@@ -421,7 +421,7 @@
 @media print {
   @page {
     size: A4;
-    margin: 0;
+    margin: 13mm 15mm;
   }
 
   html,
@@ -431,11 +431,18 @@
   }
 
   .sheet {
-    width: var(--sheet-width);
+    width: auto;
     min-height: 0;
     margin: 0;
     box-shadow: none;
-    padding: var(--sheet-pad-y) var(--sheet-pad-x);
+    padding: 0;
+    border: 0;
+  }
+
+  .sheet *,
+  .sheet *::before,
+  .sheet *::after {
+    border-color: transparent;
   }
 
   .print-hidden {
@@ -452,9 +459,14 @@
     break-after: avoid;
   }
 
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
   li,
-  article,
-  section {
+  article {
     break-inside: avoid;
   }
 }
