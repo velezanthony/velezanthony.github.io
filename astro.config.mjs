@@ -1,11 +1,86 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 
+import { execFileSync } from 'node:child_process';
 import { globSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 
 import sitemap from '@astrojs/sitemap';
 import { routes } from './src/i18n/ui.ts';
 import tailwindcss from '@tailwindcss/vite';
+
+/** @type {(args: string[]) => string} */
+const git = (args) =>
+  execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+
+const historyIsComplete = (() => {
+  try {
+    return (
+      git(['rev-parse', '--is-inside-work-tree']) === 'true' &&
+      git(['rev-parse', '--is-shallow-repository']) !== 'true'
+    );
+  } catch {
+    return false;
+  }
+})();
+
+/** @type {Map<string, string | null>} */
+const commitDates = new Map();
+
+/** @type {(path: string) => string | null} */
+const lastCommit = (path) => {
+  let date = commitDates.get(path);
+  if (date === undefined) {
+    try {
+      date = git(['log', '-1', '--format=%cI', '--', path]) || null;
+    } catch {
+      date = null;
+    }
+    commitDates.set(path, date);
+  }
+  return date;
+};
+
+/** @type {(locale: string, segments: string[]) => string[]} */
+const sourcesOf = (locale, [section, slug]) => {
+  const page = 'src/pages/[lang]';
+  const data = 'src/data';
+
+  if (!section) {
+    return [`${page}/index.astro`, `${page}/_sections`, `${data}/profile.ts`, `${data}/projects.ts`];
+  }
+  if (section === 'cv') {
+    return [
+      `${page}/[cv]`,
+      `${data}/profile.ts`,
+      `${data}/experience.ts`,
+      `${data}/education.ts`,
+      `${data}/projects.ts`,
+    ];
+  }
+  if (section === 'experience') {
+    return [`${page}/[experience]`, `${data}/experience.ts`, `${data}/education.ts`];
+  }
+  if (section === 'projects') {
+    return slug
+      ? [`src/content/projects/${locale}/${slug}.md`, `${page}/[projects]/[slug].astro`, `${data}/projects.ts`]
+      : [
+          `${page}/[projects]/index.astro`,
+          `${page}/[projects]/_sections/ProjectIndexSection.astro`,
+          `${data}/projects.ts`,
+        ];
+  }
+  return [];
+};
+
+/** @type {(locale: string, segments: string[]) => string | undefined} */
+const lastmodOf = (locale, segments) => {
+  if (!historyIsComplete) return undefined;
+  const dates = sourcesOf(locale, segments)
+    .map(lastCommit)
+    .filter((/** @type {string | null} */ d) => d !== null)
+    .sort();
+  return dates.at(-1) ?? undefined;
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -122,9 +197,13 @@ export default defineConfig({
     },
 
     sitemap({
+      xslURL: '/sitemap-style.xml',
+
+      namespaces: { news: false, image: false, video: false, xhtml: true },
+
       /* The root is a redirect that canonicalises to `/es/`. Listing it
          would offer Google a URL it is told not to index. */
-      filter: (page) => page !== 'https://velezanthony.github.io/',
+      filter: (page) => new URL(page).pathname !== '/',
 
       /* The built-in `i18n` option pairs locales by identical path, so it
          matched only `/es/cv/` ↔ `/en/cv/` and left the 14 URLs with a
@@ -140,10 +219,10 @@ export default defineConfig({
         const other = locale === 'es' ? 'en' : 'es';
         const map = /** @type {Record<string, Record<string, string>>} */ (routes);
 
-        const translated = rest.map((seg) => {
-          const key = Object.keys(map).find((k) => map[k][locale] === seg);
-          return key ? map[key][other] : seg;
-        });
+        const canonical = rest.map(
+          (seg) => Object.keys(map).find((k) => map[k][locale] === seg) ?? seg,
+        );
+        const translated = rest.map((seg, i) => map[canonical[i]]?.[other] ?? seg);
 
         /** @type {(loc: string, segs: string[]) => string} */
         const href = (loc, segs) => new URL([loc, ...segs].join('/') + '/', url.origin).href;
@@ -153,6 +232,10 @@ export default defineConfig({
           { lang: other, url: href(other, translated) },
           { lang: 'x-default', url: href('es', locale === 'es' ? rest : translated) },
         ];
+
+        const lastmod = lastmodOf(locale, canonical);
+        if (lastmod) item.lastmod = lastmod;
+
         return item;
       },
     }),
