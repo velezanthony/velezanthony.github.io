@@ -1,0 +1,28 @@
+---
+type Level = 1 | 2 | 3 | 4;
+type Size = 'display' | 'xl' | 'lg' | 'md' | 'sm' | 'none';
+
+interface Props {
+  level?: Level;
+  size?: Size;
+  id?: string;
+  class?: string;
+}
+
+const { level = 2, size = 'lg', id, class: className } = Astro.props;
+
+const Tag = `h${level}` as const;
+
+const sizes: Record<Size, string> = {
+  display: 'text-display font-semibold tracking-tight',
+  xl: 'text-3xl font-semibold tracking-tight leading-tight',
+  lg: 'text-2xl font-semibold tracking-tight leading-snug',
+  md: 'text-lg font-semibold leading-snug',
+  sm: 'text-base font-semibold leading-snug',
+  none: '',
+};
+---
+
+<Tag id={id} class:list={['text-ink', sizes[size], className]}>
+  <slot />
+</Tag>

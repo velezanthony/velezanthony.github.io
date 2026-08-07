@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import SiteHeader from '@organisms/SiteHeader.astro';
+import SiteFooter from '@organisms/SiteFooter.astro';
+import BackToTop from '@organisms/BackToTop.astro';
+import type { Locale, RouteKey } from '@i18n/ui';
+
+/** Every public page except the print CV and the 404. */
+interface Props {
+  lang: Locale;
+  title: string;
+  bareTitle?: boolean;
+  description: string;
+  alternates: Record<Locale, string>;
+  current?: RouteKey | 'home';
+}
+
+const { lang, title, bareTitle, description, alternates, current } = Astro.props;
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  bareTitle={bareTitle}
+  description={description}
+  alternates={alternates}
+>
+  <div class="flex min-h-screen flex-col">
+    <SiteHeader lang={lang} alternates={alternates} current={current} />
+
+    <main id="main" class="mx-auto w-full max-w-(--container-page) flex-1 px-6 lg:px-10">
+      <slot />
+    </main>
+
+    <SiteFooter lang={lang} />
+  </div>
+
+  <BackToTop lang={lang} />
+</BaseLayout>

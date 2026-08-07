@@ -1,0 +1,25 @@
+---
+type Tone = 'neutral' | 'accent' | 'faint' | 'live' | 'wip';
+
+interface Props {
+  tone?: Tone;
+  /** Renders a leading square. Used by status markers. */
+  dot?: boolean;
+  class?: string;
+}
+
+const { tone = 'neutral', dot = false, class: className } = Astro.props;
+
+const tones: Record<Tone, string> = {
+  neutral: 'text-muted',
+  accent: 'text-accent',
+  faint: 'text-faint',
+  live: 'text-state-live',
+  wip: 'text-state-wip',
+};
+---
+
+<span class:list={['label inline-flex items-center gap-1.5', tones[tone], className]}>
+  {dot && <span class="size-1.5 shrink-0 bg-current" aria-hidden="true" />}
+  <slot />
+</span>

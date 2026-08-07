@@ -1,0 +1,176 @@
+---
+import Heading from '@atoms/Heading.astro';
+import Text from '@atoms/Text.astro';
+import Link from '@atoms/Link.astro';
+import Todo from '@atoms/Todo.astro';
+import Rule from '@atoms/Rule.astro';
+import StackRow from '@molecules/StackRow.astro';
+import StatusChip from '@molecules/StatusChip.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+  name: string;
+  tagline: string;
+  status: 'maintained' | 'experimental' | 'unreleased';
+  role: string;
+  stack: string[];
+  /** What it is built FOR, as opposed to what it is built with. */
+  targets: string[];
+  /** Declared support range. */
+  compat: string[];
+  /** Tests, CI, licence, docs — the apparatus. */
+  quality: string[];
+  constraints: string[];
+  links: { label: string; href: string }[];
+  todo: string[];
+  translationPending: boolean;
+  backHref: string;
+}
+
+const {
+  lang,
+  name,
+  tagline,
+  status,
+  role,
+  stack,
+  targets,
+  compat,
+  quality,
+  constraints,
+  links,
+  todo,
+  translationPending,
+  backHref,
+} = Astro.props;
+
+const t = useTranslations(lang);
+---
+
+<article class="py-12 lg:py-16">
+  <Link href={backHref} variant="quiet" class="label">
+    {t('Volver a proyectos')}
+  </Link>
+
+  <header class="mt-10">
+    <p class="label mb-5 text-faint">{t('Caso de estudio')}</p>
+
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+      <Heading level={1} size="xl" class="font-mono">{name}</Heading>
+      <StatusChip status={status} lang={lang} />
+    </div>
+
+    <Text tone="ink" size="lead" class="mt-5 max-w-(--container-measure)">{tagline}</Text>
+  </header>
+
+  <Rule marked class="mt-10" />
+
+  {
+    translationPending && (
+      <p class="mt-8 border-l-2 border-accent bg-accent-soft px-4 py-3 text-sm text-accent">
+        {t('Esta página aún no está traducida. Se muestra la versión en castellano.')}
+      </p>
+    )
+  }
+
+  <div class="mt-12 grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_15rem]">
+    <div class="min-w-0 lg:order-1">
+      <div class="prose">
+        <slot />
+      </div>
+
+      {
+        todo.length > 0 && (
+          <section class="mt-16">
+            <p class="label mb-4 text-faint">{t('Pendiente de escribir')}</p>
+            {todo.map((item) => (
+              <Todo what={item} />
+            ))}
+          </section>
+        )
+      }
+    </div>
+
+    <aside class="space-y-8 lg:order-2 lg:sticky lg:top-10 lg:self-start">
+      <div>
+        <p class="label mb-2 text-faint">{t('Rol')}</p>
+        <p class="text-sm text-muted">{role}</p>
+      </div>
+
+      {
+        stack.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Stack')}</p>
+            <StackRow items={stack} />
+          </div>
+        )
+      }
+
+      {
+        targets.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Para')}</p>
+            <StackRow items={targets} />
+          </div>
+        )
+      }
+
+      {
+        compat.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Compatibilidad')}</p>
+            <StackRow items={compat} />
+          </div>
+        )
+      }
+
+      {
+        quality.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Calidad')}</p>
+            <ul class="space-y-1.5">
+              {quality.map((item) => (
+                <li class="flex items-baseline gap-2 text-sm text-muted">
+                  <span class="mt-1.5 size-1.5 shrink-0 bg-state-live" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        constraints.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Restricciones')}</p>
+            <ul class="space-y-2.5">
+              {constraints.map((constraint) => (
+                <li class="border-l-2 border-rule pl-3 text-sm text-muted">{constraint}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        links.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Enlaces')}</p>
+            <ul class="space-y-2">
+              {links.map((link) => (
+                <li>
+                  <Link href={link.href} variant="quiet">
+                    <span class="font-mono text-sm">{link.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </aside>
+  </div>
+</article>

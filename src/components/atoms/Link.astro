@@ -1,0 +1,48 @@
+---
+import Icon from '@atoms/Icon.astro';
+
+type Variant = 'inline' | 'quiet' | 'action';
+
+interface Props {
+  href: string;
+  variant?: Variant;
+  /** Force the external treatment for a link that is not http(s). */
+  external?: boolean;
+  'aria-label'?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'inline',
+  external,
+  'aria-label': ariaLabel,
+  class: className,
+} = Astro.props;
+
+const isExternal = external ?? /^https?:\/\//.test(href);
+
+const variants: Record<Variant, string> = {
+  inline:
+    'text-accent underline underline-offset-[0.2em] decoration-1 hover:decoration-2 transition-[text-decoration-thickness]',
+  quiet: 'text-muted hover:text-ink transition-colors',
+  action:
+    'label inline-flex items-center gap-2 text-accent hover:gap-3 transition-[gap] duration-200',
+};
+---
+
+<a
+  href={href}
+  aria-label={ariaLabel}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  target={isExternal ? '_blank' : undefined}
+  class:list={['inline-flex items-center gap-1.5', variants[variant], className]}
+>
+  <slot />
+  {variant === 'action' && <Icon name="arrow" size={14} />}
+  {
+    isExternal && variant !== 'action' && (
+      <Icon name="external" size={12} class="shrink-0 opacity-60" />
+    )
+  }
+</a>

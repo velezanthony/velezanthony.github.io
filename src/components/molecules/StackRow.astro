@@ -1,0 +1,42 @@
+---
+interface Props {
+  items: string[];
+  /** Optional label rendered before the list, e.g. "Stack". */
+  label?: string;
+  /** `cv` drops to the document scale's smallest step. */
+  size?: 'site' | 'cv';
+  /** Label above the list instead of inline — for narrow metadata columns. */
+  stacked?: boolean;
+  class?: string;
+}
+
+const { items, label, size = 'site', stacked = false, class: className } = Astro.props;
+
+const sizes = {
+  site: 'text-xs leading-relaxed',
+  cv: 'text-cv-micro',
+} as const;
+---
+
+{
+  items.length > 0 && (
+    <p class:list={['font-mono text-faint', sizes[size], className]}>
+      {label && stacked && <span class="label mb-1.5 block text-faint">{label}</span>}
+      {label && !stacked && <span class="mr-1.5 font-medium text-muted">{label}</span>}
+      {items.map((item, index) => (
+        <>
+          {/* One break point per item, always after the separator: margins
+              alone gave none and the list overflowed; spaces on both sides
+              gave one too many and lines started with a stray middot. */}
+          {index > 0 && ' '}
+          {item}
+          {index < items.length - 1 && (
+            <span class="text-rule" aria-hidden="true">
+              {' ·'}
+            </span>
+          )}
+        </>
+      ))}
+    </p>
+  )
+}

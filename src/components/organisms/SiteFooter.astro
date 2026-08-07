@@ -1,0 +1,45 @@
+---
+import ContactList from '@molecules/ContactList.astro';
+import Link from '@atoms/Link.astro';
+import { contact, profile } from '@data/profile';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-rule">
+  <div class="mx-auto max-w-(--container-page) px-6 py-12 lg:px-10">
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <p class="label mb-4 text-faint">{t('Contacto')}</p>
+        <ContactList items={contact} />
+      </div>
+
+      <div class="md:justify-self-end md:text-right">
+        <p class="label mb-4 text-faint">{t('Código fuente')}</p>
+        <Link href="https://github.com/velezanthony/velezanthony.github.io" variant="quiet">
+          <span class="font-mono text-sm">velezanthony.github.io</span>
+        </Link>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-rule pt-6 font-mono text-xs text-faint"
+    >
+      <p>© {year} {profile.name}</p>
+
+      <p>
+        <Link href="https://github.com/velezanthony/velezanthony.github.io" variant="quiet">
+          {t('Portfolio hecho con Astro')}
+        </Link>
+      </p>
+    </div>
+  </div>
+</footer>

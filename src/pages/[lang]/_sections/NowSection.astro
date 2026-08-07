@@ -1,0 +1,23 @@
+---
+import SectionHead from '@molecules/SectionHead.astro';
+import ProjectGrid from '@organisms/ProjectGrid.astro';
+import { path, useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="band py-16">
+  <SectionHead
+    eyebrow={t('Ahora')}
+    title={t('En qué estoy trabajando')}
+    action={{ href: path(lang, 'projects'), label: t('Ver todas las herramientas') }}
+  />
+
+  <ProjectGrid lang={lang} featured />
+</section>

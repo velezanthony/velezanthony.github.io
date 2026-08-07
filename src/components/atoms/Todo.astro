@@ -1,0 +1,23 @@
+---
+interface Props {
+  /** Short description of what has to be written here. */
+  what?: string;
+  class?: string;
+}
+
+const { what, class: className } = Astro.props;
+---
+
+<div
+  data-todo
+  class:list={[
+    'my-6 rounded border-2 border-dashed border-(--color-todo-rule) bg-(--color-todo-soft) px-4 py-3',
+    className,
+  ]}
+>
+  <p class="label text-(--color-todo)">TODO</p>
+  <div class="mt-1.5 text-sm leading-relaxed text-(--color-todo)">
+    {what}
+    <slot />
+  </div>
+</div>

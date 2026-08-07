@@ -1,0 +1,150 @@
+---
+import { Font } from 'astro:assets';
+import '@styles/theme.css';
+import { contact, profile } from '@data/profile';
+import { useTranslations } from '@i18n/utils';
+import { locales } from '@i18n/ui';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+  title: string;
+
+  /** Skips the ` | Anthony Velez Tapia` suffix. Project pages carry their own
+      two-part title and would otherwise overflow the SERP truncation point. */
+  bareTitle?: boolean;
+  description: string;
+  /** Every locale's URL for this page, for `hreflang`. */
+  alternates: Record<Locale, string>;
+  /** Keeps a page out of search results — used by 404. */
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  lang,
+  title,
+  bareTitle = false,
+  description,
+  alternates,
+  noindex = false,
+  bodyClass,
+} = Astro.props;
+const t = useTranslations(lang);
+
+const fullTitle = bareTitle || title === profile.name ? title : `${title} | ${profile.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    {!noindex && <link rel="canonical" href={canonical.href} />}
+    {
+      !noindex &&
+        locales.map((locale) => (
+          <link rel="alternate" hreflang={locale} href={new URL(alternates[locale], Astro.site).href} />
+        ))
+    }
+    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(alternates.es, Astro.site).href} />}
+
+    {/* Absolute URL required: crawlers do not resolve relative image paths. */}
+    <meta property="og:image" content={new URL('/og.png', Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={profile.name} />
+    <meta name="twitter:image" content={new URL('/og.png', Astro.site).href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_GB' : 'es_ES'} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fcfefe" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1111" media="(prefers-color-scheme: dark)" />
+
+    <Font cssVariable="--font-plex-sans" preload />
+    <Font cssVariable="--font-plex-mono" />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        /* Stable across all 19 pages: without it Google sees nineteen
+           separate people instead of one with nineteen mentions. */
+        '@id': new URL('/#anthony', Astro.site).href,
+        mainEntityOfPage: canonical.href,
+        name: profile.name,
+        email: 'mailto:velezanthony2000@gmail.com',
+        knowsAbout: [
+          'Django', 'Python', 'PostgreSQL', 'AWS', 'Docker',
+          'Angular', 'React', 'TypeScript', 'Laravel', 'PHP',
+          'Linux', 'Nginx', 'Proxmox',
+        ],
+        description: profile.headline[lang],
+        url: new URL(`/${lang}/`, Astro.site).href,
+        image: new URL('/photo.png', Astro.site).href,
+        jobTitle: lang === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Hernani',
+          addressRegion: 'Gipuzkoa',
+          addressCountry: 'ES',
+        },
+        knowsLanguage: ['es', 'eu', 'en'],
+        sameAs: contact.filter((c) => c.href.startsWith('http')).map((c) => c.href),
+      })}
+    />
+    <script is:inline>
+      /* Runs before first paint: without it the page renders in the system
+         theme and then flips, which is the flash every toggle has to avoid. */
+      (() => {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.dataset.theme = saved;
+        }
+      })();
+    </script>
+
+    <slot name="head" />
+  </head>
+
+  <script is:inline>
+    /* Records the locale of every page visited, so the 404 — which is a
+       single file at the root and cannot know the language — can read it
+       back. Writes nothing when the path carries no locale. */
+    document.addEventListener('DOMContentLoaded', () => {
+      const p = location.pathname;
+      if (p.startsWith('/es/')) sessionStorage.setItem('lang', 'es');
+      else if (p.startsWith('/en/')) sessionStorage.setItem('lang', 'en');
+    });
+  </script>
+
+  <body class:list={['min-h-screen bg-canvas antialiased', bodyClass]}>
+    <a
+      href="#main"
+      class="label sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:border focus:border-rule focus:bg-canvas focus:px-3 focus:py-2 focus:text-ink"
+    >
+      {t('Ir al contenido')}
+    </a>
+
+    <slot />
+  </body>
+</html>

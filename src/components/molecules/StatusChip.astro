@@ -1,0 +1,29 @@
+---
+import Tag from '@atoms/Tag.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale, Phrase } from '@i18n/ui';
+
+type Status = 'maintained' | 'experimental' | 'unreleased';
+
+interface Props {
+  status: Status;
+  lang: Locale;
+}
+
+const { status, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const labels: Record<Status, Phrase> = {
+  maintained: 'Mantenido',
+  experimental: 'Experimental',
+  unreleased: 'Sin publicar',
+};
+
+const tones = {
+  maintained: 'live',
+  experimental: 'wip',
+  unreleased: 'faint',
+} as const;
+---
+
+<Tag tone={tones[status]} dot>{t(labels[status])}</Tag>

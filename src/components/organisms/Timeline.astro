@@ -1,0 +1,46 @@
+---
+import ExperienceItem from '@molecules/ExperienceItem.astro';
+import { experience } from '@data/experience';
+import { formatRange } from '@i18n/format';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+  /** `cv` switches every child to the denser, page-costed rendering. */
+  variant?: 'site' | 'cv';
+  limit?: number;
+  /** Forwarded to each item. Depends on what precedes the timeline. */
+  headingLevel?: 2 | 3;
+  class?: string;
+}
+
+const {
+  lang,
+  variant = 'site',
+  limit,
+  headingLevel = 3,
+  class: className,
+} = Astro.props;
+const t = useTranslations(lang);
+
+const jobs = limit ? experience.slice(0, limit) : experience;
+---
+
+<div class:list={['border-b border-rule', className]}>
+  {
+    jobs.map((job) => (
+      <ExperienceItem
+        company={job.company}
+        role={job.role[lang]}
+        location={job.location?.[lang]}
+        range={formatRange(lang, job.start, job.end, t('Actualidad'))}
+        highlights={job.highlights[lang]}
+        stack={job.stack}
+        lang={lang}
+        variant={variant}
+        headingLevel={headingLevel}
+      />
+    ))
+  }
+</div>

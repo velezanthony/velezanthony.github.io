@@ -1,0 +1,25 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import HeroSection from './_sections/HeroSection.astro';
+import NowSection from './_sections/NowSection.astro';
+import TrackRecordSection from './_sections/TrackRecordSection.astro';
+import { seo } from '@data/profile';
+import { alternates, assertLocale, localeParams, useTranslations } from '@i18n/utils';
+
+export const getStaticPaths = localeParams;
+
+const lang = assertLocale(Astro.params.lang);
+const t = useTranslations(lang);
+---
+
+<PageLayout
+  lang={lang}
+  title={t('Full Stack Developer')}
+  description={seo.home[lang]}
+  alternates={alternates()}
+  current="home"
+>
+  <HeroSection lang={lang} />
+  <NowSection lang={lang} />
+  <TrackRecordSection lang={lang} />
+</PageLayout>

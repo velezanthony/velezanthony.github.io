@@ -1,0 +1,460 @@
+@import 'tailwindcss';
+
+/* Tokens. Neutrals are an OKLCH ramp at hue 195 so they share the
+   accent's hue — do not swap them for Tailwind's default greys.
+   Ratios below are against each token's own surface. */
+
+@theme {
+  --color-canvas: #fcfefe;
+  --color-raised: #f5f7f7; /*  1.06:1 */
+  --color-ink: #1d2626; /* 15.28:1  AAA */
+  --color-muted: #515a5a; /*  7.01:1  AAA */
+  --color-faint: #6a7272; /*  4.87:1  AA  */
+  --color-accent: #00635b; /*  7.07:1  AAA */
+  --color-accent-soft: #e4f9f5;
+  --color-rule: #d5dada; /*  1.40:1 */
+
+  --color-state-live: #0f6b39; /*  6.52:1  AA  — maintained   */
+  --color-state-wip: #7d4a00; /*  7.28:1  AAA — experimental */
+
+  --color-todo: #92400e;
+  --color-todo-soft: #fffbeb;
+  --color-todo-rule: #f59e0b;
+
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
+
+  --text-display: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.025em;
+
+  --sheet-width: 210mm;
+  --sheet-height: 297mm;
+  --sheet-pad-x: 15mm;
+  --sheet-pad-y: 13mm;
+
+  --text-row: 0.9375rem; /* 15px */
+  --text-row--line-height: 1.6;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.14em;
+
+  --cv-scale: 1;
+
+  --text-cv-name: calc(28pt * var(--cv-scale)); /* 37.3px */
+  --text-cv-name--line-height: 1;
+  --text-cv-name--letter-spacing: -0.02em;
+
+  --text-cv-headline: calc(11pt * var(--cv-scale)); /* 14.7px — 2.5× the name, as the reference */
+  --text-cv-headline--line-height: 1.3;
+
+  --text-cv-head: calc(10pt * var(--cv-scale)); /* 13.3px — section landmarks */
+  --text-cv-head--line-height: 1.2;
+  --text-cv-head--letter-spacing: 0.12em;
+
+  --text-cv-role: calc(9.5pt * var(--cv-scale)); /* 12.7px */
+  --text-cv-role--line-height: 1.3;
+
+  --text-cv-body: calc(9pt * var(--cv-scale)); /* 12px — bullets, profile, stack groups */
+  --text-cv-body--line-height: 1.35;
+
+  --text-cv-meta: calc(8.5pt * var(--cv-scale)); /* 11.3px — dates, location, contact */
+  --text-cv-meta--line-height: 1.3;
+
+  --text-cv-micro: calc(8pt * var(--cv-scale)); /* 10.7px — the stack line */
+  --text-cv-micro--line-height: 1.35;
+
+  /* ~67 real characters. Not `ch`: that measures the `0` glyph, so 65ch
+     would render ~86. */
+  --container-measure: 34rem;
+
+  --container-text: 42rem;
+
+  --container-wide: 52rem;
+  --container-page: 64rem;
+}
+
+@media (max-width: 48rem) {
+  :root {
+    --cv-scale: 0.78;
+    --sheet-pad-x: 6vw;
+    --sheet-pad-y: 8vw;
+  }
+}
+
+@media (max-width: 30rem) {
+  :root {
+    --cv-scale: 0.66;
+  }
+}
+
+@media print {
+  :root {
+    --cv-scale: 1;
+    --sheet-pad-x: 15mm;
+    --sheet-pad-y: 13mm;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-canvas: #0e1111;
+    --color-raised: #161a1a; /*  1.08:1 */
+    --color-ink: #e0e8e8; /* 15.25:1  AAA */
+    --color-muted: #a6b0b0; /*  8.54:1  AAA */
+    --color-faint: #7e8988; /*  5.26:1  AA  */
+    --color-accent: #67bdb1; /*  8.57:1  AAA — #00635b gives 2.65:1 here
+                                   and fails even the 3:1 non-text floor */
+    --color-accent-soft: #142422;
+    --color-rule: #2d3333; /*  1.48:1 */
+    --color-state-live: #6dd196; /* 10.13:1  AAA */
+    --color-state-wip: #e0a44a; /*  8.65:1  AAA */
+    --color-todo: #fbbf24;
+    --color-todo-soft: #1c1608;
+    --color-todo-rule: #a16207;
+  }
+}
+
+:root[data-theme='dark'] {
+    --color-canvas: #0e1111;
+    --color-raised: #161a1a; /*  1.08:1 */
+    --color-ink: #e0e8e8; /* 15.25:1  AAA */
+    --color-muted: #a6b0b0; /*  8.54:1  AAA */
+    --color-faint: #7e8988; /*  5.26:1  AA  */
+    --color-accent: #67bdb1; /*  8.57:1  AAA — #00635b gives 2.65:1 here
+                                   and fails even the 3:1 non-text floor */
+    --color-accent-soft: #142422;
+    --color-rule: #2d3333; /*  1.48:1 */
+    --color-state-live: #6dd196; /* 10.13:1  AAA */
+    --color-state-wip: #e0a44a; /*  8.65:1  AAA */
+    --color-todo: #fbbf24;
+    --color-todo-soft: #1c1608;
+    --color-todo-rule: #a16207;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-canvas);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+}
+
+/* Full-bleed surface without a wrapper element: the spread shadow paints
+   it, `clip-path` stops it widening the document. */
+@utility band {
+  background-color: var(--color-raised);
+  box-shadow:
+    0 0 0 100vmax var(--color-raised),
+    inset 0 1px 0 var(--color-rule),
+    inset 0 -1px 0 var(--color-rule);
+  clip-path: inset(0 -100vmax);
+}
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
+  line-height: var(--text-label--line-height);
+  text-transform: uppercase;
+}
+
+@layer base {
+  .sheet {
+    font-size: var(--text-cv-body);
+    line-height: var(--text-cv-body--line-height);
+  }
+}
+
+@utility cv-head {
+  font-size: var(--text-cv-head);
+  font-weight: 700;
+  letter-spacing: var(--text-cv-head--letter-spacing);
+  line-height: var(--text-cv-head--line-height);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+@utility prose {
+  max-width: var(--container-measure);
+
+  & > * + * {
+    margin-top: 1.25em;
+  }
+
+  & h2 {
+    margin-top: 2.75em;
+    padding-top: 1.25em;
+    border-top: 1px solid var(--color-rule);
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+
+  & > h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  & h3 {
+    margin-top: 2em;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  & h2 + *,
+  & h3 + * {
+    margin-top: 0.75em;
+  }
+
+  & a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  & strong {
+    font-weight: 600;
+  }
+
+  & ul,
+  & ol {
+    padding-left: 1.25em;
+  }
+
+  & ul {
+    list-style: disc;
+  }
+
+  & ol {
+    list-style: decimal;
+  }
+
+  & li + li {
+    margin-top: 0.4em;
+  }
+
+  & li::marker {
+    color: var(--color-faint);
+  }
+
+  /* Tailwind's preflight strips every table border and collapses nothing,
+     so a Markdown comparison table renders as loose text. These rules put
+     the grid back; `.table-scroll` keeps a wide one off the page edge
+     instead of widening the document. */
+  & .table-scroll {
+    overflow-x: auto;
+    width: calc(100% + 1.5rem);
+    margin-inline: -0.75rem;
+    padding-inline: 0.75rem;
+  }
+
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-row);
+    text-align: left;
+  }
+
+  & thead th {
+    padding: 0 0.875em 0.5em;
+    border-bottom: 1px solid var(--color-ink);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+    white-space: nowrap;
+  }
+
+  & tbody th,
+  & tbody td {
+    padding: 0.6em 0.875em;
+    border-bottom: 1px solid var(--color-rule);
+    vertical-align: baseline;
+  }
+
+  & tbody th {
+    font-weight: 500;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+
+  & tbody td {
+    color: var(--color-muted);
+  }
+
+  & :is(thead th, tbody th, tbody td):first-child {
+    padding-left: 0;
+  }
+
+  & :is(thead th, tbody th, tbody td):last-child {
+    padding-right: 0;
+  }
+
+  & tbody tr:last-child :is(th, td) {
+    border-bottom: 0;
+  }
+
+  & blockquote {
+    border-left: 2px solid var(--color-rule);
+    padding-left: 1.25em;
+    color: var(--color-muted);
+  }
+
+  /* Inline code here is paths, module names and diagnostic ids — single
+     unbreakable runs longer than a phone's line box. Without an explicit
+     break opportunity they drag the document into a sideways scroll. */
+  & code {
+    font-family: var(--font-mono);
+    font-size: 1em;
+    background-color: var(--color-raised);
+    border: 1px solid var(--color-rule);
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    overflow-wrap: anywhere;
+  }
+
+  & pre {
+    background-color: var(--color-raised);
+    border: 1px solid var(--color-rule);
+    border-radius: 4px;
+    padding: 1rem 1.125rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  & pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+    overflow-wrap: normal;
+  }
+
+  & hr {
+    border: 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  /* Screenshots bleed past the reading measure into the gutter. On a phone
+     there is no gutter to bleed into, so the bleed is capped at the viewport
+     minus the page padding — otherwise the whole document scrolls sideways. */
+  & img {
+    display: block;
+    width: min(calc(100% + 6rem), calc(100vw - 3rem));
+    max-width: var(--container-text);
+    height: auto;
+    border: 1px solid var(--color-rule);
+    border-radius: 4px;
+  }
+
+  & p:has(> img) {
+    margin-top: 2em;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .astro-code,
+  :root:not([data-theme='light']) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  .sheet {
+    width: var(--sheet-width);
+    min-height: 0;
+    margin: 0;
+    box-shadow: none;
+    padding: var(--sheet-pad-y) var(--sheet-pad-x);
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  li,
+  article,
+  section {
+    break-inside: avoid;
+  }
+}

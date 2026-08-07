@@ -1,0 +1,52 @@
+---
+import Heading from '@atoms/Heading.astro';
+import Link from '@atoms/Link.astro';
+
+interface Props {
+  eyebrow: string;
+  title?: string;
+  action?: { href: string; label: string };
+  size?: 'lg' | 'md';
+  level?: 2 | 3;
+  id?: string;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  action,
+  size = 'lg',
+  level = 2,
+  id,
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={[title ? 'mb-6' : 'mb-4', className]}>
+  <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+    <p class="label text-faint">{eyebrow}</p>
+    {
+      action && !title && (
+        <Link href={action.href} variant="action">
+          {action.label}
+        </Link>
+      )
+    }
+  </div>
+
+  {
+    title && (
+      <div class="mt-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+        <Heading level={level} size={size} id={id}>
+          {title}
+        </Heading>
+        {action && (
+          <Link href={action.href} variant="action">
+            {action.label}
+          </Link>
+        )}
+      </div>
+    )
+  }
+</div>

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Link from '@atoms/Link.astro';
+import LocaleSwitch from '@molecules/LocaleSwitch.astro';
+import ThemeToggle from '@molecules/ThemeToggle.astro';
+import BackToTop from '@organisms/BackToTop.astro';
+import { path, useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  alternates: Record<Locale, string>;
+}
+
+const { lang, title, description, alternates } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={description}
+  alternates={alternates}
+  bodyClass="bg-raised"
+>
+  <div class="print-hidden border-b border-rule bg-canvas">
+    <div
+      class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-10"
+    >
+      <Link href={path(lang)} variant="quiet">
+        <span class="label">{t('Inicio')}</span>
+      </Link>
+
+      <div class="flex items-center gap-6">
+        <LocaleSwitch lang={lang} hrefs={alternates} />
+        <ThemeToggle lang={lang} class="ml-1 print-hidden" />
+        <button
+          type="button"
+          data-print
+          class="label cursor-pointer rounded border border-rule px-3 py-1.5 text-muted transition-colors hover:border-accent hover:text-accent"
+        >
+          {t('Descargar / imprimir')}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    An actual A4 sheet, at A4 dimensions, with A4 margins as padding. The
+    reference CV's most useful property is that the thing on screen is the
+    thing that prints — you compose against the page break instead of
+    printing to find out where it landed. A separate `max-w-[52rem]`
+    column could only ever approximate that.
+
+    Ruled, not shadowed: a drop shadow is the site's own banned list, and
+    a hairline separates sheet from ground just as well.
+  -->
+  <main
+    id="main"
+    class="sheet mx-auto my-0 w-full max-w-(--sheet-width) border-rule bg-canvas px-6 py-8 sm:my-10 sm:min-h-(--sheet-height) sm:border sm:px-(--sheet-pad-x) sm:py-(--sheet-pad-y) print:min-h-0"
+  >
+    <slot />
+
+  <BackToTop lang={lang} />
+  </main>
+</BaseLayout>
+
+<script>
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>

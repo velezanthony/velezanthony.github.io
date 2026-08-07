@@ -1,0 +1,24 @@
+---
+import SectionHead from '@molecules/SectionHead.astro';
+import Timeline from '@organisms/Timeline.astro';
+import { path, useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="pt-16 pb-20">
+  <SectionHead
+    eyebrow={t('Trayectoria')}
+    title={t('Experiencia reciente')}
+    size="md"
+    action={{ href: path(lang, 'experience'), label: t('Ver la trayectoria completa') }}
+  />
+
+  <Timeline lang={lang} limit={3} />
+</section>

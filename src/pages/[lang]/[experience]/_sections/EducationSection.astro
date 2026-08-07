@@ -1,0 +1,53 @@
+---
+import Heading from '@atoms/Heading.astro';
+import { education } from '@data/education';
+import { spokenLanguages } from '@data/profile';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section
+  class="grid max-w-(--container-text) gap-x-12 gap-y-10 pb-20 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
+>
+  <div>
+    <Heading level={2} size="md" class="mb-5">{t('Formación')}</Heading>
+
+    <ul class="border-b border-rule">
+      {
+        education.map((study) => (
+          <li class="grid gap-x-8 gap-y-1 border-t border-rule py-4 md:grid-cols-[max-content_1fr]">
+            <p class="label text-faint md:pt-1">
+              {study.startYear} – {study.endYear}
+            </p>
+            <div>
+              <p class="font-medium text-ink">{study.title[lang]}</p>
+              <p class="mt-0.5 text-sm text-muted">{study.school}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div>
+    <Heading level={2} size="md" class="mb-5">{t('Idiomas')}</Heading>
+
+    <ul class="border-b border-rule">
+      {
+        spokenLanguages.map((language) => (
+          <li class="flex items-baseline justify-between gap-4 border-t border-rule py-4">
+            <span class="text-ink">{language.name[lang]}</span>
+            <span class="label text-faint">{language.level[lang]}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

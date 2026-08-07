@@ -1,0 +1,23 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { seo } from '@data/profile';
+import ProjectIndexSection from './_sections/ProjectIndexSection.astro';
+import { alternates, assertLocale, localeRouteParams, useTranslations } from '@i18n/utils';
+
+export function getStaticPaths() {
+  return localeRouteParams('projects');
+}
+
+const lang = assertLocale(Astro.params.lang);
+const t = useTranslations(lang);
+---
+
+<PageLayout
+  lang={lang}
+  title={t('Herramientas propias')}
+  description={seo.projects[lang]}
+  alternates={alternates('projects')}
+  current="projects"
+>
+  <ProjectIndexSection lang={lang} />
+</PageLayout>

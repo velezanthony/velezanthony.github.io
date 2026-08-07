@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import Heading from '@atoms/Heading.astro';
+import Text from '@atoms/Text.astro';
+import StackRow from '@molecules/StackRow.astro';
+import StatusChip from '@molecules/StatusChip.astro';
+import type { ImageMetadata } from 'astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  name: string;
+  tagline: string;
+  status: 'maintained' | 'experimental' | 'unreleased';
+  href: string;
+  stack?: string[];
+  /** What it is built FOR, as opposed to what it is built with. */
+  targets?: string[];
+  /** Optional. A tool with nothing to show says so by having none. */
+  thumb?: ImageMetadata;
+  thumbAlt?: string;
+  lang: Locale;
+  /** Set by the caller so the document outline never skips a level. */
+  headingLevel?: 2 | 3;
+}
+
+const {
+  name,
+  tagline,
+  status,
+  href,
+  stack = [],
+  targets = [],
+  thumb,
+  thumbAlt = '',
+  lang,
+  headingLevel = 3,
+} = Astro.props;
+
+const t = useTranslations(lang);
+---
+
+<article class="group relative border-t border-rule py-6">
+  <div class="grid gap-x-14 gap-y-3 lg:grid-cols-[minmax(0,var(--container-text))_minmax(0,1fr)]">
+    <div>
+      <Heading level={headingLevel} size="md" class="font-mono tracking-tight">
+        <a
+          href={href}
+          class="transition-colors after:absolute after:inset-0 after:content-[''] group-hover:text-accent"
+        >
+          {name}
+        </a>
+      </Heading>
+
+      <Text size="row" class="mt-1.5 max-w-(--container-measure)">{tagline}</Text>
+    </div>
+
+    <div class="min-w-0 lg:pt-1.5">
+      <StatusChip status={status} lang={lang} />
+      <StackRow items={stack} class="mt-3" />
+      <StackRow items={targets} label={t('Para')} stacked class="mt-3" />
+
+      {
+        thumb && (
+          <Image
+            src={thumb}
+            alt={thumbAlt}
+            widths={[240, 480]}
+            sizes="(min-width: 1024px) 240px, 100vw"
+            loading="lazy"
+            class="mt-4 w-full rounded border border-rule transition-[border-color] group-hover:border-accent"
+          />
+        )
+      }
+    </div>
+  </div>
+</article>

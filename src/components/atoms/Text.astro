@@ -1,0 +1,39 @@
+---
+type Tone = 'ink' | 'muted' | 'faint';
+/** `row` is the shared size for descriptions inside a ruled row. */
+type Size = 'lead' | 'base' | 'row' | 'sm';
+
+interface Props {
+  as?: 'p' | 'span' | 'div';
+  tone?: Tone;
+  size?: Size;
+  /** Caps the line length at the reading measure. */
+  measure?: boolean;
+  class?: string;
+}
+
+const {
+  as: Tag = 'p',
+  tone = 'muted',
+  size = 'base',
+  measure = false,
+  class: className,
+}: Props = Astro.props;
+
+const tones: Record<Tone, string> = {
+  ink: 'text-ink',
+  muted: 'text-muted',
+  faint: 'text-faint',
+};
+
+const sizes: Record<Size, string> = {
+  lead: 'text-lg leading-relaxed',
+  base: 'text-base leading-relaxed',
+  row: 'text-row',
+  sm: 'text-sm leading-relaxed',
+};
+---
+
+<Tag class:list={[tones[tone], sizes[size], measure && 'max-w-(--container-measure)', className]}>
+  <slot />
+</Tag>

@@ -1,0 +1,55 @@
+---
+/**
+ * The root is the URL that gets pasted into LinkedIn, a signature or a chat.
+ * Astro's built-in `redirects` emits a 285-byte stub with no `lang`, no
+ * description and no `og:*`, so every one of those unfurls as a bare link.
+ * This is the same redirect, written by hand, carrying the card.
+ */
+import { profile, seo } from '@data/profile';
+
+const target = new URL('/es/', Astro.site).href;
+const description = seo.home.es;
+const title = `${profile.name} — Desarrollador Full Stack`;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={target} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={target} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:image" content={new URL('/og.png', Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={profile.name} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og.png', Astro.site).href} />
+
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" />
+    <link rel="alternate" hreflang="es" href={target} />
+    <link rel="alternate" hreflang="en" href={new URL('/en/', Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={target} />
+  </head>
+
+  <body style="font-family: ui-sans-serif, system-ui, sans-serif">
+    <p><a href="/es/">{profile.name} — es</a></p>
+    <p><a href="/en/">{profile.name} — en</a></p>
+    <script is:inline>
+      location.replace('/es/');
+    </script>
+  </body>
+</html>

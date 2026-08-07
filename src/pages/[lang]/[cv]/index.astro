@@ -1,0 +1,29 @@
+---
+import PrintLayout from '@layouts/PrintLayout.astro';
+import CvDocument from './_sections/CvDocument.astro';
+import { getProjects } from '@data/projects';
+import { seo } from '@data/profile';
+import { alternates, assertLocale, localeRouteParams, useTranslations } from '@i18n/utils';
+
+export function getStaticPaths() {
+  return localeRouteParams('cv');
+}
+
+const lang = assertLocale(Astro.params.lang);
+const t = useTranslations(lang);
+
+const projects = await getProjects(lang);
+const tools = projects.map(({ entry }) => ({
+  name: entry.data.name,
+  tagline: entry.data.tagline,
+}));
+---
+
+<PrintLayout
+  lang={lang}
+  title={t('Currículum')}
+  description={seo.cv[lang]}
+  alternates={alternates('cv')}
+>
+  <CvDocument lang={lang} tools={tools} />
+</PrintLayout>

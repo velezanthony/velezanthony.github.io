@@ -1,0 +1,45 @@
+---
+import Heading from '@atoms/Heading.astro';
+import Text from '@atoms/Text.astro';
+import ContactList from '@molecules/ContactList.astro';
+import { contact, profile } from '@data/profile';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="pt-14 pb-12 lg:pt-20">
+  <div
+    class="grid gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,var(--container-text))_max-content]"
+  >
+    <div>
+      <p class="label mb-5 text-faint">{profile.location}</p>
+
+      <Heading level={1} size="display">
+        {profile.name}
+      </Heading>
+
+      <Text tone="ink" size="lead" class="mt-5 max-w-(--container-measure)">
+        {profile.headline[lang]}
+      </Text>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:border-l lg:border-rule lg:pt-1 lg:pl-14">
+      <div>
+        <p class="label mb-2 text-faint">{t('Disponibilidad')}</p>
+        <p class="max-w-64 text-sm leading-relaxed text-muted">{profile.availability[lang]}</p>
+      </div>
+
+      <div>
+        <p class="label mb-2 text-faint">{t('Contacto')}</p>
+        <ContactList items={contact} direction="column" />
+      </div>
+    </div>
+  </div>
+</section>

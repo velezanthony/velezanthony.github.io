@@ -1,0 +1,68 @@
+---
+import LocaleSwitch from '@molecules/LocaleSwitch.astro';
+import ThemeToggle from '@molecules/ThemeToggle.astro';
+import { profile } from '@data/profile';
+import { path, useTranslations } from '@i18n/utils';
+import type { Locale, Phrase, RouteKey } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+  alternates: Record<Locale, string>;
+  /** Route key of the current page, used for `aria-current`. */
+  current?: RouteKey | 'home';
+}
+
+const { lang, alternates, current } = Astro.props;
+const t = useTranslations(lang);
+
+const nav: { key: RouteKey; label: Phrase }[] = [
+  { key: 'projects', label: 'Proyectos' },
+  { key: 'experience', label: 'Experiencia' },
+  { key: 'cv', label: 'Currículum' },
+];
+---
+
+<header class="border-b border-rule">
+  <div
+    class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-5 lg:px-10"
+  >
+    <a
+      href={path(lang)}
+      aria-current={current === 'home' ? 'page' : undefined}
+      class="font-mono text-sm font-medium tracking-tight text-ink transition-colors hover:text-accent"
+    >
+      {profile.name}
+    </a>
+
+    <!-- The group has to wrap on its own: the nav alone is wider than a
+         narrow viewport, so an unwrappable row pushed the whole document
+         into a horizontal scroll. -->
+    <div class="flex flex-wrap items-center justify-end gap-x-6 gap-y-3">
+      <nav aria-label={t('Navegación principal')}>
+        <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={path(lang, item.key)}
+                  aria-current={current === item.key ? 'page' : undefined}
+                  class:list={[
+                    'label transition-colors hover:text-accent',
+                    current === item.key ? 'text-ink' : 'text-faint',
+                  ]}
+                >
+                  {t(item.label)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-1 border-rule sm:border-l sm:pl-5">
+        <LocaleSwitch lang={lang} hrefs={alternates} />
+        <ThemeToggle lang={lang} class="print-hidden" />
+      </div>
+    </div>
+  </div>
+</header>

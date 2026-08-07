@@ -1,0 +1,40 @@
+---
+import ProjectCard from '@molecules/ProjectCard.astro';
+import { getProjects } from '@data/projects';
+import { path } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+  featured?: boolean;
+  limit?: number;
+  /** Forwarded to each card. Depends on what precedes the grid. */
+  headingLevel?: 2 | 3;
+  class?: string;
+}
+
+const { lang, featured = false, limit, headingLevel = 3, class: className } = Astro.props;
+
+const all = await getProjects(lang);
+const selected = featured ? all.filter(({ entry }) => entry.data.featured) : all;
+const projects = limit ? selected.slice(0, limit) : selected;
+---
+
+<div class:list={['border-b border-rule', className]}>
+  {
+    projects.map(({ entry }) => (
+      <ProjectCard
+        name={entry.data.name}
+        tagline={entry.data.tagline}
+        status={entry.data.status}
+        stack={entry.data.stack}
+        targets={entry.data.targets}
+        thumb={entry.data.thumb}
+        thumbAlt={entry.data.thumbAlt}
+        href={path(lang, 'projects', entry.data.slug)}
+        lang={lang}
+        headingLevel={headingLevel}
+      />
+    ))
+  }
+</div>

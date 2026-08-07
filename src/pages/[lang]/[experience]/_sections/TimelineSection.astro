@@ -1,0 +1,21 @@
+---
+import Heading from '@atoms/Heading.astro';
+import Timeline from '@organisms/Timeline.astro';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="pt-14 pb-16 lg:pt-20">
+  <p class="label mb-5 text-faint">{t('Experiencia')}</p>
+
+  <Heading level={1} size="xl">{t('Trayectoria profesional')}</Heading>
+
+  <Timeline lang={lang} headingLevel={2} class="mt-10" />
+</section>

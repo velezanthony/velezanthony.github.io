@@ -1,0 +1,38 @@
+---
+import Icon from '@atoms/Icon.astro';
+import type { ContactLink } from '@data/types';
+
+interface Props {
+  items: ContactLink[];
+  direction?: 'row' | 'column';
+  class?: string;
+}
+
+const { items, direction = 'column', class: className } = Astro.props;
+
+const opensAway = (href: string) => /^https?:\/\//.test(href);
+---
+
+<ul
+  class:list={[
+    'flex gap-x-6 gap-y-3',
+    direction === 'row' ? 'flex-row flex-wrap items-center' : 'flex-col',
+    className,
+  ]}
+>
+  {
+    items.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          target={opensAway(item.href) ? '_blank' : undefined}
+          rel={opensAway(item.href) ? 'noopener noreferrer' : undefined}
+          class="inline-flex items-center gap-2.5 text-muted transition-colors hover:text-accent"
+        >
+          <Icon name={item.icon} size={15} class="shrink-0 text-faint" />
+          <span class="font-mono text-sm">{item.handle ?? item.label}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
