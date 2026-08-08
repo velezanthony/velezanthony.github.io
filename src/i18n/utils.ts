@@ -1,10 +1,11 @@
 import { PENDING, defaultLocale, en, locales, routes } from '@i18n/ui';
 import type { Locale, Phrase, RouteKey } from '@i18n/ui';
 
-/** Narrows an unknown route param to a Locale, or throws at build time. */
+/** Narrows the `[...lang]` param to a Locale. Absent means the default one. */
 export function assertLocale(value: string | undefined): Locale {
+  if (value === undefined) return defaultLocale;
   if (locales.includes(value as Locale)) return value as Locale;
-  throw new Error(`Unknown locale: ${String(value)}`);
+  throw new Error(`Unknown locale: ${value}`);
 }
 
 export function useTranslations(lang: Locale) {
@@ -21,11 +22,17 @@ export function isPending(phrase: Phrase): boolean {
   return translated === PENDING;
 }
 
+/** The default locale is unprefixed: `/proyectos/`, not `/es/proyectos/`. */
 export function path(lang: Locale, route?: RouteKey, ...rest: string[]): string {
-  const segments: string[] = [lang];
+  const segments: string[] = lang === defaultLocale ? [] : [lang];
   if (route) segments.push(routes[route][lang]);
   segments.push(...rest);
-  return `/${segments.join('/')}/`;
+  return segments.length === 0 ? '/' : `/${segments.join('/')}/`;
+}
+
+/** The `[...lang]` param. `undefined` is what makes Astro emit `/` itself. */
+export function langParam(lang: Locale): string | undefined {
+  return lang === defaultLocale ? undefined : lang;
 }
 
 /** The same page in the other locale. */
@@ -42,11 +49,14 @@ export function alternates(route?: RouteKey, ...rest: string[]): Record<Locale, 
 
 /** `getStaticPaths` helper for routes that exist once per locale. */
 export function localeParams() {
-  return locales.map((lang) => ({ params: { lang } }));
+  return locales.map((lang) => ({ params: { lang: langParam(lang) } }));
 }
 
 export function localeRouteParams<K extends RouteKey>(route: K) {
   return locales.map((lang) => ({
-    params: { lang, [route]: routes[route][lang] } as Record<string, string>,
+    params: { lang: langParam(lang), [route]: routes[route][lang] } as Record<
+      string,
+      string | undefined
+    >,
   }));
 }

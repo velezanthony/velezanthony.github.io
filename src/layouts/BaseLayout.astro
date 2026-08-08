@@ -126,16 +126,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <slot name="head" />
   </head>
 
-  <script is:inline>
-    /* Records the locale of every page visited, so the 404 — which is a
-       single file at the root and cannot know the language — can read it
-       back. Writes nothing when the path carries no locale. */
-    document.addEventListener('DOMContentLoaded', () => {
-      const p = location.pathname;
-      if (p.startsWith('/es/')) sessionStorage.setItem('lang', 'es');
-      else if (p.startsWith('/en/')) sessionStorage.setItem('lang', 'en');
-    });
-  </script>
+  {
+    /* Records the locale of every page visited, so the 404 — a single file
+       at the root — can read it back. Spanish carries no prefix, so anything
+       outside `/en/` is Spanish.
+
+       Not on the 404 itself: served at arbitrary paths, it would read as
+       Spanish and overwrite the value it is about to consume. */
+    !noindex && (
+      <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+          sessionStorage.setItem('lang', location.pathname.startsWith('/en/') ? 'en' : 'es');
+        });
+      </script>
+    )
+  }
 
   <body class:list={['min-h-screen bg-canvas antialiased', bodyClass]}>
     <a

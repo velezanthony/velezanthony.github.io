@@ -18,7 +18,7 @@ export const en = {
   'Full Stack Developer': 'Full Stack Developer',
   Proyectos: 'Projects',
   Experiencia: 'Experience',
-  'Currículum': 'Résumé',
+  CV: 'CV',
   'Ir al contenido': 'Skip to content',
   'Volver arriba': 'Back to top',
   'Cambiar tema': 'Switch theme',

@@ -118,10 +118,12 @@ export default defineConfig({
     },
   ],
 
+  /* Spanish is unprefixed: the root is the URL people paste, so it serves the
+     home rather than redirecting to it. GitHub Pages has no 301. */
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
-    routing: { prefixDefaultLocale: true },
+    routing: { prefixDefaultLocale: false },
   },
 
 
@@ -201,10 +203,6 @@ export default defineConfig({
 
       namespaces: { news: false, image: false, video: false, xhtml: true },
 
-      /* The root is a redirect that canonicalises to `/es/`. Listing it
-         would offer Google a URL it is told not to index. */
-      filter: (page) => new URL(page).pathname !== '/',
-
       /* The built-in `i18n` option pairs locales by identical path, so it
          matched only `/es/cv/` ↔ `/en/cv/` and left the 14 URLs with a
          translated segment without alternates. This walks the same route
@@ -212,10 +210,10 @@ export default defineConfig({
       serialize(item) {
         const url = new URL(item.url);
         const parts = url.pathname.split('/').filter(Boolean);
-        const locale = parts[0];
-        if (locale !== 'es' && locale !== 'en') return item;
 
-        const rest = parts.slice(1);
+        /* Spanish carries no prefix: anything outside `/en/` is Spanish. */
+        const locale = parts[0] === 'en' ? 'en' : 'es';
+        const rest = locale === 'en' ? parts.slice(1) : parts;
         const other = locale === 'es' ? 'en' : 'es';
         const map = /** @type {Record<string, Record<string, string>>} */ (routes);
 
@@ -225,7 +223,8 @@ export default defineConfig({
         const translated = rest.map((seg, i) => map[canonical[i]]?.[other] ?? seg);
 
         /** @type {(loc: string, segs: string[]) => string} */
-        const href = (loc, segs) => new URL([loc, ...segs].join('/') + '/', url.origin).href;
+        const href = (loc, segs) =>
+          new URL([...(loc === 'es' ? [] : [loc]), ...segs].join('/') + '/', url.origin).href;
 
         item.links = [
           { lang: locale, url: href(locale, rest) },

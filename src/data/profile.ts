@@ -70,7 +70,7 @@ export const seo = {
   },
   cv: {
     es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Hernani, Gipuzkoa. Django, Angular, AWS y sistemas. Listo para imprimir o guardar en PDF.',
-    en: 'Résumé of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Angular, AWS and systems. Ready to print or save as PDF.',
+    en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Angular, AWS and systems. Ready to print or save as PDF.',
   },
 } satisfies Record<string, Localized>;
 

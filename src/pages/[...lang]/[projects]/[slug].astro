@@ -3,14 +3,14 @@ import { render } from 'astro:content';
 import PageLayout from '@layouts/PageLayout.astro';
 import CaseStudySection from './_sections/CaseStudySection.astro';
 import { getProject, getProjectSlugs } from '@data/projects';
-import { alternates, assertLocale, path } from '@i18n/utils';
+import { alternates, assertLocale, langParam, path } from '@i18n/utils';
 import { locales, routes } from '@i18n/ui';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();
   return locales.flatMap((lang) =>
     slugs.map((slug) => ({
-      params: { lang, projects: routes.projects[lang], slug },
+      params: { lang: langParam(lang), projects: routes.projects[lang], slug },
     })),
   );
 }
