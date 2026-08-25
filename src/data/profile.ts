@@ -4,13 +4,13 @@ export const profile = {
   name: 'Anthony Velez Tapia',
 
   headline: {
-    es: 'Desarrollador Full Stack y administrador de sistemas. Backend con Django y Python, frontend con Angular y React, infraestructura sobre AWS. Construyo herramientas para desarrolladores y opero lo que las sostiene.',
-    en: 'Full Stack Developer and systems administrator. Backend in Django and Python, frontend in Angular and React, infrastructure on AWS. I build tooling for other developers and run what holds it up.',
+    es: 'Desarrollador Full Stack y administrador de sistemas. Hoy Django y Python con Angular y React; antes .NET, Java y Laravel: un stack nuevo en cada empresa. Construyo herramientas open source para el día a día del desarrollador.',
+    en: 'Full Stack Developer and systems administrator. Django and Python today, with Angular and React; .NET, Java and Laravel before that: a new stack at every company. I build open source tools for a developer’s day-to-day.',
   } satisfies Localized,
 
   summary: {
-    es: 'Desarrollador Full Stack con 4 años de experiencia, especializado en Django/Python y arquitectura SaaS sobre AWS, con frontend en Angular y React. Actualmente trabajo en la optimización de rendimiento y escalabilidad de una plataforma SaaS en producción. Perfil híbrido desarrollo y sistemas: además del backend, gestiono infraestructura cloud (EC2, RDS, Lambda, S3, VPC) y entornos on-premise. Autor de cinco herramientas open source para el ecosistema Django, una de ellas publicada en PyPI.',
-    en: 'Full Stack Developer with 4 years of experience, specialised in Django/Python and SaaS architecture on AWS, with frontend work in Angular and React. I currently work on the performance and scalability of a production SaaS platform. A hybrid development and systems profile: beyond the backend, I run cloud infrastructure (EC2, RDS, Lambda, S3, VPC) and on-premise environments. Author of five open source tools for the Django ecosystem, one of them published on PyPI.',
+    es: 'Desarrollador Full Stack con 4 años de experiencia, especializado en Django y Python, con frontend en Angular y React. Empecé en C#/.NET y Java, y he ido cambiando de stack según lo ha pedido cada empresa: Laravel, Symfony, Flask y Django. Actualmente trabajo en el refactor de una plataforma SaaS en producción, donde propuse la arquitectura de código y las bases de calidad del repositorio. Perfil híbrido desarrollo y sistemas: además del backend, he administrado infraestructura cloud en AWS (EC2, RDS, Lambda, S3, VPC) y entornos on-premise. Autor de cinco herramientas open source para desarrolladores, una de ellas publicada en PyPI.',
+    en: 'Full Stack Developer with 4 years of experience, specialised in Django and Python, with frontend work in Angular and React. I started out in C#/.NET and Java, and have switched stacks as each company needed: Laravel, Symfony, Flask and Django. I currently work on the refactor of a production SaaS platform, where I proposed the code architecture and set the repository quality baseline. A hybrid development and systems profile: beyond the backend, I have administered cloud infrastructure on AWS (EC2, RDS, Lambda, S3, VPC) and on-premise environments. Author of five open source developer tools, one of them published on PyPI.',
   } satisfies Localized,
 
   location: 'Hernani, Gipuzkoa',
@@ -26,7 +26,7 @@ export const profile = {
 export const stackGroups: StackGroup[] = [
   {
     label: { es: 'Backend', en: 'Backend' },
-    items: 'Python, Django, Flask, PHP, Laravel, Symfony, C#/.NET, Java',
+    items: 'Python, Django, Flask, PHP, Laravel, Symfony, C# / .NET, Java',
   },
   {
     label: { es: 'Frontend', en: 'Frontend' },
@@ -38,15 +38,15 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Cloud y DevOps', en: 'Cloud and DevOps' },
-    items: 'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Git',
+    items: 'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions',
   },
   {
     label: { es: 'Sistemas y redes', en: 'Systems and networking' },
-    items: 'Linux / Windows Server, Nginx, Apache, Proxmox, SSH, DNS, VitalPBX / Asterisk, Firewall, VPN',
+    items: 'Linux / Windows Server, Active Directory, Nginx, Apache, Proxmox, SSH, DNS, VitalPBX / Asterisk, Firewall, VPN',
   },
   {
     label: { es: 'Herramientas', en: 'Tools' },
-    items: 'Git / GitHub, Docker, Postman, Figma, IntelliJ IDEA',
+    items: 'Git / GitHub, uv, Ruff, MyPy, pytest, Neovim / LazyVim, Tmux, Postman, Figma',
   },
 ];
 
