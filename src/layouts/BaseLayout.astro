@@ -2,7 +2,7 @@
 import { Font } from 'astro:assets';
 import '@styles/theme.css';
 import { contact, profile } from '@data/profile';
-import { useTranslations } from '@i18n/utils';
+import { path, useTranslations } from '@i18n/utils';
 import { locales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
 
@@ -99,7 +99,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           'Linux', 'Nginx', 'Proxmox',
         ],
         description: profile.headline[lang],
-        url: new URL(`/${lang}/`, Astro.site).href,
+        url: new URL(path(lang), Astro.site).href,
         image: new URL('/photo.png', Astro.site).href,
         jobTitle: lang === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
         address: {
