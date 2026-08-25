@@ -77,7 +77,8 @@
 
 @media (max-width: 48rem) {
   :root {
-    --cv-scale: 0.78;
+    --cv-scale: 1.17;
+    --text-cv-name: 30px;
     --sheet-pad-x: 6vw;
     --sheet-pad-y: 8vw;
   }
@@ -85,13 +86,14 @@
 
 @media (max-width: 30rem) {
   :root {
-    --cv-scale: 0.66;
+    --text-cv-name: 24px;
   }
 }
 
 @media print {
   :root {
     --cv-scale: 1;
+    --text-cv-name: calc(28pt * var(--cv-scale));
     --sheet-pad-x: 15mm;
     --sheet-pad-y: 13mm;
   }
