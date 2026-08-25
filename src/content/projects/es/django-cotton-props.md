@@ -5,7 +5,7 @@ headline: IntelliSense para Django Cotton en VS Code
 tagline: IntelliSense completo para Django Cotton en VS Code — autocompletado, hover docs, 19 diagnósticos, quick fixes y explorador de componentes.
 status: unreleased
 role: Autor y mantenedor
-order: 1
+order: 2
 now: true
 featured: true
 stack:
