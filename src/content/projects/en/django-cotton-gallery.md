@@ -5,7 +5,7 @@ headline: Component playground for Django Cotton
 tagline: Drop-in playground for Django Cotton component libraries — live preview with controls generated from your annotations, lint report and insights dashboard.
 status: maintained
 role: Author and maintainer
-order: 2
+order: 1
 now: true
 featured: true
 stack:
