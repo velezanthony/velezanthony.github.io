@@ -57,20 +57,20 @@ export const stackGroups: StackGroup[] = [
  */
 export const seo = {
   home: {
-    es: 'Desarrollador Full Stack en Gipuzkoa. Django y Python en backend, Angular y React en frontend, AWS en infraestructura. Cinco herramientas open source.',
-    en: 'Full Stack Developer in Gipuzkoa, Spain. Django and Python on the backend, Angular and React on the front, AWS for infrastructure. Five open source tools.',
+    es: 'Desarrollador Full Stack en Gipuzkoa. Django y Python, Laravel y .NET en backend; Angular y React en frontend. Cinco herramientas open source propias.',
+    en: 'Full Stack Developer in Gipuzkoa, Spain. Django and Python, Laravel and .NET on the backend, Angular and React on the front. Five open source tools of my own.',
   },
   projects: {
     es: 'Cinco herramientas open source: dos extensiones de VS Code, un language server para Django, un ORM tipado en Python y un panel de Docker en terminal.',
     en: 'Five open source tools: two VS Code extensions, a Django language server, a typed Python ORM and a terminal Docker dashboard. All MIT licensed.',
   },
   experience: {
-    es: 'Cuatro años de Full Stack y sistemas: Django y AWS en Zenit, infraestructura cloud en Eywa Space, VoIP y Symfony en SWAP Energia, Laravel y .NET antes.',
-    en: 'Four years across development and systems: Django and AWS at Zenit, cloud infrastructure at Eywa Space, VoIP and Symfony at SWAP Energia, .NET before.',
+    es: 'Cuatro años de Full Stack y sistemas: Django y arquitectura en Zenit, infraestructura AWS en Eywa Space, VoIP y Symfony en SWAP, Laravel y .NET antes.',
+    en: 'Four years across development and systems: Django and architecture at Zenit, AWS infrastructure at Eywa, VoIP and Symfony at SWAP, Laravel and .NET before.',
   },
   cv: {
-    es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Hernani, Gipuzkoa. Django, Angular, AWS y sistemas. Listo para imprimir o guardar en PDF.',
-    en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Angular, AWS and systems. Ready to print or save as PDF.',
+    es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Gipuzkoa. Django, Laravel, .NET, Angular y sistemas. Listo para imprimir o guardar en PDF.',
+    en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Laravel, .NET, Angular, React and systems. Ready to print or save as PDF.',
   },
 } satisfies Record<string, Localized>;
 
