@@ -17,6 +17,8 @@ interface Props {
   variant?: Variant;
   /** Set by the caller so the document outline never skips a level. */
   headingLevel?: 2 | 3;
+  /** Drops the top rule when whatever precedes this item already drew one. */
+  flush?: boolean;
 }
 
 const {
@@ -29,13 +31,14 @@ const {
   lang,
   variant = 'site',
   headingLevel = 3,
+  flush = false,
 } = Astro.props;
 
 const t = useTranslations(lang);
 const cv = variant === 'cv';
 ---
 
-<article class:list={['border-t border-rule', cv ? 'py-3' : 'py-6']}>
+<article class:list={[!flush && 'border-t border-rule', cv ? 'py-3' : 'py-6']}>
   {
     cv ? (
       <Fragment>

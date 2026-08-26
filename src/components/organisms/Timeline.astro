@@ -1,6 +1,8 @@
 ---
 import ExperienceItem from '@molecules/ExperienceItem.astro';
+import EducationRule from '@molecules/EducationRule.astro';
 import { experience } from '@data/experience';
+import { education } from '@data/education';
 import { formatRange } from '@i18n/format';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
@@ -25,22 +27,45 @@ const {
 const t = useTranslations(lang);
 
 const jobs = limit ? experience.slice(0, limit) : experience;
+
+/**
+ * Studies share the line with the jobs so the years between them are
+ * accounted for. A truncated timeline skips them: there is no gap to explain.
+ */
+type Entry =
+  | { start: string; kind: 'job'; job: (typeof experience)[number] }
+  | { start: string; kind: 'study'; study: (typeof education)[number] };
+
+const entries: Entry[] = [
+  ...jobs.map((job): Entry => ({ start: job.start, kind: 'job', job })),
+  ...(limit ? [] : education).map(
+    (study): Entry => ({ start: `${study.startYear}-09`, kind: 'study', study }),
+  ),
+].sort((a, b) => b.start.localeCompare(a.start));
+
+/** The education rule draws its own line; a closing border here would double it. */
+const closed = entries.at(-1)?.kind !== 'study';
 ---
 
-<div class:list={['border-b border-rule', className]}>
+<div class:list={[closed && 'border-b border-rule', className]}>
   {
-    jobs.map((job) => (
-      <ExperienceItem
-        company={job.company}
-        role={job.role[lang]}
-        location={job.location?.[lang]}
-        range={formatRange(lang, job.start, job.end, t('Actualidad'))}
-        highlights={job.highlights[lang]}
-        stack={job.stack}
-        lang={lang}
-        variant={variant}
-        headingLevel={headingLevel}
-      />
-    ))
+    entries.map((entry, i) =>
+      entry.kind === 'study' ? (
+        <EducationRule lang={lang} variant={variant} />
+      ) : (
+        <ExperienceItem
+          company={entry.job.company}
+          role={entry.job.role[lang]}
+          location={entry.job.location?.[lang]}
+          range={formatRange(lang, entry.job.start, entry.job.end, t('Actualidad'))}
+          highlights={entry.job.highlights[lang]}
+          stack={entry.job.stack}
+          lang={lang}
+          variant={variant}
+          headingLevel={headingLevel}
+          flush={entries[i - 1]?.kind === 'study'}
+        />
+      ),
+    )
   }
 </div>
