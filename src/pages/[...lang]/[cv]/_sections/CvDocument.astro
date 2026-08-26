@@ -2,7 +2,7 @@
 import Heading from '@atoms/Heading.astro';
 import ContactList from '@molecules/ContactList.astro';
 import Timeline from '@organisms/Timeline.astro';
-import { contact, profile, spokenLanguages, stackGroups } from '@data/profile';
+import { cvContact, profile, spokenLanguages, stackGroups } from '@data/profile';
 import { education } from '@data/education';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
@@ -35,7 +35,7 @@ const t = useTranslations(lang);
 
     <div class="text-cv-meta mt-2 flex flex-wrap items-center gap-x-5 gap-y-0.5">
       <p class="font-mono text-faint">{profile.location}</p>
-      <ContactList items={contact} direction="row" />
+      <ContactList items={cvContact} direction="row" />
     </div>
   </div>
 </header>

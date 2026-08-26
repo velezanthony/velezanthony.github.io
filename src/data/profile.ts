@@ -51,22 +51,45 @@ export const stackGroups: StackGroup[] = [
 ];
 
 /**
+ * Page titles. Separate from the in-page headings: a heading names the section
+ * for a reader who is already here, a title has to earn the click from a SERP.
+ */
+export const pageTitles = {
+  home: {
+    es: 'Desarrollador Full Stack en Gipuzkoa',
+    en: 'Full Stack Developer in Gipuzkoa, Spain',
+  },
+  experience: {
+    es: 'Experiencia: Django, AWS y sistemas',
+    en: 'Experience: Django, AWS and systems',
+  },
+  projects: {
+    es: 'Herramientas open source para Django y Docker',
+    en: 'Open source tools for Django and Docker',
+  },
+  cv: {
+    es: 'CV · Desarrollador Full Stack y sistemas',
+    en: 'CV · Full Stack Developer and systems',
+  },
+} satisfies Record<string, Localized>;
+
+/**
  * Meta descriptions. Broader than the headline on purpose: the headline
  * positions, this is what a search engine shows and what carries the
  * keywords someone would actually type.
  */
 export const seo = {
   home: {
-    es: 'Desarrollador Full Stack en Gipuzkoa. Django y Python, Laravel y .NET en backend; Angular y React en frontend. Cinco herramientas open source propias.',
-    en: 'Full Stack Developer in Gipuzkoa, Spain. Django and Python, Laravel and .NET on the backend, Angular and React on the front. Five open source tools of my own.',
+    es: 'Desarrollador Full Stack y administrador de sistemas en Gipuzkoa. Django, Python, Laravel y .NET; Angular y React. Cinco herramientas open source propias.',
+    en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular and React. Five open source tools of my own.',
   },
   projects: {
     es: 'Cinco herramientas open source: dos extensiones de VS Code, un language server para Django, un ORM tipado en Python y un panel de Docker en terminal.',
     en: 'Five open source tools: two VS Code extensions, a Django language server, a typed Python ORM and a terminal Docker dashboard. All MIT licensed.',
   },
   experience: {
-    es: 'Cuatro años de Full Stack y sistemas: Django y arquitectura en Zenit Solar, infraestructura AWS en Eywa Space, VoIP y Symfony en SWAP, Laravel y .NET antes.',
-    en: 'Four years of development and systems: Django and architecture at Zenit Solar, AWS infrastructure at Eywa, VoIP and Symfony at SWAP, Laravel and .NET before.',
+    es: 'Cuatro años: arquitectura Django en Zenit Solar, AWS en Eywa Space, VoIP en SWAP y un SaaS multi-tenant en Laravel llevado a producción en VITE.',
+    en: 'Four years: Django architecture at Zenit Solar, AWS at Eywa Space, VoIP at SWAP, and a multi-tenant SaaS in Laravel taken to production at VITE.',
   },
   cv: {
     es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Gipuzkoa. Django, Laravel, .NET, Angular y sistemas. Listo para imprimir o guardar en PDF.',
@@ -82,12 +105,6 @@ export const contact: ContactLink[] = [
     icon: 'mail',
   },
   {
-    label: 'Portfolio',
-    href: 'https://velezanthony.github.io',
-    handle: 'velezanthony.github.io',
-    icon: 'external',
-  },
-  {
     label: 'GitHub',
     href: 'https://github.com/velezanthony',
     handle: 'github.com/velezanthony',
@@ -99,6 +116,21 @@ export const contact: ContactLink[] = [
     handle: 'linkedin.com/in/anthony-velez-tapia',
     icon: 'linkedin',
   },
+];
+
+/**
+ * The CV is read on paper and as a PDF, where the site is not one click away.
+ * Everywhere else the link would point at the page you are already on.
+ */
+export const cvContact: ContactLink[] = [
+  contact[0]!,
+  {
+    label: 'Portfolio',
+    href: 'https://velezanthony.github.io',
+    handle: 'velezanthony.github.io',
+    icon: 'external',
+  },
+  ...contact.slice(1),
 ];
 
 export const spokenLanguages: SpokenLanguage[] = [

@@ -2,6 +2,8 @@
 import { Font } from 'astro:assets';
 import '@styles/theme.css';
 import { contact, profile } from '@data/profile';
+import { education } from '@data/education';
+import { experience } from '@data/experience';
 import { path, useTranslations } from '@i18n/utils';
 import { locales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
@@ -94,9 +96,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         name: profile.name,
         email: 'mailto:velezanthony2000@gmail.com',
         knowsAbout: [
-          'Django', 'Python', 'PostgreSQL', 'AWS', 'Docker',
-          'Angular', 'React', 'TypeScript', 'Laravel', 'PHP',
-          'Linux', 'Nginx', 'Proxmox',
+          'Django', 'Python', 'Flask', 'PHP', 'Laravel', 'Symfony',
+          'C#', '.NET', 'Java', 'TypeScript', 'Angular', 'React', 'HTMX',
+          'PostgreSQL', 'MySQL', 'SQL Server',
+          'AWS', 'Docker', 'GitHub Actions', 'Linux', 'Nginx', 'Proxmox', 'DNS',
+          'Asterisk', 'VoIP', 'Software architecture', 'Multi-tenancy',
         ],
         description: profile.headline[lang],
         url: new URL(path(lang), Astro.site).href,
@@ -109,6 +113,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           addressCountry: 'ES',
         },
         knowsLanguage: ['es', 'eu', 'en'],
+        alumniOf: education.map((study) => ({
+          '@type': 'EducationalOrganization',
+          name: study.school,
+        })),
+        worksFor: { '@type': 'Organization', name: experience[0]!.company },
         sameAs: contact.filter((c) => c.href.startsWith('http')).map((c) => c.href),
       })}
     />

@@ -27,8 +27,7 @@ const { Content } = await render(entry);
 
 <PageLayout
   lang={lang}
-  title={`${entry.data.headline} | ${entry.data.name}`}
-  bareTitle
+  title={`${entry.data.name} · ${entry.data.headline}`}
   description={entry.data.tagline}
   alternates={alternates('projects', slug)}
   current="projects"

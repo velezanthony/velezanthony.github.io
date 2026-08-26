@@ -121,7 +121,7 @@ export const experience: Job[] = [
     stack: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'Apache', 'DNS', 'SEO', 'SEM'],
   },
   {
-    company: 'Emprendimiento propio',
+    company: 'Agencia digital propia',
     role: {
       es: 'Cofundador y Desarrollador Full Stack',
       en: 'Co-founder and Full Stack Developer',

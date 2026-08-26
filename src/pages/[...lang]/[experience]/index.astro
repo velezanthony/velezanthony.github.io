@@ -2,20 +2,19 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import TimelineSection from './_sections/TimelineSection.astro';
 import EducationSection from './_sections/EducationSection.astro';
-import { alternates, assertLocale, localeRouteParams, useTranslations } from '@i18n/utils';
-import { seo } from '@data/profile';
+import { alternates, assertLocale, localeRouteParams } from '@i18n/utils';
+import { pageTitles, seo } from '@data/profile';
 
 export function getStaticPaths() {
   return localeRouteParams('experience');
 }
 
 const lang = assertLocale(Astro.params.lang);
-const t = useTranslations(lang);
 ---
 
 <PageLayout
   lang={lang}
-  title={t('Trayectoria profesional')}
+  title={pageTitles.experience[lang]}
   description={seo.experience[lang]}
   alternates={alternates('experience')}
   current="experience"

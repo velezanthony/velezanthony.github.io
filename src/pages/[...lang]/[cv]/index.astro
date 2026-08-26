@@ -2,15 +2,14 @@
 import PrintLayout from '@layouts/PrintLayout.astro';
 import CvDocument from './_sections/CvDocument.astro';
 import { getProjects } from '@data/projects';
-import { seo } from '@data/profile';
-import { alternates, assertLocale, localeRouteParams, useTranslations } from '@i18n/utils';
+import { pageTitles, seo } from '@data/profile';
+import { alternates, assertLocale, localeRouteParams } from '@i18n/utils';
 
 export function getStaticPaths() {
   return localeRouteParams('cv');
 }
 
 const lang = assertLocale(Astro.params.lang);
-const t = useTranslations(lang);
 
 const projects = await getProjects(lang);
 const tools = projects.map(({ entry }) => ({
@@ -21,7 +20,7 @@ const tools = projects.map(({ entry }) => ({
 
 <PrintLayout
   lang={lang}
-  title={t('CV')}
+  title={pageTitles.cv[lang]}
   description={seo.cv[lang]}
   alternates={alternates('cv')}
 >
