@@ -4,13 +4,13 @@ export const profile = {
   name: 'Anthony Velez Tapia',
 
   headline: {
-    es: 'Desarrollador Full Stack y administrador de sistemas. Hoy Django y Python con Angular y React; antes .NET, Java y Laravel: un stack nuevo en cada empresa. Construyo herramientas open source para el día a día del desarrollador.',
-    en: 'Full Stack Developer and systems administrator. Django and Python today, with Angular and React; .NET, Java and Laravel before that: a new stack at every company. I build open source tools for a developer’s day-to-day.',
+    es: 'Desarrollador Full Stack y administrador de sistemas. Django y Python con Angular y React; antes .NET, Java, Laravel y Symfony. Construyo herramientas open source para el día a día del desarrollador.',
+    en: 'Full Stack Developer and systems administrator. Django and Python with Angular and React; .NET, Java, Laravel and Symfony before that. I build open source tools for a developer’s day-to-day.',
   } satisfies Localized,
 
   summary: {
-    es: 'Desarrollador Full Stack con 4 años de experiencia, especializado en Django y Python, con frontend en Angular y React. Empecé en C#/.NET y Java, y he ido cambiando de stack según lo ha pedido cada empresa: Laravel, Symfony, Flask y Django. Actualmente trabajo en el refactor de una plataforma SaaS en producción, donde propuse la arquitectura de código y las bases de calidad del repositorio. Perfil híbrido desarrollo y sistemas: además del backend, he administrado infraestructura cloud en AWS (EC2, RDS, Lambda, S3, VPC) y entornos on-premise. Autor de cinco herramientas open source para desarrolladores, una de ellas publicada en PyPI.',
-    en: 'Full Stack Developer with 4 years of experience, specialised in Django and Python, with frontend work in Angular and React. I started out in C#/.NET and Java, and have switched stacks as each company needed: Laravel, Symfony, Flask and Django. I currently work on the refactor of a production SaaS platform, where I proposed the code architecture and set the repository quality baseline. A hybrid development and systems profile: beyond the backend, I have administered cloud infrastructure on AWS (EC2, RDS, Lambda, S3, VPC) and on-premise environments. Author of five open source developer tools, one of them published on PyPI.',
+    es: 'Desarrollador de software. Cuatro años, seis stacks y cuatro arquitecturas en producción: API REST con clientes desacoplados, SPA, monolito SSR e hipermedia con HTMX. Aprendo el lenguaje, no el framework. Diseño el modelo de datos —SQL Server y PostgreSQL, database first y code first— y levanté en solitario un SaaS multi-tenant hasta producción. Hoy propongo la arquitectura de código y las bases de calidad del refactor de una plataforma SaaS, en un equipo de cuatro. Infraestructura AWS completa de las startups de una venture builder y una preproducción on-premise montada desde cero en Proxmox. Cinco herramientas open source propias, una en PyPI, entre ellas un ORM en Python cuyo tipado resuelven mypy y Pyright sin generación de código.',
+    en: 'Software developer. Four years, six stacks and four architectures in production: REST APIs with decoupled clients, SPAs, SSR monoliths and hypermedia with HTMX. I learn the language, not the framework. I design the data model —SQL Server and PostgreSQL, database first and code first— and built a multi-tenant SaaS single-handedly through to production. Today I propose the code architecture and the quality baseline for the refactor of a SaaS platform, in a team of four. The full AWS infrastructure of a venture builder’s startups and an on-premise pre-production environment built from scratch on Proxmox. Five open source tools of my own, one on PyPI, among them a Python ORM whose typing mypy and Pyright resolve with no code generation.',
   } satisfies Localized,
 
   location: 'Hernani, Gipuzkoa',
@@ -30,7 +30,7 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Frontend', en: 'Frontend' },
-    items: 'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Alpine.js, HTMX',
+    items: 'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Bootstrap, Alpine.js, HTMX',
   },
   {
     label: { es: 'Bases de datos', en: 'Databases' },
@@ -38,15 +38,15 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Cloud y DevOps', en: 'Cloud and DevOps' },
-    items: 'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions',
+    items: 'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Gunicorn / WSGI',
   },
   {
     label: { es: 'Sistemas y redes', en: 'Systems and networking' },
-    items: 'Linux / Windows Server, Active Directory, Nginx, Apache, Proxmox, SSH, DNS, VitalPBX / Asterisk, Firewall, VPN',
+    items: 'Linux / Windows Server, Active Directory, DNS, Nginx, Apache, Proxmox, SSH, VitalPBX / Asterisk',
   },
   {
     label: { es: 'Herramientas', en: 'Tools' },
-    items: 'Git / GitHub, uv, Ruff, MyPy, pytest, Neovim / LazyVim, Tmux, Postman, Figma',
+    items: 'Git / GitHub, uv, Ruff, MyPy, pytest, Figma',
   },
 ];
 
@@ -65,8 +65,8 @@ export const seo = {
     en: 'Five open source tools: two VS Code extensions, a Django language server, a typed Python ORM and a terminal Docker dashboard. All MIT licensed.',
   },
   experience: {
-    es: 'Cuatro años de Full Stack y sistemas: Django y arquitectura en Zenit, infraestructura AWS en Eywa Space, VoIP y Symfony en SWAP, Laravel y .NET antes.',
-    en: 'Four years across development and systems: Django and architecture at Zenit, AWS infrastructure at Eywa, VoIP and Symfony at SWAP, Laravel and .NET before.',
+    es: 'Cuatro años de Full Stack y sistemas: Django y arquitectura en Zenit Solar, infraestructura AWS en Eywa Space, VoIP y Symfony en SWAP, Laravel y .NET antes.',
+    en: 'Four years of development and systems: Django and architecture at Zenit Solar, AWS infrastructure at Eywa, VoIP and Symfony at SWAP, Laravel and .NET before.',
   },
   cv: {
     es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Gipuzkoa. Django, Laravel, .NET, Angular y sistemas. Listo para imprimir o guardar en PDF.',
@@ -80,6 +80,12 @@ export const contact: ContactLink[] = [
     href: 'mailto:velezanthony2000@gmail.com',
     handle: 'velezanthony2000@gmail.com',
     icon: 'mail',
+  },
+  {
+    label: 'Portfolio',
+    href: 'https://velezanthony.github.io',
+    handle: 'velezanthony.github.io',
+    icon: 'external',
   },
   {
     label: 'GitHub',

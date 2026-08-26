@@ -44,7 +44,7 @@ export interface ContactLink {
   label: string;
   href: string;
   /** Key of an icon in `src/components/atoms/Icon.astro`. */
-  icon: 'mail' | 'github' | 'linkedin';
+  icon: 'mail' | 'external' | 'github' | 'linkedin';
   /** Shown as the visible text; falls back to `label`. */
   handle?: string;
 }
