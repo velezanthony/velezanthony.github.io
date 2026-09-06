@@ -1,11 +1,11 @@
 ---
 slug: django-language-service
-name: django-language-service
-headline: Language server for Django templates
+name: Django Language Service
+headline: Language server for Django
 tagline: Language server that indexes models, views, forms and urls into a project graph, autocompletes the real variables of each template and draws an ER diagram.
 status: unreleased
 role: Author and maintainer
-order: 3
+order: 5
 now: true
 featured: true
 stack:

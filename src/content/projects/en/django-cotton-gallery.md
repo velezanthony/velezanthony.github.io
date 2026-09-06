@@ -1,11 +1,11 @@
 ---
 slug: django-cotton-gallery
-name: django-cotton-gallery
-headline: Component playground for Django Cotton
+name: Django Cotton Gallery
+headline: Playground for Django Cotton
 tagline: Drop-in playground for Django Cotton component libraries — live preview with controls generated from your annotations, lint report and insights dashboard.
 status: maintained
 role: Author and maintainer
-order: 1
+order: 2
 now: true
 featured: true
 stack:

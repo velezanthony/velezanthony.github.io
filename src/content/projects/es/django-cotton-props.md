@@ -1,11 +1,11 @@
 ---
 slug: django-cotton-props
-name: django-cotton-props
-headline: IntelliSense para Django Cotton en VS Code
-tagline: IntelliSense completo para Django Cotton en VS Code — autocompletado, hover docs, 19 diagnósticos, quick fixes y explorador de componentes.
+name: Django Cotton Props
+headline: IntelliSense para VS Code
+tagline: IntelliSense completo para Django Cotton en VS Code — autocompletado, hover docs, diagnósticos con quick fix y explorador de componentes.
 status: unreleased
 role: Autor y mantenedor
-order: 2
+order: 4
 now: true
 featured: true
 stack:
@@ -57,7 +57,7 @@ Lo que hace, en concreto:
   componente.
 - **Ir a la definición** desde cualquier etiqueta.
 - **Árbol de componentes** para navegarlos, y búsqueda dentro de él.
-- **19 diagnósticos** entre errores, avisos y sugerencias, con sus correcciones rápidas.
+- **Diagnósticos** entre errores, avisos y sugerencias, cada uno con su corrección rápida.
 
 ![Autocompletado de componentes y props, sin salir del teclado](../../../assets/projects/props-autocomplete.gif)
 
@@ -109,7 +109,7 @@ mostrar ni prop que validar, así que había que construirlo primero.
   <tbody>
     <tr><th scope="row">IntelliSense incompleto</th><td>IntelliSense de verdad: componentes, props y slots</td></tr>
     <tr><th scope="row">Sin documentación</th><td>Autodocumentación del componente, al pasar el ratón</td></tr>
-    <tr><th scope="row">Sin avisos</th><td>19 diagnósticos entre errores, avisos y sugerencias</td></tr>
+    <tr><th scope="row">Sin avisos</th><td>Diagnósticos entre errores, avisos y sugerencias</td></tr>
   </tbody>
 </table>
 </div>
