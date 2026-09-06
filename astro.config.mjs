@@ -82,9 +82,14 @@ const lastmodOf = (locale, segments) => {
   return dates.at(-1) ?? undefined;
 };
 
+const SITE = 'https://velezanthony.github.io';
+/* Beside the sitemap, and referenced relatively: the file is served from the site root in
+   production and from a subdirectory in a local preview, and this resolves in both. */
+const SITEMAP_XSL = 'sitemap-style.xml';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://velezanthony.github.io',
+  site: SITE,
   output: 'static',
   trailingSlash: 'always',
 
@@ -199,7 +204,7 @@ export default defineConfig({
     },
 
     sitemap({
-      xslURL: '/sitemap-style.xml',
+      xslURL: `/${SITEMAP_XSL}`,
 
       namespaces: { news: false, image: false, video: false, xhtml: true },
 
@@ -256,6 +261,17 @@ export default defineConfig({
           } else {
             renameSync(index, target);
           }
+
+          /* The integration absolutises `xslURL` against `site`, which makes the stylesheet
+             cross-origin on any local server and leaves the browser showing a blank document.
+             Root-relative resolves against whoever is serving the file. */
+          const absolute = new URL(SITEMAP_XSL, SITE).href;
+          for (const file of globSync('sitemap*.xml', { cwd: dir })) {
+            const path = new URL(file, dir);
+            const xml = readFileSync(path, 'utf8');
+            if (xml.includes(absolute)) writeFileSync(path, xml.replaceAll(absolute, SITEMAP_XSL));
+          }
+
           logger.info(`sitemap.xml (${pages.length} page(s))`);
         },
       },
