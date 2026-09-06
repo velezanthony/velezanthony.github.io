@@ -244,23 +244,24 @@ export default defineConfig({
       },
     }),
 
-    /* The `-index` and `-N` suffixes are hardcoded in the integration, and `filenameBase`
-       only changes the stem. A single page becomes `sitemap.xml` — the name every crawler
-       tries first — and the index that pointed at it is dropped. Split output keeps it. */
+    /* `sitemap.xml` is the index this site writes itself, covering the documentation sites
+       too, so what the integration produces is only the portfolio's own page — given the
+       name that index refers to. Its `-index.xml` would be a second index for one file. */
     {
-      name: 'sitemap-at-the-expected-name',
+      name: 'sitemap-pages',
       hooks: {
         'astro:build:done': ({ dir, logger }) => {
           const pages = globSync('sitemap-[0-9]*.xml', { cwd: dir });
-          const index = new URL('sitemap-index.xml', dir);
-          const target = new URL('sitemap.xml', dir);
 
-          if (pages.length === 1) {
-            renameSync(new URL(pages[0], dir), target);
-            rmSync(index, { force: true });
-          } else {
-            renameSync(index, target);
+          /* A sitemap index cannot contain another index, so splitting would silently make
+             `sitemap.xml` invalid. Stopping is the only honest answer: raise `entryLimit`,
+             or list every page in the endpoint. */
+          if (pages.length !== 1) {
+            throw new Error(`expected one sitemap page, found ${pages.length}`);
           }
+
+          renameSync(new URL(pages[0], dir), new URL('sitemap-pages.xml', dir));
+          rmSync(new URL('sitemap-index.xml', dir), { force: true });
 
           /* The integration absolutises `xslURL` against `site`, which makes the stylesheet
              cross-origin on any local server and leaves the browser showing a blank document.
@@ -272,7 +273,7 @@ export default defineConfig({
             if (xml.includes(absolute)) writeFileSync(path, xml.replaceAll(absolute, SITEMAP_XSL));
           }
 
-          logger.info(`sitemap.xml (${pages.length} page(s))`);
+          logger.info('sitemap-pages.xml');
         },
       },
     },
