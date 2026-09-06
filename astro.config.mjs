@@ -2,7 +2,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 
 import { execFileSync } from 'node:child_process';
-import { globSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { globSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 
 import sitemap from '@astrojs/sitemap';
 import { routes } from './src/i18n/ui.ts';
@@ -238,6 +238,28 @@ export default defineConfig({
         return item;
       },
     }),
+
+    /* The `-index` and `-N` suffixes are hardcoded in the integration, and `filenameBase`
+       only changes the stem. A single page becomes `sitemap.xml` — the name every crawler
+       tries first — and the index that pointed at it is dropped. Split output keeps it. */
+    {
+      name: 'sitemap-at-the-expected-name',
+      hooks: {
+        'astro:build:done': ({ dir, logger }) => {
+          const pages = globSync('sitemap-[0-9]*.xml', { cwd: dir });
+          const index = new URL('sitemap-index.xml', dir);
+          const target = new URL('sitemap.xml', dir);
+
+          if (pages.length === 1) {
+            renameSync(new URL(pages[0], dir), target);
+            rmSync(index, { force: true });
+          } else {
+            renameSync(index, target);
+          }
+          logger.info(`sitemap.xml (${pages.length} page(s))`);
+        },
+      },
+    },
   ],
 
   vite: {
