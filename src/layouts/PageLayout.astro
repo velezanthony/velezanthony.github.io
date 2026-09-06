@@ -25,6 +25,10 @@ const { lang, title, bareTitle, description, alternates, current } = Astro.props
   description={description}
   alternates={alternates}
 >
+  <Fragment slot="head">
+    <slot name="head" />
+  </Fragment>
+
   <div class="flex min-h-screen flex-col">
     <SiteHeader lang={lang} alternates={alternates} current={current} />
 
