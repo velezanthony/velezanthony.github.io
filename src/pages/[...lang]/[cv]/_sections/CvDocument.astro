@@ -3,13 +3,14 @@ import Heading from '@atoms/Heading.astro';
 import ContactList from '@molecules/ContactList.astro';
 import Timeline from '@organisms/Timeline.astro';
 import { cvContact, profile, spokenLanguages, stackGroups } from '@data/profile';
+import { segments } from '@data/emphasis';
 import { education } from '@data/education';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
   lang: Locale;
-  tools: { name: string; tagline: string }[];
+  tools: { name: string; cvLine: string }[];
 }
 
 const { lang, tools } = Astro.props;
@@ -42,7 +43,13 @@ const t = useTranslations(lang);
 
 <section class="mt-5 break-inside-avoid">
   <h2 class="cv-head mb-3">{t('Perfil')}</h2>
-  <p class="text-cv-body max-w-none text-muted">{profile.summary[lang]}</p>
+  <p class="text-cv-body max-w-none text-muted">
+    {
+      segments(profile.summary[lang]).map((s) =>
+        s.strong ? <strong class="font-semibold text-ink">{s.value}</strong> : s.value,
+      )
+    }
+  </p>
 </section>
 
 <section class="mt-5 break-inside-avoid border-y border-rule bg-raised px-4 py-3">
@@ -76,7 +83,7 @@ const t = useTranslations(lang);
           <span class="text-rule" aria-hidden="true">
             {' — '}
           </span>
-          <span class="text-muted">{tool.tagline}</span>
+          <span class="text-muted">{tool.cvLine}</span>
         </li>
       ))
     }

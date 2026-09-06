@@ -51,7 +51,7 @@ const closed = entries.at(-1)?.kind !== 'study';
   {
     entries.map((entry, i) =>
       entry.kind === 'study' ? (
-        <EducationRule lang={lang} variant={variant} />
+        <EducationRule study={entry.study} variant={variant} />
       ) : (
         <ExperienceItem
           company={entry.job.company}

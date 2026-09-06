@@ -21,6 +21,11 @@ const projects = defineCollection({
 
     tagline: z.string(),
 
+    /** The CV line. Required rather than falling back to `tagline`: that one is written as a
+        meta description and runs past 140 characters, which on paper is two lines per tool
+        and turns the list back into a paragraph. One clause, no dash — the CV draws its own. */
+    cvLine: z.string().max(100),
+
     status: z.enum(['maintained', 'experimental', 'unreleased']),
     role: z.string(),
 

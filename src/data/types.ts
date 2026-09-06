@@ -30,6 +30,9 @@ export interface Job extends DateRange {
 /** Only years are known for education, so only years are modelled. */
 export interface Study {
   title: Localized;
+  /** How the timeline names it. Declared rather than cut out of `title`'s parentheses:
+      the shape of a title is not a place to store a field. Not translated. */
+  abbr: string;
   school: string;
   startYear: number;
   endYear: number;

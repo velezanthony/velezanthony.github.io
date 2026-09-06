@@ -3,6 +3,7 @@ slug: snake-orm
 name: SnakeORM
 headline: ORM en Python tipado para mypy y Pyright
 tagline: "Un ORM en Python que grita en vez de adivinar: navegación de relaciones tipada de punta a punta, sin codegen ni plugin. mypy y Pyright lo leen nativos."
+cvLine: "ORM en Python con navegación de relaciones tipada que mypy y Pyright resuelven sin codegen."
 status: maintained
 role: Autor
 order: 1

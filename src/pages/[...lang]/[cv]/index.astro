@@ -14,7 +14,7 @@ const lang = assertLocale(Astro.params.lang);
 const projects = await getProjects(lang);
 const tools = projects.map(({ entry }) => ({
   name: entry.data.name,
-  tagline: entry.data.tagline,
+  cvLine: entry.data.cvLine,
 }));
 ---
 

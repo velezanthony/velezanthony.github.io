@@ -3,6 +3,7 @@ slug: django-cotton-gallery
 name: Django Cotton Gallery
 headline: Playground for Django Cotton
 tagline: Drop-in playground for Django Cotton component libraries — live preview with controls generated from your annotations, lint report and insights dashboard.
+cvLine: "Live catalogue of Django Cotton components: controls generated from your annotations, and lint."
 status: maintained
 role: Author and maintainer
 order: 2

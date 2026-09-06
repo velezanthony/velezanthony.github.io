@@ -3,6 +3,7 @@ slug: snake-orm
 name: SnakeORM
 headline: Typed Python ORM for mypy and Pyright
 tagline: "A Python ORM that shouts instead of guessing: deeply typed relation navigation, no codegen, no type-checker plugin. mypy and Pyright read it natively."
+cvLine: "A Python ORM with typed relation navigation that mypy and Pyright resolve with no codegen."
 status: maintained
 role: Author
 order: 1
