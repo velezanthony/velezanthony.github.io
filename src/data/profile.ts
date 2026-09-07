@@ -4,13 +4,13 @@ export const profile = {
   name: 'Anthony Velez Tapia',
 
   headline: {
-    es: 'Desarrollador Full Stack y administrador de sistemas. Django y Python con Angular y React; antes .NET, Java, Laravel y Symfony. Construyo herramientas open source para el día a día del desarrollador.',
-    en: 'Full Stack Developer and systems administrator. Django and Python with Angular and React; .NET, Java, Laravel and Symfony before that. I build open source tools for a developer’s day-to-day.',
+    es: 'Desarrollador Full Stack y administrador de sistemas. Django y Python con Angular; antes .NET, Java, Laravel y Symfony. Construyo herramientas open source para el día a día del desarrollador.',
+    en: 'Full Stack Developer and systems administrator. Django and Python with Angular; .NET, Java, Laravel and Symfony before that. I build open source tools for a developer’s day-to-day.',
   } satisfies Localized,
 
   summary: {
-    es: '**Cuatro años, seis stacks y tres arquitecturas en producción**: API REST con clientes desacoplados, SPA y monolito SSR con HTMX. Diseño el modelo de datos —SQL Server y PostgreSQL, database first y code first— y **levanté en solitario un SaaS multi-tenant hasta producción**. Hoy propongo la **arquitectura de código** y las bases de calidad del refactor de una plataforma SaaS, en un equipo de cuatro. Antes llevé la **infraestructura AWS completa** de las startups de una venture builder y monté su preproducción on-premise en Proxmox. **Cinco herramientas open source propias, dos en PyPI**, entre ellas un ORM en Python que mypy y Pyright resuelven sin generación de código.',
-    en: '**Four years, six stacks and three architectures in production**: REST APIs with decoupled clients, SPAs and SSR monoliths with HTMX. I design the data model —SQL Server and PostgreSQL, database first and code first— and **took a multi-tenant SaaS to production single-handedly**. Today I propose the **code architecture** and the quality baseline for the refactor of a SaaS platform, in a team of four. Before that I ran the **full AWS infrastructure** of a venture builder’s startups and built their on-premise pre-production on Proxmox. **Five open source tools of my own, two on PyPI**, among them a Python ORM whose typing mypy and Pyright resolve with no code generation.',
+    es: '**Cuatro años, seis stacks y tres arquitecturas en producción**: API REST con clientes desacoplados, SPA y monolito SSR con HTMX. Diseño el modelo de datos —SQL Server y PostgreSQL, database first y code first— y **levanté en solitario un SaaS multi-tenant hasta producción**. Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS, en un equipo de cuatro. Bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes llevé la **infraestructura AWS completa** de las startups de una venture builder y monté su preproducción on-premise en Proxmox. **Cinco herramientas open source propias, dos en PyPI**, entre ellas un ORM en Python que mypy y Pyright resuelven sin generación de código.',
+    en: '**Four years, six stacks and three architectures in production**: REST APIs with decoupled clients, SPAs and SSR monoliths with HTMX. I design the data model —SQL Server and PostgreSQL, database first and code first— and **took a multi-tenant SaaS to production single-handedly**. Today I define the **code architecture** for the refactor of a SaaS marketplace, in a team of four. I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that I ran the **full AWS infrastructure** of a venture builder’s startups and built their on-premise pre-production on Proxmox. **Five open source tools of my own, two on PyPI**, among them a Python ORM whose typing mypy and Pyright resolve with no code generation.',
   } satisfies Localized,
 
   location: 'Hernani, Gipuzkoa',
@@ -80,8 +80,8 @@ export const pageTitles = {
  */
 export const seo = {
   home: {
-    es: 'Desarrollador Full Stack y administrador de sistemas en Gipuzkoa. Django, Python, Laravel y .NET; Angular y React. Cinco herramientas open source propias.',
-    en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular and React. Five open source tools of my own.',
+    es: 'Desarrollador Full Stack y administrador de sistemas en Gipuzkoa. Django, Python, Laravel y .NET; Angular. Cinco herramientas open source propias.',
+    en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular. Five open source tools of my own.',
   },
   projects: {
     es: 'Cinco herramientas open source: dos extensiones de VS Code, un language server para Django, un ORM tipado en Python y un panel de Docker en terminal.',
@@ -93,7 +93,7 @@ export const seo = {
   },
   cv: {
     es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Gipuzkoa. Django, Laravel, .NET, Angular y sistemas. Listo para imprimir o guardar en PDF.',
-    en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Laravel, .NET, Angular, React and systems. Ready to print or save as PDF.',
+    en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Laravel, .NET, Angular and systems. Ready to print or save as PDF.',
   },
 } satisfies Record<string, Localized>;
 

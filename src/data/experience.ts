@@ -13,16 +13,16 @@ export const experience: Job[] = [
     end: null,
     highlights: {
       es: [
-        'Propongo la **arquitectura de código** del refactor de una **plataforma SaaS en producción**, en un equipo de cuatro: estructura, responsabilidades y convenciones del repositorio.',
-        'Construyo un **design system con Django Cotton** bajo atomic design: cerca de **90 componentes** y un sistema de formularios que reutiliza todo el equipo.',
-        'Fijé las **bases de calidad** del repositorio —Ruff, MyPy, tests de Django, devcontainer— y un Makefile que deja el día a día del desarrollador en un alias.',
-        'Modelo datos e índices **code first** para la migración del sistema legacy y escribo los seeders de las pruebas de carga.',
+        'Refactorizamos entre cuatro una **plataforma SaaS de autoconsumo solar** en producción: evalué la **viabilidad del stack** midiendo tiempos de carga y definí su **arquitectura de código** y el **design system en Django Cotton**, con cerca de **90 componentes** reutilizables.',
+        'Optimicé el acceso a datos reescribiendo sus consultas —N+1, anotaciones, agregados y subconsultas—: el **marketplace**, un mapa con proyectos de toda España, bajó de **12 s en producción a 1–2 s**, y a **800 ms** con el nuevo stack.',
+        'Establecí la **base de calidad**: Ruff, MyPy, tests de Django, devcontainer, dependencias por entorno y un Makefile que deja el día a día en un alias.',
+        'Definí **con el equipo** el modelo de datos y sus índices, code first para la migración del sistema legacy, con seeders para las pruebas de carga.',
       ],
       en: [
-        'I propose the **code architecture** for the refactor of a **production SaaS platform**, in a team of four: structure, responsibilities and repository conventions.',
-        'I build a **design system in Django Cotton** under atomic design: close to **90 components** and a form system the whole team reuses.',
-        'Set the repository **quality baseline** —Ruff, MyPy, Django tests, devcontainer— and a Makefile that puts a developer’s whole day behind one alias.',
-        'I model the data and its indexes **code first** for the legacy migration, and write the seeders for the load tests.',
+        'The four of us are refactoring a **production SaaS platform for solar self-consumption**: I assessed the **stack’s viability** by measuring load times and defined its **code architecture** and the **design system in Django Cotton**, with close to **90 reusable components**.',
+        'Optimised data access by reworking its queries —N+1, annotations, aggregates and subqueries—: the **marketplace**, a map of projects across Spain, went from **12 s in production to 1–2 s**, and to **800 ms** on the new stack.',
+        'Set the **quality baseline**: Ruff, MyPy, Django tests, devcontainer, per-environment dependencies and a Makefile that puts the whole day behind one alias.',
+        'Defined the data model and its indexes **with the team**, code first for the legacy migration, with seeders for the load tests.',
       ],
     },
     stack: ['Django', 'Django Cotton', 'Python', 'PostgreSQL', 'HTMX', 'Alpine.js', 'Tailwind CSS', 'Ruff', 'MyPy', 'Docker'],
@@ -35,21 +35,17 @@ export const experience: Job[] = [
     end: '2025-09',
     highlights: {
       es: [
-        'Entregué la **web corporativa en Angular** desde cero, una SPA.',
-        'Refactoricé de extremo a extremo un **SaaS de gestión de fincas en Symfony**: monolito SSR con **multi-tenancy** de base de datos y esquema compartidos, con aislamiento por fila.',
-        'Sustituí la telefonía en la nube (Twilio) por una **centralita propia con VitalPBX sobre Asterisk**: el coste por extensión pasa de tarifa a configuración y **deja de crecer**.',
-        'Disparé **llamadas de agente de voz con IA** (ElevenLabs) desde n8n según el número entrante, con despliegue on-premise y migración a AWS.',
-        'Analicé una aplicación **React sobre Firebase** (Firestore y Auth) para decidir qué funcionalidades llevar al monolito.',
+        'Web corporativa en **Angular** desde cero, SPA, entregada.',
+        'Desarrollé **nuevas funcionalidades** en un SaaS de gestión de fincas en **Symfony**: monolito SSR con **multi-tenancy** de esquema compartido.',
+        '**Centralita propia con VitalPBX sobre Asterisk** para autohospedar la telefonía en la nube y **ahorrar**: llamadas internas funcionando en local, a falta del troncal y del salto a AWS, todo documentado.',
       ],
       en: [
-        'Delivered the **corporate website in Angular** from scratch, an SPA.',
-        'Refactored end to end a **property management SaaS in Symfony**: an SSR monolith with shared database and schema **multi-tenancy**, with row-level isolation.',
-        'Replaced cloud telephony (Twilio) with an **in-house PBX on VitalPBX over Asterisk**: cost per extension moves from a tariff to a config entry and **stops growing**.',
-        'Triggered **AI voice-agent calls** (ElevenLabs) from n8n based on the incoming number, with on-premise deployment and migration to AWS.',
-        'Assessed a **React application on Firebase** (Firestore and Auth) to decide which features to bring into the monolith.',
+        'Corporate website in **Angular** from scratch, an SPA, delivered.',
+        'Developed **new features** in a property management SaaS in **Symfony**: an SSR monolith with shared-schema **multi-tenancy**.',
+        '**In-house PBX with VitalPBX on Asterisk** to self-host cloud telephony and **cut its cost**: internal calls working locally, pending the carrier trunk and the move to AWS, all documented.',
       ],
     },
-    stack: ['Angular', 'Symfony', 'PHP', 'Bootstrap', 'React', 'VitalPBX', 'Asterisk', 'Twilio', 'ElevenLabs', 'n8n', 'AWS', 'Firebase', 'Firestore', 'Linux'],
+    stack: ['Angular', 'Symfony', 'PHP', 'Bootstrap', 'VitalPBX', 'Asterisk', 'Linux'],
   },
   {
     company: 'Eywa Space',
@@ -63,15 +59,15 @@ export const experience: Job[] = [
     highlights: {
       es: [
         'Me encargué del **código y la infraestructura completa** de las startups de una **venture builder**, más encargos de Eywa y de otras del grupo.',
-        'Monté un **Proxmox on-premise desde cero** como preproducción —Debian, Nginx con TLS, PostgreSQL y MariaDB—: **coste fijo propio** en lugar de un entorno cloud por proyecto.',
+        'Monté un **Proxmox on-premise desde cero** como entorno de producto y desarrollo, con réplicas locales de las máquinas cloud: **coste fijo propio** en lugar de un entorno cloud por proyecto.',
         'Heredé y mantuve la **infraestructura AWS** —EC2, RDS, S3, Lambda, ECR, balanceadores y redes privadas— y arreglé los **pipelines de CI/CD** en GitHub Actions.',
-        'Gestioné dominios y DNS de los clientes del grupo, migré el correo corporativo entre proveedores vía MX y prototipé en **Figma** antes de implementar.',
+        'Gestioné dominios y DNS de los clientes del grupo, migré el correo corporativo vía MX, publiqué landings estáticas —alguna en el propio Proxmox— y prototipé en **Figma**.',
       ],
       en: [
         'Took charge of the **code and the entire infrastructure** of a **venture builder**’s startups, plus work for Eywa and others in the group.',
-        'Built an **on-premise Proxmox from scratch** as pre-production —Debian, Nginx with TLS, PostgreSQL and MariaDB—: a **fixed in-house cost** instead of a cloud environment per project.',
+        'Built an **on-premise Proxmox from scratch** as a product and development environment, with local replicas of the cloud machines: a **fixed in-house cost** instead of a cloud environment per project.',
         'Inherited and maintained the **AWS infrastructure** —EC2, RDS, S3, Lambda, ECR, load balancers and private networks— and fixed the **CI/CD pipelines** in GitHub Actions.',
-        'Managed domains and DNS for the group’s clients, migrated corporate email between providers via MX and prototyped in **Figma** before implementing.',
+        'Managed domains and DNS for the group’s clients, migrated corporate email over MX, published static landings —some on that same Proxmox— and prototyped in **Figma**.',
       ],
     },
     stack: [
@@ -109,14 +105,16 @@ export const experience: Job[] = [
     highlights: {
       es: [
         'Desarrollé **en solitario** y llevé a producción una **aplicación de control horario en Laravel**: monolito SSR con **una base de datos por tenant** y una central para identidad y enrutado.',
+        'Frontend sobre plantilla comercial; **backend, modelo de datos code first y lógica de negocio propios**.',
         'Fichaje con geolocalización, vacaciones con validación de solapamiento y flujo de aprobación, roles de administración, RRHH y empleado, y cuadros de mando por rol.',
-        'Optimicé los CMS y e-commerce de cliente (WordPress, PrestaShop, Wix) y su infraestructura: dominios, DNS, hosting, HTTPS y las redirecciones del **SEO técnico**.',
+        'Desarrollo a medida en Laravel y optimización de los CMS y e-commerce de cliente (WordPress, PrestaShop, Wix): dominios, DNS, hosting, HTTPS y las redirecciones del **SEO técnico**.',
         'Dirigí los **departamentos de desarrollo y SEO**, con estrategia SEO/SEM por sector y automatización de los procesos internos del equipo.',
       ],
       en: [
         'Built **single-handedly** and took to production a **time-tracking application in Laravel**: an SSR monolith with **a database per tenant** and a central one for identity and routing.',
+        'The frontend ran on a commercial template; the **backend, code-first data model and business logic were my own**.',
         'Clock-in with geolocation, leave with overlap validation and an approval flow, admin, HR and employee roles, and per-role dashboards.',
-        'Optimised client CMS and e-commerce sites (WordPress, PrestaShop, Wix) and their infrastructure: domains, DNS, hosting, HTTPS and the redirects **technical SEO** called for.',
+        'Bespoke development in Laravel and optimisation of client CMS and e-commerce sites (WordPress, PrestaShop, Wix): domains, DNS, hosting, HTTPS and the redirects **technical SEO** called for.',
         'Ran the **development and SEO departments**, with SEO/SEM strategy per sector and automation of the team’s internal processes.',
       ],
     },
