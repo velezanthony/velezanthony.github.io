@@ -33,7 +33,13 @@ jobs:
 
       # `astro check` runs here too — a type error must fail the deploy,
       # not ship silently.
+      #
+      # The GTM container ID is only ever set here. Unset, the tag simply is not
+      # rendered, so local and fork builds stay untracked without a code path of
+      # their own.
       - run: npm run build
+        env:
+          PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 
 import { execFileSync } from 'node:child_process';
 import { globSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -92,6 +92,14 @@ export default defineConfig({
   site: SITE,
   output: 'static',
   trailingSlash: 'always',
+
+  /* Public by nature — it ships in the page — but injected from a repository
+     secret, never committed. Optional: unset, no tag is rendered at all. */
+  env: {
+    schema: {
+      PUBLIC_GTM_ID: envField.string({ context: 'client', access: 'public', optional: true }),
+    },
+  },
 
   /**
    * IBM Plex Sans and Mono share metrics exactly — same x-height, cap

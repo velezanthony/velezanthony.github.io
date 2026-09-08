@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets';
+import { PUBLIC_GTM_ID } from 'astro:env/client';
 import '@styles/theme.css';
 import { contact, profile } from '@data/profile';
 import { education } from '@data/education';
@@ -44,6 +45,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+
+    {
+      PUBLIC_GTM_ID && (
+        <script
+          is:inline
+          set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${PUBLIC_GTM_ID}');`
+          }
+        />
+      )
+    }
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -152,6 +167,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   }
 
   <body class:list={['min-h-screen bg-canvas antialiased', bodyClass]}>
+    {
+      /* Ahead of the skip link on Google's instruction. It costs nothing there:
+         hidden and non-focusable, it never lands in the tab order. */
+      PUBLIC_GTM_ID && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${encodeURIComponent(PUBLIC_GTM_ID)}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          />
+        </noscript>
+      )
+    }
+
     <a
       href="#main"
       class="label sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:border focus:border-rule focus:bg-canvas focus:px-3 focus:py-2 focus:text-ink"
