@@ -1,10 +1,10 @@
 ---
-slug: django-cotton-props
-name: Django Cotton Props
+slug: cotton-props
+name: Cotton Props
 headline: IntelliSense para VS Code
 tagline: IntelliSense completo para Django Cotton en VS Code — autocompletado, hover docs, diagnósticos con quick fix y explorador de componentes.
 cvLine: "IntelliSense de Django Cotton para VS Code: autocompletado, hover, diagnósticos y quick fix."
-status: unreleased
+status: maintained
 role: Autor y mantenedor
 order: 4
 now: true
@@ -23,8 +23,12 @@ quality:
   - 'v1.0.0'
 constraints: []
 links:
+  - label: Marketplace
+    href: https://marketplace.visualstudio.com/items?itemName=velezanthony.cotton-props
+  - label: Documentación
+    href: https://velezanthony.github.io/cotton-props/
   - label: Código
-    href: https://github.com/velezanthony/django-cotton-props
+    href: https://github.com/velezanthony/cotton-props
 thumb: ../../../assets/projects/props-hover.png
 thumbAlt: Documentación del componente al pasar el ratón
 todo: []
@@ -127,9 +131,9 @@ qué le hablas.
 
 **Descubrimiento.** Los componentes se detectan por expresión regular sobre un directorio
 configurable, con un valor por defecto para el caso normal. El recorrido vive en
-[`src/core/scanner.ts`](https://github.com/velezanthony/django-cotton-props/blob/main/src/core/scanner.ts)
+[`src/core/scanner.ts`](https://github.com/velezanthony/cotton-props/blob/main/src/core/scanner.ts)
 y los patrones en
-[`src/core/regex.ts`](https://github.com/velezanthony/django-cotton-props/blob/main/src/core/regex.ts).
+[`src/core/regex.ts`](https://github.com/velezanthony/cotton-props/blob/main/src/core/regex.ts).
 
 **Declaración.** Cada componente declara sus props en comentarios de plantilla, junto al `<c-vars>`
 de Cotton:
@@ -149,13 +153,13 @@ pasar el ratón y los diagnósticos.
 **Las reglas.** Son 19, cada una con su código, y se agrupan por dónde saltan: las **de definición**
 corren dentro del propio componente y comprueban que las anotaciones `@prop` y el `<c-vars>`
 concuerden; las **de uso** corren allí donde se escribe el componente. Viven en
-[`src/core/providers/diagnostics/`](https://github.com/velezanthony/django-cotton-props/tree/main/src/core/providers/diagnostics).
+[`src/core/providers/diagnostics/`](https://github.com/velezanthony/cotton-props/tree/main/src/core/providers/diagnostics).
 
 Todas se emiten con `source` y `code`, así que en el panel de problemas puedes filtrar una regla
 concreta:
 
 ```
-django-cotton-props(duplicate-usage-prop)
+cotton-props(duplicate-usage-prop)
 ```
 
 ![Diagnósticos señalados en el editor, con sus correcciones rápidas](../../../assets/projects/props-diagnostics.png)
@@ -186,9 +190,11 @@ La extensión no tiene que hacer nada al respecto — el mismo código vale en L
 
 ## Estado
 
-Etiquetada como `v1.0.0` en el repositorio. Código abierto con licencia MIT, con tests y CI/CD.
+**Publicada en el VS Code Marketplace** como `velezanthony.cotton-props`, versión `v1.0.0`, en
+septiembre de 2026. Código abierto con licencia MIT, con tests y CI/CD: la release la corta el
+pipeline desde un tag, no yo a mano.
 
-**Todavía no está en el VS Code Marketplace**: el envío queda rechazado por cuestiones de copy que
-sigo resolviendo, y la revisión no concreta cuáles.
+Salió con el nombre `django-cotton-props` y ahora se llama **Cotton Props**. La URL antigua del
+repositorio sigue redirigiendo a la nueva.
 
 Es la herramienta con la que trabajo todos los días.

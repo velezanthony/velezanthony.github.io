@@ -81,7 +81,7 @@ What it ships:
 
 ### The other half
 
-[django-cotton-props](/en/projects/django-cotton-props/) does **the same job**: help you write
+[Cotton Props](/en/projects/cotton-props/) does **the same job**: help you write
 components and catch mistakes. What differs is where each one lives and what it can show.
 
 <div class="table-scroll">

@@ -82,7 +82,7 @@ Lo que trae:
 
 ### La otra mitad
 
-[django-cotton-props](/es/proyectos/django-cotton-props/) hace **el mismo trabajo**: ayudar a
+[Cotton Props](/es/proyectos/cotton-props/) hace **el mismo trabajo**: ayudar a
 escribir componentes y detectar errores. La diferencia es dónde vive cada una y qué puede enseñar.
 
 <div class="table-scroll">
