@@ -26,7 +26,7 @@ quality:
   - 'mypy with django-stubs, and ruff'
   - 'pre-commit, Dependabot and issue templates'
   - 'Tests with coverage'
-  - 'v0.2.0 with changelog'
+  - 'A changelog kept up to date'
   - 'MIT licence'
 constraints:
   - 'Drop-in: it goes into an existing project without forcing a restructure.'
@@ -168,28 +168,34 @@ limit, and that is why both exist: each covers what the other cannot reach.
 **Detection is regex-based**, same as the extension. A component written in an odd enough way falls
 outside what the tool considers a component, and then it cannot see it.
 
-## What I would do differently
+## Isolating the preview
 
-**Isolating the preview.** Right now the component renders on the gallery page itself, and that
-works until someone brings a modal.
+For two versions the component rendered on the gallery page itself, and that worked until someone
+brought a modal.
 
 A modal with its backdrop — the dark layer that covers the screen — does not stay inside its slot:
-it spreads over the whole gallery and can lock it up. The component is doing exactly what it should;
-the problem is where I am putting it.
+it spreads over the whole gallery and can lock it up. The component was doing exactly what it
+should; the problem was where I was putting it.
 
-There are two ways out and one is clearly better:
+There were two ways out and one was clearly better:
 
 - **Limit the preview**, disabling anything that can escape its container. Cheap, but it cripples
   precisely the components you most want to look at.
 - **One `iframe` per preview.** Each component in its own document, with its own `body`. More
   expensive, but it is real isolation and takes nothing away from the component.
 
-The `iframe` is the next step.
+**1.0.0 brought the `iframe`**, and it fixed three things beyond the modal: the gallery's unlayered
+heading reset was overriding the consumer's `@layer` typography; a block-level root collapsed to
+`0px` inside the flex stage that centres it; and media queries now fire on the stage width, which
+makes **the viewport switcher real**. Index thumbnails render in their own document too, and are
+dropped once a card scrolls away rather than keeping one JS runtime alive per component.
 
 ## Status
 
-Published on PyPI, version **0.2.0**. Runs on Python 3.10 and above, Django 4.2 to 6.x.
-Documentation published, changelog kept. Open source, MIT licensed.
+Published on PyPI and **on its first stable release**: the annotation grammar and the
+`DJANGO_COTTON_GALLERY_*` settings are public API, renamed or removed only on a major version.
+Runs on Python 3.10 and above, Django 4.2 to 6.x. Documentation published, changelog kept. Open
+source, MIT licensed.
 
 ```bash
 pip install django-cotton-gallery

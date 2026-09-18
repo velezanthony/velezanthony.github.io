@@ -13,6 +13,8 @@ stack:
   - Python
   - Type system
   - PostgreSQL
+  - MySQL
+  - SQLite
 targets:
   - mypy
   - Pyright
@@ -22,10 +24,10 @@ targets:
   - FastAPI
 compat:
   - 'Python ≥ 3.11'
-  - 'PostgreSQL'
+  - 'PostgreSQL · MySQL/MariaDB · SQLite'
 quality:
   - 'Validated against both mypy and pyright'
-  - '120+ test files'
+  - 'The suite runs against the three real engines, not doubles'
   - 'Its own benchmarks'
   - 'MIT licence'
 constraints:

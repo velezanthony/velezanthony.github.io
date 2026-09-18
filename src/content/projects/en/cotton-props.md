@@ -17,14 +17,15 @@ targets:
   - Django Cotton
 quality:
   - 'TypeScript in strict mode'
-  - '50 test files'
+  - 'Tests beside the code they cover'
   - 'CI, branch guard and publishing automated'
   - 'MIT licence'
-  - 'v1.0.0'
 constraints: []
 links:
   - label: Marketplace
     href: https://marketplace.visualstudio.com/items?itemName=velezanthony.cotton-props
+  - label: Open VSX
+    href: https://open-vsx.org/extension/velezanthony/cotton-props
   - label: Documentation
     href: https://velezanthony.github.io/cotton-props/
   - label: Source
@@ -188,9 +189,9 @@ Windows.
 
 ## Status
 
-**Published on the VS Code Marketplace** as `velezanthony.cotton-props`, version `v1.0.0`, in
-September 2026. Open source, MIT licensed, with tests and CI/CD — the release is cut by the
-pipeline off a tag, not by hand.
+**Published on the VS Code Marketplace and on Open VSX** as `velezanthony.cotton-props`, in
+September 2026 — Open VSX is where Cursor, Windsurf and VSCodium install from. Open source, MIT
+licensed, with tests and CI/CD: the release is cut by the pipeline off a tag, not by hand.
 
 It shipped under the name `django-cotton-props` and is now **Cotton Props**. The old repository
 URL still redirects to the new one.

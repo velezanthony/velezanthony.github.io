@@ -17,13 +17,14 @@ targets:
   - Django
 quality:
   - 'Arquitectura hexagonal: el dominio no conoce VS Code'
-  - '60 ficheros de test junto al código que prueban'
-  - '13 tags de fase'
+  - 'Tests junto al código que prueban'
   - 'Licencia MIT'
 constraints:
   - 'Análisis real del proyecto a un grafo, no coincidencias por expresión regular.'
   - 'No adivinar: si una plantilla puede venir de varias vistas, la extensión se calla hasta que eliges una.'
 links:
+  - label: Documentación
+    href: https://velezanthony.github.io/django-language-service/
   - label: Código
     href: https://github.com/velezanthony/django-language-service
 todo: []
@@ -101,8 +102,8 @@ El código está partido en `domain/`, `adapters/` e `infra/`. El dominio —par
 migraciones, urls y variables de plantilla— **no conoce VS Code**. Los adaptadores traducen entre
 ese dominio y la API del editor.
 
-No es purismo: es lo que permite testear los parsers sin levantar un editor. Hay **60 ficheros de
-test** junto al código que prueban.
+No es purismo: es lo que permite testear los parsers sin levantar un editor. Cada parser tiene sus
+**tests junto al código** que prueban.
 
 ## Cómo funciona por dentro
 
@@ -124,7 +125,7 @@ lo que tu proyecto pinta.
 
 ## Estado
 
-**En desarrollo activo y sin publicar.** Ahora mismo estoy en pleno refactor —va por la fase 6— y
-por eso la versión del repositorio va por detrás de lo que hay en local.
+**En desarrollo activo y sin publicar.** No está terminado, y hasta que lo esté no sale al
+Marketplace ni a Open VSX.
 
 Código abierto con licencia MIT.

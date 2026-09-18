@@ -17,14 +17,15 @@ targets:
   - Django Cotton
 quality:
   - 'TypeScript en modo estricto'
-  - '50 ficheros de test'
+  - 'Tests junto al código que prueban'
   - 'CI, guard de rama y publicación automatizadas'
   - 'Licencia MIT'
-  - 'v1.0.0'
 constraints: []
 links:
   - label: Marketplace
     href: https://marketplace.visualstudio.com/items?itemName=velezanthony.cotton-props
+  - label: Open VSX
+    href: https://open-vsx.org/extension/velezanthony/cotton-props
   - label: Documentación
     href: https://velezanthony.github.io/cotton-props/
   - label: Código
@@ -190,9 +191,9 @@ La extensión no tiene que hacer nada al respecto — el mismo código vale en L
 
 ## Estado
 
-**Publicada en el VS Code Marketplace** como `velezanthony.cotton-props`, versión `v1.0.0`, en
-septiembre de 2026. Código abierto con licencia MIT, con tests y CI/CD: la release la corta el
-pipeline desde un tag, no yo a mano.
+**Publicada en el VS Code Marketplace y en Open VSX** como `velezanthony.cotton-props`, en
+septiembre de 2026 — Open VSX es de donde instalan Cursor, Windsurf y VSCodium. Código abierto con
+licencia MIT, con tests y CI/CD: la release la corta el pipeline desde un tag, no yo a mano.
 
 Salió con el nombre `django-cotton-props` y ahora se llama **Cotton Props**. La URL antigua del
 repositorio sigue redirigiendo a la nueva.

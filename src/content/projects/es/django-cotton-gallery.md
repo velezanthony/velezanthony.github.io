@@ -26,7 +26,7 @@ quality:
   - 'mypy con django-stubs, y ruff'
   - 'pre-commit, Dependabot y plantillas de issue'
   - 'Tests con cobertura'
-  - 'v0.2.0 con changelog'
+  - 'Changelog al día'
   - 'Licencia MIT'
 constraints:
   - 'Drop-in: se añade a un proyecto existente sin obligar a reestructurarlo.'
@@ -168,28 +168,35 @@ extensión, y por eso existen las dos: cada una cubre lo que la otra no alcanza.
 **La detección es por regex**, igual que en la extensión. Un componente escrito de una forma lo
 bastante rara se sale de lo que la herramienta considera un componente, y entonces no lo ve.
 
-## Qué haría distinto
+## El aislamiento del preview
 
-**El aislamiento del preview.** Ahora mismo el componente se renderiza en la misma página de la
-galería, y eso funciona hasta que alguien mete un modal.
+Durante dos versiones el componente se renderizó en la misma página de la galería, y eso funcionó
+hasta que alguien metió un modal.
 
 Un modal con su *backdrop* —la capa oscura que tapa la pantalla— no se queda dentro de su hueco:
-se despliega sobre la galería entera y puede llegar a bloquearla. El componente hace exactamente lo
-que tiene que hacer; el problema es dónde lo estoy metiendo.
+se despliega sobre la galería entera y puede llegar a bloquearla. El componente hacía exactamente
+lo que tenía que hacer; el problema era dónde lo estaba metiendo.
 
-Hay dos salidas y una es claramente mejor:
+Había dos salidas y una era claramente mejor:
 
 - **Limitar el preview**, desactivando lo que pueda escaparse de su contenedor. Barato, pero mutila
   justo los componentes que más interesa ver.
 - **Un `iframe` por preview.** Cada componente en su propio documento, con su propio `body`. Más
   caro, pero es el aislamiento de verdad y no le quita nada al componente.
 
-El siguiente paso es el `iframe`.
+**En la 1.0.0 entró el `iframe`**, y arregló tres cosas más de las que iba a arreglar: el reset de
+titulares de la galería pisaba la tipografía en `@layer` del proyecto que la usa; una raíz de bloque
+se encogía a `0px` dentro del stage flex que la centra; y las media queries ahora disparan con el
+ancho del stage, así que **el conmutador de viewport es real**. Las miniaturas del índice también
+tienen su propio documento, y se descartan al salir de pantalla en vez de mantener un runtime de JS
+por componente.
 
 ## Estado
 
-Publicada en PyPI, versión **0.2.0**. Funciona sobre Python 3.10 en adelante y Django 4.2 a 6.x.
-Documentación publicada y changelog al día. Código abierto con licencia MIT.
+Publicada en PyPI y **ya en su primera versión estable**: la gramática de anotaciones y los
+ajustes `DJANGO_COTTON_GALLERY_*` son API pública, y no se renombran ni se quitan sin una mayor.
+Funciona sobre Python 3.10 en adelante y Django 4.2 a 6.x. Documentación publicada y changelog al
+día. Código abierto con licencia MIT.
 
 ```bash
 pip install django-cotton-gallery
