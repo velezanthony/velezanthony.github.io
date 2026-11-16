@@ -9,13 +9,15 @@ interface Props {
   projects: LocalisedProject[];
   /** Forwarded to each card. Depends on what precedes the grid. */
   headingLevel?: 2 | 3;
+  /** Close the list with a rule. Off inside a band, whose own edge already is one. */
+  closed?: boolean;
   class?: string;
 }
 
-const { lang, projects, headingLevel = 3, class: className } = Astro.props;
+const { lang, projects, headingLevel = 3, closed = true, class: className } = Astro.props;
 ---
 
-<div class:list={['border-b border-rule', className]}>
+<div class:list={[closed && 'border-b border-rule', className]}>
   {projects.map(({ entry }) => (
     <ProjectCard
       name={entry.data.name}

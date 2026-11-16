@@ -24,4 +24,13 @@ describe('SiteFooter', () => {
     const doc = await render(SiteFooter, { lang: 'en', name: 'Ada', contact, year: 1843 });
     expect(doc.querySelectorAll(`a[href="${SITE_SOURCE}"]`)).toHaveLength(2);
   });
+
+  /* The last section's bottom padding already parts the page from the footer; a margin here too
+     stacked the two into some 200px of nothing. */
+  it('adds no top margin of its own', async () => {
+    const footer = (
+      await render(SiteFooter, { lang: 'en', name: 'Ada', contact, year: 1843 })
+    ).querySelector('footer')!;
+    expect([...footer.classList].some((c) => /^mt-/.test(c))).toBe(false);
+  });
 });
