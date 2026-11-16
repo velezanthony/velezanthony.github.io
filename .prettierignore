@@ -1,0 +1,9 @@
+dist/
+.astro/
+package-lock.json
+
+# Served byte for byte. The Search Console token file fails verification if it changes.
+public/
+
+# Prose, wrapped by hand. Prettier would reflow the content and the review notes.
+*.md
