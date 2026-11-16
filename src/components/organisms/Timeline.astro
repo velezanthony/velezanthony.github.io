@@ -1,8 +1,8 @@
 ---
 import ExperienceItem from '@molecules/ExperienceItem.astro';
 import EducationRule from '@molecules/EducationRule.astro';
-import { experience } from '@data/experience';
-import { education } from '@data/education';
+import type { Job, Study } from '@data/types';
+import { timelineEntries } from './timeline-entries';
 import { formatRange } from '@i18n/format';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
@@ -10,6 +10,9 @@ import type { Variant } from '@/components/variant';
 
 interface Props {
   lang: Locale;
+  /** Newest first. */
+  jobs: Job[];
+  studies: Study[];
   /** `cv` switches every child to the denser, page-costed rendering. */
   variant?: Variant;
   limit?: number;
@@ -18,27 +21,18 @@ interface Props {
   class?: string;
 }
 
-const { lang, variant = 'site', limit, headingLevel = 3, class: className } = Astro.props;
+const {
+  lang,
+  jobs,
+  studies,
+  variant = 'site',
+  limit,
+  headingLevel = 3,
+  class: className,
+} = Astro.props;
 const t = useTranslations(lang);
 
-const jobs = limit ? experience.slice(0, limit) : experience;
-
-/**
- * Studies share the line with the jobs so the years between them are
- * accounted for. A truncated timeline skips them: there is no gap to explain.
- */
-type Entry =
-  | { start: string; kind: 'job'; job: (typeof experience)[number] }
-  | { start: string; kind: 'study'; study: (typeof education)[number] };
-
-const entries: Entry[] = [
-  ...jobs.map((job): Entry => ({ start: job.start, kind: 'job', job })),
-  ...(limit ? [] : education).map((study): Entry => ({
-    start: `${study.startYear}-09`,
-    kind: 'study',
-    study,
-  })),
-].sort((a, b) => b.start.localeCompare(a.start));
+const entries = timelineEntries(jobs, studies, limit);
 
 /** The education rule draws its own line; a closing border here would double it. */
 const closed = entries.at(-1)?.kind !== 'study';

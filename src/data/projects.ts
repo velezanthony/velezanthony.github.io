@@ -1,36 +1,18 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { defaultLocale } from '@i18n/ui';
-import { localeOfEntry } from '@i18n/utils';
+import { resolveLocalized } from '@i18n/localized';
+import type { Resolved } from '@i18n/localized';
 import type { Locale } from '@i18n/ui';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 
-export interface LocalisedProject {
-  entry: ProjectEntry;
-  /** True when this locale is falling back to the Spanish source. */
-  translationPending: boolean;
-}
+export type LocalisedProject = Resolved<ProjectEntry>;
 
 export async function getProjects(lang: Locale): Promise<LocalisedProject[]> {
   const all = await getCollection('projects');
-
-  const bySlug = new Map<string, Map<Locale, ProjectEntry>>();
-  for (const entry of all) {
-    const group = bySlug.get(entry.data.slug) ?? new Map<Locale, ProjectEntry>();
-    group.set(localeOfEntry(entry.id), entry);
-    bySlug.set(entry.data.slug, group);
-  }
-
-  const resolved: LocalisedProject[] = [];
-  for (const group of bySlug.values()) {
-    const wanted = group.get(lang);
-    const entry = wanted ?? group.get(defaultLocale);
-    if (!entry) continue;
-    resolved.push({ entry, translationPending: !wanted });
-  }
-
-  return resolved.sort((a, b) => a.entry.data.order - b.entry.data.order);
+  return resolveLocalized(all, lang, (entry) => entry.data.slug).sort(
+    (a, b) => a.entry.data.order - b.entry.data.order,
+  );
 }
 
 export async function getProject(

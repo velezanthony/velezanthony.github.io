@@ -3,6 +3,7 @@ import Heading from '@atoms/Heading.astro';
 import Text from '@atoms/Text.astro';
 import ProjectGrid from '@organisms/ProjectGrid.astro';
 import { useTranslations } from '@i18n/utils';
+import { getProjects } from '@data/projects';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const projects = await getProjects(lang);
 ---
 
 <section class="pt-14 pb-20 lg:pt-20">
@@ -24,5 +26,5 @@ const t = useTranslations(lang);
     {t('Todo el código es abierto y con licencia MIT.')}
   </Text>
 
-  <ProjectGrid lang={lang} headingLevel={2} class="mt-10" />
+  <ProjectGrid lang={lang} projects={projects} headingLevel={2} class="mt-10" />
 </section>

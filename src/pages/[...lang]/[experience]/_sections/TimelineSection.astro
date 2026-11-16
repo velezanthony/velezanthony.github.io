@@ -2,6 +2,8 @@
 import Heading from '@atoms/Heading.astro';
 import Timeline from '@organisms/Timeline.astro';
 import { useTranslations } from '@i18n/utils';
+import { experience } from '@data/experience';
+import { education } from '@data/education';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
@@ -19,5 +21,5 @@ const t = useTranslations(lang);
     {t('Trayectoria profesional')}
   </Heading>
 
-  <Timeline lang={lang} headingLevel={2} class="mt-10" />
+  <Timeline lang={lang} jobs={experience} studies={education} headingLevel={2} class="mt-10" />
 </section>
