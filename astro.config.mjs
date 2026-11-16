@@ -31,9 +31,10 @@ export default defineConfig({
 
   /**
    * IBM Plex Sans and Mono share metrics exactly — same x-height, cap
-   * height and digit width. Inline `<code>` therefore needs no size
-   * correction against surrounding prose, which matters on a site made
-   * of paths, module names and type signatures.
+   * height and digit width — so mono sits on the same lines as the
+   * prose around it. What differs is the advance: every mono glyph takes
+   * a full cell, so a run of it carries more ink. Inline `<code>` and
+   * mono lists step down slightly for that, not for height (theme.css).
    *
    * `latin` covers every Spanish character; `latin-ext` would nearly
    * double the weight for nothing.
