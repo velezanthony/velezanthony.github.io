@@ -22,14 +22,16 @@ const {
 
 const isExternal = external ?? /^https?:\/\//.test(href);
 
+/* `min-h-6` on every variant but inline: WCAG 2.5.8 wants targets 24px tall, and a 12px label
+   alone is 14px. Links inside a sentence are exempt, and a taller box would push its line apart. */
 const variants: Record<Variant, string> = {
   inline:
     'text-accent underline underline-offset-[0.2em] decoration-1 hover:decoration-2 transition-[text-decoration-thickness]',
-  quiet: 'text-muted hover:text-ink transition-colors',
+  quiet: 'min-h-6 text-muted hover:text-ink transition-colors',
   /* The content of a labelled field: ink, like the text values beside it. */
-  value: 'text-ink hover:text-accent transition-colors',
+  value: 'min-h-6 text-ink hover:text-accent transition-colors',
   action:
-    'label inline-flex items-center gap-2 text-accent hover:gap-3 transition-[gap] duration-200',
+    'label min-h-6 inline-flex items-center gap-2 text-accent hover:gap-3 transition-[gap] duration-200',
 };
 ---
 

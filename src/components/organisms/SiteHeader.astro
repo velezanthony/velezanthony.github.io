@@ -32,7 +32,7 @@ const nav: { key: RouteKey; label: Phrase }[] = [
     <a
       href={path(lang)}
       aria-current={current === 'home' ? 'page' : undefined}
-      class="col-start-1 row-start-1 justify-self-start font-mono text-sm font-medium tracking-tight text-ink transition-colors hover:text-accent"
+      class="col-start-1 row-start-1 inline-flex min-h-6 items-center justify-self-start font-mono text-sm font-medium tracking-tight text-ink transition-colors hover:text-accent"
     >
       {name}
     </a>
@@ -48,7 +48,7 @@ const nav: { key: RouteKey; label: Phrase }[] = [
               href={path(lang, item.key)}
               aria-current={current === item.key ? 'page' : undefined}
               class:list={[
-                'label inline-block py-1 transition-colors hover:text-accent',
+                'label inline-flex min-h-6 min-w-6 items-center justify-center transition-colors hover:text-accent',
                 current === item.key ? 'text-ink' : 'text-faint',
               ]}
             >

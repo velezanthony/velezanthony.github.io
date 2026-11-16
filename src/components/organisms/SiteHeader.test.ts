@@ -39,4 +39,17 @@ describe('SiteHeader', () => {
       ),
     ).toEqual(['Projects']);
   });
+
+  /* WCAG 2.5.8: the name and each section link at least 24px tall. */
+  it('gives the name and every section link a 24px tall target', async () => {
+    const doc = await render(SiteHeader, props);
+    const targets = [
+      doc.querySelector('header > div > a')!,
+      ...doc.querySelectorAll('nav[aria-label="Main navigation"] a'),
+    ];
+    for (const a of targets) expect(a.classList.contains('min-h-6')).toBe(true);
+    /* "CV" is two letters: 18px wide without a floor. */
+    for (const a of doc.querySelectorAll('nav[aria-label="Main navigation"] a'))
+      expect(a.classList.contains('min-w-6')).toBe(true);
+  });
 });

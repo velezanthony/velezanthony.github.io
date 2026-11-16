@@ -45,6 +45,8 @@ const t = useTranslations(lang);
     place-items: center;
     inline-size: 2rem;
     block-size: 2rem;
+    /* A flex row short of room squeezed it to 19px wide; it is a 32px target. */
+    flex-shrink: 0;
     color: var(--color-faint);
     border-radius: 3px;
     transition: color 150ms ease;

@@ -46,4 +46,10 @@ describe('LocaleSwitch', () => {
         ?.getAttribute('aria-label'),
     ).toBe('Language');
   });
+
+  /* WCAG 2.5.8: each language link at least 24px tall. */
+  it('gives each language a 24px tall target', async () => {
+    const doc = await render(LocaleSwitch, { lang: 'es', hrefs });
+    for (const a of doc.querySelectorAll('a')) expect(a.classList.contains('min-h-6')).toBe(true);
+  });
 });

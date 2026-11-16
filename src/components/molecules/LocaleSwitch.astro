@@ -28,7 +28,7 @@ const t = useTranslations(lang);
           lang={locale}
           aria-current={locale === lang ? 'true' : undefined}
           class:list={[
-            'rounded px-1 py-0.5 transition-colors',
+            'inline-flex min-h-6 items-center rounded px-1 transition-colors',
             locale === lang ? 'text-ink' : 'text-faint hover:text-accent',
           ]}
         >
