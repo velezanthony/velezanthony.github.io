@@ -48,6 +48,15 @@ links:
     kind: docs
     href: https://velezanthony.github.io/snake-orm/
 todo: []
+visual:
+  kind: code
+  lang: python
+  code: |
+    # Django
+    Truck.objects.filter(maker__nation__name="España")
+
+    # SnakeORM
+    Truck.maker.nation.name == "España"
 ---
 
 ## El problema

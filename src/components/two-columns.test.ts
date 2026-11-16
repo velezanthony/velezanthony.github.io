@@ -28,6 +28,7 @@ const layouts: [string, () => Promise<Document>][] = [
         status: 'maintained',
         href: '/a/',
         lang: 'es',
+        visual: { kind: 'code', lang: 'python', code: 'x' },
       }),
   ],
   ['ExperienceItem', () => render(Timeline, { lang: 'es', jobs: [job], studies: [] })],

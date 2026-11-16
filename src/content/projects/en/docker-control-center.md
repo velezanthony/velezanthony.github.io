@@ -33,6 +33,19 @@ links:
     href: https://github.com/velezanthony/docker-control-center
 todo:
   - 'Add a screenshot or a short GIF. A terminal tool is sold by showing it.'
+visual:
+  kind: code
+  lang: text
+  code: |
+    $ dcc dash
+
+      DOCKER  ·  default  ·  engine 29.6.2  ·  8 CPU  ·  overlayfs  ·  host RAM 412 MB
+    ────────────────────────────────────────────────────────────────────────────────
+      2 stacks · 4/6 containers up · CPU 6.3% of host · 21.4 GB on disk
+
+      IDENTIFIED WASTE (counted from the API, not estimated by docker)
+        build cache           4.2 GB  12 entries, 0 in use        dcc clean-build
+        stopped layer         912 MB  2 containers                dcc clean
 ---
 
 ## The problem

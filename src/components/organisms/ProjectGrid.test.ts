@@ -12,6 +12,7 @@ const project = {
       stack: ['Python'],
       targets: [],
       slug: 'snake-orm',
+      visual: { kind: 'code', lang: 'python', code: 'Truck.maker' },
     },
   },
   translationPending: false,

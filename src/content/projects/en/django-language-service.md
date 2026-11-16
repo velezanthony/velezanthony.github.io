@@ -30,6 +30,11 @@ links:
     kind: source
     href: https://github.com/velezanthony/django-language-service
 todo: []
+visual:
+  kind: image
+  src: ../../../assets/projects/dls-intellisense.png
+  alt: A template variable's type, inferred from its view
+  focus: '50% 58%'
 ---
 
 ## The problem

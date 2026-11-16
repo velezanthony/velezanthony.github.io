@@ -43,6 +43,10 @@ links:
     kind: source
     href: https://github.com/velezanthony/django-cotton-gallery
 todo: []
+visual:
+  kind: image
+  src: ../../../assets/projects/gallery-detail.png
+  alt: A component detail with its generated controls
 ---
 
 ## The problem

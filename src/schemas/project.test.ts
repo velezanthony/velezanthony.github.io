@@ -1,9 +1,11 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { z } from 'zod';
 
 import { linkOf, projectSchema } from './project';
 
-const schema = projectSchema();
+/* `image()` needs Astro's asset pipeline; a path string stands in for it here. */
+const schema = projectSchema({ image: () => z.string() } as never);
 
 const valid = {
   slug: 'snake-orm',
@@ -14,6 +16,7 @@ const valid = {
   status: 'maintained',
   role: 'Author',
   order: 1,
+  visual: { kind: 'code', lang: 'python', code: 'Truck.maker.nation.name' },
   links: [
     { label: 'Source', kind: 'source', href: 'https://github.com/velezanthony/snake-orm' },
     { label: 'PyPI', kind: 'package', href: 'https://pypi.org/project/snake-orm/' },
@@ -73,12 +76,38 @@ describe('projectSchema', () => {
     expect(errorsOf({ ...valid, cvLine: 'x'.repeat(101) })).toEqual(['cvLine']);
   });
 
-  /* Index cards carry no image: at card size a screenshot was an unreadable smudge, and only two
-     of five projects had one. The screenshots live in each write-up. */
-  it('keeps no thumbnail', () => {
-    const parsed = schema.parse({ ...valid, thumb: 'a.png', thumbAlt: 'A screenshot' });
-    expect(parsed).not.toHaveProperty('thumb');
-    expect(parsed).not.toHaveProperty('thumbAlt');
+  describe('visual', () => {
+    /* Every card shows one, so none may be missing: a card without it breaks the even rows. */
+    it('is required', () => {
+      const rest: Partial<typeof valid> = { ...valid };
+      delete rest.visual;
+      expect(errorsOf(rest)).toEqual(['visual']);
+    });
+
+    it('accepts an image with its text', () => {
+      expect(
+        errorsOf({ ...valid, visual: { kind: 'image', src: 'a.png', alt: 'A screenshot' } }),
+      ).toEqual([]);
+    });
+
+    it('wants the text of an image', () => {
+      expect(errorsOf({ ...valid, visual: { kind: 'image', src: 'a.png' } })).toEqual([
+        'visual.alt',
+      ]);
+    });
+
+    it('wants code and its language', () => {
+      expect(errorsOf({ ...valid, visual: { kind: 'code', lang: 'python', code: '' } })).toEqual([
+        'visual.code',
+      ]);
+      expect(errorsOf({ ...valid, visual: { kind: 'code', code: 'x' } })).toEqual(['visual.lang']);
+    });
+
+    it('rejects an unknown kind', () => {
+      expect(errorsOf({ ...valid, visual: { kind: 'video', src: 'a.mp4' } })).toEqual([
+        'visual.kind',
+      ]);
+    });
   });
 });
 

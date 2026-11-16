@@ -11,6 +11,7 @@ const props = {
   stack: ['Python'],
   targets: ['PostgreSQL', 'SQLite'],
   lang: 'en',
+  visual: { kind: 'code', lang: 'python', code: 'Truck.maker.nation.name == "España"' },
 };
 
 describe('ProjectCard', () => {
@@ -43,9 +44,37 @@ describe('ProjectCard', () => {
     ]);
   });
 
-  it('leaves out the targets and the image when there are none', async () => {
+  it('leaves out the targets when there are none', async () => {
     const doc = await render(ProjectCard, { ...props, targets: [] });
-    expect(text(doc)).not.toContain('For');
-    expect(doc.querySelector('img')).toBeNull();
+    expect([...doc.querySelectorAll('span.label')].map(text)).not.toContain('For');
+  });
+
+  describe('visual', () => {
+    const frame = async (visual: unknown) =>
+      (await render(ProjectCard, { ...props, visual })).querySelector('.card-visual')!;
+
+    it('shows code as highlighted code', async () => {
+      const visual = await frame(props.visual);
+      expect(visual.querySelector('pre.astro-code')).not.toBeNull();
+      expect(text(visual)).toBe('Truck.maker.nation.name == "España"');
+    });
+
+    it('shows an image with its text', async () => {
+      const src = { src: '/a.png', width: 1912, height: 1001, format: 'png' };
+      const img = (await frame({ kind: 'image', src, alt: 'A screenshot' })).querySelector('img')!;
+      expect(img.getAttribute('alt')).toBe('A screenshot');
+    });
+
+    /* Image or code, the frame is the same height, so the rows stay even. */
+    it('frames every visual at the same height', async () => {
+      const code = await frame(props.visual);
+      const image = await frame({
+        kind: 'image',
+        src: { src: '/a.png', width: 1912, height: 1001, format: 'png' },
+        alt: 'A',
+      });
+      expect(code.classList.contains('h-44')).toBe(true);
+      expect(image.classList.contains('h-44')).toBe(true);
+    });
   });
 });

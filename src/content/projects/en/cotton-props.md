@@ -35,6 +35,11 @@ links:
     kind: source
     href: https://github.com/velezanthony/cotton-props
 todo: []
+visual:
+  kind: image
+  src: ../../../assets/projects/props-hover.png
+  alt: Component documentation on hover
+  focus: '50% 18%'
 ---
 
 ## The problem

@@ -1,3 +1,4 @@
+import type { SchemaContext } from 'astro:content';
 import { z } from 'zod';
 
 /**
@@ -31,9 +32,28 @@ const listItem = z
   .string()
   .refine((item) => !item.includes('·'), 'one item per entry, without a written separator');
 
-/* No field takes an image: index cards carry none, and the write-ups embed theirs in Markdown.
-   Astro's schema context, with its `image()` helper, is therefore not needed. */
-export const projectSchema = () =>
+/**
+ * What the project's card shows under its description: a screenshot where there is an interface,
+ * code or terminal output where there is none. Required, so every card has the same structure.
+ */
+const visualOf = (image: SchemaContext['image']) =>
+  z.discriminatedUnion('kind', [
+    z.object({
+      kind: z.literal('image'),
+      src: image(),
+      alt: z.string().min(1),
+      /** CSS `object-position` for the crop: which part of the screenshot the card shows. */
+      focus: z.string().optional(),
+    }),
+    z.object({
+      kind: z.literal('code'),
+      /** A Shiki language: `python`, `console`… */
+      lang: z.string().min(1),
+      code: z.string().min(1),
+    }),
+  ]);
+
+export const projectSchema = ({ image }: SchemaContext) =>
   z.object({
     /** Stable across locales — it is the URL segment, and the file name. */
     slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'lowercase words joined by single dashes'),
@@ -85,4 +105,6 @@ export const projectSchema = () =>
 
     /** Rendered as visible placeholders. Never silently dropped. */
     todo: z.array(z.string()).default([]),
+
+    visual: visualOf(image),
   });

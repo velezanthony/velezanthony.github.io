@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import { Code } from 'astro:components';
+import type { CollectionEntry } from 'astro:content';
 import Heading from '@atoms/Heading.astro';
 import Text from '@atoms/Text.astro';
 import StackRow from '@molecules/StackRow.astro';
@@ -16,6 +19,8 @@ interface Props {
   /** What it is built FOR, as opposed to what it is built with. */
   targets?: string[];
   lang: Locale;
+  /** A screenshot, or code where there is no interface to show. */
+  visual: CollectionEntry<'projects'>['data']['visual'];
   /** Set by the caller so the document outline never skips a level. */
   headingLevel?: 2 | 3;
 }
@@ -28,6 +33,7 @@ const {
   stack = [],
   targets = [],
   lang,
+  visual,
   headingLevel = 3,
 } = Astro.props;
 
@@ -49,6 +55,27 @@ const t = useTranslations(lang);
       <Text size="row" class="mt-1.5 max-w-(--container-measure-row) lg:max-w-none">
         {tagline}
       </Text>
+
+      <!-- One fixed height for image and code alike, so the rows stay even. -->
+      <div class="card-visual mt-4 h-44 overflow-hidden rounded border border-rule transition-[border-color] group-hover:border-accent">
+        {visual.kind === 'image' ? (
+          <Image
+            src={visual.src}
+            alt={visual.alt}
+            widths={[480, 960, 1712]}
+            sizes="(min-width: 1024px) 856px, 100vw"
+            loading="lazy"
+            class="h-full w-full object-cover"
+            style={visual.focus ? `object-position: ${visual.focus}` : undefined}
+          />
+        ) : (
+          <Code
+            code={visual.code}
+            lang={visual.lang as never}
+            themes={{ light: 'github-light', dark: 'github-dark' }}
+          />
+        )}
+      </div>
     </div>
 
     <div class="min-w-0 lg:pt-1.5">
@@ -58,3 +85,15 @@ const t = useTranslations(lang);
     </div>
   </div>
 </article>
+
+<style>
+  /* Shiki's block, sized to the frame: the card shows a glimpse, never a scrollbar. */
+  .card-visual :global(pre) {
+    height: 100%;
+    margin: 0;
+    padding: 0.875rem 1rem;
+    overflow: hidden;
+    font-size: var(--text-mono-list);
+    line-height: 1.6;
+  }
+</style>

@@ -30,6 +30,11 @@ links:
     kind: source
     href: https://github.com/velezanthony/django-language-service
 todo: []
+visual:
+  kind: image
+  src: ../../../assets/projects/dls-intellisense.png
+  alt: El tipo de una variable de plantilla, inferido desde su vista
+  focus: '50% 58%'
 ---
 
 ## El problema
