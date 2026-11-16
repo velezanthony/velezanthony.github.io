@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "i18n:status": "node --experimental-strip-types scripts/i18n-status.mjs",
     "todo": "rg -n 'todo:' -A20 src/content/projects | rg \"^\\s*- '\" || true",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
   }
 }
