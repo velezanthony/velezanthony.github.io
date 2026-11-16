@@ -6,6 +6,7 @@ import { globSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } f
 
 import sitemap from '@astrojs/sitemap';
 import { routes } from './src/i18n/ui.ts';
+import { sourcesOf } from './src/sitemap/sources.ts';
 import tailwindcss from '@tailwindcss/vite';
 
 /** @type {(args: string[]) => string} */
@@ -38,38 +39,6 @@ const lastCommit = (path) => {
     commitDates.set(path, date);
   }
   return date;
-};
-
-/** @type {(locale: string, segments: string[]) => string[]} */
-const sourcesOf = (locale, [section, slug]) => {
-  const page = 'src/pages/[lang]';
-  const data = 'src/data';
-
-  if (!section) {
-    return [`${page}/index.astro`, `${page}/_sections`, `${data}/profile.ts`, `${data}/projects.ts`];
-  }
-  if (section === 'cv') {
-    return [
-      `${page}/[cv]`,
-      `${data}/profile.ts`,
-      `${data}/experience.ts`,
-      `${data}/education.ts`,
-      `${data}/projects.ts`,
-    ];
-  }
-  if (section === 'experience') {
-    return [`${page}/[experience]`, `${data}/experience.ts`, `${data}/education.ts`];
-  }
-  if (section === 'projects') {
-    return slug
-      ? [`src/content/projects/${locale}/${slug}.md`, `${page}/[projects]/[slug].astro`, `${data}/projects.ts`]
-      : [
-          `${page}/[projects]/index.astro`,
-          `${page}/[projects]/_sections/ProjectIndexSection.astro`,
-          `${data}/projects.ts`,
-        ];
-  }
-  return [];
 };
 
 /** @type {(locale: string, segments: string[]) => string | undefined} */
