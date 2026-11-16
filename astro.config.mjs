@@ -14,6 +14,7 @@ import { createLastmod } from './src/seo/sitemap/lastmod.ts';
 import { createSerialize } from './src/seo/sitemap/links.ts';
 import { sourcesOf } from './src/seo/sitemap/sources.ts';
 import { SITE } from './src/site.ts';
+import { codeThemes } from './src/styles/code-themes.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -84,7 +85,7 @@ export default defineConfig({
      * anchors instead — there are four of them.
      */
     shikiConfig: {
-      themes: { light: 'github-light', dark: 'github-dark' },
+      themes: codeThemes,
       wrap: false,
     },
   },

@@ -11,6 +11,7 @@ import type { DownloadSources, StoreCounts } from '@data/downloads';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 import type { ProjectStatus } from '@/schemas/project';
+import { codeThemes } from '@/styles/code-themes';
 
 interface Props {
   name: string;
@@ -77,11 +78,7 @@ const t = useTranslations(lang);
             style={visual.focus ? `object-position: ${visual.focus}` : undefined}
           />
         ) : (
-          <Code
-            code={visual.code}
-            lang={visual.lang as never}
-            themes={{ light: 'github-light', dark: 'github-dark' }}
-          />
+          <Code code={visual.code} lang={visual.lang as never} themes={codeThemes} />
         )}
       </div>
     </div>
