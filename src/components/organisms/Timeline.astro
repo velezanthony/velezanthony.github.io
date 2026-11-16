@@ -6,11 +6,12 @@ import { education } from '@data/education';
 import { formatRange } from '@i18n/format';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
+import type { Variant } from '@/components/variant';
 
 interface Props {
   lang: Locale;
   /** `cv` switches every child to the denser, page-costed rendering. */
-  variant?: 'site' | 'cv';
+  variant?: Variant;
   limit?: number;
   /** Forwarded to each item. Depends on what precedes the timeline. */
   headingLevel?: 2 | 3;

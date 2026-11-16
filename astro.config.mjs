@@ -13,8 +13,7 @@ import { git } from './src/seo/sitemap/git.ts';
 import { createLastmod } from './src/seo/sitemap/lastmod.ts';
 import { createSerialize } from './src/seo/sitemap/links.ts';
 import { sourcesOf } from './src/seo/sitemap/sources.ts';
-
-const SITE = 'https://velezanthony.github.io';
+import { SITE } from './src/site.ts';
 
 // https://astro.build/config
 export default defineConfig({

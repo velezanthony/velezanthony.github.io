@@ -1,10 +1,12 @@
 ---
+import type { Variant } from '@/components/variant';
+
 interface Props {
   items: string[];
   /** Optional label rendered before the list, e.g. "Stack". */
   label?: string;
   /** `cv` drops to the document scale's smallest step. */
-  size?: 'site' | 'cv';
+  size?: Variant;
   /** Label above the list instead of inline — for narrow metadata columns. */
   stacked?: boolean;
   class?: string;

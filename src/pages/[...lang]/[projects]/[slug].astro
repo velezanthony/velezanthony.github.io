@@ -1,7 +1,7 @@
 ---
-import { execFileSync } from 'node:child_process';
 import { render } from 'astro:content';
-import { linkOf } from '@/schemas/project';
+import { commitDate } from '@/seo/commit-date';
+import { breadcrumb, softwareSourceCode, techArticle } from '@/seo/jsonld';
 import PageLayout from '@layouts/PageLayout.astro';
 import CaseStudySection from './_sections/CaseStudySection.astro';
 import { getProject, getProjectSlugs } from '@data/projects';
@@ -26,25 +26,9 @@ if (!project) throw new Error(`No project content for slug: ${slug}`);
 const { entry, translationPending } = project;
 const { Content } = await render(entry);
 
-/** Last commit that touched this entry, as an ISO date, or undefined.
- *
- * Read from git and not from a frontmatter field on purpose: a date somebody has to remember to
- * bump is a date that stops being true, and a stale `dateModified` is worse than none — it tells a
- * search engine the page is older than it is. A shallow checkout has no history for the file, and
- * `undefined` is the honest answer there. */
-function lastModified(file: string | undefined): string | undefined {
-  if (!file) return undefined;
-  try {
-    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], {
-      encoding: 'utf8',
-    }).trim();
-    return out || undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-const dateModified = lastModified(entry.filePath);
+/* Read from git and not from a frontmatter field on purpose: a date somebody has to remember to
+   bump is a date that stops being true, and a stale `dateModified` is worse than none. */
+const dateModified = entry.filePath ? commitDate(entry.filePath) : undefined;
 const indexUrl = new URL(path(lang, 'projects'), Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
@@ -61,53 +45,22 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'SoftwareSourceCode',
-        name: entry.data.name,
-        description: entry.data.tagline,
-        codeRepository: linkOf(entry.data.links, 'source'),
-        programmingLanguage: entry.data.stack,
-        license: 'https://opensource.org/licenses/MIT',
-        author: { '@id': new URL('/#anthony', Astro.site).href },
-        /* This page is the entity; every declared link is the same thing elsewhere. Without
-           `sameAs` a search engine has no way to tie the write-up to the published package, so
-           the package and the page compete instead of reinforcing each other. */
-        url: new URL(Astro.url.pathname, Astro.site).href,
-        sameAs: entry.data.links.map((l) => l.href),
-        runtimePlatform: entry.data.compat,
-        keywords: [...entry.data.stack, ...entry.data.targets].join(', ') || undefined,
-        dateModified,
-      })}
-    />
-    {/* The write-up IS an article, and saying so is what lets an answer engine quote it as one
-        instead of treating the page as a repository listing. */}
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'TechArticle',
-        headline: `${entry.data.name} · ${entry.data.headline}`,
-        description: entry.data.tagline,
-        url: pageUrl,
-        inLanguage: lang,
-        dateModified,
-        author: { '@id': new URL('/#anthony', Astro.site).href },
-        about: { '@type': 'SoftwareSourceCode', name: entry.data.name },
-      })}
+      set:html={JSON.stringify(softwareSourceCode(entry.data, pageUrl, dateModified))}
     />
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: routes.projects[lang], item: indexUrl },
-          { '@type': 'ListItem', position: 2, name: entry.data.name, item: pageUrl },
-        ],
-      })}
+      set:html={JSON.stringify(techArticle(entry.data, lang, pageUrl, dateModified))}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(
+        breadcrumb([
+          { name: routes.projects[lang], url: indexUrl },
+          { name: entry.data.name, url: pageUrl },
+        ]),
+      )}
     />
   </Fragment>
 

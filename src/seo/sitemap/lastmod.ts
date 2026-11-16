@@ -4,15 +4,16 @@ export type Git = (args: string[]) => string;
 type SourcesOf = (locale: string, segments: string[]) => string[];
 
 /**
- * A page's `<lastmod>`: the newest commit among the files it is built from.
+ * The date of the last commit that touched a file, or undefined.
  *
- * Git runs on the first date asked for, not when this is created — importing the config is not
- * a reason to shell out. Without full history there is no date at all: a shallow clone would
- * stamp every page with its one commit, which is wrong rather than missing.
+ * Git runs on the first date asked for, not when this is created — importing the config is not a
+ * reason to shell out. Without full history there is no date at all: shallow, `git log -- file`
+ * answers with the one commit there is, which stamps every file with today. Wrong is worse than
+ * missing.
  */
-export function createLastmod(git: Git, sourcesOf: SourcesOf) {
+export function createCommitDates(git: Git) {
   let complete: boolean | undefined;
-  const dates = new Map<string, string | null>();
+  const dates = new Map<string, string | undefined>();
 
   const historyIsComplete = () => {
     if (complete === undefined) {
@@ -27,25 +28,28 @@ export function createLastmod(git: Git, sourcesOf: SourcesOf) {
     return complete;
   };
 
-  const lastCommit = (path: string): string | null => {
-    let date = dates.get(path);
-    if (date === undefined) {
+  return (path: string): string | undefined => {
+    if (!historyIsComplete()) return undefined;
+    if (!dates.has(path)) {
+      let date: string | undefined;
       try {
-        date = git(['log', '-1', '--format=%cI', '--', path]) || null;
+        date = git(['log', '-1', '--format=%cI', '--', path]) || undefined;
       } catch {
-        date = null;
+        date = undefined;
       }
       dates.set(path, date);
     }
-    return date;
+    return dates.get(path);
   };
+}
 
-  return (locale: string, segments: string[]): string | undefined => {
-    if (!historyIsComplete()) return undefined;
-    return sourcesOf(locale, segments)
-      .map(lastCommit)
-      .filter((date): date is string => date !== null)
+/** A page's `<lastmod>`: the newest commit among the files it is built from. */
+export function createLastmod(git: Git, sourcesOf: SourcesOf) {
+  const commitDate = createCommitDates(git);
+  return (locale: string, segments: string[]): string | undefined =>
+    sourcesOf(locale, segments)
+      .map(commitDate)
+      .filter((date): date is string => date !== undefined)
       .sort()
       .at(-1);
-  };
 }

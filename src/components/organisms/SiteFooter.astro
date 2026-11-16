@@ -2,6 +2,7 @@
 import ContactList from '@molecules/ContactList.astro';
 import Link from '@atoms/Link.astro';
 import { contact, profile } from '@data/profile';
+import { SITE_HOST, SITE_SOURCE } from '@/site';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
@@ -24,8 +25,8 @@ const year = new Date().getFullYear();
 
       <div class="md:justify-self-end md:text-right">
         <p class="label mb-4 text-faint">{t('Código fuente')}</p>
-        <Link href="https://github.com/velezanthony/velezanthony.github.io" variant="quiet">
-          <span class="font-mono text-sm">velezanthony.github.io</span>
+        <Link href={SITE_SOURCE} variant="quiet">
+          <span class="font-mono text-sm">{SITE_HOST}</span>
         </Link>
       </div>
     </div>
@@ -36,7 +37,7 @@ const year = new Date().getFullYear();
       </p>
 
       <p>
-        <Link href="https://github.com/velezanthony/velezanthony.github.io" variant="quiet">
+        <Link href={SITE_SOURCE} variant="quiet">
           {t('Portfolio hecho con Astro')}
         </Link>
       </p>

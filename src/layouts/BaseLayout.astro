@@ -2,12 +2,12 @@
 import { Font } from 'astro:assets';
 import { PUBLIC_GTM_ID } from 'astro:env/client';
 import '@styles/theme.css';
-import { contact, profile, spokenLanguages } from '@data/profile';
-import { education } from '@data/education';
-import { experience } from '@data/experience';
-import { alternateLocale, path, useTranslations } from '@i18n/utils';
+import { profile } from '@data/profile';
+import { alternateLocale, useTranslations } from '@i18n/utils';
 import { locales, ogLocales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
+import { person } from '@/seo/jsonld';
+import { themeColors } from '@styles/theme-colors';
 
 interface Props {
   lang: Locale;
@@ -93,8 +93,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#fcfefe" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0e1111" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content={themeColors.light} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={themeColors.dark} media="(prefers-color-scheme: dark)" />
 
     <Font cssVariable="--font-plex-sans" preload />
     <Font cssVariable="--font-plex-mono" />
@@ -102,62 +102,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        /* Stable across all 19 pages: without it Google sees nineteen
-           separate people instead of one with nineteen mentions. */
-        '@id': new URL('/#anthony', Astro.site).href,
-        mainEntityOfPage: canonical.href,
-        name: profile.name,
-        email: 'mailto:velezanthony2000@gmail.com',
-        knowsAbout: [
-          'Django',
-          'Python',
-          'Flask',
-          'PHP',
-          'Laravel',
-          'Symfony',
-          'C#',
-          '.NET',
-          'Java',
-          'TypeScript',
-          'Angular',
-          'React',
-          'HTMX',
-          'PostgreSQL',
-          'MySQL',
-          'SQL Server',
-          'AWS',
-          'Docker',
-          'GitHub Actions',
-          'Linux',
-          'Nginx',
-          'Proxmox',
-          'DNS',
-          'Asterisk',
-          'VoIP',
-          'Software architecture',
-          'Multi-tenancy',
-        ],
-        description: profile.headline[lang],
-        url: new URL(path(lang), Astro.site).href,
-        image: new URL('/photo.png', Astro.site).href,
-        jobTitle: experience[0]!.role[lang],
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: 'Hernani',
-          addressRegion: 'Gipuzkoa',
-          addressCountry: 'ES',
-        },
-        knowsLanguage: spokenLanguages.map((language) => language.code),
-        alumniOf: education.map((study) => ({
-          '@type': 'EducationalOrganization',
-          name: study.school,
-        })),
-        worksFor: { '@type': 'Organization', name: experience[0]!.company },
-        sameAs: contact.filter((c) => c.href.startsWith('http')).map((c) => c.href),
-      })}
+      set:html={JSON.stringify(person(lang, canonical.href))}
     />
     <script is:inline>
       /* Runs before first paint: without it the page renders in the system

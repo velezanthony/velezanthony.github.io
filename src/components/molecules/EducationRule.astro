@@ -2,10 +2,11 @@
 /** Marks a stretch of the timeline spent studying. It names which one and when, because two
     unlabelled rules read as a rendering fault; the full title lives in the education section. */
 import type { Study } from '@data/types';
+import type { Variant } from '@/components/variant';
 
 interface Props {
   study: Study;
-  variant?: 'site' | 'cv';
+  variant?: Variant;
 }
 
 const { study, variant = 'site' } = Astro.props;

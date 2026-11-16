@@ -5,7 +5,6 @@ import { localeOfEntry } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
-export type ProjectStatus = ProjectEntry['data']['status'];
 
 export interface LocalisedProject {
   entry: ProjectEntry;

@@ -1,4 +1,7 @@
 import type { ContactLink, SpokenLanguage, StackGroup, Localized } from '@data/types';
+import { SITE, SITE_HOST } from '@/site';
+
+export const email = 'velezanthony2000@gmail.com';
 
 export const profile = {
   name: 'Anthony Velez Tapia',
@@ -103,8 +106,8 @@ export const seo = {
 export const contact: ContactLink[] = [
   {
     label: 'Email',
-    href: 'mailto:velezanthony2000@gmail.com',
-    handle: 'velezanthony2000@gmail.com',
+    href: `mailto:${email}`,
+    handle: email,
     icon: 'mail',
   },
   {
@@ -129,8 +132,8 @@ export const cvContact: ContactLink[] = [
   contact[0]!,
   {
     label: 'Portfolio',
-    href: 'https://velezanthony.github.io',
-    handle: 'velezanthony.github.io',
+    href: SITE,
+    handle: SITE_HOST,
     icon: 'external',
   },
   ...contact.slice(1),
@@ -140,4 +143,38 @@ export const spokenLanguages: SpokenLanguage[] = [
   { code: 'es', name: { es: 'Castellano', en: 'Spanish' }, level: { es: 'Nativo', en: 'Native' } },
   { code: 'eu', name: { es: 'Euskera', en: 'Basque' }, level: { es: 'Nativo', en: 'Native' } },
   { code: 'en', name: { es: 'Inglés', en: 'English' }, level: { es: 'B1', en: 'B1' } },
+];
+
+/** Where the person is, for the JSON-LD. Town-level on purpose. */
+export const address = { locality: 'Hernani', region: 'Gipuzkoa', country: 'ES' };
+
+/** What the JSON-LD says the person knows. Technology names, so not translated. */
+export const knowsAbout = [
+  'Django',
+  'Python',
+  'Flask',
+  'PHP',
+  'Laravel',
+  'Symfony',
+  'C#',
+  '.NET',
+  'Java',
+  'TypeScript',
+  'Angular',
+  'React',
+  'HTMX',
+  'PostgreSQL',
+  'MySQL',
+  'SQL Server',
+  'AWS',
+  'Docker',
+  'GitHub Actions',
+  'Linux',
+  'Nginx',
+  'Proxmox',
+  'DNS',
+  'Asterisk',
+  'VoIP',
+  'Software architecture',
+  'Multi-tenancy',
 ];

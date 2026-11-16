@@ -5,6 +5,9 @@ import { z } from 'zod';
  * What a link IS, declared rather than guessed from its host. The docs are moving off
  * `github.io/<repo>/` and into this site, which would quietly break any host regex.
  */
+export const projectStatuses = ['maintained', 'experimental', 'unreleased'] as const;
+export type ProjectStatus = (typeof projectStatuses)[number];
+
 export const linkKinds = ['source', 'docs', 'package'] as const;
 export type LinkKind = (typeof linkKinds)[number];
 
@@ -41,7 +44,7 @@ export const projectSchema = ({ image }: SchemaContext) =>
         and turns the list back into a paragraph. One clause, no dash — the CV draws its own. */
       cvLine: z.string().max(100),
 
-      status: z.enum(['maintained', 'experimental', 'unreleased']),
+      status: z.enum(projectStatuses),
       role: z.string(),
 
       /** Ascending. Controls the order of the index. */
