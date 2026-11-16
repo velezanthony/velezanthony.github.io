@@ -76,6 +76,31 @@ describe('projectSchema', () => {
     expect(errorsOf({ ...valid, cvLine: 'x'.repeat(101) })).toEqual(['cvLine']);
   });
 
+  describe('downloads', () => {
+    it('is optional', () => {
+      expect(errorsOf(valid)).toEqual([]);
+    });
+
+    it('names the package in each store it is published to', () => {
+      const downloads = {
+        openvsx: 'velezanthony.cotton-props',
+        marketplace: 'velezanthony.cotton-props',
+      };
+      expect(errorsOf({ ...valid, downloads })).toEqual([]);
+    });
+
+    /* The VS Code stores address an extension as publisher.name; anything else asks for nothing. */
+    it.each(['openvsx', 'marketplace'])('wants publisher.name for %s', (store) => {
+      expect(errorsOf({ ...valid, downloads: { [store]: 'cotton-props' } })).toEqual([
+        `downloads.${store}`,
+      ]);
+    });
+
+    it('rejects a store it cannot read', () => {
+      expect(errorsOf({ ...valid, downloads: { npm: 'x' } })).toEqual(['downloads']);
+    });
+  });
+
   describe('visual', () => {
     /* Every card shows one, so none may be missing: a card without it breaks the even rows. */
     it('is required', () => {

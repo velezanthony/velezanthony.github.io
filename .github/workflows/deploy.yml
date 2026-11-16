@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Download counts are read from PyPI and the VS Code stores at build time; a static page keeps
+  # the number it was built with. A weekly rebuild keeps it from going stale between pushes.
+  schedule:
+    - cron: '0 6 * * 1'
 
 # `deploy-pages` authenticates with an OIDC token, so it needs `id-token`.
 permissions:

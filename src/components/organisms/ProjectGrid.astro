@@ -7,6 +7,8 @@ import type { Locale } from '@i18n/ui';
 interface Props {
   lang: Locale;
   projects: LocalisedProject[];
+  /** Download counts worded for the page, by slug. */
+  downloads?: Record<string, string>;
   /** Forwarded to each card. Depends on what precedes the grid. */
   headingLevel?: 2 | 3;
   /** Close the list with a rule. Off inside a band, whose own edge already is one. */
@@ -14,7 +16,14 @@ interface Props {
   class?: string;
 }
 
-const { lang, projects, headingLevel = 3, closed = true, class: className } = Astro.props;
+const {
+  lang,
+  projects,
+  downloads = {},
+  headingLevel = 3,
+  closed = true,
+  class: className,
+} = Astro.props;
 ---
 
 <div class:list={[closed && 'border-b border-rule', className]}>
@@ -23,6 +32,7 @@ const { lang, projects, headingLevel = 3, closed = true, class: className } = As
       name={entry.data.name}
       tagline={entry.data.tagline}
       status={entry.data.status}
+      downloads={downloads[entry.data.slug]}
       stack={entry.data.stack}
       targets={entry.data.targets}
       visual={entry.data.visual}

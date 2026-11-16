@@ -69,4 +69,16 @@ describe('CaseStudySection sidebar', () => {
       expect(classes, text(label)).not.toContain('text-muted');
     }
   });
+
+  it('lists the download count as a field when there is one', async () => {
+    const doc = await render(CaseStudySection, { ...props, downloads: '811 descargas al mes' });
+    const label = [...doc.querySelectorAll('aside p.label')].find((l) => text(l) === 'Descargas');
+    expect(label).toBeDefined();
+    expect(text(label!.nextElementSibling)).toBe('811 descargas al mes');
+  });
+
+  it('leaves the field out without a number', async () => {
+    const doc = await render(CaseStudySection, props);
+    expect([...doc.querySelectorAll('aside p.label')].map(text)).not.toContain('Descargas');
+  });
 });

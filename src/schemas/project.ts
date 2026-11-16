@@ -53,6 +53,15 @@ const visualOf = (image: SchemaContext['image']) =>
     }),
   ]);
 
+const extensionId = z.string().regex(/^[\w-]+\.[\w-]+$/, 'publisher.name');
+
+/** The stores a project's download count is read from at build time. */
+const downloads = z.strictObject({
+  pypi: z.string().min(1).optional(),
+  openvsx: extensionId.optional(),
+  marketplace: extensionId.optional(),
+});
+
 export const projectSchema = ({ image }: SchemaContext) =>
   z.object({
     /** Stable across locales — it is the URL segment, and the file name. */
@@ -107,4 +116,6 @@ export const projectSchema = ({ image }: SchemaContext) =>
     todo: z.array(z.string()).default([]),
 
     visual: visualOf(image),
+
+    downloads: downloads.optional(),
   });

@@ -47,6 +47,8 @@ visual:
   kind: image
   src: ../../../assets/projects/gallery-detail.png
   alt: A component detail with its generated controls
+downloads:
+  pypi: django-cotton-gallery
 ---
 
 ## The problem

@@ -15,6 +15,8 @@ interface Props {
   name: string;
   tagline: string;
   status: ProjectStatus;
+  /** Already worded with its unit. Absent when no store answered. */
+  downloads?: string;
   role: string;
   stack: string[];
   /** What it is built FOR, as opposed to what it is built with. */
@@ -36,6 +38,7 @@ const {
   tagline,
   status,
   role,
+  downloads,
   stack,
   targets,
   compat,
@@ -102,6 +105,13 @@ const t = useTranslations(lang);
         <p class="label mb-2 text-faint">{t('Rol')}</p>
         <p class="text-sm text-ink">{role}</p>
       </div>
+
+      {downloads && (
+        <div>
+          <p class="label mb-2 text-faint">{t('Descargas')}</p>
+          <p class="text-sm text-ink">{downloads}</p>
+        </div>
+      )}
 
       {stack.length > 0 && (
         <div>

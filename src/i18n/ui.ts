@@ -48,6 +48,7 @@ export const en = {
   'Sin publicar': 'Unreleased',
   Restricciones: 'Constraints',
   Stack: 'Stack',
+  Descargas: 'Downloads',
   Para: 'For',
   Compatibilidad: 'Compatibility',
   Calidad: 'Quality',

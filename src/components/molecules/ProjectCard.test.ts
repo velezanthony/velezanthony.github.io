@@ -49,6 +49,18 @@ describe('ProjectCard', () => {
     expect([...doc.querySelectorAll('span.label')].map(text)).not.toContain('For');
   });
 
+  describe('downloads', () => {
+    it('shows them under the status', async () => {
+      const doc = await render(ProjectCard, { ...props, downloads: '811 downloads a month' });
+      const line = [...doc.querySelectorAll('p')].find((p) => text(p) === '811 downloads a month');
+      expect(line).toBeDefined();
+    });
+
+    it('shows nothing when there is no number', async () => {
+      expect(text(await render(ProjectCard, props))).not.toMatch(/downloads/);
+    });
+  });
+
   describe('visual', () => {
     const frame = async (visual: unknown) =>
       (await render(ProjectCard, { ...props, visual })).querySelector('.card-visual')!;

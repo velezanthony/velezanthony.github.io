@@ -57,6 +57,8 @@ visual:
 
     # SnakeORM
     Truck.maker.nation.name == "España"
+downloads:
+  pypi: snake-orm
 ---
 
 ## The problem

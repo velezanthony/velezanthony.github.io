@@ -40,6 +40,9 @@ visual:
   src: ../../../assets/projects/props-hover.png
   alt: Documentación del componente al pasar el ratón
   focus: '50% 18%'
+downloads:
+  openvsx: velezanthony.cotton-props
+  marketplace: velezanthony.cotton-props
 ---
 
 ## El problema
