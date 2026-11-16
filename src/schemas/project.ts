@@ -1,4 +1,3 @@
-import type { SchemaContext } from 'astro:content';
 import { z } from 'zod';
 
 /**
@@ -32,69 +31,58 @@ const listItem = z
   .string()
   .refine((item) => !item.includes('·'), 'one item per entry, without a written separator');
 
-export const projectSchema = ({ image }: SchemaContext) =>
-  z
-    .object({
-      /** Stable across locales — it is the URL segment, and the file name. */
-      slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'lowercase words joined by single dashes'),
-      name: z.string(),
+/* No field takes an image: index cards carry none, and the write-ups embed theirs in Markdown.
+   Astro's schema context, with its `image()` helper, is therefore not needed. */
+export const projectSchema = () =>
+  z.object({
+    /** Stable across locales — it is the URL segment, and the file name. */
+    slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'lowercase words joined by single dashes'),
+    name: z.string(),
 
-      /** Leads the `<title>`. The phrase someone would actually search for —
+    /** Leads the `<title>`. The phrase someone would actually search for —
         the package name alone has no search volume yet. */
-      headline: z.string(),
+    headline: z.string(),
 
-      tagline: z.string(),
+    tagline: z.string(),
 
-      /** The CV line. Required rather than falling back to `tagline`: that one is written as a
+    /** The CV line. Required rather than falling back to `tagline`: that one is written as a
         meta description and runs past 140 characters, which on paper is two lines per tool
         and turns the list back into a paragraph. One clause, no dash — the CV draws its own. */
-      cvLine: z.string().max(100),
+    cvLine: z.string().max(100),
 
-      status: z.enum(projectStatuses),
-      role: z.string(),
+    status: z.enum(projectStatuses),
+    role: z.string(),
 
-      /** Ascending. Controls the order of the index. */
-      order: z.int(),
+    /** Ascending. Controls the order of the index. */
+    order: z.int(),
 
-      /** Appears in "En qué estoy trabajando" on the home page. */
-      now: z.boolean().default(false),
+    /** Appears in "En qué estoy trabajando" on the home page. */
+    now: z.boolean().default(false),
 
-      /** Appears in the home page's selected work. */
-      featured: z.boolean().default(false),
+    /** Appears in the home page's selected work. */
+    featured: z.boolean().default(false),
 
-      /** What it is built WITH. Implementation only. */
-      stack: z.array(listItem).default([]),
+    /** What it is built WITH. Implementation only. */
+    stack: z.array(listItem).default([]),
 
-      /* Built FOR, not built with. */
-      targets: z.array(listItem).default([]),
+    /* Built FOR, not built with. */
+    targets: z.array(listItem).default([]),
 
-      /** Declared support range, e.g. `Python ≥ 3.11`. */
-      compat: z.array(listItem).default([]),
+    /** Declared support range, e.g. `Python ≥ 3.11`. */
+    compat: z.array(listItem).default([]),
 
-      quality: z.array(z.string()).default([]),
+    quality: z.array(z.string()).default([]),
 
-      constraints: z.array(z.string()).default([]),
+    constraints: z.array(z.string()).default([]),
 
-      links: z
-        .array(link)
-        .refine(
-          (links) => single.every((kind) => links.filter((l) => l.kind === kind).length <= 1),
-          `one link at most of kind ${single.join(' and ')}`,
-        )
-        .default([]),
+    links: z
+      .array(link)
+      .refine(
+        (links) => single.every((kind) => links.filter((l) => l.kind === kind).length <= 1),
+        `one link at most of kind ${single.join(' and ')}`,
+      )
+      .default([]),
 
-      /** Rendered as visible placeholders. Never silently dropped. */
-      todo: z.array(z.string()).default([]),
-
-      thumb: image().optional(),
-      thumbAlt: z.string().optional(),
-    })
-    /* A thumbnail without its text renders `alt=""`, which says "decorative" — silently. */
-    .superRefine(({ thumb, thumbAlt }, ctx) => {
-      if (thumb !== undefined && thumbAlt === undefined) {
-        ctx.addIssue({ code: 'custom', path: ['thumbAlt'], message: 'a thumb needs its alt text' });
-      }
-      if (thumbAlt !== undefined && thumb === undefined) {
-        ctx.addIssue({ code: 'custom', path: ['thumb'], message: 'alt text without a thumb' });
-      }
-    });
+    /** Rendered as visible placeholders. Never silently dropped. */
+    todo: z.array(z.string()).default([]),
+  });

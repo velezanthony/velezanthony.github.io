@@ -42,8 +42,6 @@ links:
   - label: Source
     kind: source
     href: https://github.com/velezanthony/django-cotton-gallery
-thumb: ../../../assets/projects/gallery-detail.png
-thumbAlt: A component detail with its controls
 todo: []
 ---
 

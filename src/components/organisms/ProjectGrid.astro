@@ -23,8 +23,6 @@ const { lang, projects, headingLevel = 3, class: className } = Astro.props;
       status={entry.data.status}
       stack={entry.data.stack}
       targets={entry.data.targets}
-      thumb={entry.data.thumb}
-      thumbAlt={entry.data.thumbAlt}
       href={path(lang, 'projects', entry.data.slug)}
       lang={lang}
       headingLevel={headingLevel}

@@ -34,8 +34,6 @@ links:
   - label: Source
     kind: source
     href: https://github.com/velezanthony/cotton-props
-thumb: ../../../assets/projects/props-hover.png
-thumbAlt: Component documentation on hover
 todo: []
 ---
 

@@ -34,8 +34,6 @@ links:
   - label: Código
     kind: source
     href: https://github.com/velezanthony/cotton-props
-thumb: ../../../assets/projects/props-hover.png
-thumbAlt: Documentación del componente al pasar el ratón
 todo: []
 ---
 

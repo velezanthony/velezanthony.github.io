@@ -1,11 +1,9 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { z } from 'zod';
 
 import { linkOf, projectSchema } from './project';
 
-/* `image()` needs Astro's asset pipeline; a path string stands in for it here. */
-const schema = projectSchema({ image: () => z.string() } as never);
+const schema = projectSchema();
 
 const valid = {
   slug: 'snake-orm',
@@ -75,16 +73,12 @@ describe('projectSchema', () => {
     expect(errorsOf({ ...valid, cvLine: 'x'.repeat(101) })).toEqual(['cvLine']);
   });
 
-  /* A thumbnail without its text renders `alt=""`, which says "decorative" — silently. */
-  it.each([
-    [{ thumb: 'a.png' }, 'thumbAlt'],
-    [{ thumbAlt: 'A screenshot' }, 'thumb'],
-  ])('wants thumb and thumbAlt together: %j', (extra, missing) => {
-    expect(errorsOf({ ...valid, ...extra })).toEqual([missing]);
-  });
-
-  it('accepts thumb and thumbAlt together', () => {
-    expect(errorsOf({ ...valid, thumb: 'a.png', thumbAlt: 'A screenshot' })).toEqual([]);
+  /* Index cards carry no image: at card size a screenshot was an unreadable smudge, and only two
+     of five projects had one. The screenshots live in each write-up. */
+  it('keeps no thumbnail', () => {
+    const parsed = schema.parse({ ...valid, thumb: 'a.png', thumbAlt: 'A screenshot' });
+    expect(parsed).not.toHaveProperty('thumb');
+    expect(parsed).not.toHaveProperty('thumbAlt');
   });
 });
 
