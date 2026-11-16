@@ -56,13 +56,9 @@ const t = useTranslations(lang);
     color: var(--color-accent);
   }
 
-  /* Show the icon of the theme the button switches TO, not the current one. */
+  /* Show the icon of the current theme: sun in light, moon in dark. A choice overrides the
+     system's preference both ways, hence the light rules at the end. */
   .icon-moon {
-    display: none;
-  }
-
-  :root[data-theme='dark'] .icon-moon,
-  :root:not([data-theme='light']) .icon-moon {
     display: none;
   }
 
