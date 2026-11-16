@@ -40,7 +40,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Profile',
     '',
-    `- location: ${profile.location}, Spain — ${profile.availability.en.replaceAll(' · ', ', ')}`,
+    `- location: ${profile.location}, Spain — ${profile.availability.en.join(', ')}`,
     `- languages: ${spokenLanguages.map((l) => l.name.en).join(', ')}`,
     ...stackGroups.map((group) => `- ${group.label.en.toLowerCase()}: ${group.items}`),
     ...contact.map((link) => `- ${link.label.toLowerCase()}: ${link.handle}`),

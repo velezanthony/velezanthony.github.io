@@ -26,6 +26,12 @@ export function linkOf(links: ProjectLink[], kind: LinkKind): string | undefined
   return links.find((l) => l.kind === kind)?.href;
 }
 
+/* One entry of a list the site renders with its own separators. A middot written into it doubles
+   them, in the wrong colour, and makes three items one that cannot wrap. */
+const listItem = z
+  .string()
+  .refine((item) => !item.includes('·'), 'one item per entry, without a written separator');
+
 export const projectSchema = ({ image }: SchemaContext) =>
   z
     .object({
@@ -57,13 +63,13 @@ export const projectSchema = ({ image }: SchemaContext) =>
       featured: z.boolean().default(false),
 
       /** What it is built WITH. Implementation only. */
-      stack: z.array(z.string()).default([]),
+      stack: z.array(listItem).default([]),
 
       /* Built FOR, not built with. */
-      targets: z.array(z.string()).default([]),
+      targets: z.array(listItem).default([]),
 
       /** Declared support range, e.g. `Python ≥ 3.11`. */
-      compat: z.array(z.string()).default([]),
+      compat: z.array(listItem).default([]),
 
       quality: z.array(z.string()).default([]),
 

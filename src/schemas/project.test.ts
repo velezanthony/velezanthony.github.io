@@ -61,6 +61,12 @@ describe('projectSchema', () => {
     },
   );
 
+  /* Lists are rendered with their own separators; one written into an item doubles them, in the
+     wrong colour, and turns three items into one that cannot wrap. */
+  it.each(['stack', 'targets', 'compat'])('rejects a middot inside a %s item', (field) => {
+    expect(errorsOf({ ...valid, [field]: ['PostgreSQL · SQLite'] })).toEqual([`${field}.0`]);
+  });
+
   it('rejects a fractional order', () => {
     expect(errorsOf({ ...valid, order: 1.5 })).toEqual(['order']);
   });

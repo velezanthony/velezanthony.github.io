@@ -18,10 +18,11 @@ export const profile = {
 
   location: 'Hernani, Gipuzkoa',
 
+  /** A list, not a sentence: rendered with separators that never start or end a line. */
   availability: {
-    es: 'Híbrido en Gipuzkoa · Remoto en España · Proyectos freelance',
-    en: 'Hybrid in Gipuzkoa · Remote within Spain · Freelance projects',
-  } satisfies Localized,
+    es: ['Híbrido en Gipuzkoa', 'Remoto en España', 'Proyectos freelance'],
+    en: ['Hybrid in Gipuzkoa', 'Remote within Spain', 'Freelance projects'],
+  } satisfies Localized<string[]>,
 
   photo: '/photo.png',
 } as const;

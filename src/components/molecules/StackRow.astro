@@ -1,4 +1,5 @@
 ---
+import InlineList from '@atoms/InlineList.astro';
 import type { Variant } from '@/components/variant';
 
 interface Props {
@@ -32,28 +33,23 @@ const sizes = {
 ---
 
 {items.length > 0 && (
-  <p
+  <div
     class:list={[
-      'font-mono',
+      'stack-row font-mono',
       field ? 'text-mono-list text-ink' : ['text-faint', sizes[size]],
+      label && !stacked && 'flex items-baseline',
       className,
     ]}
   >
     {label && stacked && <span class="label mb-1.5 block text-faint">{label}</span>}
-    {label && !stacked && <span class="mr-1.5 font-medium text-muted">{label}</span>}
-    {items.map((item, index) => (
-      <>
-        {/* One break point per item, always after the separator: margins
-              alone gave none and the list overflowed; spaces on both sides
-              gave one too many and lines started with a stray middot. */}
-        {index > 0 && ' '}
-        {item}
-        {index < items.length - 1 && (
-          <span class="text-rule" aria-hidden="true">
-            {' ·'}
-          </span>
-        )}
-      </>
-    ))}
-  </p>
+    {label && !stacked && <span class="mr-1.5 shrink-0 font-medium text-muted">{label}</span>}
+    <InlineList items={items} class="min-w-0 flex-1" />
+  </div>
 )}
+
+<style>
+  /* Three mono cells: the " · " the separator replaces. */
+  .stack-row {
+    --separator: 3ch;
+  }
+</style>

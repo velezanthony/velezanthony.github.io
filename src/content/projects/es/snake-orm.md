@@ -24,7 +24,9 @@ targets:
   - FastAPI
 compat:
   - 'Python ≥ 3.11'
-  - 'PostgreSQL · MySQL/MariaDB · SQLite'
+  - PostgreSQL
+  - MySQL/MariaDB
+  - SQLite
 quality:
   - 'Validado contra mypy y pyright, los dos'
   - 'La suite corre contra los tres motores de verdad, no contra dobles'

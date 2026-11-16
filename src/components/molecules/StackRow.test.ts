@@ -4,7 +4,7 @@ import { render } from '@/test/render';
 import StackRow from './StackRow.astro';
 
 const row = async (props: Record<string, unknown>) =>
-  (await render(StackRow, { items: ['Python', 'Django'], ...props })).querySelector('p')!;
+  (await render(StackRow, { items: ['Python', 'Django'], ...props })).querySelector('.stack-row')!;
 
 describe('StackRow', () => {
   /* Secondary metadata under a card or a CV entry: it should recede. */
@@ -25,6 +25,6 @@ describe('StackRow', () => {
   });
 
   it('renders nothing for an empty list', async () => {
-    expect((await render(StackRow, { items: [] })).querySelector('p')).toBeNull();
+    expect((await render(StackRow, { items: [] })).querySelector('.stack-row')).toBeNull();
   });
 });

@@ -37,7 +37,10 @@ describe('ProjectCard', () => {
     const doc = await render(ProjectCard, props);
     const label = [...doc.querySelectorAll('span.label')].find((span) => text(span) === 'For');
     expect(label).toBeDefined();
-    expect(text(label!.parentElement).replace(/^For/, '')).toBe('PostgreSQL · SQLite');
+    expect([...label!.parentElement!.querySelectorAll('li')].map(text)).toEqual([
+      'PostgreSQL',
+      'SQLite',
+    ]);
   });
 
   it('leaves out the targets and the image when there are none', async () => {
