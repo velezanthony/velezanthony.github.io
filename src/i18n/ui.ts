@@ -80,6 +80,16 @@ export const en = {
   '¿Prefieres inglés?': 'Prefer Spanish?',
 
   'Pendiente de escribir': 'Still to write',
+
+  Privacidad: 'Privacy',
+  'Política de privacidad': 'Privacy policy',
+  'Última actualización': 'Last updated',
+  'Preferencias de cookies': 'Cookie preferences',
+  'Aviso de cookies': 'Cookie notice',
+  'Uso cookies de analítica solo si las aceptas. La web funciona igual sin ellas.':
+    'I use analytics cookies only if you accept them. The site works the same without them.',
+  Aceptar: 'Accept',
+  Rechazar: 'Reject',
 } as const satisfies Record<string, string | Pending>;
 
 /** Every source string the UI is allowed to render. */
@@ -89,6 +99,7 @@ export const routes = {
   projects: { es: 'proyectos', en: 'projects' },
   experience: { es: 'experiencia', en: 'experience' },
   cv: { es: 'cv', en: 'cv' },
+  privacy: { es: 'privacidad', en: 'privacy' },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type RouteKey = keyof typeof routes;

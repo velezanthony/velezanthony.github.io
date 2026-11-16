@@ -3,6 +3,7 @@ import type { SitemapItem } from '@astrojs/sitemap';
 /* Relative imports only: `astro.config.mjs` loads this before the tsconfig aliases exist. */
 import { defaultLocale } from '../../i18n/ui';
 import type { Locale } from '../../i18n/ui';
+import type { RouteKey } from '../../i18n/ui';
 import { alternateLocale, localizePath, parsePath } from '../../i18n/utils';
 
 type Lastmod = (locale: Locale, segments: string[]) => string | undefined;
@@ -29,4 +30,16 @@ export function createSerialize(lastmod: Lastmod) {
 
     return item;
   };
+}
+
+/** Pages that exist for the visitor and not for search: they carry `noindex`. */
+const NOINDEX_ROUTES: RouteKey[] = ['privacy'];
+
+/**
+ * The sitemap integration's `filter`. A URL in the sitemap asks crawlers to fetch it, and a
+ * `noindex` page in it is a contradiction Search Console reports as an error.
+ */
+export function isIndexable(page: string): boolean {
+  const [route] = parsePath(new URL(page).pathname).segments;
+  return !NOINDEX_ROUTES.some((noindex) => noindex === route);
 }

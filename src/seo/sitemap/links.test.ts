@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { createSerialize } from './links';
+import { createSerialize, isIndexable } from './links';
 
 const site = 'https://velezanthony.github.io';
 
@@ -33,5 +33,16 @@ describe('createSerialize', () => {
   it('leaves lastmod out when there is no date', () => {
     const item = createSerialize(() => undefined)({ url: `${site}/` });
     expect(item).not.toHaveProperty('lastmod');
+  });
+});
+
+describe('isIndexable', () => {
+  it.each([`${site}/`, `${site}/proyectos/snake-orm/`, `${site}/en/cv/`])('keeps %s', (url) => {
+    expect(isIndexable(url)).toBe(true);
+  });
+
+  /* The policy is noindex: listing it would tell crawlers to fetch a page that says not to. */
+  it.each([`${site}/privacidad/`, `${site}/en/privacy/`])('leaves out %s', (url) => {
+    expect(isIndexable(url)).toBe(false);
   });
 });

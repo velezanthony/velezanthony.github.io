@@ -4,6 +4,7 @@ import SiteHeader from '@organisms/SiteHeader.astro';
 import SiteFooter from '@organisms/SiteFooter.astro';
 import BackToTop from '@organisms/BackToTop.astro';
 import { contact, profile } from '@data/profile';
+import { PUBLIC_GTM_ID } from 'astro:env/client';
 import type { Locale, RouteKey } from '@i18n/ui';
 
 /** Every public page except the print CV and the 404. */
@@ -14,9 +15,10 @@ interface Props {
   description: string;
   alternates: Record<Locale, string>;
   current?: RouteKey | 'home';
+  noindex?: boolean;
 }
 
-const { lang, title, bareTitle, description, alternates, current } = Astro.props;
+const { lang, title, bareTitle, description, alternates, current, noindex } = Astro.props;
 ---
 
 <BaseLayout
@@ -25,6 +27,7 @@ const { lang, title, bareTitle, description, alternates, current } = Astro.props
   bareTitle={bareTitle}
   description={description}
   alternates={alternates}
+  noindex={noindex}
 >
   <Fragment slot="head">
     <slot name="head" />
@@ -37,7 +40,13 @@ const { lang, title, bareTitle, description, alternates, current } = Astro.props
       <slot />
     </main>
 
-    <SiteFooter lang={lang} name={profile.name} contact={contact} year={new Date().getFullYear()} />
+    <SiteFooter
+      lang={lang}
+      name={profile.name}
+      contact={contact}
+      year={new Date().getFullYear()}
+      cookieControl={Boolean(PUBLIC_GTM_ID)}
+    />
   </div>
 
   <BackToTop lang={lang} />

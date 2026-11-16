@@ -3,7 +3,7 @@ import ContactList from '@molecules/ContactList.astro';
 import Link from '@atoms/Link.astro';
 import type { ContactLink } from '@data/types';
 import { SITE_HOST, SITE_SOURCE } from '@/site';
-import { useTranslations } from '@i18n/utils';
+import { path, useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
@@ -12,9 +12,11 @@ interface Props {
   contact: ContactLink[];
   /** Of the copyright line. Passed in so the footer renders the same whenever it is rendered. */
   year: number;
+  /** Whether the site asks for cookie consent, and so has a choice to reopen. */
+  cookieControl?: boolean;
 }
 
-const { lang, name, contact, year } = Astro.props;
+const { lang, name, contact, year, cookieControl = false } = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -39,11 +41,31 @@ const t = useTranslations(lang);
         © {year} {name}
       </p>
 
-      <p>
-        <Link href={SITE_SOURCE} variant="quiet">
-          {t('Portfolio hecho con Astro')}
-        </Link>
-      </p>
+      <ul class="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+        <li>
+          <Link href={path(lang, 'privacy')} variant="quiet">
+            {t('Privacidad')}
+          </Link>
+        </li>
+        {cookieControl && (
+          <li>
+            {/* A button, not a link: it acts on the page, it goes nowhere. Tailwind's preflight
+                sets `cursor: default` on buttons. */}
+            <button
+              type="button"
+              data-consent-open
+              class="inline-flex min-h-6 cursor-pointer items-center text-muted transition-colors hover:text-ink"
+            >
+              {t('Preferencias de cookies')}
+            </button>
+          </li>
+        )}
+        <li>
+          <Link href={SITE_SOURCE} variant="quiet">
+            {t('Portfolio hecho con Astro')}
+          </Link>
+        </li>
+      </ul>
     </div>
   </div>
 </footer>

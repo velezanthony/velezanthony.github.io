@@ -3,6 +3,8 @@
 export const THEME_KEY = 'theme';
 /** The locale of the last page visited, read back by the 404, which has no locale of its own. */
 export const LANG_KEY = 'lang';
+/** The visitor's answer to the cookie banner, in `localStorage`. */
+export const CONSENT_KEY = 'consent';
 
 /**
  * Storage access that cannot break the page. Private windows and blocked site data throw on

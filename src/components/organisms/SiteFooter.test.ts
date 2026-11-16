@@ -33,4 +33,31 @@ describe('SiteFooter', () => {
     ).querySelector('footer')!;
     expect([...footer.classList].some((c) => /^mt-/.test(c))).toBe(false);
   });
+
+  it('links to the privacy page of its language', async () => {
+    const en = await render(SiteFooter, { lang: 'en', name: 'Ada', contact, year: 1843 });
+    const es = await render(SiteFooter, { lang: 'es', name: 'Ada', contact, year: 1843 });
+    expect(en.querySelector('a[href="/en/privacy/"]')).not.toBeNull();
+    expect(es.querySelector('a[href="/privacidad/"]')).not.toBeNull();
+  });
+
+  /* Only a site that asks for consent has a choice to revisit. */
+  it('has no cookie control unless it is asked for one', async () => {
+    const without = await render(SiteFooter, { lang: 'en', name: 'Ada', contact, year: 1843 });
+    expect(without.querySelector('[data-consent-open]')).toBeNull();
+  });
+
+  it('offers a cookie control that is a button, since it acts rather than navigates', async () => {
+    const doc = await render(SiteFooter, {
+      lang: 'en',
+      name: 'Ada',
+      contact,
+      year: 1843,
+      cookieControl: true,
+    });
+    const control = doc.querySelector('[data-consent-open]')!;
+    expect(control.tagName).toBe('BUTTON');
+    expect(control.getAttribute('type')).toBe('button');
+    expect(text(control)).toBe('Cookie preferences');
+  });
 });

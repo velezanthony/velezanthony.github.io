@@ -150,6 +150,8 @@ describe('localizePath', () => {
     '/en/experience/',
     '/proyectos/snake-orm/',
     '/en/projects/snake-orm/',
+    '/privacidad/',
+    '/en/privacy/',
   ])('round-trips %s through parsePath', (pathname) => {
     const { lang, segments } = parsePath(pathname);
     expect(localizePath(lang, segments)).toBe(pathname);
