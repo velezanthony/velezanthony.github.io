@@ -78,7 +78,7 @@ const t = useTranslations(lang);
             style={visual.focus ? `object-position: ${visual.focus}` : undefined}
           />
         ) : (
-          <Code code={visual.code} lang={visual.lang as never} themes={codeThemes} />
+          <Code code={visual.code} lang={visual.lang as never} themes={codeThemes} wrap={null} />
         )}
       </div>
     </div>
