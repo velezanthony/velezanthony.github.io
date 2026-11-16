@@ -11,18 +11,31 @@ export interface DownloadSources {
 }
 
 /**
+ * Each store's own figure, kept apart so a fresh one can replace a stale one store by store.
+ * PyPI is downloads in the last month; the VS Code stores, all-time downloads.
+ */
+export interface StoreCounts {
+  pypi?: { count: number; approximate?: boolean };
+  openvsx?: number;
+  marketplace?: number;
+}
+
+/**
+ * Who asks. The build reads pypistats itself, exact. The browser cannot — pypistats sends no CORS
+ * header — and reads the same figure through shields.io, which rounds past a thousand.
+ */
+export type Asker = 'build' | 'browser';
+
+/**
  * Kept apart because the stores measure different things: PyPI's last month is reliable (its
  * "overall" covers only some 180 days), the VS Code stores publish only an all-time count.
- *
- * Read in the browser, not at build: every source here sends CORS headers. PyPI's figure comes
- * through shields.io, because pypistats sends none.
  */
 export interface Downloads {
   perMonth?: number;
   total?: number;
-  /** shields.io rounds past a thousand ("1.2k/month"): the count is then shown as such. */
+  /** A rounded shields.io figure ("1.2k/month"), shown as such. */
   approximate?: boolean;
-  /** The stores that answered, each linked to the public page where its number can be checked. */
+  /** The stores with a count, each linked to the public page where it can be checked. */
   sources: Citation[];
 }
 
@@ -43,6 +56,15 @@ const citations = {
   }),
 } satisfies Record<keyof DownloadSources, (id: string) => Citation>;
 
+/** Every store the project declares, cited, in a fixed order, with the store it names. */
+export function citationsOf(
+  sources: DownloadSources,
+): (Citation & { store: keyof DownloadSources })[] {
+  return (Object.keys(citations) as (keyof DownloadSources)[])
+    .filter((store) => sources[store] !== undefined)
+    .map((store) => ({ store, ...citations[store](sources[store]!) }));
+}
+
 const TIMEOUT_MS = 8000;
 
 async function json(fetcher: typeof fetch, url: string, init?: RequestInit): Promise<unknown> {
@@ -62,16 +84,22 @@ const SUFFIX = { '': 1, k: 1e3, M: 1e6, B: 1e9 } as const;
 /** shields.io's `value`: "811/month", or rounded past a thousand, "1.2k/month". */
 export function parseShieldsMonthly(
   value: unknown,
-): { count: number; approximate: boolean } | undefined {
+): { count: number; approximate?: true } | undefined {
   const match = typeof value === 'string' ? /^([\d.]+)([kMB]?)\/month$/.exec(value) : null;
   if (!match) return undefined;
   const [, digits, suffix] = match as unknown as [string, string, keyof typeof SUFFIX];
   const n = Number(digits);
   if (!Number.isFinite(n)) return undefined;
-  return { count: Math.round(n * SUFFIX[suffix]), approximate: suffix !== '' };
+  const result = { count: Math.round(n * SUFFIX[suffix]) };
+  return suffix === '' ? result : { ...result, approximate: true };
 }
 
-async function pypiPerMonth(fetcher: typeof fetch, name: string) {
+async function pypiMonthly(fetcher: typeof fetch, name: string, asker: Asker) {
+  if (asker === 'build') {
+    const body = await json(fetcher, `https://pypistats.org/api/packages/${name}/recent`);
+    const n = count((body as { data?: { last_month?: unknown } } | undefined)?.data?.last_month);
+    return n === undefined ? undefined : { count: n };
+  }
   const body = await json(fetcher, `https://img.shields.io/pypi/dm/${name}.json`);
   return parseShieldsMonthly((body as { value?: unknown } | undefined)?.value);
 }
@@ -102,49 +130,67 @@ async function marketplaceTotal(fetcher: typeof fetch, id: string) {
   return count(stats?.find((s) => s.statisticName === 'downloadCount')?.value);
 }
 
-/** Every store the project declares, cited: what the page renders before the browser asks. */
-export function citationsOf(sources: DownloadSources): Citation[] {
-  return (Object.keys(citations) as (keyof DownloadSources)[])
-    .filter((store) => sources[store] !== undefined)
-    .map((store) => citations[store](sources[store]!));
-}
-
 /**
- * Asks each store the project declares. A store that is down or answers oddly drops its share:
- * a missing number is shown as no number, and never fails the build.
+ * Asks each store the project declares. A store that is down or answers oddly is left out: a
+ * missing number is shown as no number, and never fails the build or the page.
  */
-export async function fetchDownloads(
+export async function fetchStoreCounts(
   sources: DownloadSources | undefined,
-  fetcher: typeof fetch = fetch,
-): Promise<Downloads> {
-  if (!sources) return { sources: [] };
-  const [perMonth, vsx, market] = await Promise.all([
-    sources.pypi ? pypiPerMonth(fetcher, sources.pypi) : undefined,
+  fetcher: typeof fetch,
+  asker: Asker,
+): Promise<StoreCounts> {
+  if (!sources) return {};
+  const [pypi, openvsx, marketplace] = await Promise.all([
+    sources.pypi ? pypiMonthly(fetcher, sources.pypi, asker) : undefined,
     sources.openvsx ? openVsxTotal(fetcher, sources.openvsx) : undefined,
     sources.marketplace ? marketplaceTotal(fetcher, sources.marketplace) : undefined,
   ]);
-  const totals = [vsx, market].filter((n): n is number => n !== undefined);
+  const counts: StoreCounts = {};
+  if (pypi) counts.pypi = pypi;
+  if (openvsx !== undefined) counts.openvsx = openvsx;
+  if (marketplace !== undefined) counts.marketplace = marketplace;
+  return counts;
+}
 
+/**
+ * The browser's fresh counts over the build's, store by store: a store the browser could not
+ * reach keeps its build figure. A rounded fresh PyPI figure does not replace an exact one.
+ */
+export function mergeCounts(built: StoreCounts, fresh: StoreCounts): StoreCounts {
+  const merged: StoreCounts = { ...built, ...fresh };
+  if (fresh.pypi?.approximate && built.pypi && !built.pypi.approximate) merged.pypi = built.pypi;
+  return merged;
+}
+
+/** Counts into what a page says: a monthly PyPI figure or a summed all-time one, with sources. */
+export function toDownloads(sources: DownloadSources, counts: StoreCounts): Downloads {
   const downloads: Downloads = { sources: [] };
-  if (perMonth !== undefined) {
-    downloads.perMonth = perMonth.count;
-    if (perMonth.approximate) downloads.approximate = true;
-    downloads.sources.push(citations.pypi(sources.pypi!));
+  if (counts.pypi && sources.pypi) {
+    downloads.perMonth = counts.pypi.count;
+    if (counts.pypi.approximate) downloads.approximate = true;
+    downloads.sources.push(citations.pypi(sources.pypi));
+  }
+  const totals: number[] = [];
+  if (counts.openvsx !== undefined && sources.openvsx) {
+    totals.push(counts.openvsx);
+    downloads.sources.push(citations.openvsx(sources.openvsx));
+  }
+  if (counts.marketplace !== undefined && sources.marketplace) {
+    totals.push(counts.marketplace);
+    downloads.sources.push(citations.marketplace(sources.marketplace));
   }
   if (totals.length) downloads.total = totals.reduce((a, b) => a + b, 0);
-  if (vsx !== undefined) downloads.sources.push(citations.openvsx(sources.openvsx!));
-  if (market !== undefined) downloads.sources.push(citations.marketplace(sources.marketplace!));
   return downloads;
 }
 
-/** One request per project per page: a card list asks once per project however it renders. */
-export function createDownloadsCache(fetcher: typeof fetch = fetch) {
-  const cache = new Map<string, Promise<Downloads>>();
-  return (sources: DownloadSources | undefined): Promise<Downloads> => {
+/** One request per project: cards and write-ups, in both languages, share it. */
+export function createCountsCache(fetcher: typeof fetch, asker: Asker) {
+  const cache = new Map<string, Promise<StoreCounts>>();
+  return (sources: DownloadSources | undefined): Promise<StoreCounts> => {
     const key = JSON.stringify(sources ?? {});
     let pending = cache.get(key);
     if (!pending) {
-      pending = fetchDownloads(sources, fetcher);
+      pending = fetchStoreCounts(sources, fetcher, asker);
       cache.set(key, pending);
     }
     return pending;
@@ -168,15 +214,4 @@ export function formatDownloads(
   }
   if (downloads.total !== undefined) return `${number(downloads.total)} ${words[lang].total}`;
   return undefined;
-}
-
-/** A count ready for a page: worded in its language, with the sources that back it. */
-export interface DownloadsLabel {
-  text: string;
-  sources: Citation[];
-}
-
-export function labelDownloads(downloads: Downloads, lang: Locale): DownloadsLabel | undefined {
-  const text = formatDownloads(downloads, lang);
-  return text === undefined ? undefined : { text, sources: downloads.sources };
 }

@@ -1,39 +1,42 @@
 ---
 import Link from '@atoms/Link.astro';
-import { citationsOf } from '@data/downloads';
-import type { DownloadSources } from '@data/downloads';
+import { citationsOf, formatDownloads, toDownloads } from '@data/downloads';
+import type { DownloadSources, StoreCounts } from '@data/downloads';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
   sources: DownloadSources | undefined;
+  /** What the build read, pypistats included. The default, kept wherever the browser gets less. */
+  counts: StoreCounts;
   lang: Locale;
   /** `card`: one faint line under a card's status. `field`: a labelled field of the sidebar. */
   variant?: 'card' | 'field';
 }
 
-const { sources, lang, variant = 'card' } = Astro.props;
+const { sources, counts, lang, variant = 'card' } = Astro.props;
 const t = useTranslations(lang);
 const cited = sources ? citationsOf(sources) : [];
+const text = sources ? formatDownloads(toDownloads(sources, counts), lang) : undefined;
+const data = {
+  'data-downloads': JSON.stringify(sources),
+  'data-counts': JSON.stringify(counts),
+  'data-lang': lang,
+};
 ---
 
 {/*
-  Rendered hidden and without a number: the count is read in the visitor's browser, so the page
-  never carries one frozen at build time. The script fills it in, drops the citation of a store
-  that did not answer, and shows the block. Without JavaScript it stays hidden.
+  The build's count is written in and shown: it is what a visitor without JavaScript sees, and
+  what stays if the browser's fresh request fails. The script then asks again and replaces it
+  store by store. Each declared store is cited; one with no count waits hidden.
 */}
 {sources &&
   cited.length > 0 &&
   (variant === 'card' ? (
-    <p
-      hidden
-      data-downloads={JSON.stringify(sources)}
-      data-lang={lang}
-      class="mt-2 font-mono text-xs text-faint"
-    >
-      <span data-downloads-text />
+    <p hidden={!text} {...data} class="mt-2 font-mono text-xs text-faint">
+      <span data-downloads-text>{text}</span>
       {cited.map((source) => (
-        <span data-downloads-item={source.href}>
+        <span data-downloads-item={source.store} hidden={counts[source.store] === undefined}>
           <span aria-hidden="true"> · </span>
           {/* Above the card's ::after overlay, or a click would open the write-up. */}
           <Link href={source.href} variant="quiet" class="relative z-10">
@@ -43,12 +46,14 @@ const cited = sources ? citationsOf(sources) : [];
       ))}
     </p>
   ) : (
-    <div hidden data-downloads={JSON.stringify(sources)} data-lang={lang}>
+    <div hidden={!text} {...data}>
       <p class="label mb-2 text-faint">{t('Descargas')}</p>
-      <p class="text-sm text-ink" data-downloads-text />
+      <p class="text-sm text-ink" data-downloads-text>
+        {text}
+      </p>
       <p class="mt-1 flex flex-wrap gap-x-3 font-mono text-xs">
         {cited.map((source) => (
-          <span data-downloads-item={source.href}>
+          <span data-downloads-item={source.store} hidden={counts[source.store] === undefined}>
             <Link href={source.href} variant="quiet">
               {source.label}
             </Link>

@@ -1,30 +1,39 @@
-import { createDownloadsCache, labelDownloads } from '@data/downloads';
-import type { DownloadSources } from '@data/downloads';
+import { createCountsCache, formatDownloads, mergeCounts, toDownloads } from '@data/downloads';
+import type { DownloadSources, StoreCounts } from '@data/downloads';
 import type { Locale } from '@i18n/ui';
 
+const read = <T>(el: Element, attribute: string, fallback: T): T => {
+  try {
+    return JSON.parse(el.getAttribute(attribute) ?? '') as T;
+  } catch {
+    return fallback;
+  }
+};
+
 /**
- * Fills every download block on the page: asks the stores it declares, writes the count, drops the
- * citation of any store that did not answer, and shows the block. A block no store answered for
- * stays hidden — as it is with JavaScript off. Each project is asked once, however many blocks
- * show it.
+ * Refreshes every download block on the page. The build wrote its own counts into the page — read
+ * by the server, pypistats included — and those stay wherever the browser cannot do better: each
+ * store asked here replaces its build figure only if it answers. A citation shows for every store
+ * with a count, from either side; a block with none stays hidden. Each project is asked once.
  */
 export async function hydrateDownloads(root: ParentNode, fetcher: typeof fetch = fetch) {
-  const downloadsOf = createDownloadsCache(fetcher);
-  const blocks = [...root.querySelectorAll<HTMLElement>('[data-downloads]')];
+  const countsOf = createCountsCache(fetcher, 'browser');
 
   await Promise.all(
-    blocks.map(async (block) => {
-      const sources = JSON.parse(block.getAttribute('data-downloads') ?? '{}') as DownloadSources;
+    [...root.querySelectorAll('[data-downloads]')].map(async (block) => {
+      const sources = read<DownloadSources>(block, 'data-downloads', {});
+      const built = read<StoreCounts>(block, 'data-counts', {});
       const lang = (block.getAttribute('data-lang') ?? 'es') as Locale;
-      const label = labelDownloads(await downloadsOf(sources), lang);
-      if (!label) return;
 
-      const text = block.querySelector('[data-downloads-text]');
-      if (text) text.textContent = label.text;
+      const counts = mergeCounts(built, await countsOf(sources));
+      const text = formatDownloads(toDownloads(sources, counts), lang);
+      if (text === undefined) return;
 
-      const answered = new Set(label.sources.map((source) => source.href));
+      const slot = block.querySelector('[data-downloads-text]');
+      if (slot) slot.textContent = text;
       for (const item of block.querySelectorAll('[data-downloads-item]')) {
-        if (!answered.has(item.getAttribute('data-downloads-item') ?? '')) item.remove();
+        const store = item.getAttribute('data-downloads-item') as keyof StoreCounts;
+        item.toggleAttribute('hidden', counts[store] === undefined);
       }
       block.removeAttribute('hidden');
     }),

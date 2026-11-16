@@ -5,6 +5,7 @@ import { breadcrumb, softwareSourceCode, techArticle } from '@/seo/jsonld';
 import PageLayout from '@layouts/PageLayout.astro';
 import CaseStudySection from './_sections/CaseStudySection.astro';
 import { getProject, getProjectSlugs } from '@data/projects';
+import { buildCountsOf } from '@data/build-counts';
 import { alternates, assertLocale, langParam, path } from '@i18n/utils';
 import { locales, routes } from '@i18n/ui';
 
@@ -29,6 +30,7 @@ const { Content } = await render(entry);
 /* Read from git and not from a frontmatter field on purpose: a date somebody has to remember to
    bump is a date that stops being true, and a stale `dateModified` is worse than none. */
 const dateModified = entry.filePath ? commitDate(entry.filePath) : undefined;
+const downloadCounts = await buildCountsOf(entry.data.downloads);
 const indexUrl = new URL(path(lang, 'projects'), Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
@@ -70,6 +72,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     tagline={entry.data.tagline}
     status={entry.data.status}
     downloads={entry.data.downloads}
+    downloadCounts={downloadCounts}
     role={entry.data.role}
     stack={entry.data.stack}
     targets={entry.data.targets}

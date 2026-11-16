@@ -11,64 +11,95 @@ function fakeFetch(table: Record<string, unknown>) {
   }) as unknown as typeof fetch;
 }
 
-/** The markup DownloadCount renders: hidden, no number, one cited item per declared store. */
-const block = (sources: object, lang = 'es') => {
-  const items = [
-    ['openvsx', 'https://open-vsx.org/extension/velezanthony/cotton-props', 'Open VSX'],
-    [
-      'marketplace',
-      'https://marketplace.visualstudio.com/items?itemName=velezanthony.cotton-props',
-      'Marketplace',
-    ],
-    ['pypi', 'https://pypistats.org/packages/snake-orm', 'PyPI'],
-  ]
-    .filter(([store]) => store! in sources)
+/** What DownloadCount renders: the build's counts and text, one item per declared store, hidden
+    where the build got no count. */
+function page(sources: object, counts: object, text: string, lang = 'es') {
+  const items = Object.keys(sources)
     .map(
-      ([, href, label]) =>
-        `<span data-downloads-item="${href}"><a href="${href}">${label}</a></span>`,
+      (store) =>
+        `<span data-downloads-item="${store}"${store in counts ? '' : ' hidden'}>${store}</span>`,
     )
     .join('');
   return parseHTML(
-    `<div><p hidden data-downloads='${JSON.stringify(sources)}' data-lang="${lang}"><span data-downloads-text></span>${items}</p></div>`,
+    `<div><p${text ? '' : ' hidden'} data-downloads='${JSON.stringify(sources)}' data-counts='${JSON.stringify(counts)}' data-lang="${lang}"><span data-downloads-text>${text}</span>${items}</p></div>`,
   ).document;
-};
+}
+
+const textOf = (doc: Document) => doc.querySelector('[data-downloads-text]')!.textContent;
+const shown = (doc: Document) =>
+  [...doc.querySelectorAll('[data-downloads-item]')]
+    .filter((i) => !i.hasAttribute('hidden'))
+    .map((i) => i.textContent);
 
 describe('hydrateDownloads', () => {
-  it('fills in the count and shows the block', async () => {
-    const doc = block({ pypi: 'snake-orm' });
+  it('replaces the build count with a fresh one', async () => {
+    const doc = page({ pypi: 'a' }, { pypi: { count: 40 } }, '40 descargas al mes');
     await hydrateDownloads(
       doc,
-      fakeFetch({ 'img.shields.io/pypi/dm/snake-orm.json': { value: '42/month' } }),
+      fakeFetch({ 'img.shields.io/pypi/dm/a.json': { value: '42/month' } }),
     );
-    const el = doc.querySelector('[data-downloads]')!;
-    expect(el.hasAttribute('hidden')).toBe(false);
-    expect(el.querySelector('[data-downloads-text]')!.textContent).toBe('42 descargas al mes');
+    expect(textOf(doc)).toBe('42 descargas al mes');
   });
 
-  /* A store that did not answer is not cited. */
-  it('drops the citation of a store that did not answer', async () => {
-    const doc = block(
-      { openvsx: 'velezanthony.cotton-props', marketplace: 'velezanthony.cotton-props' },
+  /* shields.io down: the visitor still sees what the build read from pypistats. */
+  it('keeps the build count when the browser gets nothing', async () => {
+    const doc = page({ pypi: 'a' }, { pypi: { count: 40 } }, '40 descargas al mes');
+    await hydrateDownloads(doc, fakeFetch({}));
+    expect(textOf(doc)).toBe('40 descargas al mes');
+    expect(doc.querySelector('[data-downloads]')!.hasAttribute('hidden')).toBe(false);
+  });
+
+  it('merges store by store: a fresh one, and the build one for the store the browser missed', async () => {
+    const doc = page(
+      { openvsx: 'p.x', marketplace: 'p.x' },
+      { openvsx: 700, marketplace: 60 },
+      '760 downloads',
       'en',
     );
     await hydrateDownloads(doc, fakeFetch({ 'open-vsx.org/api': { downloadCount: 730 } }));
-    expect(doc.querySelector('[data-downloads-text]')!.textContent).toBe('730 downloads');
-    expect([...doc.querySelectorAll('[data-downloads-item] a')].map((a) => a.textContent)).toEqual([
-      'Open VSX',
-    ]);
+    expect(textOf(doc)).toBe('790 downloads');
+    expect(shown(doc)).toEqual(['openvsx', 'marketplace']);
   });
 
-  /* Nothing answered: the block stays hidden, as it is without JavaScript. */
-  it('leaves the block hidden when no store answered', async () => {
-    const doc = block({ pypi: 'snake-orm' });
+  /* A store the build missed but the browser reached gets its citation back. */
+  it('shows the citation of a store only the browser reached', async () => {
+    const doc = page(
+      { openvsx: 'p.x', marketplace: 'p.x' },
+      { openvsx: 700 },
+      '700 downloads',
+      'en',
+    );
+    const marketplace = {
+      results: [{ extensions: [{ statistics: [{ statisticName: 'downloadCount', value: 64 }] }] }],
+    };
+    await hydrateDownloads(doc, fakeFetch({ 'marketplace.visualstudio.com': marketplace }));
+    expect(textOf(doc)).toBe('764 downloads');
+    expect(shown(doc)).toEqual(['openvsx', 'marketplace']);
+  });
+
+  it('shows a block the build left hidden, once the browser has a count', async () => {
+    const doc = page({ pypi: 'a' }, {}, '');
+    await hydrateDownloads(doc, fakeFetch({ 'img.shields.io': { value: '42/month' } }));
+    expect(doc.querySelector('[data-downloads]')!.hasAttribute('hidden')).toBe(false);
+    expect(textOf(doc)).toBe('42 descargas al mes');
+  });
+
+  it('leaves a block hidden that neither the build nor the browser could fill', async () => {
+    const doc = page({ pypi: 'a' }, {}, '');
     await hydrateDownloads(doc, fakeFetch({}));
     expect(doc.querySelector('[data-downloads]')!.hasAttribute('hidden')).toBe(true);
   });
 
+  /* Past a thousand shields rounds; the build's exact figure is not traded for it. */
+  it('keeps an exact build figure over a rounded fresh one', async () => {
+    const doc = page({ pypi: 'a' }, { pypi: { count: 1234 } }, '1234 descargas al mes');
+    await hydrateDownloads(doc, fakeFetch({ 'img.shields.io': { value: '1.2k/month' } }));
+    expect(textOf(doc)).toBe('1234 descargas al mes');
+  });
+
   it('asks each project once however many blocks show it', async () => {
-    const doc = parseHTML(
-      `<div>${[1, 2].map(() => `<p hidden data-downloads='{"pypi":"a"}' data-lang="es"><span data-downloads-text></span></p>`).join('')}</div>`,
-    ).document;
+    const block = `<p hidden data-downloads='{"pypi":"a"}' data-counts='{}' data-lang="es"><span data-downloads-text></span></p>`;
+    const doc = parseHTML(`<div>${block}${block}</div>`).document;
     const f = fakeFetch({ 'img.shields.io': { value: '42/month' } });
     await hydrateDownloads(doc, f);
     expect(f).toHaveBeenCalledTimes(1);

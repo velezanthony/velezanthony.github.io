@@ -1,12 +1,15 @@
 ---
 import ProjectCard from '@molecules/ProjectCard.astro';
 import type { LocalisedProject } from '@data/projects';
+import type { StoreCounts } from '@data/downloads';
 import { path } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
   lang: Locale;
   projects: LocalisedProject[];
+  /** What the build read from each project's stores, by slug. */
+  counts?: Record<string, StoreCounts>;
   /** Forwarded to each card. Depends on what precedes the grid. */
   headingLevel?: 2 | 3;
   /** Close the list with a rule. Off inside a band, whose own edge already is one. */
@@ -14,7 +17,14 @@ interface Props {
   class?: string;
 }
 
-const { lang, projects, headingLevel = 3, closed = true, class: className } = Astro.props;
+const {
+  lang,
+  projects,
+  counts = {},
+  headingLevel = 3,
+  closed = true,
+  class: className,
+} = Astro.props;
 ---
 
 <div class:list={[closed && 'border-b border-rule', className]}>
@@ -24,6 +34,7 @@ const { lang, projects, headingLevel = 3, closed = true, class: className } = As
       tagline={entry.data.tagline}
       status={entry.data.status}
       downloads={entry.data.downloads}
+      downloadCounts={counts[entry.data.slug]}
       stack={entry.data.stack}
       targets={entry.data.targets}
       visual={entry.data.visual}

@@ -1,6 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { createDownloadsCache, fetchDownloads, formatDownloads } from './downloads';
+import {
+  createCountsCache,
+  fetchStoreCounts,
+  formatDownloads,
+  mergeCounts,
+  toDownloads,
+} from './downloads';
 
 /** A fetch that answers from a table of URL fragments, and fails for anything else. */
 function fakeFetch(table: Record<string, unknown>) {
@@ -11,45 +17,97 @@ function fakeFetch(table: Record<string, unknown>) {
   }) as unknown as typeof fetch;
 }
 
-/* shields.io, not pypistats: pypistats sends no CORS header, and the count is read in the browser. */
-const pypi = { label: 'downloads', message: '811/month', value: '811/month' };
+const pypistats = { data: { last_day: 34, last_week: 69, last_month: 811 } };
+const shields = { value: '811/month' };
 const openVsx = { downloadCount: 730 };
 const marketplace = {
-  results: [
-    {
-      extensions: [
-        {
-          statistics: [
-            { statisticName: 'install', value: 8 },
-            { statisticName: 'downloadCount', value: 64 },
-          ],
-        },
-      ],
-    },
-  ],
+  results: [{ extensions: [{ statistics: [{ statisticName: 'downloadCount', value: 64 }] }] }],
 };
+const vscode = { openvsx: 'velezanthony.cotton-props', marketplace: 'velezanthony.cotton-props' };
 
-describe('fetchDownloads', () => {
-  it('reads PyPI as downloads in the last month', async () => {
-    const f = fakeFetch({ 'img.shields.io/pypi/dm/django-cotton-gallery.json': pypi });
-    expect(await fetchDownloads({ pypi: 'django-cotton-gallery' }, f)).toEqual({
-      perMonth: 811,
-      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/django-cotton-gallery' }],
+describe('fetchStoreCounts', () => {
+  /* At build the server reads pypistats itself: exact, and no CORS to worry about. */
+  it('reads PyPI from pypistats at build', async () => {
+    const f = fakeFetch({ 'pypistats.org/api/packages/gallery/recent': pypistats });
+    expect(await fetchStoreCounts({ pypi: 'gallery' }, f, 'build')).toEqual({
+      pypi: { count: 811 },
     });
   });
 
-  /* The two VS Code stores only publish an all-time count: summed, and kept apart from a monthly one. */
-  it('adds up Open VSX and the Marketplace as an all-time total', async () => {
+  /* In the browser pypistats is blocked (no CORS header); shields.io serves the same figure. */
+  it('reads PyPI through shields.io in the browser', async () => {
+    const f = fakeFetch({ 'img.shields.io/pypi/dm/gallery.json': shields });
+    expect(await fetchStoreCounts({ pypi: 'gallery' }, f, 'browser')).toEqual({
+      pypi: { count: 811 },
+    });
+  });
+
+  it('marks a rounded shields figure as approximate', async () => {
+    const f = fakeFetch({ 'img.shields.io': { value: '1.2k/month' } });
+    expect(await fetchStoreCounts({ pypi: 'a' }, f, 'browser')).toEqual({
+      pypi: { count: 1200, approximate: true },
+    });
+  });
+
+  it('reads both VS Code stores', async () => {
     const f = fakeFetch({
-      'open-vsx.org/api/velezanthony/cotton-props': openVsx,
+      'open-vsx.org/api': openVsx,
       'marketplace.visualstudio.com': marketplace,
     });
+    expect(await fetchStoreCounts(vscode, f, 'build')).toEqual({ openvsx: 730, marketplace: 64 });
+  });
+
+  it('leaves out a store that did not answer, or answered without the number', async () => {
+    const f = fakeFetch({
+      'open-vsx.org/api': openVsx,
+      'marketplace.visualstudio.com': { results: [] },
+    });
+    expect(await fetchStoreCounts(vscode, f, 'build')).toEqual({ openvsx: 730 });
+  });
+
+  it('asks nothing for a project without sources', async () => {
+    const f = fakeFetch({});
+    expect(await fetchStoreCounts(undefined, f, 'build')).toEqual({});
+    expect(f).not.toHaveBeenCalled();
+  });
+});
+
+describe('mergeCounts', () => {
+  /* The browser's fresh count wins; a store it could not reach keeps the build's. */
+  it('takes the fresh count, and the build count where the browser got none', () => {
+    expect(mergeCounts({ openvsx: 700, marketplace: 60 }, { openvsx: 730 })).toEqual({
+      openvsx: 730,
+      marketplace: 60,
+    });
+  });
+
+  /* shields rounds past a thousand: an exact build figure is not traded for a rounded one. */
+  it('keeps an exact build figure over a rounded fresh one', () => {
     expect(
-      await fetchDownloads(
-        { openvsx: 'velezanthony.cotton-props', marketplace: 'velezanthony.cotton-props' },
-        f,
-      ),
+      mergeCounts({ pypi: { count: 1234 } }, { pypi: { count: 1200, approximate: true } }),
     ).toEqual({
+      pypi: { count: 1234 },
+    });
+  });
+
+  it('takes a rounded fresh figure when the build has none', () => {
+    expect(mergeCounts({}, { pypi: { count: 1200, approximate: true } })).toEqual({
+      pypi: { count: 1200, approximate: true },
+    });
+  });
+});
+
+describe('toDownloads', () => {
+  it('turns PyPI into downloads in the last month, citing pypistats', () => {
+    expect(toDownloads({ pypi: 'gallery' }, { pypi: { count: 811 } })).toEqual({
+      perMonth: 811,
+      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/gallery' }],
+    });
+  });
+
+  /* The VS Code stores publish only an all-time count: summed, never mixed with a monthly one. */
+  it('sums the VS Code stores into an all-time total, citing each that has a count', () => {
+    expect(toDownloads(vscode, { openvsx: 730, marketplace: 64 })).toEqual({
       total: 794,
       sources: [
         { label: 'Open VSX', href: 'https://open-vsx.org/extension/velezanthony/cotton-props' },
@@ -61,46 +119,15 @@ describe('fetchDownloads', () => {
     });
   });
 
-  /* A store that is down drops its share; the build never fails for a number. */
-  it('keeps what it could read when a source fails', async () => {
-    const f = fakeFetch({ 'open-vsx.org/api/velezanthony/cotton-props': openVsx });
-    expect(
-      await fetchDownloads(
-        { openvsx: 'velezanthony.cotton-props', marketplace: 'velezanthony.cotton-props' },
-        f,
-      ),
-    ).toEqual({
-      total: 730,
-      /* Only the stores that answered are cited. */
-      sources: [
-        { label: 'Open VSX', href: 'https://open-vsx.org/extension/velezanthony/cotton-props' },
-      ],
-    });
+  it('cites only the stores with a count', () => {
+    expect(toDownloads(vscode, { openvsx: 730 }).sources.map((s) => s.label)).toEqual(['Open VSX']);
   });
 
-  /* Past a thousand shields rounds: "1.2k/month". Kept as approximate rather than made precise. */
-  it('reads a rounded shields count as approximate', async () => {
-    const f = fakeFetch({ 'img.shields.io': { value: '1.2k/month' } });
-    expect(await fetchDownloads({ pypi: 'a' }, f)).toEqual({
+  it('carries an approximate figure as such', () => {
+    expect(toDownloads({ pypi: 'a' }, { pypi: { count: 1200, approximate: true } })).toMatchObject({
       perMonth: 1200,
       approximate: true,
-      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/a' }],
     });
-  });
-
-  it('is empty when nothing could be read', async () => {
-    expect(await fetchDownloads({ pypi: 'snake-orm' }, fakeFetch({}))).toEqual({ sources: [] });
-  });
-
-  it('ignores an answer without the number', async () => {
-    const f = fakeFetch({ 'img.shields.io': { value: 'invalid' } });
-    expect(await fetchDownloads({ pypi: 'snake-orm' }, f)).toEqual({ sources: [] });
-  });
-
-  it('asks nothing for a project without sources', async () => {
-    const f = fakeFetch({});
-    expect(await fetchDownloads(undefined, f)).toEqual({ sources: [] });
-    expect(f).not.toHaveBeenCalled();
   });
 });
 
@@ -119,7 +146,7 @@ describe('formatDownloads', () => {
   /* Intl joins number and "mil" with a no-break space, so they never part across lines. */
   it('words an approximate count compactly, without false precision', () => {
     expect(formatDownloads({ perMonth: 1200, approximate: true }, 'es')).toBe(
-      '1,2\u00a0mil descargas al mes',
+      '1,2 mil descargas al mes',
     );
     expect(formatDownloads({ perMonth: 1200, approximate: true }, 'en')).toBe(
       '1.2K downloads a month',
@@ -131,24 +158,20 @@ describe('formatDownloads', () => {
   });
 });
 
-describe('createDownloadsCache', () => {
-  /* Cards and write-ups, in two languages, ask for the same project: one build, one request. */
-  it('asks each store once per build, however many pages want the number', async () => {
-    const f = fakeFetch({ 'img.shields.io': pypi });
-    const downloadsOf = createDownloadsCache(f);
-    await Promise.all([
-      downloadsOf({ pypi: 'a' }),
-      downloadsOf({ pypi: 'a' }),
-      downloadsOf({ pypi: 'a' }),
-    ]);
+describe('createCountsCache', () => {
+  /* Cards and write-ups, in two languages, ask for the same project: one request each. */
+  it('asks each store once, however many times a project is asked for', async () => {
+    const f = fakeFetch({ 'pypistats.org': pypistats });
+    const countsOf = createCountsCache(f, 'build');
+    await Promise.all([countsOf({ pypi: 'a' }), countsOf({ pypi: 'a' }), countsOf({ pypi: 'a' })]);
     expect(f).toHaveBeenCalledTimes(1);
   });
 
   it('keeps projects apart', async () => {
-    const f = fakeFetch({ 'img.shields.io': pypi });
-    const downloadsOf = createDownloadsCache(f);
-    await downloadsOf({ pypi: 'a' });
-    await downloadsOf({ pypi: 'b' });
+    const f = fakeFetch({ 'pypistats.org': pypistats });
+    const countsOf = createCountsCache(f, 'build');
+    await countsOf({ pypi: 'a' });
+    await countsOf({ pypi: 'b' });
     expect(f).toHaveBeenCalledTimes(2);
   });
 });

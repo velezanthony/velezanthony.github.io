@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { buildCountsOf } from '@data/build-counts';
+import type { StoreCounts } from '@data/downloads';
 import { resolveLocalized } from '@i18n/localized';
 import type { Resolved } from '@i18n/localized';
 import type { Locale } from '@i18n/ui';
@@ -27,4 +29,16 @@ export async function getProject(
 export async function getProjectSlugs(): Promise<string[]> {
   const all = await getCollection('projects');
   return [...new Set(all.map((entry) => entry.data.slug))];
+}
+
+/** What the build read from each project's stores, by slug: the default the browser refreshes. */
+export async function getBuildCounts(
+  projects: LocalisedProject[],
+): Promise<Record<string, StoreCounts>> {
+  const pairs = await Promise.all(
+    projects.map(
+      async ({ entry }) => [entry.data.slug, await buildCountsOf(entry.data.downloads)] as const,
+    ),
+  );
+  return Object.fromEntries(pairs);
 }
