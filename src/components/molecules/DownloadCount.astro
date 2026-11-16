@@ -10,8 +10,9 @@ interface Props {
   /** What the build read, pypistats included. The default, kept wherever the browser gets less. */
   counts: StoreCounts;
   lang: Locale;
-  /** `card`: one faint line under a card's status. `field`: a labelled field of the sidebar. */
-  variant?: 'card' | 'field';
+  /** `card`: one faint line under a card's status. `field`: a labelled field of the sidebar.
+      `inline`: the count alone, after a separator, inside a line of its own (the printed CV). */
+  variant?: 'card' | 'field' | 'inline';
 }
 
 const { sources, counts, lang, variant = 'card' } = Astro.props;
@@ -32,7 +33,12 @@ const data = {
 */}
 {sources &&
   cited.length > 0 &&
-  (variant === 'card' ? (
+  (variant === 'inline' ? (
+    <span hidden={!text} {...data}>
+      <span aria-hidden="true"> · </span>
+      <span data-downloads-text>{text}</span>
+    </span>
+  ) : variant === 'card' ? (
     <p hidden={!text} {...data} class="mt-2 font-mono text-xs text-faint">
       <span data-downloads-text>{text}</span>
       {cited.map((source) => (

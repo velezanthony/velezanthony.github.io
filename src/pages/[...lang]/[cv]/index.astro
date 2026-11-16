@@ -1,9 +1,10 @@
 ---
 import PrintLayout from '@layouts/PrintLayout.astro';
 import CvDocument from './_sections/CvDocument.astro';
-import { getProjects } from '@data/projects';
+import { getBuildCounts, getProjects } from '@data/projects';
+import { SITE } from '@/site';
 import { pageTitles, seo } from '@data/profile';
-import { alternates, assertLocale, localeRouteParams } from '@i18n/utils';
+import { alternates, assertLocale, localeRouteParams, path } from '@i18n/utils';
 
 export function getStaticPaths() {
   return localeRouteParams('cv');
@@ -12,9 +13,16 @@ export function getStaticPaths() {
 const lang = assertLocale(Astro.params.lang);
 
 const projects = await getProjects(lang);
+const counts = await getBuildCounts(projects);
 const tools = projects.map(({ entry }) => ({
   name: entry.data.name,
   cvLine: entry.data.cvLine,
+  href: new URL(path(lang, 'projects', entry.data.slug), SITE).href,
+  packages: entry.data.links
+    .filter((link) => link.kind === 'package')
+    .map(({ label, href }) => ({ label, href })),
+  downloads: entry.data.downloads,
+  downloadCounts: counts[entry.data.slug],
 }));
 ---
 
