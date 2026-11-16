@@ -13,7 +13,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section class="grid gap-x-14 gap-y-10 pb-20 lg:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
+<section class="grid gap-x-14 gap-y-10 pb-20 grid-cols-1 md:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
   <div>
     <Heading level={2} size="md" class="mb-5">
       {t('Formación')}

@@ -79,9 +79,9 @@
   /* ~75 characters of 15px row text, for single-column widths. */
   --container-measure-row: 36rem;
 
-  /* The right column of every two-column layout: case-study sidebar, card and job meta, the
-     home's availability and contact. The content beside it takes the rest of the page. */
-  --container-aside: 18rem;
+  /* The right column of every two-column layout, from md: case-study sidebar, card and job meta.
+     The content beside it takes the rest of the page. 18rem from lg, below. */
+  --container-aside: 14rem;
 
   --container-text: 42rem;
 
@@ -110,6 +110,14 @@
     --text-cv-name: calc(28pt * var(--cv-scale));
     --sheet-pad-x: 15mm;
     --sheet-pad-y: 13mm;
+  }
+}
+
+/* The side column narrows between md and lg, where two columns start: 14rem leaves the content
+   ~425px at 768. From lg it is 18rem. */
+@media (min-width: 64rem) {
+  :root {
+    --container-aside: 18rem;
   }
 }
 

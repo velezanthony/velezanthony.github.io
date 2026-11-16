@@ -60,11 +60,18 @@ describe('two-column layouts', () => {
     '%s: content takes the rest beside a --container-aside column',
     async (_, rendered) => {
       const doc = await rendered();
-      const grid = [...doc.querySelectorAll('[class*="lg:grid-cols-"]')].map((el) =>
+      /* Below md the single column must be able to shrink: an implicit `auto` column grows to its
+       widest unbreakable child, and a terminal block pushed the page 58px sideways at 640. */
+      expect(
+        [
+          ...doc.querySelectorAll('[class*="md:grid-cols-[minmax(0,1fr)_var(--container-aside)]"]'),
+        ].every((el) => el.classList.contains('grid-cols-1')),
+      ).toBe(true);
+      const grid = [...doc.querySelectorAll('[class*="md:grid-cols-"]')].map((el) =>
         el.getAttribute('class')!,
       );
       expect(
-        grid.some((c) => c.includes('lg:grid-cols-[minmax(0,1fr)_var(--container-aside)]')),
+        grid.some((c) => c.includes('md:grid-cols-[minmax(0,1fr)_var(--container-aside)]')),
       ).toBe(true);
     },
   );
