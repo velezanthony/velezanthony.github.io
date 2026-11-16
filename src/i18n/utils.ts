@@ -16,12 +16,6 @@ export function useTranslations(lang: Locale) {
   };
 }
 
-/** True while `phrase` still has no English translation. */
-export function isPending(phrase: Phrase): boolean {
-  const translated: string = en[phrase];
-  return translated === PENDING;
-}
-
 /** The default locale is unprefixed: `/proyectos/`, not `/es/proyectos/`. */
 export function path(lang: Locale, route?: RouteKey, ...rest: string[]): string {
   const segments: string[] = lang === defaultLocale ? [] : [lang];

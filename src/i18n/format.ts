@@ -20,8 +20,3 @@ export function formatRange(
 ): string {
   return `${formatMonth(lang, start)} – ${end ? formatMonth(lang, end) : presentLabel}`;
 }
-
-/** Machine-readable value for `<time datetime>`. */
-export function isoMonth(value: YearMonth): string {
-  return value;
-}
