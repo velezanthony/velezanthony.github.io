@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { localeOfEntry } from '@i18n/utils';
+import { SITEMAP_PAGES, SITEMAP_XSL } from '@/seo/sitemap/files';
 
 /**
  * `/sitemap.xml` — the one entry point for the whole domain.
@@ -25,11 +26,11 @@ export const GET: APIRoute = async ({ site }) => {
     .filter((href): href is string => Boolean(href))
     .map((href) => new URL('sitemap.xml', href).href);
 
-  const sitemaps = [new URL('sitemap-pages.xml', site).href, ...docs];
+  const sitemaps = [new URL(SITEMAP_PAGES, site).href, ...docs];
 
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<?xml-stylesheet type="text/xsl" href="sitemap-style.xml"?>',
+    `<?xml-stylesheet type="text/xsl" href="${SITEMAP_XSL}"?>`,
     '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...sitemaps.map((loc) => `<sitemap><loc>${loc}</loc></sitemap>`),
     '</sitemapindex>',
