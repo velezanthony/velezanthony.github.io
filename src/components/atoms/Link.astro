@@ -1,7 +1,7 @@
 ---
 import Icon from '@atoms/Icon.astro';
 
-type Variant = 'inline' | 'quiet' | 'action';
+type Variant = 'inline' | 'quiet' | 'action' | 'value';
 
 interface Props {
   href: string;
@@ -26,6 +26,8 @@ const variants: Record<Variant, string> = {
   inline:
     'text-accent underline underline-offset-[0.2em] decoration-1 hover:decoration-2 transition-[text-decoration-thickness]',
   quiet: 'text-muted hover:text-ink transition-colors',
+  /* The content of a labelled field: ink, like the text values beside it. */
+  value: 'text-ink hover:text-accent transition-colors',
   action:
     'label inline-flex items-center gap-2 text-accent hover:gap-3 transition-[gap] duration-200',
 };

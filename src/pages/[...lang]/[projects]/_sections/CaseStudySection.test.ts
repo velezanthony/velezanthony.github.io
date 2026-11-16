@@ -44,8 +44,8 @@ function classesUpTo(el: Element, stop: Element): string[] {
 }
 
 describe('CaseStudySection sidebar', () => {
-  /* Content and title must part clearly; content and content must not. Every value is muted, at
-     14px in sans or at the mono list size: one weight across the sidebar. */
+  /* Content and title must part clearly; content and content must not. Every value is ink against
+     the faint label, at 14px in sans or at the mono list size: one weight across the sidebar. */
   it('gives every field the same weight of content under the same kind of label', async () => {
     const doc = await render(CaseStudySection, props);
     const labels = [...doc.querySelectorAll('aside p.label')];
@@ -65,11 +65,8 @@ describe('CaseStudySection sidebar', () => {
       const classes = classesUpTo(value, label.parentElement!);
       const mono = classes.includes('font-mono');
       expect(classes, text(label)).toContain(mono ? 'text-mono-list' : 'text-sm');
-      expect(
-        classes.some((c) => c === 'text-muted' || c.startsWith('text-muted')) ||
-          value.closest('a') !== null,
-        text(label),
-      ).toBe(true);
+      expect(classes, text(label)).toContain('text-ink');
+      expect(classes, text(label)).not.toContain('text-muted');
     }
   });
 });
