@@ -9,14 +9,15 @@ import StatusChip from '@molecules/StatusChip.astro';
 import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 import type { ProjectStatus } from '@/schemas/project';
+import type { DownloadsLabel } from '@data/downloads';
 
 interface Props {
   lang: Locale;
   name: string;
   tagline: string;
   status: ProjectStatus;
-  /** Already worded with its unit. Absent when no store answered. */
-  downloads?: string;
+  /** Worded with its unit, and the stores to check it at. Absent when no store answered. */
+  downloads?: DownloadsLabel;
   role: string;
   stack: string[];
   /** What it is built FOR, as opposed to what it is built with. */
@@ -109,7 +110,14 @@ const t = useTranslations(lang);
       {downloads && (
         <div>
           <p class="label mb-2 text-faint">{t('Descargas')}</p>
-          <p class="text-sm text-ink">{downloads}</p>
+          <p class="text-sm text-ink">{downloads.text}</p>
+          <p class="mt-1 flex flex-wrap gap-x-3 font-mono text-xs">
+            {downloads.sources.map((source) => (
+              <Link href={source.href} variant="quiet">
+                {source.label}
+              </Link>
+            ))}
+          </p>
         </div>
       )}
 

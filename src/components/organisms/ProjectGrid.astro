@@ -1,6 +1,7 @@
 ---
 import ProjectCard from '@molecules/ProjectCard.astro';
 import type { LocalisedProject } from '@data/projects';
+import type { DownloadsLabel } from '@data/downloads';
 import { path } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
@@ -8,7 +9,7 @@ interface Props {
   lang: Locale;
   projects: LocalisedProject[];
   /** Download counts worded for the page, by slug. */
-  downloads?: Record<string, string>;
+  downloads?: Record<string, DownloadsLabel>;
   /** Forwarded to each card. Depends on what precedes the grid. */
   headingLevel?: 2 | 3;
   /** Close the list with a rule. Off inside a band, whose own edge already is one. */

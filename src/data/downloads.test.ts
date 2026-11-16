@@ -31,7 +31,10 @@ const marketplace = {
 describe('fetchDownloads', () => {
   it('reads PyPI as downloads in the last month', async () => {
     const f = fakeFetch({ 'pypistats.org/api/packages/django-cotton-gallery/recent': pypi });
-    expect(await fetchDownloads({ pypi: 'django-cotton-gallery' }, f)).toEqual({ perMonth: 811 });
+    expect(await fetchDownloads({ pypi: 'django-cotton-gallery' }, f)).toEqual({
+      perMonth: 811,
+      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/django-cotton-gallery' }],
+    });
   });
 
   /* The two VS Code stores only publish an all-time count: summed, and kept apart from a monthly one. */
@@ -47,6 +50,13 @@ describe('fetchDownloads', () => {
       ),
     ).toEqual({
       total: 794,
+      sources: [
+        { label: 'Open VSX', href: 'https://open-vsx.org/extension/velezanthony/cotton-props' },
+        {
+          label: 'Marketplace',
+          href: 'https://marketplace.visualstudio.com/items?itemName=velezanthony.cotton-props',
+        },
+      ],
     });
   });
 
@@ -60,21 +70,25 @@ describe('fetchDownloads', () => {
       ),
     ).toEqual({
       total: 730,
+      /* Only the stores that answered are cited. */
+      sources: [
+        { label: 'Open VSX', href: 'https://open-vsx.org/extension/velezanthony/cotton-props' },
+      ],
     });
   });
 
   it('is empty when nothing could be read', async () => {
-    expect(await fetchDownloads({ pypi: 'snake-orm' }, fakeFetch({}))).toEqual({});
+    expect(await fetchDownloads({ pypi: 'snake-orm' }, fakeFetch({}))).toEqual({ sources: [] });
   });
 
   it('ignores an answer without the number', async () => {
     const f = fakeFetch({ 'pypistats.org': { data: {} } });
-    expect(await fetchDownloads({ pypi: 'snake-orm' }, f)).toEqual({});
+    expect(await fetchDownloads({ pypi: 'snake-orm' }, f)).toEqual({ sources: [] });
   });
 
   it('asks nothing for a project without sources', async () => {
     const f = fakeFetch({});
-    expect(await fetchDownloads(undefined, f)).toEqual({});
+    expect(await fetchDownloads(undefined, f)).toEqual({ sources: [] });
     expect(f).not.toHaveBeenCalled();
   });
 });

@@ -17,7 +17,26 @@ export interface DownloadSources {
 export interface Downloads {
   perMonth?: number;
   total?: number;
+  /** The stores that answered, each linked to the public page where its number can be checked. */
+  sources: Citation[];
 }
+
+export interface Citation {
+  label: string;
+  href: string;
+}
+
+const citations = {
+  pypi: (name: string) => ({ label: 'PyPI', href: `https://pypistats.org/packages/${name}` }),
+  openvsx: (id: string) => ({
+    label: 'Open VSX',
+    href: `https://open-vsx.org/extension/${id.replace('.', '/')}`,
+  }),
+  marketplace: (id: string) => ({
+    label: 'Marketplace',
+    href: `https://marketplace.visualstudio.com/items?itemName=${id}`,
+  }),
+} satisfies Record<keyof DownloadSources, (id: string) => Citation>;
 
 const TIMEOUT_MS = 8000;
 
@@ -72,7 +91,7 @@ export async function fetchDownloads(
   sources: DownloadSources | undefined,
   fetcher: typeof fetch = fetch,
 ): Promise<Downloads> {
-  if (!sources) return {};
+  if (!sources) return { sources: [] };
   const [perMonth, vsx, market] = await Promise.all([
     sources.pypi ? pypiPerMonth(fetcher, sources.pypi) : undefined,
     sources.openvsx ? openVsxTotal(fetcher, sources.openvsx) : undefined,
@@ -80,9 +99,14 @@ export async function fetchDownloads(
   ]);
   const totals = [vsx, market].filter((n): n is number => n !== undefined);
 
-  const downloads: Downloads = {};
-  if (perMonth !== undefined) downloads.perMonth = perMonth;
+  const downloads: Downloads = { sources: [] };
+  if (perMonth !== undefined) {
+    downloads.perMonth = perMonth;
+    downloads.sources.push(citations.pypi(sources.pypi!));
+  }
   if (totals.length) downloads.total = totals.reduce((a, b) => a + b, 0);
+  if (vsx !== undefined) downloads.sources.push(citations.openvsx(sources.openvsx!));
+  if (market !== undefined) downloads.sources.push(citations.marketplace(sources.marketplace!));
   return downloads;
 }
 
@@ -106,14 +130,28 @@ export const downloadsOf = createDownloadsCache();
 const words = {
   es: { perMonth: 'descargas al mes', total: 'descargas' },
   en: { perMonth: 'downloads a month', total: 'downloads' },
-} satisfies Record<Locale, Record<keyof Downloads, string>>;
+} satisfies Record<Locale, Record<'perMonth' | 'total', string>>;
 
 /** "811 descargas al mes", "1,794 downloads": always with its unit, never as users. */
-export function formatDownloads(downloads: Downloads, lang: Locale): string | undefined {
+export function formatDownloads(
+  downloads: Pick<Downloads, 'perMonth' | 'total'>,
+  lang: Locale,
+): string | undefined {
   const number = (n: number) => new Intl.NumberFormat(lang).format(n);
   if (downloads.perMonth !== undefined) {
     return `${number(downloads.perMonth)} ${words[lang].perMonth}`;
   }
   if (downloads.total !== undefined) return `${number(downloads.total)} ${words[lang].total}`;
   return undefined;
+}
+
+/** A count ready for a page: worded in its language, with the sources that back it. */
+export interface DownloadsLabel {
+  text: string;
+  sources: Citation[];
+}
+
+export function labelDownloads(downloads: Downloads, lang: Locale): DownloadsLabel | undefined {
+  const text = formatDownloads(downloads, lang);
+  return text === undefined ? undefined : { text, sources: downloads.sources };
 }

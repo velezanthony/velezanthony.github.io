@@ -71,10 +71,18 @@ describe('CaseStudySection sidebar', () => {
   });
 
   it('lists the download count as a field when there is one', async () => {
-    const doc = await render(CaseStudySection, { ...props, downloads: '811 descargas al mes' });
+    const downloads = {
+      text: '811 descargas al mes',
+      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/snake-orm' }],
+    };
+    const doc = await render(CaseStudySection, { ...props, downloads });
     const label = [...doc.querySelectorAll('aside p.label')].find((l) => text(l) === 'Descargas');
     expect(label).toBeDefined();
-    expect(text(label!.nextElementSibling)).toBe('811 descargas al mes');
+    expect(text(label!.nextElementSibling)).toContain('811 descargas al mes');
+    const source = label!.parentElement!.querySelector(
+      'a[href="https://pypistats.org/packages/snake-orm"]',
+    );
+    expect(text(source)).toBe('PyPI');
   });
 
   it('leaves the field out without a number', async () => {
