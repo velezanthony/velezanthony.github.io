@@ -7,6 +7,8 @@ import { alternateLocale, useTranslations } from '@i18n/utils';
 import { locales, ogLocales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
 import { person } from '@/seo/jsonld';
+import { THEME_KEY } from '@/client/storage';
+import RememberLocale from '@atoms/RememberLocale.astro';
 import { themeColors } from '@styles/theme-colors';
 
 interface Props {
@@ -104,32 +106,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       is:inline
       set:html={JSON.stringify(person(lang, canonical.href))}
     />
-    <script is:inline>
+    <script is:inline define:vars={{ key: THEME_KEY }}>
       /* Runs before first paint: without it the page renders in the system
-         theme and then flips, which is the flash every toggle has to avoid. */
-      (() => {
-        const saved = localStorage.getItem('theme');
+         theme and then flips, which is the flash every toggle has to avoid.
+         Inline, so it cannot import. */
+      try {
+        const saved = localStorage.getItem(key);
         if (saved === 'dark' || saved === 'light') {
           document.documentElement.dataset.theme = saved;
         }
-      })();
+      } catch {
+        /* Storage blocked: the system theme stands. */
+      }
     </script>
 
     <slot name="head" />
   </head>
 
   {
-    /* Records the locale of every page visited, so the 404 — a single file
-       at the root — can read it back. Spanish carries no prefix, so anything
-       outside `/en/` is Spanish.
-
-       Not on the 404 itself: served at arbitrary paths, it would read as
-       Spanish and overwrite the value it is about to consume. */
-    !noindex && <script is:inline>
-      document.addEventListener('DOMContentLoaded', () => {
-        sessionStorage.setItem('lang', location.pathname.startsWith('/en/') ? 'en' : 'es');
-      });
-    </script>
+    /* Not on the 404 itself: served at arbitrary paths, it would read as Spanish and overwrite
+       the value it is about to consume. */
+    !noindex && <RememberLocale />
   }
 
   <body class:list={['min-h-screen bg-canvas antialiased', bodyClass]}>

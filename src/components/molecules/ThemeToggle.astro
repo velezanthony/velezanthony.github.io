@@ -88,18 +88,29 @@ const t = useTranslations(lang);
   }
 </style>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('.theme-toggle');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const root = document.documentElement;
-      const dark = root.dataset.theme
-        ? root.dataset.theme === 'dark'
-        : matchMedia('(prefers-color-scheme: dark)').matches;
-      const next = dark ? 'light' : 'dark';
+<script>
+  import { THEME_KEY, safeSet, storageOf } from '@/client/storage';
+  import { isDark, nextTheme, parseTheme, syncToggle } from '@/client/theme';
+
+  const root = document.documentElement;
+  const system = matchMedia('(prefers-color-scheme: dark)');
+  const chosen = () => parseTheme(root.dataset.theme);
+  const buttons = document.querySelectorAll('.theme-toggle');
+
+  const sync = () => {
+    for (const button of buttons) syncToggle(button, isDark(chosen(), system.matches));
+  };
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const next = nextTheme(chosen(), system.matches);
       root.dataset.theme = next;
-      localStorage.setItem('theme', next);
+      safeSet(storageOf('localStorage'), THEME_KEY, next);
+      sync();
     });
-  });
+  }
+
+  /* With no explicit choice the page follows the system, and so must the pressed state. */
+  system.addEventListener('change', sync);
+  sync();
 </script>

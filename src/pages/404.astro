@@ -4,7 +4,7 @@ import Heading from '@atoms/Heading.astro';
 import Text from '@atoms/Text.astro';
 import Link from '@atoms/Link.astro';
 import ContactList from '@molecules/ContactList.astro';
-import { contact } from '@data/profile';
+import { contact, profile } from '@data/profile';
 import { defaultLocale, locales } from '@i18n/ui';
 import { alternateLocale, alternates, path, useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
@@ -61,6 +61,7 @@ const td = useTranslations(defaultLocale);
 
   <main
     id="main"
+    data-title-en={`${useTranslations('en')('Página no encontrada')} | ${profile.name}`}
     class="mx-auto flex min-h-screen max-w-(--container-page) flex-col justify-center px-6 py-20 lg:px-10"
   >
     {bloques.map(({ locale, t, destinos }) => (
@@ -112,11 +113,15 @@ const td = useTranslations(defaultLocale);
   </main>
 </BaseLayout>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (sessionStorage.getItem('lang') !== 'en') return;
-    document.documentElement.lang = 'en';
-    document.documentElement.dataset.locale = 'en';
-    document.title = 'Page not found | Anthony Velez Tapia';
-  });
+<script>
+  import { LANG_KEY, safeGet, storageOf } from '@/client/storage';
+
+  /* The page is built once, in Spanish. A reader who arrived from the English site gets the
+     English blocks and title, which the page carries for exactly this. */
+  if (safeGet(storageOf('sessionStorage'), LANG_KEY) === 'en') {
+    const root = document.documentElement;
+    root.lang = 'en';
+    root.dataset.locale = 'en';
+    document.title = document.querySelector('main')?.dataset.titleEn ?? document.title;
+  }
 </script>

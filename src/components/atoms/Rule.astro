@@ -9,7 +9,7 @@ const { marked = false, class: className } = Astro.props;
 ---
 
 {marked ? (
-  <div class:list={['flex items-center', className]} role="presentation">
+  <div class:list={['flex items-center', className]}>
     <span class="h-px w-8 bg-accent" />
     <span class="h-px flex-1 bg-rule" />
   </div>

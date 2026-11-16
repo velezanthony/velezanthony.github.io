@@ -1,0 +1,14 @@
+---
+/**
+ * Records the locale of the page being read, so the 404 — one file at the root, with no locale
+ * of its own — can answer in the same language. A component rather than an inline script so the
+ * script is bundled, typed and can import, and so it is only emitted where it is rendered.
+ */
+---
+
+<script>
+  import { LANG_KEY, safeSet, storageOf } from '@/client/storage';
+  import { parsePath } from '@i18n/utils';
+
+  safeSet(storageOf('sessionStorage'), LANG_KEY, parsePath(location.pathname).lang);
+</script>
