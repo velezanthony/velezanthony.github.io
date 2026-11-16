@@ -50,8 +50,8 @@ const t = useTranslations(lang);
 ---
 
 <article class="group relative border-t border-rule py-6">
-  <div class="grid gap-x-14 gap-y-3 grid-cols-1 md:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
-    <div>
+  <div class="card-grid grid gap-x-14 gap-y-3 grid-cols-1 md:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
+    <div class="card-main">
       <Heading level={headingLevel} size="md" class="font-mono tracking-tight">
         <a
           href={href}
@@ -83,8 +83,10 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <div class="min-w-0 lg:pt-1.5">
-      <StatusChip status={status} lang={lang} />
+    <div class="card-meta min-w-0 lg:pt-1.5">
+      <div class="card-status">
+        <StatusChip status={status} lang={lang} />
+      </div>
       <DownloadCount sources={downloads} counts={downloadCounts} lang={lang} variant="card" />
       <StackRow items={stack} class="mt-3" />
       <StackRow items={targets} label={t('Para')} stacked class="mt-3" />
@@ -93,6 +95,39 @@ const t = useTranslations(lang);
 </article>
 
 <style>
+  /* Below md the two columns dissolve into the card's own grid, so the status rises beside the
+     name instead of falling under the visual; everything else keeps its order, full width. */
+  @media (width < 48rem) {
+    .card-grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 1rem;
+      row-gap: 0;
+    }
+
+    .card-main,
+    .card-meta {
+      display: contents;
+    }
+
+    .card-main > :global(*),
+    .card-meta > :global(*) {
+      grid-column: 1 / -1;
+    }
+
+    /* On the name's first baseline, so a name wrapped to two lines keeps the status on its first. */
+    .card-main > :global(:first-child) {
+      grid-column: 1;
+      order: -2;
+      align-self: first baseline;
+    }
+
+    .card-status {
+      grid-column: 2;
+      order: -1;
+      align-self: first baseline;
+    }
+  }
+
   /* Shiki's block, sized to the frame: the card shows a glimpse, never a scrollbar. */
   .card-visual :global(pre) {
     height: 100%;
