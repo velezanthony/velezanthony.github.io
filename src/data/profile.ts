@@ -137,7 +137,7 @@ export const cvContact: ContactLink[] = [
 ];
 
 export const spokenLanguages: SpokenLanguage[] = [
-  { name: { es: 'Castellano', en: 'Spanish' }, level: { es: 'Nativo', en: 'Native' } },
-  { name: { es: 'Euskera', en: 'Basque' }, level: { es: 'Nativo', en: 'Native' } },
-  { name: { es: 'Inglés', en: 'English' }, level: { es: 'B1', en: 'B1' } },
+  { code: 'es', name: { es: 'Castellano', en: 'Spanish' }, level: { es: 'Nativo', en: 'Native' } },
+  { code: 'eu', name: { es: 'Euskera', en: 'Basque' }, level: { es: 'Nativo', en: 'Native' } },
+  { code: 'en', name: { es: 'Inglés', en: 'English' }, level: { es: 'B1', en: 'B1' } },
 ];

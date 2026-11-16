@@ -2,7 +2,8 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { profile, spokenLanguages, stackGroups, contact } from '@data/profile';
 import { experience } from '@data/experience';
-import { path } from '@i18n/utils';
+import { localeOfEntry, path } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
 
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */
 const plain = (text: string) => text.replaceAll('**', '');
@@ -23,10 +24,9 @@ const period = (start: string, end: string | null) => `${start} → ${end ?? 'pr
 export const GET: APIRoute = async ({ site }) => {
   /** Every route comes from `path()`, so renaming a segment moves this map with the site. */
   const url = (route: string) => new URL(route, site).href;
-  const both = (route: (lang: 'es' | 'en') => string) =>
-    `${url(route('en'))} (es: ${url(route('es'))})`;
+  const both = (route: (lang: Locale) => string) => `${url(route('en'))} (es: ${url(route('es'))})`;
 
-  const entries = await getCollection('projects', ({ id }) => id.startsWith('en/'));
+  const entries = await getCollection('projects', ({ id }) => localeOfEntry(id) === 'en');
   const projects = entries.sort((a, b) => a.data.order - b.data.order);
 
   const lines: string[] = [

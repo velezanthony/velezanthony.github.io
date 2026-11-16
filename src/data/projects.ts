@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { defaultLocale } from '@i18n/ui';
+import { localeOfEntry } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
@@ -12,17 +13,13 @@ export interface LocalisedProject {
   translationPending: boolean;
 }
 
-function localeOf(entry: ProjectEntry): string {
-  return entry.id.split('/')[0] ?? defaultLocale;
-}
-
 export async function getProjects(lang: Locale): Promise<LocalisedProject[]> {
   const all = await getCollection('projects');
 
-  const bySlug = new Map<string, Map<string, ProjectEntry>>();
+  const bySlug = new Map<string, Map<Locale, ProjectEntry>>();
   for (const entry of all) {
-    const group = bySlug.get(entry.data.slug) ?? new Map<string, ProjectEntry>();
-    group.set(localeOf(entry), entry);
+    const group = bySlug.get(entry.data.slug) ?? new Map<Locale, ProjectEntry>();
+    group.set(localeOfEntry(entry.id), entry);
     bySlug.set(entry.data.slug, group);
   }
 

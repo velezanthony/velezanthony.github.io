@@ -5,7 +5,8 @@ import { execFileSync } from 'node:child_process';
 import { globSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 
 import sitemap from '@astrojs/sitemap';
-import { routes } from './src/i18n/ui.ts';
+import { defaultLocale, locales } from './src/i18n/ui.ts';
+import { alternateLocale, localizePath, parsePath } from './src/i18n/utils.ts';
 import { sourcesOf } from './src/sitemap/sources.ts';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -103,8 +104,8 @@ export default defineConfig({
   /* Spanish is unprefixed: the root is the URL people paste, so it serves the
      home rather than redirecting to it. GitHub Pages has no 301. */
   i18n: {
-    defaultLocale: 'es',
-    locales: ['es', 'en'],
+    defaultLocale,
+    locales: [...locales],
     routing: { prefixDefaultLocale: false },
   },
 
@@ -190,30 +191,19 @@ export default defineConfig({
          map the pages use. */
       serialize(item) {
         const url = new URL(item.url);
-        const parts = url.pathname.split('/').filter(Boolean);
+        const { lang, segments } = parsePath(url.pathname);
+        const other = alternateLocale(lang);
 
-        /* Spanish carries no prefix: anything outside `/en/` is Spanish. */
-        const locale = parts[0] === 'en' ? 'en' : 'es';
-        const rest = locale === 'en' ? parts.slice(1) : parts;
-        const other = locale === 'es' ? 'en' : 'es';
-        const map = /** @type {Record<string, Record<string, string>>} */ (routes);
-
-        const canonical = rest.map(
-          (seg) => Object.keys(map).find((k) => map[k][locale] === seg) ?? seg,
-        );
-        const translated = rest.map((seg, i) => map[canonical[i]]?.[other] ?? seg);
-
-        /** @type {(loc: string, segs: string[]) => string} */
-        const href = (loc, segs) =>
-          new URL([...(loc === 'es' ? [] : [loc]), ...segs].join('/') + '/', url.origin).href;
+        /** @type {(locale: import('./src/i18n/ui.ts').Locale) => string} */
+        const href = (locale) => new URL(localizePath(locale, segments), url.origin).href;
 
         item.links = [
-          { lang: locale, url: href(locale, rest) },
-          { lang: other, url: href(other, translated) },
-          { lang: 'x-default', url: href('es', locale === 'es' ? rest : translated) },
+          { lang, url: href(lang) },
+          { lang: other, url: href(other) },
+          { lang: 'x-default', url: href(defaultLocale) },
         ];
 
-        const lastmod = lastmodOf(locale, canonical);
+        const lastmod = lastmodOf(lang, segments);
         if (lastmod) item.lastmod = lastmod;
 
         return item;

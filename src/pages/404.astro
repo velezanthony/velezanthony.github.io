@@ -6,7 +6,7 @@ import Link from '@atoms/Link.astro';
 import ContactList from '@molecules/ContactList.astro';
 import { contact } from '@data/profile';
 import { defaultLocale, locales } from '@i18n/ui';
-import { alternates, path, useTranslations } from '@i18n/utils';
+import { alternateLocale, alternates, path, useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 
 /**
@@ -101,7 +101,7 @@ const td = useTranslations(defaultLocale);
             </div>
 
             <div>
-              <Link href={path(locale === 'es' ? 'en' : 'es')} variant="action">
+              <Link href={path(alternateLocale(locale))} variant="action">
                 {t('¿Prefieres inglés?')}
               </Link>
             </div>

@@ -8,6 +8,12 @@ export const localeNames: Record<Locale, string> = {
   en: 'English',
 };
 
+/** Open Graph wants a territory too. */
+export const ogLocales: Record<Locale, string> = {
+  es: 'es_ES',
+  en: 'en_GB',
+};
+
 /** Sentinel for a source string with no English translation yet. */
 export const PENDING = 'TODO:translate';
 type Pending = typeof PENDING;

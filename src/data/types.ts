@@ -39,6 +39,8 @@ export interface Study {
 }
 
 export interface SpokenLanguage {
+  /** BCP 47, for `knowsLanguage` in the JSON-LD. */
+  code: string;
   name: Localized;
   level: Localized;
 }

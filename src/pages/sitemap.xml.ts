@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { localeOfEntry } from '@i18n/utils';
 
 /**
  * `/sitemap.xml` — the one entry point for the whole domain.
@@ -16,7 +17,7 @@ import { getCollection } from 'astro:content';
  * nobody publishes is reported as a fetch error against this domain.
  */
 export const GET: APIRoute = async ({ site }) => {
-  const projects = await getCollection('projects', ({ id }) => id.startsWith('en/'));
+  const projects = await getCollection('projects', ({ id }) => localeOfEntry(id) === 'en');
 
   const docs = projects
     .sort((a, b) => a.data.order - b.data.order)

@@ -2,11 +2,11 @@
 import { Font } from 'astro:assets';
 import { PUBLIC_GTM_ID } from 'astro:env/client';
 import '@styles/theme.css';
-import { contact, profile } from '@data/profile';
+import { contact, profile, spokenLanguages } from '@data/profile';
 import { education } from '@data/education';
 import { experience } from '@data/experience';
-import { path, useTranslations } from '@i18n/utils';
-import { locales } from '@i18n/ui';
+import { alternateLocale, path, useTranslations } from '@i18n/utils';
+import { locales, ogLocales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
 
 interface Props {
@@ -85,8 +85,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
-    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
-    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_GB' : 'es_ES'} />
+    <meta property="og:locale" content={ogLocales[lang]} />
+    <meta property="og:locale:alternate" content={ogLocales[alternateLocale(lang)]} />
     <meta property="og:site_name" content={profile.name} />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -143,14 +143,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         description: profile.headline[lang],
         url: new URL(path(lang), Astro.site).href,
         image: new URL('/photo.png', Astro.site).href,
-        jobTitle: lang === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
+        jobTitle: experience[0]!.role[lang],
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Hernani',
           addressRegion: 'Gipuzkoa',
           addressCountry: 'ES',
         },
-        knowsLanguage: ['es', 'eu', 'en'],
+        knowsLanguage: spokenLanguages.map((language) => language.code),
         alumniOf: education.map((study) => ({
           '@type': 'EducationalOrganization',
           name: study.school,

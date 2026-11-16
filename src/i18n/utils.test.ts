@@ -6,8 +6,11 @@ import {
   alternates,
   assertLocale,
   langParam,
+  localeOfEntry,
   localeParams,
   localeRouteParams,
+  localizePath,
+  parsePath,
   path,
   useTranslations,
 } from './utils';
@@ -97,5 +100,69 @@ describe('localeRouteParams', () => {
       { params: { lang: undefined, projects: 'proyectos' } },
       { params: { lang: 'en', projects: 'projects' } },
     ]);
+  });
+});
+
+describe('parsePath', () => {
+  it.each([
+    ['/', 'es', []],
+    ['/proyectos/', 'es', ['projects']],
+    ['/proyectos/snake-orm/', 'es', ['projects', 'snake-orm']],
+    ['/en/', 'en', []],
+    ['/en/experience/', 'en', ['experience']],
+    ['/en/projects/snake-orm/', 'en', ['projects', 'snake-orm']],
+  ])('reads %s as %s %j', (pathname, lang, segments) => {
+    expect(parsePath(pathname)).toEqual({ lang, segments });
+  });
+
+  it('only recognises a whole prefix segment as a locale', () => {
+    expect(parsePath('/english/')).toEqual({ lang: 'es', segments: ['english'] });
+  });
+
+  it('does not take a segment in the wrong language for a route', () => {
+    expect(parsePath('/projects/')).toEqual({ lang: 'es', segments: ['projects'] });
+  });
+
+  it('only the first segment can be a route', () => {
+    expect(parsePath('/proyectos/cv/')).toEqual({ lang: 'es', segments: ['projects', 'cv'] });
+  });
+});
+
+describe('localizePath', () => {
+  it('builds the page in any locale from canonical segments', () => {
+    expect(localizePath('es', ['projects', 'snake-orm'])).toBe('/proyectos/snake-orm/');
+    expect(localizePath('en', ['projects', 'snake-orm'])).toBe('/en/projects/snake-orm/');
+    expect(localizePath('es', [])).toBe('/');
+  });
+
+  /* `in` would walk the prototype chain and read `routes.constructor` as a route. */
+  it.each(['constructor', 'toString', '__proto__'])('keeps %j as a plain segment', (segment) => {
+    expect(localizePath('es', [segment])).toBe(`/${segment}/`);
+    expect(localizePath('en', [segment])).toBe(`/en/${segment}/`);
+  });
+
+  it.each([
+    '/',
+    '/en/',
+    '/cv/',
+    '/en/cv/',
+    '/experiencia/',
+    '/en/experience/',
+    '/proyectos/snake-orm/',
+    '/en/projects/snake-orm/',
+  ])('round-trips %s through parsePath', (pathname) => {
+    const { lang, segments } = parsePath(pathname);
+    expect(localizePath(lang, segments)).toBe(pathname);
+  });
+});
+
+describe('localeOfEntry', () => {
+  it('reads the locale off the folder', () => {
+    expect(localeOfEntry('es/snake-orm')).toBe('es');
+    expect(localeOfEntry('en/snake-orm')).toBe('en');
+  });
+
+  it.each(['fr/snake-orm', 'snake-orm', 'EN/snake-orm'])('rejects %j', (id) => {
+    expect(() => localeOfEntry(id)).toThrow(id);
   });
 });
