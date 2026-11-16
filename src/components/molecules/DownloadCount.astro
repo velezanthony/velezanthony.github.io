@@ -1,0 +1,65 @@
+---
+import Link from '@atoms/Link.astro';
+import { citationsOf } from '@data/downloads';
+import type { DownloadSources } from '@data/downloads';
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  sources: DownloadSources | undefined;
+  lang: Locale;
+  /** `card`: one faint line under a card's status. `field`: a labelled field of the sidebar. */
+  variant?: 'card' | 'field';
+}
+
+const { sources, lang, variant = 'card' } = Astro.props;
+const t = useTranslations(lang);
+const cited = sources ? citationsOf(sources) : [];
+---
+
+{/*
+  Rendered hidden and without a number: the count is read in the visitor's browser, so the page
+  never carries one frozen at build time. The script fills it in, drops the citation of a store
+  that did not answer, and shows the block. Without JavaScript it stays hidden.
+*/}
+{sources &&
+  cited.length > 0 &&
+  (variant === 'card' ? (
+    <p
+      hidden
+      data-downloads={JSON.stringify(sources)}
+      data-lang={lang}
+      class="mt-2 font-mono text-xs text-faint"
+    >
+      <span data-downloads-text />
+      {cited.map((source) => (
+        <span data-downloads-item={source.href}>
+          <span aria-hidden="true"> · </span>
+          {/* Above the card's ::after overlay, or a click would open the write-up. */}
+          <Link href={source.href} variant="quiet" class="relative z-10">
+            {source.label}
+          </Link>
+        </span>
+      ))}
+    </p>
+  ) : (
+    <div hidden data-downloads={JSON.stringify(sources)} data-lang={lang}>
+      <p class="label mb-2 text-faint">{t('Descargas')}</p>
+      <p class="text-sm text-ink" data-downloads-text />
+      <p class="mt-1 flex flex-wrap gap-x-3 font-mono text-xs">
+        {cited.map((source) => (
+          <span data-downloads-item={source.href}>
+            <Link href={source.href} variant="quiet">
+              {source.label}
+            </Link>
+          </span>
+        ))}
+      </p>
+    </div>
+  ))}
+
+<script>
+  import { hydrateDownloads } from '@/client/downloads';
+
+  void hydrateDownloads(document);
+</script>

@@ -50,34 +50,18 @@ describe('ProjectCard', () => {
   });
 
   describe('downloads', () => {
-    const downloads = {
-      text: '811 downloads a month',
-      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/snake-orm' }],
-    };
-
-    it('shows them under the status', async () => {
-      const doc = await render(ProjectCard, { ...props, downloads });
-      expect(text(doc)).toContain('811 downloads a month');
+    /* Counted in the browser: the card carries the block and its citations, never a number. */
+    it('carries the download block for the stores the project is published to', async () => {
+      const doc = await render(ProjectCard, { ...props, downloads: { pypi: 'snake-orm' } });
+      const block = doc.querySelector('[data-downloads]')!;
+      expect(block.hasAttribute('hidden')).toBe(true);
+      expect(
+        block.querySelector('a[href="https://pypistats.org/packages/snake-orm"]'),
+      ).not.toBeNull();
     });
 
-    /* So anyone can check the number where it comes from. */
-    it('links each source to the page that publishes the number', async () => {
-      const doc = await render(ProjectCard, { ...props, downloads });
-      const link = doc.querySelector('a[href="https://pypistats.org/packages/snake-orm"]')!;
-      expect(text(link)).toBe('PyPI');
-      expect(link.getAttribute('target')).toBe('_blank');
-    });
-
-    /* The card is one big link through an ::after overlay; a source link under it would open the
-       write-up instead. */
-    it('lifts the source links above the card overlay', async () => {
-      const doc = await render(ProjectCard, { ...props, downloads });
-      const link = doc.querySelector('a[href^="https://pypistats"]')!;
-      expect([...link.classList]).toEqual(expect.arrayContaining(['relative', 'z-10']));
-    });
-
-    it('shows nothing when there is no number', async () => {
-      expect(text(await render(ProjectCard, props))).not.toMatch(/downloads/);
+    it('has none for a project published nowhere', async () => {
+      expect((await render(ProjectCard, props)).querySelector('[data-downloads]')).toBeNull();
     });
   });
 

@@ -11,7 +11,8 @@ function fakeFetch(table: Record<string, unknown>) {
   }) as unknown as typeof fetch;
 }
 
-const pypi = { data: { last_day: 34, last_week: 69, last_month: 811 } };
+/* shields.io, not pypistats: pypistats sends no CORS header, and the count is read in the browser. */
+const pypi = { label: 'downloads', message: '811/month', value: '811/month' };
 const openVsx = { downloadCount: 730 };
 const marketplace = {
   results: [
@@ -30,7 +31,7 @@ const marketplace = {
 
 describe('fetchDownloads', () => {
   it('reads PyPI as downloads in the last month', async () => {
-    const f = fakeFetch({ 'pypistats.org/api/packages/django-cotton-gallery/recent': pypi });
+    const f = fakeFetch({ 'img.shields.io/pypi/dm/django-cotton-gallery.json': pypi });
     expect(await fetchDownloads({ pypi: 'django-cotton-gallery' }, f)).toEqual({
       perMonth: 811,
       sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/django-cotton-gallery' }],
@@ -77,12 +78,22 @@ describe('fetchDownloads', () => {
     });
   });
 
+  /* Past a thousand shields rounds: "1.2k/month". Kept as approximate rather than made precise. */
+  it('reads a rounded shields count as approximate', async () => {
+    const f = fakeFetch({ 'img.shields.io': { value: '1.2k/month' } });
+    expect(await fetchDownloads({ pypi: 'a' }, f)).toEqual({
+      perMonth: 1200,
+      approximate: true,
+      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/a' }],
+    });
+  });
+
   it('is empty when nothing could be read', async () => {
     expect(await fetchDownloads({ pypi: 'snake-orm' }, fakeFetch({}))).toEqual({ sources: [] });
   });
 
   it('ignores an answer without the number', async () => {
-    const f = fakeFetch({ 'pypistats.org': { data: {} } });
+    const f = fakeFetch({ 'img.shields.io': { value: 'invalid' } });
     expect(await fetchDownloads({ pypi: 'snake-orm' }, f)).toEqual({ sources: [] });
   });
 
@@ -105,6 +116,16 @@ describe('formatDownloads', () => {
     expect(formatDownloads({ total: 1794 }, 'en')).toBe('1,794 downloads');
   });
 
+  /* Intl joins number and "mil" with a no-break space, so they never part across lines. */
+  it('words an approximate count compactly, without false precision', () => {
+    expect(formatDownloads({ perMonth: 1200, approximate: true }, 'es')).toBe(
+      '1,2\u00a0mil descargas al mes',
+    );
+    expect(formatDownloads({ perMonth: 1200, approximate: true }, 'en')).toBe(
+      '1.2K downloads a month',
+    );
+  });
+
   it('is undefined when there is nothing to say', () => {
     expect(formatDownloads({}, 'es')).toBeUndefined();
   });
@@ -113,7 +134,7 @@ describe('formatDownloads', () => {
 describe('createDownloadsCache', () => {
   /* Cards and write-ups, in two languages, ask for the same project: one build, one request. */
   it('asks each store once per build, however many pages want the number', async () => {
-    const f = fakeFetch({ 'pypistats.org': pypi });
+    const f = fakeFetch({ 'img.shields.io': pypi });
     const downloadsOf = createDownloadsCache(f);
     await Promise.all([
       downloadsOf({ pypi: 'a' }),
@@ -124,7 +145,7 @@ describe('createDownloadsCache', () => {
   });
 
   it('keeps projects apart', async () => {
-    const f = fakeFetch({ 'pypistats.org': pypi });
+    const f = fakeFetch({ 'img.shields.io': pypi });
     const downloadsOf = createDownloadsCache(f);
     await downloadsOf({ pypi: 'a' });
     await downloadsOf({ pypi: 'b' });

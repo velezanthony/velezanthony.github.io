@@ -70,23 +70,18 @@ describe('CaseStudySection sidebar', () => {
     }
   });
 
-  it('lists the download count as a field when there is one', async () => {
-    const downloads = {
-      text: '811 descargas al mes',
-      sources: [{ label: 'PyPI', href: 'https://pypistats.org/packages/snake-orm' }],
-    };
-    const doc = await render(CaseStudySection, { ...props, downloads });
-    const label = [...doc.querySelectorAll('aside p.label')].find((l) => text(l) === 'Descargas');
-    expect(label).toBeDefined();
-    expect(text(label!.nextElementSibling)).toContain('811 descargas al mes');
-    const source = label!.parentElement!.querySelector(
-      'a[href="https://pypistats.org/packages/snake-orm"]',
-    );
-    expect(text(source)).toBe('PyPI');
+  it('carries the downloads field for the stores the project is published to', async () => {
+    const doc = await render(CaseStudySection, { ...props, downloads: { pypi: 'snake-orm' } });
+    const field = doc.querySelector('aside [data-downloads]')!;
+    expect(text(field.querySelector('p.label'))).toBe('Descargas');
+    expect(
+      field.querySelector('a[href="https://pypistats.org/packages/snake-orm"]'),
+    ).not.toBeNull();
   });
 
-  it('leaves the field out without a number', async () => {
-    const doc = await render(CaseStudySection, props);
-    expect([...doc.querySelectorAll('aside p.label')].map(text)).not.toContain('Descargas');
+  it('has no downloads field for a project published nowhere', async () => {
+    expect(
+      (await render(CaseStudySection, props)).querySelector('aside [data-downloads]'),
+    ).toBeNull();
   });
 });

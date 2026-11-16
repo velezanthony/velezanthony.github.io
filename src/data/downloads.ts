@@ -11,12 +11,17 @@ export interface DownloadSources {
 }
 
 /**
- * Kept apart because the stores measure different things: pypistats publishes a reliable last
- * month (its "overall" covers only some 180 days), the VS Code stores only an all-time count.
+ * Kept apart because the stores measure different things: PyPI's last month is reliable (its
+ * "overall" covers only some 180 days), the VS Code stores publish only an all-time count.
+ *
+ * Read in the browser, not at build: every source here sends CORS headers. PyPI's figure comes
+ * through shields.io, because pypistats sends none.
  */
 export interface Downloads {
   perMonth?: number;
   total?: number;
+  /** shields.io rounds past a thousand ("1.2k/month"): the count is then shown as such. */
+  approximate?: boolean;
   /** The stores that answered, each linked to the public page where its number can be checked. */
   sources: Citation[];
 }
@@ -52,9 +57,23 @@ async function json(fetcher: typeof fetch, url: string, init?: RequestInit): Pro
 const count = (value: unknown): number | undefined =>
   typeof value === 'number' && Number.isFinite(value) ? value : undefined;
 
+const SUFFIX = { '': 1, k: 1e3, M: 1e6, B: 1e9 } as const;
+
+/** shields.io's `value`: "811/month", or rounded past a thousand, "1.2k/month". */
+export function parseShieldsMonthly(
+  value: unknown,
+): { count: number; approximate: boolean } | undefined {
+  const match = typeof value === 'string' ? /^([\d.]+)([kMB]?)\/month$/.exec(value) : null;
+  if (!match) return undefined;
+  const [, digits, suffix] = match as unknown as [string, string, keyof typeof SUFFIX];
+  const n = Number(digits);
+  if (!Number.isFinite(n)) return undefined;
+  return { count: Math.round(n * SUFFIX[suffix]), approximate: suffix !== '' };
+}
+
 async function pypiPerMonth(fetcher: typeof fetch, name: string) {
-  const body = await json(fetcher, `https://pypistats.org/api/packages/${name}/recent`);
-  return count((body as { data?: { last_month?: unknown } } | undefined)?.data?.last_month);
+  const body = await json(fetcher, `https://img.shields.io/pypi/dm/${name}.json`);
+  return parseShieldsMonthly((body as { value?: unknown } | undefined)?.value);
 }
 
 async function openVsxTotal(fetcher: typeof fetch, id: string) {
@@ -83,6 +102,13 @@ async function marketplaceTotal(fetcher: typeof fetch, id: string) {
   return count(stats?.find((s) => s.statisticName === 'downloadCount')?.value);
 }
 
+/** Every store the project declares, cited: what the page renders before the browser asks. */
+export function citationsOf(sources: DownloadSources): Citation[] {
+  return (Object.keys(citations) as (keyof DownloadSources)[])
+    .filter((store) => sources[store] !== undefined)
+    .map((store) => citations[store](sources[store]!));
+}
+
 /**
  * Asks each store the project declares. A store that is down or answers oddly drops its share:
  * a missing number is shown as no number, and never fails the build.
@@ -101,7 +127,8 @@ export async function fetchDownloads(
 
   const downloads: Downloads = { sources: [] };
   if (perMonth !== undefined) {
-    downloads.perMonth = perMonth;
+    downloads.perMonth = perMonth.count;
+    if (perMonth.approximate) downloads.approximate = true;
     downloads.sources.push(citations.pypi(sources.pypi!));
   }
   if (totals.length) downloads.total = totals.reduce((a, b) => a + b, 0);
@@ -110,7 +137,7 @@ export async function fetchDownloads(
   return downloads;
 }
 
-/** One request per project per build: the cards and write-ups of both languages share it. */
+/** One request per project per page: a card list asks once per project however it renders. */
 export function createDownloadsCache(fetcher: typeof fetch = fetch) {
   const cache = new Map<string, Promise<Downloads>>();
   return (sources: DownloadSources | undefined): Promise<Downloads> => {
@@ -124,9 +151,6 @@ export function createDownloadsCache(fetcher: typeof fetch = fetch) {
   };
 }
 
-/** The build's shared cache. */
-export const downloadsOf = createDownloadsCache();
-
 const words = {
   es: { perMonth: 'descargas al mes', total: 'descargas' },
   en: { perMonth: 'downloads a month', total: 'downloads' },
@@ -134,10 +158,11 @@ const words = {
 
 /** "811 descargas al mes", "1,794 downloads": always with its unit, never as users. */
 export function formatDownloads(
-  downloads: Pick<Downloads, 'perMonth' | 'total'>,
+  downloads: Pick<Downloads, 'perMonth' | 'total' | 'approximate'>,
   lang: Locale,
 ): string | undefined {
-  const number = (n: number) => new Intl.NumberFormat(lang).format(n);
+  const number = (n: number) =>
+    new Intl.NumberFormat(lang, downloads.approximate ? { notation: 'compact' } : {}).format(n);
   if (downloads.perMonth !== undefined) {
     return `${number(downloads.perMonth)} ${words[lang].perMonth}`;
   }
