@@ -71,14 +71,22 @@
   --text-cv-micro: calc(8pt * var(--cv-scale)); /* 10.7px — the stack line */
   --text-cv-micro--line-height: 1.35;
 
-  /* ~67 real characters. Not `ch`: that measures the `0` glyph, so 65ch
-     would render ~86. */
-  --container-measure: 34rem;
+  /* ~78 real characters: past the classic 75, traded for less scrolling on
+     long write-ups. Not `ch`: that measures the `0` glyph, so 65ch would
+     render ~86. */
+  --container-measure: 42rem;
+
+  /* ~75 characters of 15px row text, for single-column widths. */
+  --container-measure-row: 36rem;
+
+  /* The right column of every two-column layout: case-study sidebar, card and job meta, the
+     home's availability and contact. The content beside it takes the rest of the page. */
+  --container-aside: 18rem;
 
   --container-text: 42rem;
 
   --container-wide: 52rem;
-  --container-page: 64rem;
+  --container-page: 80rem;
 }
 
 @media (max-width: 48rem) {

@@ -35,7 +35,7 @@ const t = useTranslations(lang);
 ---
 
 <article class="group relative border-t border-rule py-6">
-  <div class="grid gap-x-14 gap-y-3 lg:grid-cols-[minmax(0,var(--container-text))_minmax(0,1fr)]">
+  <div class="grid gap-x-14 gap-y-3 lg:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
     <div>
       <Heading level={headingLevel} size="md" class="font-mono tracking-tight">
         <a
@@ -46,7 +46,7 @@ const t = useTranslations(lang);
         </a>
       </Heading>
 
-      <Text size="row" class="mt-1.5 max-w-(--container-measure)">
+      <Text size="row" class="mt-1.5 max-w-(--container-measure-row) lg:max-w-none">
         {tagline}
       </Text>
     </div>

@@ -1,0 +1,70 @@
+import { describe, expect, it } from 'vitest';
+
+import type { Job } from '@data/types';
+import CaseStudySection from '@/pages/[...lang]/[projects]/_sections/CaseStudySection.astro';
+import EducationSection from '@/pages/[...lang]/[experience]/_sections/EducationSection.astro';
+import { render } from '@/test/render';
+import ProjectCard from './molecules/ProjectCard.astro';
+import Timeline from './organisms/Timeline.astro';
+
+const job: Job = {
+  company: 'Acme',
+  role: { es: 'Dev', en: 'Dev' },
+  start: '2024-01',
+  end: null,
+  highlights: { es: ['Una línea'], en: ['A line'] },
+  stack: ['Python'],
+};
+
+/* Every two-column content layout gives its right column the same width and the content the rest.
+   The home's hero is the exception, by choice: its lead keeps the reading measure. */
+const layouts: [string, () => Promise<Document>][] = [
+  [
+    'ProjectCard',
+    () =>
+      render(ProjectCard, {
+        name: 'A',
+        tagline: 'B',
+        status: 'maintained',
+        href: '/a/',
+        lang: 'es',
+      }),
+  ],
+  ['ExperienceItem', () => render(Timeline, { lang: 'es', jobs: [job], studies: [] })],
+  ['EducationSection', () => render(EducationSection, { lang: 'es' })],
+  [
+    'CaseStudySection',
+    () =>
+      render(CaseStudySection, {
+        lang: 'es',
+        name: 'A',
+        tagline: 'B',
+        status: 'maintained',
+        role: 'Autor',
+        stack: [],
+        targets: [],
+        compat: [],
+        quality: [],
+        constraints: [],
+        links: [],
+        todo: [],
+        translationPending: false,
+        backHref: '/proyectos/',
+      }),
+  ],
+];
+
+describe('two-column layouts', () => {
+  it.each(layouts)(
+    '%s: content takes the rest beside a --container-aside column',
+    async (_, rendered) => {
+      const doc = await rendered();
+      const grid = [...doc.querySelectorAll('[class*="lg:grid-cols-"]')].map((el) =>
+        el.getAttribute('class')!,
+      );
+      expect(
+        grid.some((c) => c.includes('lg:grid-cols-[minmax(0,1fr)_var(--container-aside)]')),
+      ).toBe(true);
+    },
+  );
+});
