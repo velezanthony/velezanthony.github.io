@@ -36,6 +36,12 @@
   --text-row: 0.9375rem; /* 15px */
   --text-row--line-height: 1.6;
 
+  /* Mono lists of technology names, as values beside sans text of 14px. Plex Mono shares Plex
+     Sans' metrics, so inline code needs no correction; a whole list does, because every glyph
+     takes a full advance and the run carries more ink. One step down evens the weight. */
+  --text-mono-list: 0.8125rem; /* 13px */
+  --text-mono-list--line-height: 1.7;
+
   --text-label: 0.75rem;
   --text-label--line-height: 1.2;
   --text-label--letter-spacing: 0.14em;

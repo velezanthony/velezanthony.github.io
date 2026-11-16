@@ -9,10 +9,21 @@ interface Props {
   size?: Variant;
   /** Label above the list instead of inline — for narrow metadata columns. */
   stacked?: boolean;
+  /** The row IS the value of a labelled field, as in the case study's sidebar. It then takes the
+      colour of every other value there and the mono list size that matches their weight; left as
+      metadata, small and faint like the label above it, it read as a second label. */
+  field?: boolean;
   class?: string;
 }
 
-const { items, label, size = 'site', stacked = false, class: className } = Astro.props;
+const {
+  items,
+  label,
+  size = 'site',
+  stacked = false,
+  field = false,
+  class: className,
+} = Astro.props;
 
 const sizes = {
   site: 'text-xs leading-relaxed',
@@ -21,7 +32,13 @@ const sizes = {
 ---
 
 {items.length > 0 && (
-  <p class:list={['font-mono text-faint', sizes[size], className]}>
+  <p
+    class:list={[
+      'font-mono',
+      field ? 'text-mono-list text-muted' : ['text-faint', sizes[size]],
+      className,
+    ]}
+  >
     {label && stacked && <span class="label mb-1.5 block text-faint">{label}</span>}
     {label && !stacked && <span class="mr-1.5 font-medium text-muted">{label}</span>}
     {items.map((item, index) => (
