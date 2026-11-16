@@ -58,22 +58,24 @@ const t = useTranslations(lang);
     <p class="label mb-5 text-faint">{t('Caso de estudio')}</p>
 
     <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
-      <Heading level={1} size="xl" class="font-mono">{name}</Heading>
+      <Heading level={1} size="xl" class="font-mono">
+        {name}
+      </Heading>
       <StatusChip status={status} lang={lang} />
     </div>
 
-    <Text tone="ink" size="lead" class="mt-5 max-w-(--container-measure)">{tagline}</Text>
+    <Text tone="ink" size="lead" class="mt-5 max-w-(--container-measure)">
+      {tagline}
+    </Text>
   </header>
 
   <Rule marked class="mt-10" />
 
-  {
-    translationPending && (
-      <p class="mt-8 border-l-2 border-accent bg-accent-soft px-4 py-3 text-sm text-accent">
-        {t('Esta página aún no está traducida. Se muestra la versión en castellano.')}
-      </p>
-    )
-  }
+  {translationPending && (
+    <p class="mt-8 border-l-2 border-accent bg-accent-soft px-4 py-3 text-sm text-accent">
+      {t('Esta página aún no está traducida. Se muestra la versión en castellano.')}
+    </p>
+  )}
 
   <div class="mt-12 grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_15rem]">
     <div class="min-w-0 lg:order-1">
@@ -81,16 +83,14 @@ const t = useTranslations(lang);
         <slot />
       </div>
 
-      {
-        todo.length > 0 && (
-          <section class="mt-16">
-            <p class="label mb-4 text-faint">{t('Pendiente de escribir')}</p>
-            {todo.map((item) => (
-              <Todo what={item} />
-            ))}
-          </section>
-        )
-      }
+      {todo.length > 0 && (
+        <section class="mt-16">
+          <p class="label mb-4 text-faint">{t('Pendiente de escribir')}</p>
+          {todo.map((item) => (
+            <Todo what={item} />
+          ))}
+        </section>
+      )}
     </div>
 
     <aside class="space-y-8 lg:order-2 lg:sticky lg:top-10 lg:self-start">
@@ -99,78 +99,66 @@ const t = useTranslations(lang);
         <p class="text-sm text-muted">{role}</p>
       </div>
 
-      {
-        stack.length > 0 && (
-          <div>
-            <p class="label mb-3 text-faint">{t('Stack')}</p>
-            <StackRow items={stack} />
-          </div>
-        )
-      }
+      {stack.length > 0 && (
+        <div>
+          <p class="label mb-3 text-faint">{t('Stack')}</p>
+          <StackRow items={stack} />
+        </div>
+      )}
 
-      {
-        targets.length > 0 && (
-          <div>
-            <p class="label mb-3 text-faint">{t('Para')}</p>
-            <StackRow items={targets} />
-          </div>
-        )
-      }
+      {targets.length > 0 && (
+        <div>
+          <p class="label mb-3 text-faint">{t('Para')}</p>
+          <StackRow items={targets} />
+        </div>
+      )}
 
-      {
-        compat.length > 0 && (
-          <div>
-            <p class="label mb-3 text-faint">{t('Compatibilidad')}</p>
-            <StackRow items={compat} />
-          </div>
-        )
-      }
+      {compat.length > 0 && (
+        <div>
+          <p class="label mb-3 text-faint">{t('Compatibilidad')}</p>
+          <StackRow items={compat} />
+        </div>
+      )}
 
-      {
-        quality.length > 0 && (
-          <div>
-            <p class="label mb-3 text-faint">{t('Calidad')}</p>
-            <ul class="space-y-1.5">
-              {quality.map((item) => (
-                <li class="flex items-baseline gap-2 text-sm text-muted">
-                  <span class="mt-1.5 size-1.5 shrink-0 bg-state-live" aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
+      {quality.length > 0 && (
+        <div>
+          <p class="label mb-3 text-faint">{t('Calidad')}</p>
+          <ul class="space-y-1.5">
+            {quality.map((item) => (
+              <li class="flex items-baseline gap-2 text-sm text-muted">
+                <span class="mt-1.5 size-1.5 shrink-0 bg-state-live" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
-      {
-        constraints.length > 0 && (
-          <div>
-            <p class="label mb-3 text-faint">{t('Restricciones')}</p>
-            <ul class="space-y-2.5">
-              {constraints.map((constraint) => (
-                <li class="border-l-2 border-rule pl-3 text-sm text-muted">{constraint}</li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
+      {constraints.length > 0 && (
+        <div>
+          <p class="label mb-3 text-faint">{t('Restricciones')}</p>
+          <ul class="space-y-2.5">
+            {constraints.map((constraint) => (
+              <li class="border-l-2 border-rule pl-3 text-sm text-muted">{constraint}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
-      {
-        links.length > 0 && (
-          <div>
-            <p class="label mb-3 text-faint">{t('Enlaces')}</p>
-            <ul class="space-y-2">
-              {links.map((link) => (
-                <li>
-                  <Link href={link.href} variant="quiet">
-                    <span class="font-mono text-sm">{link.label}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
+      {links.length > 0 && (
+        <div>
+          <p class="label mb-3 text-faint">{t('Enlaces')}</p>
+          <ul class="space-y-2">
+            {links.map((link) => (
+              <li>
+                <Link href={link.href} variant="quiet">
+                  <span class="font-mono text-sm">{link.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </aside>
   </div>
 </article>

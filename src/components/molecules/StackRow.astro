@@ -18,25 +18,23 @@ const sizes = {
 } as const;
 ---
 
-{
-  items.length > 0 && (
-    <p class:list={['font-mono text-faint', sizes[size], className]}>
-      {label && stacked && <span class="label mb-1.5 block text-faint">{label}</span>}
-      {label && !stacked && <span class="mr-1.5 font-medium text-muted">{label}</span>}
-      {items.map((item, index) => (
-        <>
-          {/* One break point per item, always after the separator: margins
+{items.length > 0 && (
+  <p class:list={['font-mono text-faint', sizes[size], className]}>
+    {label && stacked && <span class="label mb-1.5 block text-faint">{label}</span>}
+    {label && !stacked && <span class="mr-1.5 font-medium text-muted">{label}</span>}
+    {items.map((item, index) => (
+      <>
+        {/* One break point per item, always after the separator: margins
               alone gave none and the list overflowed; spaces on both sides
               gave one too many and lines started with a stray middot. */}
-          {index > 0 && ' '}
-          {item}
-          {index < items.length - 1 && (
-            <span class="text-rule" aria-hidden="true">
-              {' ·'}
-            </span>
-          )}
-        </>
-      ))}
-    </p>
-  )
-}
+        {index > 0 && ' '}
+        {item}
+        {index < items.length - 1 && (
+          <span class="text-rule" aria-hidden="true">
+            {' ·'}
+          </span>
+        )}
+      </>
+    ))}
+  </p>
+)}

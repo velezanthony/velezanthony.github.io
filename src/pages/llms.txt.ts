@@ -23,7 +23,8 @@ const period = (start: string, end: string | null) => `${start} → ${end ?? 'pr
 export const GET: APIRoute = async ({ site }) => {
   /** Every route comes from `path()`, so renaming a segment moves this map with the site. */
   const url = (route: string) => new URL(route, site).href;
-  const both = (route: (lang: 'es' | 'en') => string) => `${url(route('en'))} (es: ${url(route('es'))})`;
+  const both = (route: (lang: 'es' | 'en') => string) =>
+    `${url(route('en'))} (es: ${url(route('es'))})`;
 
   const entries = await getCollection('projects', ({ id }) => id.startsWith('en/'));
   const projects = entries.sort((a, b) => a.data.order - b.data.order);

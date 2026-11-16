@@ -40,9 +40,7 @@ const variants: Record<Variant, string> = {
 >
   <slot />
   {variant === 'action' && <Icon name="arrow" size={14} />}
-  {
-    isExternal && variant !== 'action' && (
-      <Icon name="external" size={12} class="shrink-0 opacity-60" />
-    )
-  }
+  {isExternal && variant !== 'action' && (
+    <Icon name="external" size={12} class="shrink-0 opacity-60" />
+  )}
 </a>

@@ -21,20 +21,18 @@ const projects = limit ? selected.slice(0, limit) : selected;
 ---
 
 <div class:list={['border-b border-rule', className]}>
-  {
-    projects.map(({ entry }) => (
-      <ProjectCard
-        name={entry.data.name}
-        tagline={entry.data.tagline}
-        status={entry.data.status}
-        stack={entry.data.stack}
-        targets={entry.data.targets}
-        thumb={entry.data.thumb}
-        thumbAlt={entry.data.thumbAlt}
-        href={path(lang, 'projects', entry.data.slug)}
-        lang={lang}
-        headingLevel={headingLevel}
-      />
-    ))
-  }
+  {projects.map(({ entry }) => (
+    <ProjectCard
+      name={entry.data.name}
+      tagline={entry.data.tagline}
+      status={entry.data.status}
+      stack={entry.data.stack}
+      targets={entry.data.targets}
+      thumb={entry.data.thumb}
+      thumbAlt={entry.data.thumbAlt}
+      href={path(lang, 'projects', entry.data.slug)}
+      lang={lang}
+      headingLevel={headingLevel}
+    />
+  ))}
 </div>

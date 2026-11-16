@@ -52,7 +52,9 @@ const t = useTranslations(lang);
         </a>
       </Heading>
 
-      <Text size="row" class="mt-1.5 max-w-(--container-measure)">{tagline}</Text>
+      <Text size="row" class="mt-1.5 max-w-(--container-measure)">
+        {tagline}
+      </Text>
     </div>
 
     <div class="min-w-0 lg:pt-1.5">
@@ -60,18 +62,16 @@ const t = useTranslations(lang);
       <StackRow items={stack} class="mt-3" />
       <StackRow items={targets} label={t('Para')} stacked class="mt-3" />
 
-      {
-        thumb && (
-          <Image
-            src={thumb}
-            alt={thumbAlt}
-            widths={[240, 480]}
-            sizes="(min-width: 1024px) 240px, 100vw"
-            loading="lazy"
-            class="mt-4 w-full rounded border border-rule transition-[border-color] group-hover:border-accent"
-          />
-        )
-      }
+      {thumb && (
+        <Image
+          src={thumb}
+          alt={thumbAlt}
+          widths={[240, 480]}
+          sizes="(min-width: 1024px) 240px, 100vw"
+          loading="lazy"
+          class="mt-4 w-full rounded border border-rule transition-[border-color] group-hover:border-accent"
+        />
+      )}
     </div>
   </div>
 </article>

@@ -1,4 +1,3 @@
-
 export const locales = ['es', 'en'] as const;
 export type Locale = (typeof locales)[number];
 
@@ -43,7 +42,7 @@ export const en = {
   'Sin publicar': 'Unreleased',
   Restricciones: 'Constraints',
   Stack: 'Stack',
-  'Para': 'For',
+  Para: 'For',
   Compatibilidad: 'Compatibility',
   Calidad: 'Quality',
   Enlaces: 'Links',
@@ -56,7 +55,7 @@ export const en = {
   Perfil: 'Profile',
   'Stack técnico': 'Technical stack',
   'Trayectoria profesional': 'Professional experience',
-  'Formación': 'Education',
+  Formación: 'Education',
   Idiomas: 'Languages',
   Actualidad: 'Present',
   'Descargar / imprimir': 'Download / print',
@@ -64,7 +63,8 @@ export const en = {
   'Página no encontrada': 'Page not found',
   'La ruta que buscas no existe.': 'That page does not exist.',
   'Volver al inicio': 'Back to home',
-  'La ruta que buscas no existe. Pero ya que estás aquí:': 'That page does not exist. But while you are here:',
+  'La ruta que buscas no existe. Pero ya que estás aquí:':
+    'That page does not exist. But while you are here:',
   'Quién soy y qué construyo': 'Who I am and what I build',
   'Cinco herramientas open source': 'Five open source tools',
   'Dónde he trabajado y en qué': 'Where I have worked and on what',

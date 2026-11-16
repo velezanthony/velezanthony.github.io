@@ -26,9 +26,7 @@ const t = useTranslations(lang);
   bodyClass="bg-raised"
 >
   <div class="print-hidden border-b border-rule bg-canvas">
-    <div
-      class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-10"
-    >
+    <div class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-10">
       <Link href={path(lang)} variant="quiet">
         <span class="label">{t('Inicio')}</span>
       </Link>
@@ -63,7 +61,7 @@ const t = useTranslations(lang);
   >
     <slot />
 
-  <BackToTop lang={lang} />
+    <BackToTop lang={lang} />
   </main>
 </BaseLayout>
 

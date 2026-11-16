@@ -30,7 +30,8 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Frontend', en: 'Frontend' },
-    items: 'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Bootstrap, Alpine.js, HTMX',
+    items:
+      'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Bootstrap, Alpine.js, HTMX',
   },
   {
     label: { es: 'Bases de datos', en: 'Databases' },
@@ -38,11 +39,13 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Cloud y DevOps', en: 'Cloud and DevOps' },
-    items: 'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Gunicorn / WSGI',
+    items:
+      'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Gunicorn / WSGI',
   },
   {
     label: { es: 'Sistemas y redes', en: 'Systems and networking' },
-    items: 'Linux / Windows Server, Active Directory, DNS, Nginx, Apache, Proxmox, SSH, VitalPBX / Asterisk',
+    items:
+      'Linux / Windows Server, Active Directory, DNS, Nginx, Apache, Proxmox, SSH, VitalPBX / Asterisk',
   },
   {
     label: { es: 'Herramientas', en: 'Tools' },

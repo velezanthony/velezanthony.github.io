@@ -44,11 +44,9 @@ const t = useTranslations(lang);
 <section class="mt-5 break-inside-avoid">
   <h2 class="cv-head mb-3">{t('Perfil')}</h2>
   <p class="text-cv-body max-w-none text-muted">
-    {
-      segments(profile.summary[lang]).map((s) =>
-        s.strong ? <strong class="font-semibold text-ink">{s.value}</strong> : s.value,
-      )
-    }
+    {segments(profile.summary[lang]).map((s) =>
+      s.strong ? <strong class="font-semibold text-ink">{s.value}</strong> : s.value,
+    )}
   </p>
 </section>
 
@@ -56,14 +54,12 @@ const t = useTranslations(lang);
   <h2 class="cv-head mb-3">{t('Stack técnico')}</h2>
 
   <dl class="text-cv-body space-y-1">
-    {
-      stackGroups.map((group) => (
-        <div class="flex gap-3">
-          <dt class="w-[30mm] shrink-0 font-medium text-ink">{group.label[lang]}</dt>
-          <dd class="min-w-0 text-muted">{group.items}</dd>
-        </div>
-      ))
-    }
+    {stackGroups.map((group) => (
+      <div class="flex gap-3">
+        <dt class="w-[30mm] shrink-0 font-medium text-ink">{group.label[lang]}</dt>
+        <dd class="min-w-0 text-muted">{group.items}</dd>
+      </div>
+    ))}
   </dl>
 </section>
 
@@ -76,17 +72,15 @@ const t = useTranslations(lang);
   <h2 class="cv-head mb-3">{t('Herramientas propias')}</h2>
 
   <ul class="border-b border-rule">
-    {
-      tools.map((tool) => (
-        <li class="text-cv-body break-inside-avoid border-t border-rule py-1">
-          <span class="font-mono font-medium text-ink">{tool.name}</span>
-          <span class="text-rule" aria-hidden="true">
-            {' — '}
-          </span>
-          <span class="text-muted">{tool.cvLine}</span>
-        </li>
-      ))
-    }
+    {tools.map((tool) => (
+      <li class="text-cv-body break-inside-avoid border-t border-rule py-1">
+        <span class="font-mono font-medium text-ink">{tool.name}</span>
+        <span class="text-rule" aria-hidden="true">
+          {' — '}
+        </span>
+        <span class="text-muted">{tool.cvLine}</span>
+      </li>
+    ))}
   </ul>
 </section>
 
@@ -94,31 +88,27 @@ const t = useTranslations(lang);
   <div class="break-inside-avoid">
     <h2 class="cv-head mb-3">{t('Formación')}</h2>
     <ul class="border-b border-rule">
-      {
-        education.map((study) => (
-          <li class="border-t border-rule py-2">
-            <p class="text-cv-meta font-medium text-faint tabular-nums">
-              {study.startYear} – {study.endYear}
-            </p>
-            <p class="text-cv-body mt-0.5 font-medium text-ink">{study.title[lang]}</p>
-            <p class="text-cv-body text-muted">{study.school}</p>
-          </li>
-        ))
-      }
+      {education.map((study) => (
+        <li class="border-t border-rule py-2">
+          <p class="text-cv-meta font-medium text-faint tabular-nums">
+            {study.startYear} – {study.endYear}
+          </p>
+          <p class="text-cv-body mt-0.5 font-medium text-ink">{study.title[lang]}</p>
+          <p class="text-cv-body text-muted">{study.school}</p>
+        </li>
+      ))}
     </ul>
   </div>
 
   <div class="break-inside-avoid">
     <h2 class="cv-head mb-3">{t('Idiomas')}</h2>
     <ul class="border-b border-rule">
-      {
-        spokenLanguages.map((language) => (
-          <li class="flex items-baseline justify-between gap-4 border-t border-rule py-2">
-            <span class="text-cv-body text-ink">{language.name[lang]}</span>
-            <span class="text-cv-meta font-medium text-faint uppercase">{language.level[lang]}</span>
-          </li>
-        ))
-      }
+      {spokenLanguages.map((language) => (
+        <li class="flex items-baseline justify-between gap-4 border-t border-rule py-2">
+          <span class="text-cv-body text-ink">{language.name[lang]}</span>
+          <span class="text-cv-meta font-medium text-faint uppercase">{language.level[lang]}</span>
+        </li>
+      ))}
     </ul>
   </div>
 </section>

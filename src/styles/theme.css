@@ -119,20 +119,20 @@
 }
 
 :root[data-theme='dark'] {
-    --color-canvas: #0e1111;
-    --color-raised: #161a1a; /*  1.08:1 */
-    --color-ink: #e0e8e8; /* 15.25:1  AAA */
-    --color-muted: #a6b0b0; /*  8.54:1  AAA */
-    --color-faint: #7e8988; /*  5.26:1  AA  */
-    --color-accent: #67bdb1; /*  8.57:1  AAA — #00635b gives 2.65:1 here
+  --color-canvas: #0e1111;
+  --color-raised: #161a1a; /*  1.08:1 */
+  --color-ink: #e0e8e8; /* 15.25:1  AAA */
+  --color-muted: #a6b0b0; /*  8.54:1  AAA */
+  --color-faint: #7e8988; /*  5.26:1  AA  */
+  --color-accent: #67bdb1; /*  8.57:1  AAA — #00635b gives 2.65:1 here
                                    and fails even the 3:1 non-text floor */
-    --color-accent-soft: #142422;
-    --color-rule: #2d3333; /*  1.48:1 */
-    --color-state-live: #6dd196; /* 10.13:1  AAA */
-    --color-state-wip: #e0a44a; /*  8.65:1  AAA */
-    --color-todo: #fbbf24;
-    --color-todo-soft: #1c1608;
-    --color-todo-rule: #a16207;
+  --color-accent-soft: #142422;
+  --color-rule: #2d3333; /*  1.48:1 */
+  --color-state-live: #6dd196; /* 10.13:1  AAA */
+  --color-state-wip: #e0a44a; /*  8.65:1  AAA */
+  --color-todo: #fbbf24;
+  --color-todo-soft: #1c1608;
+  --color-todo-rule: #a16207;
 }
 
 @view-transition {

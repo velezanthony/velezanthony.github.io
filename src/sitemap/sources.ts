@@ -11,7 +11,12 @@ export const sourcesOf = (locale: string, [section, slug]: string[]): string[] =
   const data = 'src/data';
 
   if (!section) {
-    return [`${page}/index.astro`, `${page}/_sections`, `${data}/profile.ts`, `${data}/projects.ts`];
+    return [
+      `${page}/index.astro`,
+      `${page}/_sections`,
+      `${data}/profile.ts`,
+      `${data}/projects.ts`,
+    ];
   }
   if (section === 'cv') {
     return [
@@ -27,7 +32,11 @@ export const sourcesOf = (locale: string, [section, slug]: string[]): string[] =
   }
   if (section === 'projects') {
     return slug
-      ? [`src/content/projects/${locale}/${slug}.md`, `${page}/[projects]/[slug].astro`, `${data}/projects.ts`]
+      ? [
+          `src/content/projects/${locale}/${slug}.md`,
+          `${page}/[projects]/[slug].astro`,
+          `${data}/projects.ts`,
+        ]
       : [
           `${page}/[projects]/index.astro`,
           `${page}/[projects]/_sections/ProjectIndexSection.astro`,

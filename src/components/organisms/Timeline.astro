@@ -17,13 +17,7 @@ interface Props {
   class?: string;
 }
 
-const {
-  lang,
-  variant = 'site',
-  limit,
-  headingLevel = 3,
-  class: className,
-} = Astro.props;
+const { lang, variant = 'site', limit, headingLevel = 3, class: className } = Astro.props;
 const t = useTranslations(lang);
 
 const jobs = limit ? experience.slice(0, limit) : experience;
@@ -38,9 +32,11 @@ type Entry =
 
 const entries: Entry[] = [
   ...jobs.map((job): Entry => ({ start: job.start, kind: 'job', job })),
-  ...(limit ? [] : education).map(
-    (study): Entry => ({ start: `${study.startYear}-09`, kind: 'study', study }),
-  ),
+  ...(limit ? [] : education).map((study): Entry => ({
+    start: `${study.startYear}-09`,
+    kind: 'study',
+    study,
+  })),
 ].sort((a, b) => b.start.localeCompare(a.start));
 
 /** The education rule draws its own line; a closing border here would double it. */
@@ -48,24 +44,22 @@ const closed = entries.at(-1)?.kind !== 'study';
 ---
 
 <div class:list={[closed && 'border-b border-rule', className]}>
-  {
-    entries.map((entry, i) =>
-      entry.kind === 'study' ? (
-        <EducationRule study={entry.study} variant={variant} />
-      ) : (
-        <ExperienceItem
-          company={entry.job.company}
-          role={entry.job.role[lang]}
-          location={entry.job.location?.[lang]}
-          range={formatRange(lang, entry.job.start, entry.job.end, t('Actualidad'))}
-          highlights={entry.job.highlights[lang]}
-          stack={entry.job.stack}
-          lang={lang}
-          variant={variant}
-          headingLevel={headingLevel}
-          flush={entries[i - 1]?.kind === 'study'}
-        />
-      ),
-    )
-  }
+  {entries.map((entry, i) =>
+    entry.kind === 'study' ? (
+      <EducationRule study={entry.study} variant={variant} />
+    ) : (
+      <ExperienceItem
+        company={entry.job.company}
+        role={entry.job.role[lang]}
+        location={entry.job.location?.[lang]}
+        range={formatRange(lang, entry.job.start, entry.job.end, t('Actualidad'))}
+        highlights={entry.job.highlights[lang]}
+        stack={entry.job.stack}
+        lang={lang}
+        variant={variant}
+        headingLevel={headingLevel}
+        flush={entries[i - 1]?.kind === 'study'}
+      />
+    ),
+  )}
 </div>

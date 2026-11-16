@@ -23,9 +23,7 @@ const nav: { key: RouteKey; label: Phrase }[] = [
 ---
 
 <header class="border-b border-rule">
-  <div
-    class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-5 lg:px-10"
-  >
+  <div class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-5 lg:px-10">
     <a
       href={path(lang)}
       aria-current={current === 'home' ? 'page' : undefined}
@@ -40,22 +38,20 @@ const nav: { key: RouteKey; label: Phrase }[] = [
     <div class="flex flex-wrap items-center justify-end gap-x-6 gap-y-3">
       <nav aria-label={t('Navegación principal')}>
         <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
-          {
-            nav.map((item) => (
-              <li>
-                <a
-                  href={path(lang, item.key)}
-                  aria-current={current === item.key ? 'page' : undefined}
-                  class:list={[
-                    'label transition-colors hover:text-accent',
-                    current === item.key ? 'text-ink' : 'text-faint',
-                  ]}
-                >
-                  {t(item.label)}
-                </a>
-              </li>
-            ))
-          }
+          {nav.map((item) => (
+            <li>
+              <a
+                href={path(lang, item.key)}
+                aria-current={current === item.key ? 'page' : undefined}
+                class:list={[
+                  'label transition-colors hover:text-accent',
+                  current === item.key ? 'text-ink' : 'text-faint',
+                ]}
+              >
+                {t(item.label)}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
 

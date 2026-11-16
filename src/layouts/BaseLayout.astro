@@ -46,32 +46,33 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
-    {
-      PUBLIC_GTM_ID && (
-        <script
-          is:inline
-          set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    {PUBLIC_GTM_ID && (
+      <script
+        is:inline
+        set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${PUBLIC_GTM_ID}');`
-          }
-        />
-      )
-    }
+            })(window,document,'script','dataLayer','${PUBLIC_GTM_ID}');`}
+      />
+    )}
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
 
     {!noindex && <link rel="canonical" href={canonical.href} />}
-    {
-      !noindex &&
-        locales.map((locale) => (
-          <link rel="alternate" hreflang={locale} href={new URL(alternates[locale], Astro.site).href} />
-        ))
-    }
-    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(alternates.es, Astro.site).href} />}
+    {!noindex &&
+      locales.map((locale) => (
+        <link
+          rel="alternate"
+          hreflang={locale}
+          href={new URL(alternates[locale], Astro.site).href}
+        />
+      ))}
+    {!noindex && (
+      <link rel="alternate" hreflang="x-default" href={new URL(alternates.es, Astro.site).href} />
+    )}
 
     {/* Absolute URL required: crawlers do not resolve relative image paths. */}
     <meta property="og:image" content={new URL('/og.png', Astro.site).href} />
@@ -111,11 +112,33 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         name: profile.name,
         email: 'mailto:velezanthony2000@gmail.com',
         knowsAbout: [
-          'Django', 'Python', 'Flask', 'PHP', 'Laravel', 'Symfony',
-          'C#', '.NET', 'Java', 'TypeScript', 'Angular', 'React', 'HTMX',
-          'PostgreSQL', 'MySQL', 'SQL Server',
-          'AWS', 'Docker', 'GitHub Actions', 'Linux', 'Nginx', 'Proxmox', 'DNS',
-          'Asterisk', 'VoIP', 'Software architecture', 'Multi-tenancy',
+          'Django',
+          'Python',
+          'Flask',
+          'PHP',
+          'Laravel',
+          'Symfony',
+          'C#',
+          '.NET',
+          'Java',
+          'TypeScript',
+          'Angular',
+          'React',
+          'HTMX',
+          'PostgreSQL',
+          'MySQL',
+          'SQL Server',
+          'AWS',
+          'Docker',
+          'GitHub Actions',
+          'Linux',
+          'Nginx',
+          'Proxmox',
+          'DNS',
+          'Asterisk',
+          'VoIP',
+          'Software architecture',
+          'Multi-tenancy',
         ],
         description: profile.headline[lang],
         url: new URL(path(lang), Astro.site).href,
@@ -157,13 +180,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
        Not on the 404 itself: served at arbitrary paths, it would read as
        Spanish and overwrite the value it is about to consume. */
-    !noindex && (
-      <script is:inline>
-        document.addEventListener('DOMContentLoaded', () => {
-          sessionStorage.setItem('lang', location.pathname.startsWith('/en/') ? 'en' : 'es');
-        });
-      </script>
-    )
+    !noindex && <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        sessionStorage.setItem('lang', location.pathname.startsWith('/en/') ? 'en' : 'es');
+      });
+    </script>
   }
 
   <body class:list={['min-h-screen bg-canvas antialiased', bodyClass]}>

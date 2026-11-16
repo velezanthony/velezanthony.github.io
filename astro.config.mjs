@@ -108,7 +108,6 @@ export default defineConfig({
     routing: { prefixDefaultLocale: false },
   },
 
-
   /* Markdown images shipped the full-size file with an empty `srcset`.
      `constrained` makes every image responsive, including the ones the
      Markdown pipeline emits. */
