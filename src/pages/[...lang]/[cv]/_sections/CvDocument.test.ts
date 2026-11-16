@@ -21,4 +21,20 @@ describe('CvDocument', () => {
     expect(meta.classList.contains('flex-col')).toBe(true);
     expect(meta.classList.contains('print:flex-row')).toBe(true);
   });
+
+  /* Split across two pages it read as two lists; whole, it lands with education and languages. */
+  it('keeps the own-tools section on one page', async () => {
+    const doc = await render(CvDocument, {
+      lang: 'es',
+      tools: [{ name: 'SnakeORM', cvLine: 'Un ORM' }],
+    });
+    const section = [...doc.querySelectorAll('section')].find(
+      (s) => s.querySelector('h2')?.textContent?.trim() === 'Herramientas propias',
+    )!;
+    /* break-inside: avoid is not enough for Chrome here — tested, the section still split. An
+       inline-block is laid out as one unbreakable box, and moves whole to the next page. */
+    expect([...section.classList]).toEqual(
+      expect.arrayContaining(['print:inline-block', 'print:w-full']),
+    );
+  });
 });

@@ -497,8 +497,9 @@
     widows: 3;
   }
 
-  li,
-  article {
+  /* A list item stays whole. A job does not: a tall one kept whole left the page before it a
+     fifth empty, so it may break between its points, its heading held to the first. */
+  li {
     break-inside: avoid;
   }
 }

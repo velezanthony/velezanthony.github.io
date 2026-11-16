@@ -50,4 +50,35 @@ describe('Timeline', () => {
     expect(withJobLast.body.firstElementChild?.classList.contains('border-b')).toBe(true);
     expect(withStudyLast.body.firstElementChild?.classList.contains('border-b')).toBe(false);
   });
+
+  describe('on paper', () => {
+    const cv = () =>
+      render(Timeline, {
+        lang: 'es',
+        jobs: [{ ...jobs[1]!, stack: ['Python'] }],
+        studies: [study],
+        variant: 'cv',
+      });
+
+    /* A job may break across pages, so a tall one no longer leaves the page before it a fifth
+       empty; its heading never ends a page alone. */
+    it('keeps each job heading with what follows it', async () => {
+      const header = (await cv()).querySelector('article > header')!;
+      expect(header.classList.contains('break-after-avoid')).toBe(true);
+    });
+
+    it('keeps a study rule with the entry after it', async () => {
+      /* The innermost div naming the study: the rule itself, not a container around it. */
+      const rule = [...(await cv()).querySelectorAll('div')].find(
+        (d) => d.textContent?.includes('DAM') && !d.querySelector('div'),
+      )!;
+      expect(rule.classList.contains('break-after-avoid')).toBe(true);
+    });
+
+    /* Every job's technologies are already grouped in the CV's own stack section. */
+    it('leaves the per-job stack line off the printed page', async () => {
+      const stack = (await cv()).querySelector('article .stack-row')!;
+      expect(stack.classList.contains('print-hidden')).toBe(true);
+    });
+  });
 });

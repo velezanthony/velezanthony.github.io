@@ -41,22 +41,25 @@ const cv = variant === 'cv';
 <article class:list={[!flush && 'border-t border-rule', cv ? 'py-3' : 'py-6']}>
   {cv ? (
     <Fragment>
-      <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <Heading level={headingLevel} size="none" class="font-bold">
-          {company}
-        </Heading>
-        <p class="text-cv-meta shrink-0 font-medium text-faint tabular-nums">{range}</p>
-      </div>
+      {/* On paper a job may break across pages; its heading never ends a page alone. */}
+      <header class="break-after-avoid">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <Heading level={headingLevel} size="none" class="font-bold">
+            {company}
+          </Heading>
+          <p class="text-cv-meta shrink-0 font-medium text-faint tabular-nums">{range}</p>
+        </div>
 
-      <p class="text-cv-role font-medium text-accent">
-        {role}
-        {location && (
-          <span class="text-cv-meta font-normal text-faint">
-            <span aria-hidden="true"> · </span>
-            {location}
-          </span>
-        )}
-      </p>
+        <p class="text-cv-role font-medium text-accent">
+          {role}
+          {location && (
+            <span class="text-cv-meta font-normal text-faint">
+              <span aria-hidden="true"> · </span>
+              {location}
+            </span>
+          )}
+        </p>
+      </header>
 
       <ul class="mt-2 space-y-1">
         {highlights.map((highlight) => (
@@ -68,7 +71,8 @@ const cv = variant === 'cv';
         ))}
       </ul>
 
-      <StackRow items={stack} label={t('Stack')} size="cv" class="mt-2" />
+      {/* Off the printed page: every job's technologies are grouped in the CV's stack section. */}
+      <StackRow items={stack} label={t('Stack')} size="cv" class="print-hidden mt-2" />
     </Fragment>
   ) : (
     <div class="grid gap-x-14 gap-y-4 grid-cols-1 md:grid-cols-[minmax(0,1fr)_var(--container-aside)]">

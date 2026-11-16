@@ -73,7 +73,9 @@ const t = useTranslations(lang);
   <Timeline lang={lang} jobs={experience} studies={education} variant="cv" />
 </section>
 
-<section class="mt-5">
+<!-- Whole on one page: split, it read as two lists. Chrome split it despite break-inside: avoid;
+     on paper it is an inline-block, one unbreakable box that moves whole to the next page. -->
+<section class="mt-5 print:inline-block print:w-full print:align-top">
   <h2 class="cv-head mb-3">{t('Herramientas propias')}</h2>
 
   <ul class="border-b border-rule">
