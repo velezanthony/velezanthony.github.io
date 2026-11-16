@@ -19,3 +19,13 @@ export function nextTheme(chosen: Theme | undefined, systemDark: boolean): Theme
 export function syncToggle(button: Element, dark: boolean): void {
   button.setAttribute('aria-pressed', String(dark));
 }
+
+/**
+ * `<meta name="theme-color">` comes in two, one per system preference, so a choice against the
+ * system would leave the browser bar in the other theme. A choice gives both its colour.
+ */
+export function syncThemeColor(doc: Document, color: string): void {
+  for (const meta of doc.querySelectorAll('meta[name="theme-color"]')) {
+    meta.setAttribute('content', color);
+  }
+}

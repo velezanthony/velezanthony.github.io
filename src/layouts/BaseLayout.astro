@@ -106,7 +106,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       is:inline
       set:html={JSON.stringify(person(lang, canonical.href))}
     />
-    <script is:inline define:vars={{ key: THEME_KEY }}>
+    <script is:inline define:vars={{ key: THEME_KEY, colors: themeColors }}>
       /* Runs before first paint: without it the page renders in the system
          theme and then flips, which is the flash every toggle has to avoid.
          Inline, so it cannot import. */
@@ -114,6 +114,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         const saved = localStorage.getItem(key);
         if (saved === 'dark' || saved === 'light') {
           document.documentElement.dataset.theme = saved;
+          /* The same as syncThemeColor: the browser bar follows the choice. */
+          for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+            meta.setAttribute('content', colors[saved]);
+          }
         }
       } catch {
         /* Storage blocked: the system theme stands. */

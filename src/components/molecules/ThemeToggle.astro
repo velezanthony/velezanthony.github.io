@@ -92,7 +92,8 @@ const t = useTranslations(lang);
 
 <script>
   import { THEME_KEY, safeSet, storageOf } from '@/client/storage';
-  import { isDark, nextTheme, parseTheme, syncToggle } from '@/client/theme';
+  import { isDark, nextTheme, parseTheme, syncThemeColor, syncToggle } from '@/client/theme';
+  import { themeColors } from '@styles/theme-colors';
 
   const root = document.documentElement;
   const system = matchMedia('(prefers-color-scheme: dark)');
@@ -107,6 +108,7 @@ const t = useTranslations(lang);
     button.addEventListener('click', () => {
       const next = nextTheme(chosen(), system.matches);
       root.dataset.theme = next;
+      syncThemeColor(document, themeColors[next]);
       safeSet(storageOf('localStorage'), THEME_KEY, next);
       sync();
     });

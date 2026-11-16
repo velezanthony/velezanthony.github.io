@@ -140,7 +140,14 @@
   }
 }
 
+/* A chosen theme names its `color-scheme` too, or scrollbars and native controls keep the
+   system's. */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
 :root[data-theme='dark'] {
+  color-scheme: dark;
   --color-canvas: #0e1111;
   --color-raised: #161a1a; /*  1.08:1 */
   --color-ink: #e0e8e8; /* 15.25:1  AAA */

@@ -1,7 +1,7 @@
 import { parseHTML } from 'linkedom';
 import { describe, expect, it } from 'vitest';
 
-import { isDark, nextTheme, parseTheme, syncToggle } from './theme';
+import { isDark, nextTheme, parseTheme, syncThemeColor, syncToggle } from './theme';
 
 describe('parseTheme', () => {
   it.each(['dark', 'light'])('accepts %s', (value) => {
@@ -47,5 +47,23 @@ describe('syncToggle', () => {
     const b = button();
     syncToggle(b, false);
     expect(b.getAttribute('aria-pressed')).toBe('false');
+  });
+});
+
+describe('syncThemeColor', () => {
+  /* Each tag answers to the system's preference; a choice must override both, or the browser bar
+     keeps the system's colour under a page of the other one. */
+  it('gives every theme-color tag the chosen colour', () => {
+    const { document } = parseHTML(
+      '<html><head>' +
+        '<meta name="theme-color" content="#fcfefe" media="(prefers-color-scheme: light)">' +
+        '<meta name="theme-color" content="#0e1111" media="(prefers-color-scheme: dark)">' +
+        '</head></html>',
+    );
+    syncThemeColor(document, '#0e1111');
+    const contents = [...document.querySelectorAll('meta[name="theme-color"]')].map((meta) =>
+      meta.getAttribute('content'),
+    );
+    expect(contents).toEqual(['#0e1111', '#0e1111']);
   });
 });

@@ -19,3 +19,16 @@ describe('themeColors', () => {
     for (const value of canvas.slice(1)) expect(value).toBe(themeColors.dark);
   });
 });
+
+/* Native controls and scrollbars take the system's scheme unless the page names one: a choice made
+   with the toggle has to reach them too. */
+describe('color-scheme', () => {
+  const css = readFileSync('src/styles/theme.css', 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+
+  it.each(['light', 'dark'])('follows a chosen %s theme', (theme) => {
+    const rule = new RegExp(
+      `:root\\[data-theme='${theme}'\\]\\s*\\{[^{}]*color-scheme:\\s*${theme}\\s*;`,
+    );
+    expect(css).toMatch(rule);
+  });
+});
