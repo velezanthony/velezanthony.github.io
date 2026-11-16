@@ -91,8 +91,8 @@ export const seo = {
     en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular. Five open source tools of my own.',
   },
   projects: {
-    es: 'Cinco herramientas open source: dos extensiones de VS Code, un language server para Django, un ORM tipado en Python y un panel de Docker en terminal.',
-    en: 'Five open source tools: two VS Code extensions, a Django language server, a typed Python ORM and a terminal Docker dashboard. All MIT licensed.',
+    es: 'Cinco herramientas open source: dos extensiones de VS Code (Django Language Service y Cotton Props), un catálogo de componentes Django, un ORM tipado en Python y un panel Docker en terminal.',
+    en: 'Five open source tools: two VS Code extensions (Django Language Service and Cotton Props), a Django component catalogue, a typed Python ORM and a terminal Docker dashboard.',
   },
   experience: {
     es: 'Cuatro años: arquitectura Django en Zenit Solar, AWS en Eywa Space, VoIP en SWAP y un SaaS multi-tenant en Laravel llevado a producción en VITE.',
