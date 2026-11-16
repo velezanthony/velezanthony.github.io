@@ -26,8 +26,10 @@ constraints:
   - 'Bilingüe, y con tests en ShellSpec.'
 links:
   - label: Documentación
+    kind: docs
     href: https://velezanthony.github.io/docker-control-center/
   - label: Código
+    kind: source
     href: https://github.com/velezanthony/docker-control-center
 todo:
   - 'Añadir una captura o un GIF corto. Una herramienta de terminal se vende enseñándola.'

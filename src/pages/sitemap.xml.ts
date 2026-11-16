@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { localeOfEntry } from '@i18n/utils';
+import { linkOf } from '@/schemas/project';
 import { SITEMAP_PAGES, SITEMAP_XSL } from '@/seo/sitemap/files';
 
 /**
@@ -22,7 +23,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   const docs = projects
     .sort((a, b) => a.data.order - b.data.order)
-    .map(({ data }) => data.links.find((l) => /github\.io/.test(l.href))?.href)
+    .map(({ data }) => linkOf(data.links, 'docs'))
     .filter((href): href is string => Boolean(href))
     .map((href) => new URL('sitemap.xml', href).href);
 

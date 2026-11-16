@@ -24,8 +24,10 @@ constraints:
   - 'No adivinar: si una plantilla puede venir de varias vistas, la extensión se calla hasta que eliges una.'
 links:
   - label: Documentación
+    kind: docs
     href: https://velezanthony.github.io/django-language-service/
   - label: Código
+    kind: source
     href: https://github.com/velezanthony/django-language-service
 todo: []
 ---

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { profile, spokenLanguages, stackGroups, contact } from '@data/profile';
 import { experience } from '@data/experience';
 import { localeOfEntry, path } from '@i18n/utils';
+import { linkOf } from '@/schemas/project';
 import type { Locale } from '@i18n/ui';
 
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */
@@ -58,12 +59,11 @@ export const GET: APIRoute = async ({ site }) => {
   lines.push('## Projects', '');
 
   for (const { data } of projects) {
-    const link = (re: RegExp) => data.links.find((l) => re.test(l.href))?.href;
     const facts = [
       `write-up: ${both((lang) => path(lang, 'projects', data.slug))}`,
-      `code: ${link(/github\.com/) ?? 'not public'}`,
-      `package: ${link(/pypi\.org|marketplace\.visualstudio\.com|npmjs\.com/) ?? 'not published'}`,
-      `docs: ${link(/github\.io/) ?? 'none'}`,
+      `code: ${linkOf(data.links, 'source') ?? 'not public'}`,
+      `package: ${linkOf(data.links, 'package') ?? 'not published'}`,
+      `docs: ${linkOf(data.links, 'docs') ?? 'none'}`,
       `status: ${data.status}`,
     ];
     lines.push(`- [${data.name}](${url(path('en', 'projects', data.slug))}): ${data.tagline}`);

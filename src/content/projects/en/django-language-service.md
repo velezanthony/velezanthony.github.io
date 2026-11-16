@@ -24,8 +24,10 @@ constraints:
   - 'No guessing: if a template can come from several views, the extension stays quiet until you pick one.'
 links:
   - label: Documentation
+    kind: docs
     href: https://velezanthony.github.io/django-language-service/
   - label: Source
+    kind: source
     href: https://github.com/velezanthony/django-language-service
 todo: []
 ---

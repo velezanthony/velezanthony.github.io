@@ -34,10 +34,13 @@ constraints:
   - 'El theming sale de los design tokens del proyecto anfitrión, no de una hoja de estilos propia.'
 links:
   - label: PyPI
+    kind: package
     href: https://pypi.org/project/django-cotton-gallery/
   - label: Documentación
+    kind: docs
     href: https://velezanthony.github.io/django-cotton-gallery/
   - label: Código
+    kind: source
     href: https://github.com/velezanthony/django-cotton-gallery
 thumb: ../../../assets/projects/gallery-detail.png
 thumbAlt: Detalle de un componente con sus controles

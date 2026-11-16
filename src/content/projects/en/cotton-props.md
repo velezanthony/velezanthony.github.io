@@ -23,12 +23,16 @@ quality:
 constraints: []
 links:
   - label: Marketplace
+    kind: package
     href: https://marketplace.visualstudio.com/items?itemName=velezanthony.cotton-props
   - label: Open VSX
+    kind: package
     href: https://open-vsx.org/extension/velezanthony/cotton-props
   - label: Documentation
+    kind: docs
     href: https://velezanthony.github.io/cotton-props/
   - label: Source
+    kind: source
     href: https://github.com/velezanthony/cotton-props
 thumb: ../../../assets/projects/props-hover.png
 thumbAlt: Component documentation on hover

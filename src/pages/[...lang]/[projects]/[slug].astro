@@ -1,6 +1,7 @@
 ---
 import { execFileSync } from 'node:child_process';
 import { render } from 'astro:content';
+import { linkOf } from '@/schemas/project';
 import PageLayout from '@layouts/PageLayout.astro';
 import CaseStudySection from './_sections/CaseStudySection.astro';
 import { getProject, getProjectSlugs } from '@data/projects';
@@ -65,7 +66,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
         '@type': 'SoftwareSourceCode',
         name: entry.data.name,
         description: entry.data.tagline,
-        codeRepository: entry.data.links.find((l) => /github\.com/.test(l.href))?.href,
+        codeRepository: linkOf(entry.data.links, 'source'),
         programmingLanguage: entry.data.stack,
         license: 'https://opensource.org/licenses/MIT',
         author: { '@id': new URL('/#anthony', Astro.site).href },

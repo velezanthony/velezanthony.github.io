@@ -37,10 +37,13 @@ constraints:
   - 'Sin quejas de mypy ni de ruff en estricto.'
 links:
   - label: Código
+    kind: source
     href: https://github.com/velezanthony/snake-orm
   - label: PyPI
+    kind: package
     href: https://pypi.org/project/snake-orm/
   - label: Documentación
+    kind: docs
     href: https://velezanthony.github.io/snake-orm/
 todo: []
 ---

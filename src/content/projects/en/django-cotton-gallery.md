@@ -34,10 +34,13 @@ constraints:
   - 'Theming comes from the host project design tokens, not from a stylesheet of its own.'
 links:
   - label: PyPI
+    kind: package
     href: https://pypi.org/project/django-cotton-gallery/
   - label: Documentation
+    kind: docs
     href: https://velezanthony.github.io/django-cotton-gallery/
   - label: Source
+    kind: source
     href: https://github.com/velezanthony/django-cotton-gallery
 thumb: ../../../assets/projects/gallery-detail.png
 thumbAlt: A component detail with its controls
