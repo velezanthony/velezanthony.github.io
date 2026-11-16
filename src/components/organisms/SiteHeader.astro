@@ -24,42 +24,44 @@ const nav: { key: RouteKey; label: Phrase }[] = [
 ---
 
 <header class="border-b border-rule">
-  <div class="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-5 lg:px-10">
+  <!-- Two rows on a phone, one from md up. The name and the controls share the first row and the
+       nav takes the whole second one: three links fit in view, so they are not hidden behind a
+       menu, and the header stays free of JavaScript. Source order stays name, nav, controls, so
+       Tab reaches the main navigation first at every width. -->
+  <div class="mx-auto grid max-w-(--container-page) grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2 px-6 py-4 md:grid-cols-[1fr_auto_auto] md:gap-x-8 md:py-5 lg:px-10">
     <a
       href={path(lang)}
       aria-current={current === 'home' ? 'page' : undefined}
-      class="font-mono text-sm font-medium tracking-tight text-ink transition-colors hover:text-accent"
+      class="col-start-1 row-start-1 justify-self-start font-mono text-sm font-medium tracking-tight text-ink transition-colors hover:text-accent"
     >
       {name}
     </a>
 
-    <!-- The group has to wrap on its own: the nav alone is wider than a
-         narrow viewport, so an unwrappable row pushed the whole document
-         into a horizontal scroll. -->
-    <div class="flex flex-wrap items-center justify-end gap-x-6 gap-y-3">
-      <nav aria-label={t('Navegación principal')}>
-        <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
-          {nav.map((item) => (
-            <li>
-              <a
-                href={path(lang, item.key)}
-                aria-current={current === item.key ? 'page' : undefined}
-                class:list={[
-                  'label transition-colors hover:text-accent',
-                  current === item.key ? 'text-ink' : 'text-faint',
-                ]}
-              >
-                {t(item.label)}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <nav
+      aria-label={t('Navegación principal')}
+      class="col-span-2 row-start-2 md:col-span-1 md:col-start-2 md:row-start-1"
+    >
+      <ul class="flex flex-wrap items-center gap-x-5 gap-y-1">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={path(lang, item.key)}
+              aria-current={current === item.key ? 'page' : undefined}
+              class:list={[
+                'label inline-block py-1 transition-colors hover:text-accent',
+                current === item.key ? 'text-ink' : 'text-faint',
+              ]}
+            >
+              {t(item.label)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-      <div class="flex items-center gap-1 border-rule sm:border-l sm:pl-5">
-        <LocaleSwitch lang={lang} hrefs={alternates} />
-        <ThemeToggle lang={lang} class="print-hidden" />
-      </div>
+    <div class="col-start-2 row-start-1 flex items-center gap-1 border-rule md:col-start-3 md:border-l md:pl-5">
+      <LocaleSwitch lang={lang} hrefs={alternates} />
+      <ThemeToggle lang={lang} class="print-hidden" />
     </div>
   </div>
 </header>
