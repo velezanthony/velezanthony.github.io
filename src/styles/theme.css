@@ -250,6 +250,12 @@
 @utility prose {
   max-width: var(--container-measure);
 
+  /* A heading reached from the index or a shared #link lands with room above it, not glued to
+     the top edge. */
+  & :is(h2, h3) {
+    scroll-margin-top: 2rem;
+  }
+
   & > * + * {
     margin-top: 1.25em;
   }

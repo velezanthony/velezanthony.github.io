@@ -10,6 +10,7 @@ import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 import type { ProjectStatus } from '@/schemas/project';
 import DownloadCount from '@molecules/DownloadCount.astro';
+import TableOfContents from '@molecules/TableOfContents.astro';
 import type { DownloadSources, StoreCounts } from '@data/downloads';
 
 interface Props {
@@ -34,6 +35,8 @@ interface Props {
   todo: string[];
   translationPending: boolean;
   backHref: string;
+  /** The write-up's headings, for the index beside it. */
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
 const {
@@ -53,6 +56,7 @@ const {
   todo,
   translationPending,
   backHref,
+  headings = [],
 } = Astro.props;
 
 const t = useTranslations(lang);
@@ -105,7 +109,9 @@ const t = useTranslations(lang);
       )}
     </div>
 
-    <aside class="space-y-8 lg:order-2 lg:sticky lg:top-10 lg:self-start">
+    <!-- Runs the article's full height, so the index at its foot can stick once the details above
+         have scrolled away. -->
+    <aside class="space-y-8 lg:order-2">
       <div>
         <p class="label mb-2 text-faint">{t('Rol')}</p>
         <p class="text-sm text-ink">{role}</p>
@@ -173,6 +179,8 @@ const t = useTranslations(lang);
           </ul>
         </div>
       )}
+
+      <TableOfContents headings={headings} lang={lang} />
     </aside>
   </div>
 </article>

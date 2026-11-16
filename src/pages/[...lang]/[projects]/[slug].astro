@@ -25,7 +25,7 @@ const project = await getProject(lang, slug);
 if (!project) throw new Error(`No project content for slug: ${slug}`);
 
 const { entry, translationPending } = project;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 
 /* Read from git and not from a frontmatter field on purpose: a date somebody has to remember to
    bump is a date that stops being true, and a stale `dateModified` is worse than none. */
@@ -82,6 +82,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     links={entry.data.links}
     todo={entry.data.todo}
     translationPending={translationPending}
+    headings={headings}
     backHref={path(lang, 'projects')}
   >
     <Content />

@@ -49,6 +49,7 @@ export const en = {
   Restricciones: 'Constraints',
   Stack: 'Stack',
   Descargas: 'Downloads',
+  'En esta página': 'On this page',
   Para: 'For',
   Compatibilidad: 'Compatibility',
   Calidad: 'Quality',

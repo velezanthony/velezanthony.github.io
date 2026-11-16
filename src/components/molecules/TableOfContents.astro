@@ -1,0 +1,43 @@
+---
+import { useTranslations } from '@i18n/utils';
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  /** The write-up's headings, as `render(entry)` returns them. Only sections (h2) are listed. */
+  headings: { depth: number; slug: string; text: string }[];
+  lang: Locale;
+}
+
+const { headings, lang } = Astro.props;
+const t = useTranslations(lang);
+const sections = headings.filter((heading) => heading.depth === 2);
+---
+
+{/*
+  Follows the reader down a long write-up, beside it: sticky in the side column, hidden on a
+  phone, where there is none. Two sections are a page, not a document worth an index.
+*/}
+{sections.length >= 3 && (
+  <nav aria-label={t('En esta página')} class="toc hidden md:sticky md:top-8 md:block">
+    <p class="label mb-3 text-faint">{t('En esta página')}</p>
+    <ol class="space-y-1 border-l border-rule">
+      {sections.map((section) => (
+        <li>
+          <a
+            href={`#${section.slug}`}
+            class="-ml-px block border-l border-transparent py-1 pl-3 text-sm text-muted transition-colors hover:text-ink aria-[current=location]:border-accent aria-[current=location]:text-ink"
+          >
+            {section.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<script>
+  import { trackSections } from '@/client/toc';
+
+  const nav = document.querySelector('nav.toc');
+  if (nav) trackSections(nav);
+</script>

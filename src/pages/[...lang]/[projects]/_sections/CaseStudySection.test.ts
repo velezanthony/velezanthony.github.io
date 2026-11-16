@@ -84,4 +84,33 @@ describe('CaseStudySection sidebar', () => {
       (await render(CaseStudySection, props)).querySelector('aside [data-downloads]'),
     ).toBeNull();
   });
+
+  describe('index', () => {
+    const headings = ['El problema', 'Qué es', 'Restricciones'].map((t, i) => ({
+      depth: 2,
+      slug: `s${i}`,
+      text: t,
+    }));
+
+    /* Below the details, so it sticks once they have scrolled away and follows the reader down. */
+    it('sits in the side column, after the details', async () => {
+      const aside = (await render(CaseStudySection, { ...props, headings })).querySelector(
+        'aside',
+      )!;
+      /* Astro renders the index's own <script> right after it; content is what counts. */
+      const content = [...aside.children].filter((el) => el.tagName !== 'SCRIPT');
+      expect(content.at(-1)!.matches('nav.toc')).toBe(true);
+    });
+
+    /* The column must run the article's full height for its index to stick; a sticky column of
+       its own, taller than the screen, would not. */
+    it('lets the column run the full height, the index being what sticks', async () => {
+      const aside = (await render(CaseStudySection, { ...props, headings })).querySelector(
+        'aside',
+      )!;
+      expect(
+        [...aside.classList].some((c) => c.endsWith('sticky') || c.endsWith('self-start')),
+      ).toBe(false);
+    });
+  });
 });
