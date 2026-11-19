@@ -42,8 +42,7 @@ Then open http://localhost:4321 — it forwards to `/es/`.
 | Package | Why |
 | --- | --- |
 | `astro` | Static site generator. Routing, i18n, content collections, image pipeline, self-hosted fonts |
-| `tailwindcss` + `@tailwindcss/vite` | Peers of the design library, which owns the Tailwind setup. The portfolio's own tokens live in `@theme` inside `src/styles/site.css` (the `theme` option of `docs.config.mjs`) |
-| `zod` | Schema for the project content collection. A malformed entry fails the build |
+| `@velezanthony/design` | The design library. It brings Tailwind, the code themes, the build steps and the last-modified dates. The portfolio's own tokens live in `@theme` inside `src/styles/site.css` (the `theme` option of `docs.config.mjs`) |
 
 **Development**
 
