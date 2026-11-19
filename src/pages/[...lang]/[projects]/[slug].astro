@@ -40,34 +40,19 @@ const identity = { site: Astro.site!, personId: PERSON_ID };
 <PageLayout
   lang={lang}
   title={`${entry.data.name} · ${entry.data.headline}`}
-  bareTitle
   description={entry.data.tagline}
+  seo={{ titleSuffix: false, ...entry.data.seo }}
+  schema={[
+    softwareSourceCode(entry.data, identity, pageUrl, dateModified),
+    techArticle(entry.data, identity, lang, pageUrl, dateModified),
+    breadcrumb([
+      { name: routes.projects[lang], url: indexUrl },
+      { name: entry.data.name, url: pageUrl },
+    ]),
+  ]}
   alternates={alternates('projects', slug)}
   current="projects"
 >
-  <Fragment slot="head">
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(softwareSourceCode(entry.data, identity, pageUrl, dateModified))}
-    />
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(techArticle(entry.data, identity, lang, pageUrl, dateModified))}
-    />
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(
-        breadcrumb([
-          { name: routes.projects[lang], url: indexUrl },
-          { name: entry.data.name, url: pageUrl },
-        ]),
-      )}
-    />
-  </Fragment>
-
   <CaseStudy
     lang={lang}
     name={entry.data.name}

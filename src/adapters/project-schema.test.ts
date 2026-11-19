@@ -101,6 +101,29 @@ describe('projectSchema', () => {
     });
   });
 
+  describe('seo', () => {
+    it('is optional: the title and the description are derived', () => {
+      expect(errorsOf(valid)).toEqual([]);
+    });
+
+    it('takes the library block', () => {
+      expect(
+        errorsOf({
+          ...valid,
+          seo: { description: 'Another', image: { src: '/og-snake.png', alt: 'Cover' } },
+        }),
+      ).toEqual([]);
+    });
+
+    it('rejects a field the block does not have', () => {
+      expect(errorsOf({ ...valid, seo: { descripcion: 'x' } })).toEqual(['seo']);
+    });
+
+    it('rejects an image outside public/', () => {
+      expect(errorsOf({ ...valid, seo: { image: { src: 'og.png' } } })).toEqual(['seo.image.src']);
+    });
+  });
+
   describe('visual', () => {
     /* Every card shows one, so none may be missing: a card without it breaks the even rows. */
     it('is required', () => {

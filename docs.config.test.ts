@@ -2,6 +2,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import docsConfig from './docs.config.mjs';
+import { ogLocales } from './src/core/i18n/locales';
+import { profile } from './src/data/profile';
 
 /* The list is typed in `docs.config.mjs`, so it can lag behind the content. A project missing from
    it drops out of the sitemap index with no error; one that is not published is reported as a
@@ -16,5 +18,17 @@ describe('sitemap.include', () => {
 
   it('lists the documentation site of every project', () => {
     expect([...(docsConfig.sitemap?.include ?? [])].sort()).toEqual(documentation.sort());
+  });
+});
+
+/* `docs.config.mjs` cannot import the TypeScript sources, so what it repeats is checked here. */
+describe('values repeated from the site sources', () => {
+  it('ogLocales equals the Open Graph locales of the site', () => {
+    expect(docsConfig.ogLocales).toEqual(ogLocales);
+  });
+
+  it('the title suffix and the social image alt are the owner name', () => {
+    expect(docsConfig.seo?.titleSuffix).toBe(profile.name);
+    expect(docsConfig.seo?.image?.alt).toBe(profile.name);
   });
 });

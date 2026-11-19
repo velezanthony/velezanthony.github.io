@@ -1,5 +1,6 @@
 import type { SchemaContext } from 'astro:content';
 import { z } from 'astro/zod';
+import { seoSchema } from '@velezanthony/design/seo-schema';
 import { projectStatuses } from '@core/projects/status';
 
 /**
@@ -112,4 +113,8 @@ export const projectSchema = ({ image }: SchemaContext) =>
     visual: visualOf(image),
 
     downloads: downloads.optional(),
+
+    /** The library's `seo` block (title, description, image, noindex…). The title and the
+        description are derived from `name`, `headline` and `tagline`: write it only to override. */
+    seo: seoSchema.optional(),
   });

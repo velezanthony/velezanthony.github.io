@@ -5,6 +5,14 @@ export default defineDocsConfig({
   name: 'Anthony Velez Tapia',
   locales: ['es', 'en'],
   defaultLocale: 'es',
+  /* Every page head: the title suffix, the social image and the icon are the site's, one place. */
+  seo: {
+    titleSuffix: 'Anthony Velez Tapia',
+    image: { src: '/og.png', alt: 'Anthony Velez Tapia' },
+  },
+  favicon: '/favicon-32.png',
+  /* Open Graph wants a territory too; `docs.config.test.ts` keeps it equal to `ogLocales`. */
+  ogLocales: { es: 'es_ES', en: 'en_GB' },
   /* Tokens and styles of the portfolio only; the library compiles them with its own theme. */
   theme: 'src/site.css',
   /* The policy is the portfolio's own page, one for the whole domain; the library only links it. */

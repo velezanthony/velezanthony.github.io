@@ -1,11 +1,13 @@
 ---
 import Fonts from '@velezanthony/design/fonts';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
+import { pageHead, type PageHeadInput } from '@velezanthony/design/seo';
+import type { PageSeo } from '@velezanthony/design/seo-schema';
+import { gtmId } from '@velezanthony/design/site';
 import { path } from '@core/i18n/utils';
+import { person } from '@core/seo/jsonld';
 import { useTranslations } from '@ui/translations';
 import type { Locale } from '@core/i18n/locales';
-import { gtmId } from '@velezanthony/design/site';
-import { pageHead } from '@core/seo/head';
 import { owner } from '@data/person';
 import { PERSON_ID } from '@data/site';
 import RememberLocale from './_partials/RememberLocale.astro';
@@ -13,41 +15,37 @@ import RememberLocale from './_partials/RememberLocale.astro';
 interface Props {
   lang: Locale;
   title: string;
-
-  /** Skips the ` | Anthony Velez Tapia` suffix. Project pages carry their own
-      two-part title and would otherwise overflow the SERP truncation point. */
-  bareTitle?: boolean;
   description: string;
+  /** The `seo` block of a Markdown page, or loose values (`titleSuffix`, `noindex`…). */
+  seo?: PageSeo;
+  /** Extra JSON-LD of this page, after the site's Person. */
+  schema?: PageHeadInput['schema'];
   /** Every locale's URL for this page, for `hreflang`. */
   alternates: Record<Locale, string>;
-  /** Keeps a page out of search results — used by 404. */
-  noindex?: boolean;
   bodyClass?: string;
 }
 
-const {
-  lang,
-  title,
-  bareTitle = false,
-  description,
-  alternates,
-  noindex = false,
-  bodyClass,
-} = Astro.props;
+const { lang, title, description, seo, schema = [], alternates, bodyClass } = Astro.props;
 const t = useTranslations(lang);
+const { pathname } = Astro.url;
+const noindex = seo?.noindex ?? false;
 
-const head = pageHead({
-  lang,
+const head = await pageHead({
   title,
-  bareTitle,
-  description,
+  seo: { ...seo, description: seo?.description ?? description },
+  locale: lang,
+  url: pathname,
   alternates,
-  noindex,
-  pathname: Astro.url.pathname,
-  site: Astro.site!,
-  personId: PERSON_ID,
-  owner,
-  generator: Astro.generator,
+  ogType: 'website',
+  schema: [
+    person(
+      owner,
+      { site: Astro.site!, personId: PERSON_ID },
+      lang,
+      new URL(pathname, Astro.site).href,
+    ),
+    ...schema,
+  ],
 });
 ---
 
@@ -64,6 +62,9 @@ const head = pageHead({
   privacyLabel={t('Política de privacidad')}
 >
   <Fragment slot="head">
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <Fonts />
 
     <slot name="head" />

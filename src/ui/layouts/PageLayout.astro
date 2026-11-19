@@ -4,6 +4,8 @@ import SiteHeader from './_partials/SiteHeader.astro';
 import SiteFooter from './_partials/SiteFooter.astro';
 import BackToTop from '@velezanthony/design/components/organisms/chrome/BackToTop.astro';
 import { designStrings } from '@velezanthony/design/site';
+import type { PageSeo } from '@velezanthony/design/seo-schema';
+import type { PageHeadInput } from '@velezanthony/design/seo';
 import { contact, profile } from '@data/profile';
 import { gtmId } from '@velezanthony/design/site';
 import type { Locale, RouteKey } from '@core/i18n/locales';
@@ -12,23 +14,23 @@ import type { Locale, RouteKey } from '@core/i18n/locales';
 interface Props {
   lang: Locale;
   title: string;
-  bareTitle?: boolean;
   description: string;
+  seo?: PageSeo;
+  schema?: PageHeadInput['schema'];
   alternates: Record<Locale, string>;
   current?: RouteKey | 'home';
-  noindex?: boolean;
 }
 
-const { lang, title, bareTitle, description, alternates, current, noindex } = Astro.props;
+const { lang, title, description, seo, schema, alternates, current } = Astro.props;
 ---
 
 <BaseLayout
   lang={lang}
   title={title}
-  bareTitle={bareTitle}
   description={description}
+  seo={seo}
+  schema={schema}
   alternates={alternates}
-  noindex={noindex}
 >
   <Fragment slot="head">
     <slot name="head" />

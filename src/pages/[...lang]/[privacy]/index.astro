@@ -13,14 +13,14 @@ export function getStaticPaths() {
 const lang = assertLocale(Astro.params.lang);
 ---
 
-<!-- `noindex`: a legal notice ranks for nothing worth having, and the sitemap leaves it out
+<!-- `seo.noindex`: a legal notice ranks for nothing worth having, and the sitemap leaves it out
      for the same reason (`isIndexable`). -->
 <PageLayout
   lang={lang}
   title={pageTitles.privacy[lang]}
   description={seo.privacy[lang]}
   alternates={alternates('privacy')}
-  noindex
+  seo={{ noindex: true }}
 >
   <PrivacyPolicy
     lang={lang}

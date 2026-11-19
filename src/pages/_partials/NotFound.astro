@@ -54,7 +54,7 @@ const td = useTranslations(lang);
   title={td('Página no encontrada')}
   description={td('La ruta que buscas no existe.')}
   alternates={alternates()}
-  noindex
+  seo={{ noindex: true }}
 >
   <Fragment slot="head">
     {lang === defaultLocale ? (
