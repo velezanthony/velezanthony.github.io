@@ -49,7 +49,7 @@ Pages and partials read the data layer. `ui/components/` receive plain props, ne
 
 | | Backend | Why |
 | --- | --- | --- |
-| Projects | Content Collection, `src/content/projects/<locale>/<slug>.md` | Each one carries a case study — prose with headings and decisions. Frontmatter is the structured half. |
+| Projects | Content Collection, `src/data/projects/<locale>/<slug>.md` | Each one carries a case study — prose with headings and decisions. Frontmatter is the structured half. |
 | Experience · education · profile | Typed TS modules in `src/data/` | Records with no prose body, rendered into the site and the print CV. |
 
 `src/adapters/projects.ts` wraps the collection: it resolves locale, falls back to the Spanish source when a translation is missing, and flags it so the page can say so instead of 404-ing.
@@ -104,6 +104,7 @@ src/
 ├── content.config.ts · site.css
 ├── core/             types.ts · i18n/ · downloads/ · timeline/ · privacy/ · projects/ · seo/
 ├── data/             site · profile · experience · education · emphasis · privacy · person · ui
+│   └── projects/     es/ · en/  case studies in Markdown (the library reads only src/content/docs/)
 ├── adapters/         projects · project-schema · downloads
 ├── client/           downloads · storage
 ├── ui/
@@ -120,7 +121,6 @@ src/
 │       ├── [experience]/  index.astro · _partials/
 │       ├── [cv]/          index.astro · _partials/
 │       └── [privacy]/     index.astro · _partials/
-└── content/projects/ es/ · en/
 ```
 
 `ui/translations.ts` binds `core/i18n/translate.ts` to the phrases in `data/ui.ts`: `core/` cannot import the catalogue, so it receives it.

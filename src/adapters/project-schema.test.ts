@@ -138,7 +138,7 @@ describe('projectSchema', () => {
 
 /* The schema cannot see the file name, so the agreement between the two is checked here. */
 describe('project files', () => {
-  const root = 'src/content/projects';
+  const root = 'src/data/projects';
   const files = readdirSync(root).flatMap((lang) =>
     readdirSync(`${root}/${lang}`).map((file) => `${root}/${lang}/${file}`),
   );

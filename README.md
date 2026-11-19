@@ -58,11 +58,11 @@ Fonts (IBM Plex Sans and Mono) are downloaded and self-hosted at build time by A
 src/
 ├── core/             pure logic: i18n, downloads, timeline, privacy, seo (no Astro, no fetch)
 ├── data/             content: profile · experience · education · privacy · ui phrases
+│                     projects/ case studies in Markdown, one folder per locale
 ├── adapters/         Astro and network: projects · downloads
 ├── client/           browser scripts
 ├── ui/               components/ · layouts/
 ├── pages/            routes, with page-specific pieces in `_partials/`
-├── content/projects/ case studies, one folder per locale
 └── site.css
 ```
 
@@ -75,7 +75,7 @@ Imports cross folders through one alias per layer (`@core`, `@data`, `@adapters`
 | What | Where |
 | --- | --- |
 | A job, a degree, contact details | `src/data/` |
-| A project case study | `src/content/projects/<locale>/<slug>.md` |
+| A project case study | `src/data/projects/<locale>/<slug>.md` |
 | UI strings | `src/data/ui.ts` |
 | Colours, type scale, spacing | `@theme` in `src/site.css` (the library's tokens come with `@velezanthony/design`) |
 

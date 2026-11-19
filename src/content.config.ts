@@ -6,7 +6,7 @@ import { projectSchema } from '@adapters/project-schema';
 
 const projects = defineCollection({
   loader: glob({
-    base: './src/content/projects',
+    base: './src/data/projects',
     pattern: '**/*.md',
     /* The default drops the directory, so es/foo and en/foo would collide. */
     generateId: ({ entry }) => entry.replace(/\.md$/, ''),
