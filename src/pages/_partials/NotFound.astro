@@ -1,14 +1,14 @@
 ---
-import BaseLayout from '@/ui/layouts/BaseLayout.astro';
+import BaseLayout from '@ui/layouts/BaseLayout.astro';
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import Text from '@velezanthony/design/components/atoms/display/Text.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
-import ContactList from '@/ui/components/ContactList.astro';
-import { contact, profile } from '@/data/profile';
-import { defaultLocale, locales } from '@/core/i18n/locales';
-import { alternateLocale, alternates, path } from '@/core/i18n/utils';
-import { useTranslations } from '@/ui/translations';
-import type { Locale } from '@/core/i18n/locales';
+import ContactList from '@ui/components/ContactList.astro';
+import { contact, profile } from '@data/profile';
+import { defaultLocale, locales } from '@core/i18n/locales';
+import { alternateLocale, alternates, path } from '@core/i18n/utils';
+import { useTranslations } from '@ui/translations';
+import type { Locale } from '@core/i18n/locales';
 
 interface Props {
   lang: Locale;
@@ -129,7 +129,7 @@ const td = useTranslations(lang);
 
 <script>
   import { safeGet, storageOf } from '@velezanthony/design/client/storage';
-  import { LANG_KEY } from '@/client/storage';
+  import { LANG_KEY } from '@client/storage';
 
   /* The page is built once, in Spanish. A reader who arrived from the English site gets the
      English blocks and title, which the page carries for exactly this. */

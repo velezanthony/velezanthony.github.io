@@ -1,4 +1,4 @@
-import type { Job, Study } from '@/core/types';
+import type { Job, Study } from '@core/types';
 
 export type TimelineEntry =
   { start: string; kind: 'job'; job: Job } | { start: string; kind: 'study'; study: Study };

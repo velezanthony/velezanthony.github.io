@@ -1,4 +1,4 @@
-import type { Locale } from '@/core/i18n/locales';
+import type { Locale } from '@core/i18n/locales';
 import type { Downloads } from './counts';
 
 const words = {

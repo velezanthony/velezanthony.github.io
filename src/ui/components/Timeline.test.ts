@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { Job, Study } from '@/core/types';
-import { render, text } from '@/test-utils';
+import type { Job, Study } from '@core/types';
+import { render, text } from '@ui/test-utils';
 import Timeline from './Timeline.astro';
 
 const job = (company: string, start: Job['start'], end: Job['end']): Job => ({

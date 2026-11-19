@@ -10,7 +10,7 @@ export default defineDocsConfig({
   /* The policy is the portfolio's own page, one for the whole domain; the library only links it. */
   privacyUrl: { es: '/privacidad/', en: '/en/privacy/' },
   /* Every project publishes its docs to `github.io/<project>/` with a sitemap of its own. Typed
-     here, and `src/docs-config.test.ts` keeps it equal to the projects collection. */
+     here, and `docs.config.test.ts` keeps it equal to the projects collection. */
   sitemap: {
     include: [
       '/snake-orm/sitemap.xml',

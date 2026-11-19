@@ -1,13 +1,13 @@
 ---
 import { Font } from 'astro:assets';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
-import { path } from '@/core/i18n/utils';
-import { useTranslations } from '@/ui/translations';
-import type { Locale } from '@/core/i18n/locales';
+import { path } from '@core/i18n/utils';
+import { useTranslations } from '@ui/translations';
+import type { Locale } from '@core/i18n/locales';
 import { gtmId } from '@velezanthony/design/site';
-import { pageHead } from '@/core/seo/head';
-import { owner } from '@/data/person';
-import { PERSON_ID } from '@/site';
+import { pageHead } from '@core/seo/head';
+import { owner } from '@data/person';
+import { PERSON_ID } from '@data/site';
 import RememberLocale from './_partials/RememberLocale.astro';
 
 interface Props {

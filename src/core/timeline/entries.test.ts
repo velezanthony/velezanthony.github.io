@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { Job, Study } from '@/core/types';
+import type { Job, Study } from '@core/types';
 import { timelineEntries } from './entries';
 
 const job = (start: Job['start']) => ({ start, company: start }) as Job;

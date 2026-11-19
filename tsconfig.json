@@ -5,7 +5,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@core/*": ["src/core/*"],
+      "@data/*": ["src/data/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@client/*": ["src/client/*"],
+      "@ui/*": ["src/ui/*"]
     }
   }
 }

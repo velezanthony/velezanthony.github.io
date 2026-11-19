@@ -1,15 +1,15 @@
 ---
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
-import ContactList from '@/ui/components/ContactList.astro';
-import Timeline from '@/ui/components/Timeline.astro';
-import { cvContact, profile, spokenLanguages, stackGroups } from '@/data/profile';
-import { segments } from '@/data/emphasis';
-import { education } from '@/data/education';
-import { useTranslations } from '@/ui/translations';
-import { experience } from '@/data/experience';
-import type { Locale } from '@/core/i18n/locales';
-import DownloadCount from '@/ui/components/DownloadCount.astro';
-import type { DownloadSources, StoreCounts } from '@/core/downloads/counts';
+import ContactList from '@ui/components/ContactList.astro';
+import Timeline from '@ui/components/Timeline.astro';
+import { cvContact, profile, spokenLanguages, stackGroups } from '@data/profile';
+import { segments } from '@data/emphasis';
+import { education } from '@data/education';
+import { useTranslations } from '@ui/translations';
+import { experience } from '@data/experience';
+import type { Locale } from '@core/i18n/locales';
+import DownloadCount from '@ui/components/DownloadCount.astro';
+import type { DownloadSources, StoreCounts } from '@core/downloads/counts';
 
 interface Props {
   lang: Locale;

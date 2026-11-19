@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { locales } from '@/core/i18n/locales';
+import { locales } from '@core/i18n/locales';
 import { email, profile } from './profile';
-import { resolvePrivacy } from '@/core/privacy/resolve';
+import { resolvePrivacy } from '@core/privacy/resolve';
 import { privacySections, privacyUpdated } from './privacy';
 
 const blocksOf = (kind: string) =>

@@ -1,4 +1,4 @@
-import type { PersonSource } from '@/core/seo/jsonld';
+import type { PersonSource } from '@core/seo/jsonld';
 import { education } from './education';
 import { experience } from './experience';
 import { address, contact, email, knowsAbout, profile, spokenLanguages } from './profile';

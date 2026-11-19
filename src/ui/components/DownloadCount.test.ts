@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render, text } from '@/test-utils';
+import { render, text } from '@ui/test-utils';
 import DownloadCount from './DownloadCount.astro';
 
 const sources = { openvsx: 'velezanthony.cotton-props', marketplace: 'velezanthony.cotton-props' };

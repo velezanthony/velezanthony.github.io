@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-import docsConfig from '../docs.config.mjs';
+import docsConfig from './docs.config.mjs';
 
 /* The list is typed in `docs.config.mjs`, so it can lag behind the content. A project missing from
    it drops out of the sitemap index with no error; one that is not published is reported as a

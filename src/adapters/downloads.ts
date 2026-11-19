@@ -1,5 +1,5 @@
-import { parseShieldsMonthly } from '@/core/downloads/parse';
-import type { DownloadSources, StoreCounts } from '@/core/downloads/counts';
+import { parseShieldsMonthly } from '@core/downloads/parse';
+import type { DownloadSources, StoreCounts } from '@core/downloads/counts';
 
 /**
  * Who asks. The build reads pypistats itself, exact. The browser cannot — pypistats sends no CORS

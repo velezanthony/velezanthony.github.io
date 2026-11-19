@@ -1,5 +1,5 @@
-import type { Locale } from '@/core/i18n/locales';
-import type { Localized } from '@/core/types';
+import type { Locale } from '@core/i18n/locales';
+import type { Localized } from '@core/types';
 
 export type PrivacyBlock =
   | { kind: 'text'; text: Localized }

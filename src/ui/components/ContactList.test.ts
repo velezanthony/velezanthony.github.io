@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ContactLink } from '@/core/types';
-import { render } from '@/test-utils';
+import type { ContactLink } from '@core/types';
+import { render } from '@ui/test-utils';
 import ContactList from './ContactList.astro';
 
 const items: ContactLink[] = [

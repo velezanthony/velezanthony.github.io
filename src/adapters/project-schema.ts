@@ -1,6 +1,6 @@
 import type { SchemaContext } from 'astro:content';
 import { z } from 'astro/zod';
-import { projectStatuses } from '@/core/projects/status';
+import { projectStatuses } from '@core/projects/status';
 
 /**
  * What a link IS, declared rather than guessed from its host. The docs are moving off

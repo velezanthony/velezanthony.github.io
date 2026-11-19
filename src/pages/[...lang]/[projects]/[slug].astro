@@ -1,14 +1,14 @@
 ---
 import { render } from 'astro:content';
 import { fileLastModified } from '@velezanthony/design/last-modified';
-import { breadcrumb, softwareSourceCode, techArticle } from '@/core/seo/jsonld';
-import PageLayout from '@/ui/layouts/PageLayout.astro';
+import { breadcrumb, softwareSourceCode, techArticle } from '@core/seo/jsonld';
+import PageLayout from '@ui/layouts/PageLayout.astro';
 import CaseStudy from './_partials/CaseStudy.astro';
-import { getProject, getProjectSlugs } from '@/adapters/projects';
-import { buildCountsOf } from '@/adapters/downloads';
-import { alternates, assertLocale, langParam, path } from '@/core/i18n/utils';
-import { locales, routes } from '@/core/i18n/locales';
-import { PERSON_ID } from '@/site';
+import { getProject, getProjectSlugs } from '@adapters/projects';
+import { buildCountsOf } from '@adapters/downloads';
+import { alternates, assertLocale, langParam, path } from '@core/i18n/utils';
+import { locales, routes } from '@core/i18n/locales';
+import { PERSON_ID } from '@data/site';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();

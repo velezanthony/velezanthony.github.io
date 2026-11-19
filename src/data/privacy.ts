@@ -1,6 +1,6 @@
 import { email, profile } from './profile';
-import type { IsoDate } from '@/core/types';
-import type { PrivacySection } from '@/core/privacy/resolve';
+import type { IsoDate } from '@core/types';
+import type { PrivacySection } from '@core/privacy/resolve';
 
 /**
  * The privacy policy, as content: like the experience, it is prose with two languages, and a

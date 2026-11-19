@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { collections as designCollections } from '@velezanthony/design/content';
 
-import { projectSchema } from './adapters/project-schema';
+import { projectSchema } from '@adapters/project-schema';
 
 const projects = defineCollection({
   loader: glob({

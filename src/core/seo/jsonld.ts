@@ -1,7 +1,7 @@
-import type { Locale } from '@/core/i18n/locales';
-import { path } from '@/core/i18n/utils';
-import { linkOf } from '@/core/projects/links';
-import type { Localized } from '@/core/types';
+import type { Locale } from '@core/i18n/locales';
+import { path } from '@core/i18n/utils';
+import { linkOf } from '@core/projects/links';
+import type { Localized } from '@core/types';
 
 /** What `person` needs to know about the owner, handed in by the caller. */
 export interface PersonSource {

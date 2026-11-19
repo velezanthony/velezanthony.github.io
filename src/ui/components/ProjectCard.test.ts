@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render, text } from '@/test-utils';
+import { render, text } from '@ui/test-utils';
 import ProjectCard from './ProjectCard.astro';
 
 const props = {

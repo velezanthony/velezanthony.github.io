@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render } from '@/test-utils';
+import { render } from '@ui/test-utils';
 import StackRow from './StackRow.astro';
 
 describe('StackRow', () => {

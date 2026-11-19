@@ -1,8 +1,8 @@
 import type { HeadConfig } from '@velezanthony/design/head';
 
-import { locales, ogLocales } from '@/core/i18n/locales';
-import type { Locale } from '@/core/i18n/locales';
-import { alternateLocale } from '@/core/i18n/utils';
+import { locales, ogLocales } from '@core/i18n/locales';
+import type { Locale } from '@core/i18n/locales';
+import { alternateLocale } from '@core/i18n/utils';
 import { person } from './jsonld';
 import type { PersonSource } from './jsonld';
 
