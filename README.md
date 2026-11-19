@@ -57,13 +57,14 @@ Fonts (IBM Plex Sans and Mono) are downloaded and self-hosted at build time by A
 
 ```
 src/
-├── components/       atoms · molecules · organisms
-├── layouts/          BaseLayout · PageLayout · PrintLayout
-├── pages/[lang]/     routes, with page-specific sections in `_sections/`
+├── core/             pure logic: i18n, downloads, timeline, privacy, seo (no Astro, no fetch)
+├── data/             content: profile · experience · education · privacy · ui phrases
+├── adapters/         Astro and network: projects · downloads · library config
+├── client/           browser scripts
+├── ui/               components/ · layouts/
+├── pages/            routes, with page-specific pieces in `_partials/`
 ├── content/projects/ case studies, one folder per locale
-├── data/             experience · education · profile
-├── i18n/             ui.ts · utils.ts · format.ts
-└── styles/           site.css
+└── site.css
 ```
 
 `doc/architecture.md` records the decisions and the reasoning behind them. Read it before changing structure.
@@ -74,7 +75,7 @@ src/
 | --- | --- |
 | A job, a degree, contact details | `src/data/` |
 | A project case study | `src/content/projects/<locale>/<slug>.md` |
-| UI strings | `src/i18n/ui.ts` |
+| UI strings | `src/data/ui.ts` |
 | Colours, type scale, spacing | `@theme` in `src/site.css` (the library's tokens come with `@velezanthony/design`) |
 
 Records in `src/data/` carry both languages on the same object, so a missing translation is a type error rather than a page that quietly renders Spanish.

@@ -5,45 +5,44 @@ Astro 7 · static output · Spanish + English · GitHub Pages at `https://veleza
 ## Layers
 
 ```
-tokens        @theme in src/site.css
-  ↓
-atoms         Tag · Heading · Text · Link · Icon
-  ↓
-molecules     ProjectCard · ExperienceItem · StackRow
-  ↓
-organisms     SiteHeader · SiteFooter · ProjectGrid · Timeline
-  ↓
-sections      page-specific, colocated under the page
-  ↓
-layouts       BaseLayout · PageLayout · PrintLayout
-  ↓
-pages         routes
+src/
+├── core/       pure logic: no Astro, no fetch, no DOM; what it needs arrives as a parameter
+├── data/       content only: profile, experience, education, privacy text, UI phrases
+├── adapters/   what touches Astro or the network: content collections, stores, library config
+├── client/     browser scripts
+├── ui/         components and layouts, reused across pages
+└── pages/      routes, each with its own `_partials/`
 ```
 
-**Dependencies point one way only.** An atom never imports a molecule. If it does, it is not an atom.
+**Dependencies point down only**, and ESLint (`no-restricted-imports`, `eslint.config.mjs`) enforces it:
 
-`src/layouts/` is the templates layer. There is no `components/templates/`.
+| Layer | May not import |
+| --- | --- |
+| `core/` | `astro`, `astro:*`, `data/`, `adapters/`, `ui/`, `pages/`, `client/` |
+| `data/` | `adapters/`, `ui/`, `pages/` |
+| `ui/` | `adapters/` (except `adapters/design`, which the layouts read) |
 
-## Sections vs organisms
+`core/seo` therefore takes the owner, the project and the site identity as parameters; `data/person.ts` and the pages hand them in. Tests live next to their file (`*.test.ts`); the logic ones are in `core/`, `adapters/` and `client/`.
+
+## Partials vs components
 
 | | Scope | Location |
 | --- | --- | --- |
-| Organism | Used by two or more pages | `src/components/organisms/` |
-| Section | Used by one page | `_sections/` next to that page |
+| Component | Used in more than one place | `src/ui/components/` |
+| Layout | The page shell | `src/ui/layouts/`, its own pieces in `_partials/` |
+| Partial | Used by one page | `_partials/` next to that page |
 
-**Promotion rule:** a section used by a second page moves to `organisms/`. Until then it stays under its page.
+**Promotion rule:** a partial used by a second page moves to `ui/components/`. Until then it stays under its page. Nothing in `ui/components/` should be used from a single place.
 
-Nothing in `atoms/`, `molecules/` or `organisms/` should be used by a single page.
+`_`-prefixed files and folders are excluded from routing — [Astro routing](https://docs.astro.build/en/guides/routing/). `_partials/` has nothing to do with Astro's `partial` page export.
 
-`_`-prefixed files and folders are excluded from routing — [Astro routing](https://docs.astro.build/en/guides/routing/).
-
-> Note: `partial` is reserved in Astro. It means a page exported with `export const partial = true`, served without `<!DOCTYPE>` or `<head>` for htmx-style fragment swaps. Do not use the word for components.
+There is no Atomic Design here; the design library keeps it.
 
 ## Data
 
 **One source, many renderings.** Experience and projects are written once; pages, the print CV route and the profile README all render from it.
 
-Only pages and organisms read the data layer. Atoms and molecules receive plain props, never a collection entry.
+Pages and partials read the data layer. `ui/components/` receive plain props, never a collection entry.
 
 **Decided:** split by shape, not by convenience.
 
@@ -52,7 +51,7 @@ Only pages and organisms read the data layer. Atoms and molecules receive plain 
 | Projects | Content Collection, `src/content/projects/<locale>/<slug>.md` | Each one carries a case study — prose with headings and decisions. Frontmatter is the structured half. |
 | Experience · education · profile | Typed TS modules in `src/data/` | Records with no prose body, rendered into the site and the print CV. |
 
-`src/data/projects.ts` wraps the collection: it resolves locale, falls back to the Spanish source when a translation is missing, and flags it so the page can say so instead of 404-ing.
+`src/adapters/projects.ts` wraps the collection: it resolves locale, falls back to the Spanish source when a translation is missing, and flags it so the page can say so instead of 404-ing.
 
 The glob loader's default `generateId` drops the directory, so `es/foo.md` and `en/foo.md` would collide. `generateId` is overridden to keep the locale in the id.
 
@@ -68,9 +67,9 @@ Astro's built-in i18n covers routing only. Translation is ours.
 i18n: { defaultLocale: 'es', locales: ['es', 'en'], routing: { prefixDefaultLocale: true } }
 ```
 
-Both locales are explicit in the URL. `/` redirects to `/es/`.
+The default locale is unprefixed (`/proyectos/`); the other one is (`/en/projects/`).
 
-Pages live under `src/pages/[lang]/` and enumerate locales via `getStaticPaths` — one page file per route, not per language.
+Pages live under `src/pages/[...lang]/` and enumerate locales via `getStaticPaths` — one page file per route, not per language.
 
 **Strings use the source sentence as the key**, not invented identifiers:
 
@@ -80,7 +79,7 @@ Pages live under `src/pages/[lang]/` and enumerate locales via `getStaticPaths` 
 
 Spanish is the source language, so `t()` returns the argument unchanged. `Phrase` is derived from the English catalogue, so an untranslated string fails the build.
 
-`src/i18n/ui.ts` is therefore a registry of every source string, not a dictionary of invented ids. Values are the English translations; `PENDING` marks one that has not been written yet and falls back to Spanish at render time.
+`src/data/ui.ts` is therefore a registry of every source string, not a dictionary of invented ids. Values are the English translations; `PENDING` marks one that has not been written yet and falls back to Spanish at render time.
 
 Two failure modes, deliberately different:
 
@@ -93,54 +92,50 @@ Three kinds of text, three homes:
 
 | Kind | Lives in |
 | --- | --- |
-| UI chrome | `src/i18n/ui.ts` |
-| Route segments | `routes` in `src/i18n/ui.ts` |
+| UI chrome | `src/data/ui.ts` |
+| Route segments | `routes` in `src/core/i18n/locales.ts` |
 | Content | data layer |
 
 ## Directory map
 
 ```
 src/
-├── components/
-│   ├── atoms/        Heading · Text · Link · Tag · Icon · Rule · Todo
-│   ├── molecules/    SectionHead · ProjectCard · ExperienceItem · StackRow
-│   │                 StatusChip · ContactList · LocaleSwitch
-│   └── organisms/    SiteHeader · SiteFooter · ProjectGrid · Timeline
-├── content/
-│   └── projects/     es/ · en/
-├── data/             profile.ts · experience.ts · education.ts
-│                     projects.ts · types.ts
-├── i18n/             ui.ts · utils.ts · format.ts
-├── layouts/          BaseLayout · PageLayout · PrintLayout
+├── content.config.ts · site.ts · site.css
+├── core/             types.ts · i18n/ · downloads/ · timeline/ · privacy/ · projects/ · seo/
+├── data/             profile · experience · education · emphasis · privacy · person · ui
+├── adapters/         projects · project-schema · downloads · design
+├── client/           downloads · storage
+├── ui/
+│   ├── components/   ContactList · DownloadCount · StackRow · StatusChip · ProjectGrid
+│   │                 ProjectCard · Timeline · ExperienceItem · EducationRule · variant.ts
+│   ├── layouts/      BaseLayout · PageLayout · PrintLayout · _partials/
+│   └── translations.ts
 ├── pages/
-│   ├── 404.astro
-│   └── [lang]/
-│       ├── index.astro
-│       ├── _sections/
-│       ├── [projects]/    index.astro · [slug].astro · _sections/
-│       ├── [experience]/  index.astro · _sections/
-│       └── [cv]/          index.astro · _sections/
-├── styles/           site.css
-└── content.config.ts
+│   ├── 404.astro · _partials/NotFound.astro · llms.txt.ts · robots.txt.ts
+│   └── [...lang]/
+│       ├── index.astro · _partials/
+│       ├── [projects]/    index.astro · [slug].astro · _partials/
+│       ├── [experience]/  index.astro · _partials/
+│       ├── [cv]/          index.astro · _partials/
+│       └── [privacy]/     index.astro · _partials/
+└── content/projects/ es/ · en/
 ```
 
-The route segment is a dynamic param named after the folder's English concept, because Astro derives the URL from the file path and the URL has to be localised: `[projects]` emits `/es/proyectos/` and `/en/projects/`. Sibling single-segment dynamic routes coexist fine in static output — each enumerates concrete paths.
+`ui/translations.ts` binds `core/i18n/translate.ts` to the phrases in `data/ui.ts`: `core/` cannot import the catalogue, so it receives it.
 
-`/` is a static meta-refresh document to `/es/`, emitted by `redirects` in the Astro config.
+The route segment is a dynamic param named after the folder's English concept, because Astro derives the URL from the file path and the URL has to be localised: `[projects]` emits `/proyectos/` and `/en/projects/`. Sibling single-segment dynamic routes coexist fine in static output — each enumerates concrete paths.
 
-`404.astro` sits at the root, outside `[lang]`: GitHub Pages serves one `/404.html` for the whole site and cannot pick a locale.
+`404.astro` sits at the root, outside `[...lang]`: GitHub Pages serves one `/404.html` for the whole site and cannot pick a locale, so the page carries both languages and the client script chooses.
 
 ## Conventions
 
 - English for folders, files, component names, branches and commit messages.
 - Conventional Commits. No AI attribution trailers.
-- Components are `PascalCase.astro`, one per file.
+- Components are `PascalCase.astro`, one per file. Names are full words, no abbreviations.
 - Props typed with `interface Props`.
 - Heading level is a prop, never hardcoded — the caller knows what precedes it, the component does not.
 - Dev server: `astro dev --background`.
 
 ### Imports
 
-**One alias per layer** — `@atoms/*`, `@molecules/*`, `@organisms/*`, `@layouts/*`, `@data/*`, `@i18n/*`, `@styles/*`, `@/*`. The layer is written on the import line, so an atom reaching into `@molecules/…` is visible at a glance; `../../molecules/Card.astro` would disguise it as a relative path.
-
-**Sections have no alias.** They are colocated under their page and imported relatively, so import style states scope: relative means colocated, alias means shared. Writing `../_sections/…` across pages means it is no longer a section — promote it to `@organisms/`.
+**One alias, `@/*` → `src/*`.** Anything outside the file's own folder is imported through it, so the layer is written on the import line. Only a file's own folder and the `_partials/` below it are imported relatively: relative means colocated, `@/` means shared. Writing `../_partials/…` across pages means it is no longer a partial — promote it to `@/ui/components/`.
