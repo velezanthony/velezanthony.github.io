@@ -10,7 +10,8 @@ import { useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
 import type { ProjectStatus } from '@/schemas/project';
 import DownloadCount from '@molecules/DownloadCount.astro';
-import TableOfContents from '@molecules/TableOfContents.astro';
+import TableOfContents from '@velezanthony/design/components/molecules/navigation/TableOfContents.astro';
+import { designStrings } from '@/design/site-config';
 import type { DownloadSources, StoreCounts } from '@data/downloads';
 
 interface Props {
@@ -60,6 +61,7 @@ const {
 } = Astro.props;
 
 const t = useTranslations(lang);
+const sections = headings.filter((heading) => heading.depth === 2);
 ---
 
 <article class="pt-12 pb-20 lg:pt-16">
@@ -180,7 +182,11 @@ const t = useTranslations(lang);
         </div>
       )}
 
-      <TableOfContents headings={headings} lang={lang} />
+      {/* Sections only: with the sub-headings the index outgrows the screen and, sticky, cannot be scrolled. */}
+      {/* Two sections are a page, not a document worth an index. */}
+      {sections.length >= 3 && (
+        <TableOfContents headings={sections} strings={designStrings(lang)} />
+      )}
     </aside>
   </div>
 </article>

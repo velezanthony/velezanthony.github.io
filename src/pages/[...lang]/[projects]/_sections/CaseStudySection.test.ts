@@ -102,6 +102,12 @@ describe('CaseStudySection sidebar', () => {
       expect(content.at(-1)!.matches('nav.toc')).toBe(true);
     });
 
+    /* Two sections are a page, not a document worth an index. */
+    it('has no index under three sections', async () => {
+      const doc = await render(CaseStudySection, { ...props, headings: headings.slice(0, 2) });
+      expect(doc.querySelector('nav.toc')).toBeNull();
+    });
+
     /* The column must run the article's full height for its index to stick; a sticky column of
        its own, taller than the screen, would not. */
     it('lets the column run the full height, the index being what sticks', async () => {
