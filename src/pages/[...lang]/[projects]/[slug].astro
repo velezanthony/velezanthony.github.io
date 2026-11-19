@@ -7,7 +7,7 @@ import CaseStudy from './_partials/CaseStudy.astro';
 import { getProject, getProjectSlugs } from '@/adapters/projects';
 import { buildCountsOf } from '@/data/build-counts';
 import { alternates, assertLocale, langParam, path } from '@/core/i18n/utils';
-import { locales, routes } from '@/data/ui';
+import { locales, routes } from '@/core/i18n/locales';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();

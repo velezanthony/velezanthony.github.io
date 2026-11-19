@@ -3,8 +3,9 @@ import ContactList from '@/ui/components/ContactList.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import type { ContactLink } from '@/core/types';
 import { SITE_HOST, SITE_SOURCE } from '@/site';
-import { path, useTranslations } from '@/core/i18n/utils';
-import type { Locale } from '@/data/ui';
+import { path } from '@/core/i18n/utils';
+import { useTranslations } from '@/ui/translations';
+import type { Locale } from '@/core/i18n/locales';
 
 interface Props {
   lang: Locale;

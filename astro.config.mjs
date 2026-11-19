@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 import { docs } from '@velezanthony/design/integration';
 
 import docsConfig from './docs.config.mjs';
-import { defaultLocale, locales } from './src/data/ui.ts';
+import { defaultLocale, locales } from './src/core/i18n/locales.ts';
 import { SITE } from './src/site.ts';
 
 // https://astro.build/config

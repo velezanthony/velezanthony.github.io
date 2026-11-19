@@ -4,7 +4,7 @@ import { buildCountsOf } from '@/data/build-counts';
 import type { StoreCounts } from '@/data/downloads';
 import { resolveLocalized } from '@/core/i18n/localized';
 import type { Resolved } from '@/core/i18n/localized';
-import type { Locale } from '@/data/ui';
+import type { Locale } from '@/core/i18n/locales';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 

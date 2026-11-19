@@ -1,7 +1,5 @@
-/* Relative, not `@i18n/ui`: `astro.config.mjs` imports this file, and it loads before the
-   tsconfig aliases exist. */
-import { PENDING, defaultLocale, en, locales, routes } from '@/data/ui';
-import type { Locale, Phrase, RouteKey } from '@/data/ui';
+import { defaultLocale, locales, routes } from '@/core/i18n/locales';
+import type { Locale, RouteKey } from '@/core/i18n/locales';
 
 function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
@@ -17,14 +15,6 @@ export function assertLocale(value: string | undefined): Locale {
   if (value === undefined) return defaultLocale;
   if (isLocale(value)) return value;
   throw new Error(`Unknown locale: ${value}`);
-}
-
-export function useTranslations(lang: Locale) {
-  return function t(phrase: Phrase): string {
-    if (lang === defaultLocale) return phrase;
-    const translated: string = en[phrase];
-    return translated === PENDING ? phrase : translated;
-  };
 }
 
 /** The default locale is unprefixed: `/proyectos/`, not `/es/proyectos/`. */

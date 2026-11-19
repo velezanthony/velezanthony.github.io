@@ -2,8 +2,10 @@
 import LocaleSwitch from '@velezanthony/design/components/molecules/navigation/LocaleSwitch.astro';
 import ThemeToggle from '@velezanthony/design/components/molecules/controls/ThemeToggle.astro';
 import { designStrings } from '@/adapters/design';
-import { path, useTranslations } from '@/core/i18n/utils';
-import type { Locale, Phrase, RouteKey } from '@/data/ui';
+import { path } from '@/core/i18n/utils';
+import { useTranslations } from '@/ui/translations';
+import type { Locale, RouteKey } from '@/core/i18n/locales';
+import type { Phrase } from '@/data/ui';
 
 interface Props {
   lang: Locale;

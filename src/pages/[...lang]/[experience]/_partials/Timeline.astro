@@ -1,10 +1,10 @@
 ---
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import TimelineList from '@/ui/components/Timeline.astro';
-import { useTranslations } from '@/core/i18n/utils';
+import { useTranslations } from '@/ui/translations';
 import { experience } from '@/data/experience';
 import { education } from '@/data/education';
-import type { Locale } from '@/data/ui';
+import type { Locale } from '@/core/i18n/locales';
 
 interface Props {
   lang: Locale;

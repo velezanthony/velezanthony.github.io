@@ -4,7 +4,7 @@ import { profile, spokenLanguages, stackGroups, contact } from '@/data/profile';
 import { experience } from '@/data/experience';
 import { localeOfEntry, path } from '@/core/i18n/utils';
 import { linkOf } from '@/adapters/project-schema';
-import type { Locale } from '@/data/ui';
+import type { Locale } from '@/core/i18n/locales';
 
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */
 const plain = (text: string) => text.replaceAll('**', '');

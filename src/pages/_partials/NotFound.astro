@@ -5,9 +5,10 @@ import Text from '@velezanthony/design/components/atoms/display/Text.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import ContactList from '@/ui/components/ContactList.astro';
 import { contact, profile } from '@/data/profile';
-import { defaultLocale, locales } from '@/data/ui';
-import { alternateLocale, alternates, path, useTranslations } from '@/core/i18n/utils';
-import type { Locale } from '@/data/ui';
+import { defaultLocale, locales } from '@/core/i18n/locales';
+import { alternateLocale, alternates, path } from '@/core/i18n/utils';
+import { useTranslations } from '@/ui/translations';
+import type { Locale } from '@/core/i18n/locales';
 
 interface Props {
   lang: Locale;

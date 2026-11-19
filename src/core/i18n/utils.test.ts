@@ -1,6 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import type { Phrase } from '@/data/ui';
 import {
   alternateLocale,
   alternates,
@@ -12,15 +11,7 @@ import {
   localizePath,
   parsePath,
   path,
-  useTranslations,
 } from './utils';
-
-/* The catalogue has no pending phrase today, so one is planted to exercise the fallback. */
-vi.mock('@/data/ui', async (importOriginal) => {
-  const ui = await importOriginal<typeof import('@/data/ui')>();
-  return { ...ui, en: { ...ui.en, 'Frase pendiente': ui.PENDING } };
-});
-const pending = 'Frase pendiente' as Phrase;
 
 describe('assertLocale', () => {
   it('treats an absent param as the default locale', () => {
@@ -33,20 +24,6 @@ describe('assertLocale', () => {
 
   it.each(['fr', 'EN', ''])('rejects %j', (lang) => {
     expect(() => assertLocale(lang)).toThrow(`Unknown locale: ${lang}`);
-  });
-});
-
-describe('useTranslations', () => {
-  it('returns the Spanish phrase itself, since it is the key', () => {
-    expect(useTranslations('es')('Proyectos')).toBe('Proyectos');
-  });
-
-  it('translates into English', () => {
-    expect(useTranslations('en')('Proyectos')).toBe('Projects');
-  });
-
-  it('falls back to Spanish while the English is pending', () => {
-    expect(useTranslations('en')(pending)).toBe('Frase pendiente');
   });
 });
 

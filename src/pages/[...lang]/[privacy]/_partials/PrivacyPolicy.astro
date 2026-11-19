@@ -4,8 +4,8 @@ import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import type { ResolvedSection } from '@/data/privacy';
 import type { IsoDate } from '@/core/types';
 import { formatDate } from '@/core/i18n/format';
-import { useTranslations } from '@/core/i18n/utils';
-import type { Locale } from '@/data/ui';
+import { useTranslations } from '@/ui/translations';
+import type { Locale } from '@/core/i18n/locales';
 
 interface Props {
   lang: Locale;

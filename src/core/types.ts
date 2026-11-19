@@ -1,4 +1,4 @@
-import type { Locale } from '@/data/ui';
+import type { Locale } from '@/core/i18n/locales';
 
 /**
  * Content, not UI chrome, so it lives here rather than in the translation
