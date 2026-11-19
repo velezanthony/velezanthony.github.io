@@ -6,9 +6,7 @@ updated: '2026-11-10'
 
 ## Who runs this site
 
-I’m Anthony Velez Tapia, and this is my personal site, my portfolio. I don’t ask for any data and do nothing with yours. Below I explain what I use cookies for: only to know how many people visit and which pages they read, and only if you agree. If you have any question, write to me.
-
-- [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com)
+I’m Anthony Velez Tapia, and this is my personal site, my portfolio. I don’t ask for any data and do nothing with yours. Below I explain what I use cookies for: only to know how many people visit and which pages they read, and only if you agree. If you have any question, write to me at [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com).
 
 ## What is collected and why
 
@@ -52,10 +50,6 @@ Over your data you can exercise these rights:
 - Restriction: asking for it to be frozen.
 - Portability: receiving it in a format you can reuse.
 
-To exercise them, write to me. If what you want is held by GitHub, Google or another service, you can ask them too. You can withdraw your consent whenever you like; what was handled until then remains valid.
+To exercise them, write to me at [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com). If what you want is held by GitHub, Google or another service, you can ask them too. You can withdraw your consent whenever you like; what was handled until then remains valid.
 
-- [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com)
-
-If you think I have not handled your data properly, you can complain to the Spanish Data Protection Agency (AEPD).
-
-- [aepd.es](https://www.aepd.es)
+If you think I have not handled your data properly, you can complain to the Spanish Data Protection Agency ([AEPD](https://www.aepd.es)).

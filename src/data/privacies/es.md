@@ -6,9 +6,7 @@ updated: '2026-11-10'
 
 ## Quién está detrás
 
-Soy Anthony Velez Tapia y esta es mi web personal, mi portfolio. No te pido ningún dato ni hago nada con los tuyos. Aquí abajo te cuento para qué uso las cookies: solo para saber cuántas personas entran y qué páginas visitan, y únicamente si lo aceptas. Si tienes alguna duda, escríbeme.
-
-- [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com)
+Soy Anthony Velez Tapia y esta es mi web personal, mi portfolio. No te pido ningún dato ni hago nada con los tuyos. Aquí abajo te cuento para qué uso las cookies: solo para saber cuántas personas entran y qué páginas visitan, y únicamente si lo aceptas. Si tienes alguna duda, escríbeme a [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com).
 
 ## Qué se recoge y por qué
 
@@ -52,10 +50,6 @@ Sobre tus datos puedes ejercer estos derechos:
 - Limitación: pedir que se congelen.
 - Portabilidad: recibirlos en un formato que puedas reutilizar.
 
-Para ejercerlos, escríbeme. Si lo que buscas está en manos de GitHub, Google u otro servicio, también puedes pedírselo a ellos. Puedes retirar tu consentimiento cuando quieras; lo tratado hasta entonces sigue siendo válido.
+Para ejercerlos, escríbeme a [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com). Si lo que buscas está en manos de GitHub, Google u otro servicio, también puedes pedírselo a ellos. Puedes retirar tu consentimiento cuando quieras; lo tratado hasta entonces sigue siendo válido.
 
-- [velezanthony2000@gmail.com](mailto:velezanthony2000@gmail.com)
-
-Si crees que no he tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos.
-
-- [aepd.es](https://www.aepd.es)
+Si crees que no he tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos ([AEPD](https://www.aepd.es)).
