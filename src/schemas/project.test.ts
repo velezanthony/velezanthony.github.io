@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { z } from 'zod';
+import { z } from 'astro/zod';
 
 import { linkOf, projectSchema } from './project';
 
