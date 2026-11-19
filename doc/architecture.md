@@ -314,7 +314,7 @@ sequenceDiagram
   NotFound->>NotFound: if "en": set html lang, show English, swap the title
 ```
 
-- `src/ui/layouts/_partials/RememberLocale.astro` runs on every indexable page and stores the locale of the path being read (`localeOfPath`), under `LANG_KEY` from `src/client/storage.ts`.
+- `src/ui/layouts/_partials/RememberLocale.astro` runs on every indexable page and stores the locale of the path being read (`localeOfPath`), under `LANG_KEY` from `src/core/i18n/locales.ts`.
 - `src/pages/404.astro` renders `pages/_partials/NotFound.astro` with the default locale. It renders a block per language and an inline style that hides English unless `<html data-locale="en">`.
 - Its script reads the stored locale; for `en` it switches `lang`, `data-locale` and the document title (carried in `data-title-en`). Without JavaScript, Spanish stays.
 - `RememberLocale` is skipped on `noindex` pages, so the 404 does not overwrite the value it is about to read.
