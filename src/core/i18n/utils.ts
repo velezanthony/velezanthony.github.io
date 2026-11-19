@@ -5,11 +5,6 @@ function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }
 
-/* `Object.hasOwn`, not `in`: `in` walks the prototype chain, so `constructor` would pass. */
-function isRouteKey(value: string): value is RouteKey {
-  return Object.hasOwn(routes, value);
-}
-
 /** Narrows the `[...lang]` param to a Locale. Absent means the default one. */
 export function assertLocale(value: string | undefined): Locale {
   if (value === undefined) return defaultLocale;
@@ -35,30 +30,10 @@ export function alternateLocale(lang: Locale): Locale {
   return locales.find((other) => other !== lang) ?? defaultLocale;
 }
 
-function routeKeyOf(lang: Locale, segment: string): RouteKey | undefined {
-  return (Object.keys(routes) as RouteKey[]).find((key) => routes[key][lang] === segment);
-}
-
-/**
- * A site path read back into its locale and canonical segments:
- * `/en/projects/snake-orm/` is `en` and `['projects', 'snake-orm']`.
- * Only the first segment can be a route — the rest are slugs, kept as they are.
- */
-export function parsePath(pathname: string): { lang: Locale; segments: string[] } {
-  const parts = pathname.split('/').filter(Boolean);
-  const [first] = parts;
-  const prefixed = first !== undefined && first !== defaultLocale && isLocale(first);
-  const lang = prefixed ? first : defaultLocale;
-  const [head, ...rest] = prefixed ? parts.slice(1) : parts;
-  if (head === undefined) return { lang, segments: [] };
-  return { lang, segments: [routeKeyOf(lang, head) ?? head, ...rest] };
-}
-
-/** The inverse of `parsePath`: the page with these canonical segments, in `lang`. */
-export function localizePath(lang: Locale, segments: string[]): string {
-  const [head, ...rest] = segments;
-  if (head === undefined) return path(lang);
-  return isRouteKey(head) ? path(lang, head, ...rest) : path(lang, undefined, head, ...rest);
+/** The locale of a site path: the default one is unprefixed, so `/en/cv/` is `en` and `/cv/` is `es`. */
+export function localeOfPath(pathname: string): Locale {
+  const [first = ''] = pathname.split('/').filter(Boolean);
+  return first !== defaultLocale && isLocale(first) ? first : defaultLocale;
 }
 
 /**

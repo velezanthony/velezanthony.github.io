@@ -6,10 +6,9 @@ import {
   assertLocale,
   langParam,
   localeOfEntry,
+  localeOfPath,
   localeParams,
   localeRouteParams,
-  localizePath,
-  parsePath,
   path,
 } from './utils';
 
@@ -80,58 +79,19 @@ describe('localeRouteParams', () => {
   });
 });
 
-describe('parsePath', () => {
+describe('localeOfPath', () => {
   it.each([
-    ['/', 'es', []],
-    ['/proyectos/', 'es', ['projects']],
-    ['/proyectos/snake-orm/', 'es', ['projects', 'snake-orm']],
-    ['/en/', 'en', []],
-    ['/en/experience/', 'en', ['experience']],
-    ['/en/projects/snake-orm/', 'en', ['projects', 'snake-orm']],
-  ])('reads %s as %s %j', (pathname, lang, segments) => {
-    expect(parsePath(pathname)).toEqual({ lang, segments });
+    ['/', 'es'],
+    ['/proyectos/snake-orm/', 'es'],
+    ['/en/', 'en'],
+    ['/en/projects/snake-orm/', 'en'],
+    ['/en', 'en'],
+  ])('reads %s as %s', (pathname, lang) => {
+    expect(localeOfPath(pathname)).toBe(lang);
   });
 
   it('only recognises a whole prefix segment as a locale', () => {
-    expect(parsePath('/english/')).toEqual({ lang: 'es', segments: ['english'] });
-  });
-
-  it('does not take a segment in the wrong language for a route', () => {
-    expect(parsePath('/projects/')).toEqual({ lang: 'es', segments: ['projects'] });
-  });
-
-  it('only the first segment can be a route', () => {
-    expect(parsePath('/proyectos/cv/')).toEqual({ lang: 'es', segments: ['projects', 'cv'] });
-  });
-});
-
-describe('localizePath', () => {
-  it('builds the page in any locale from canonical segments', () => {
-    expect(localizePath('es', ['projects', 'snake-orm'])).toBe('/proyectos/snake-orm/');
-    expect(localizePath('en', ['projects', 'snake-orm'])).toBe('/en/projects/snake-orm/');
-    expect(localizePath('es', [])).toBe('/');
-  });
-
-  /* `in` would walk the prototype chain and read `routes.constructor` as a route. */
-  it.each(['constructor', 'toString', '__proto__'])('keeps %j as a plain segment', (segment) => {
-    expect(localizePath('es', [segment])).toBe(`/${segment}/`);
-    expect(localizePath('en', [segment])).toBe(`/en/${segment}/`);
-  });
-
-  it.each([
-    '/',
-    '/en/',
-    '/cv/',
-    '/en/cv/',
-    '/experiencia/',
-    '/en/experience/',
-    '/proyectos/snake-orm/',
-    '/en/projects/snake-orm/',
-    '/privacidad/',
-    '/en/privacy/',
-  ])('round-trips %s through parsePath', (pathname) => {
-    const { lang, segments } = parsePath(pathname);
-    expect(localizePath(lang, segments)).toBe(pathname);
+    expect(localeOfPath('/english/')).toBe('es');
   });
 });
 
