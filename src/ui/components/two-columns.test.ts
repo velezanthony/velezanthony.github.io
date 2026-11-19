@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Job } from '@/data/types';
-import CaseStudySection from '@/pages/[...lang]/[projects]/_sections/CaseStudySection.astro';
-import EducationSection from '@/pages/[...lang]/[experience]/_sections/EducationSection.astro';
+import CaseStudy from '@/pages/[...lang]/[projects]/_partials/CaseStudy.astro';
+import Education from '@/pages/[...lang]/[experience]/_partials/Education.astro';
 import { render } from '@/test/render';
 import ProjectCard from './ProjectCard.astro';
 import Timeline from './Timeline.astro';
@@ -32,11 +32,11 @@ const layouts: [string, () => Promise<Document>][] = [
       }),
   ],
   ['ExperienceItem', () => render(Timeline, { lang: 'es', jobs: [job], studies: [] })],
-  ['EducationSection', () => render(EducationSection, { lang: 'es' })],
+  ['Education', () => render(Education, { lang: 'es' })],
   [
-    'CaseStudySection',
+    'CaseStudy',
     () =>
-      render(CaseStudySection, {
+      render(CaseStudy, {
         lang: 'es',
         name: 'A',
         tagline: 'B',

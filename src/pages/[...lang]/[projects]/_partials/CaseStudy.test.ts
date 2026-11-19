@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { render, text } from '@/test/render';
-import CaseStudySection from './CaseStudySection.astro';
+import CaseStudy from './CaseStudy.astro';
 
 const props = {
   lang: 'es',
@@ -43,11 +43,11 @@ function classesUpTo(el: Element, stop: Element): string[] {
   return out;
 }
 
-describe('CaseStudySection sidebar', () => {
+describe('CaseStudy sidebar', () => {
   /* Content and title must part clearly; content and content must not. Every value is ink against
      the faint label, at 14px in sans or at the mono list size: one weight across the sidebar. */
   it('gives every field the same weight of content under the same kind of label', async () => {
-    const doc = await render(CaseStudySection, props);
+    const doc = await render(CaseStudy, props);
     const labels = [...doc.querySelectorAll('aside p.label')];
     expect(labels.map(text)).toEqual([
       'Rol',
@@ -71,7 +71,7 @@ describe('CaseStudySection sidebar', () => {
   });
 
   it('carries the downloads field for the stores the project is published to', async () => {
-    const doc = await render(CaseStudySection, { ...props, downloads: { pypi: 'snake-orm' } });
+    const doc = await render(CaseStudy, { ...props, downloads: { pypi: 'snake-orm' } });
     const field = doc.querySelector('aside [data-downloads]')!;
     expect(text(field.querySelector('p.label'))).toBe('Descargas');
     expect(
@@ -80,9 +80,7 @@ describe('CaseStudySection sidebar', () => {
   });
 
   it('has no downloads field for a project published nowhere', async () => {
-    expect(
-      (await render(CaseStudySection, props)).querySelector('aside [data-downloads]'),
-    ).toBeNull();
+    expect((await render(CaseStudy, props)).querySelector('aside [data-downloads]')).toBeNull();
   });
 
   describe('index', () => {
@@ -94,9 +92,7 @@ describe('CaseStudySection sidebar', () => {
 
     /* Below the details, so it sticks once they have scrolled away and follows the reader down. */
     it('sits in the side column, after the details', async () => {
-      const aside = (await render(CaseStudySection, { ...props, headings })).querySelector(
-        'aside',
-      )!;
+      const aside = (await render(CaseStudy, { ...props, headings })).querySelector('aside')!;
       /* Astro renders the index's own <script> right after it; content is what counts. */
       const content = [...aside.children].filter((el) => el.tagName !== 'SCRIPT');
       expect(content.at(-1)!.matches('nav.toc')).toBe(true);
@@ -104,16 +100,14 @@ describe('CaseStudySection sidebar', () => {
 
     /* Two sections are a page, not a document worth an index. */
     it('has no index under three sections', async () => {
-      const doc = await render(CaseStudySection, { ...props, headings: headings.slice(0, 2) });
+      const doc = await render(CaseStudy, { ...props, headings: headings.slice(0, 2) });
       expect(doc.querySelector('nav.toc')).toBeNull();
     });
 
     /* The column must run the article's full height for its index to stick; a sticky column of
        its own, taller than the screen, would not. */
     it('lets the column run the full height, the index being what sticks', async () => {
-      const aside = (await render(CaseStudySection, { ...props, headings })).querySelector(
-        'aside',
-      )!;
+      const aside = (await render(CaseStudy, { ...props, headings })).querySelector('aside')!;
       expect(
         [...aside.classList].some((c) => c.endsWith('sticky') || c.endsWith('self-start')),
       ).toBe(false);

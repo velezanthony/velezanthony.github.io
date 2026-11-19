@@ -1,6 +1,6 @@
 ---
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
-import Timeline from '@/ui/components/Timeline.astro';
+import TimelineList from '@/ui/components/Timeline.astro';
 import { useTranslations } from '@/i18n/utils';
 import { experience } from '@/data/experience';
 import { education } from '@/data/education';
@@ -21,5 +21,5 @@ const t = useTranslations(lang);
     {t('Trayectoria profesional')}
   </Heading>
 
-  <Timeline lang={lang} jobs={experience} studies={education} headingLevel={2} class="mt-10" />
+  <TimelineList lang={lang} jobs={experience} studies={education} headingLevel={2} class="mt-10" />
 </section>

@@ -1,7 +1,7 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
 import { pageTitles, seo } from '@/data/profile';
-import ProjectIndexSection from '@/pages/[...lang]/[projects]/_sections/ProjectIndexSection.astro';
+import ProjectIndex from './_partials/ProjectIndex.astro';
 import { alternates, assertLocale, localeRouteParams } from '@/i18n/utils';
 
 export function getStaticPaths() {
@@ -18,5 +18,5 @@ const lang = assertLocale(Astro.params.lang);
   alternates={alternates('projects')}
   current="projects"
 >
-  <ProjectIndexSection lang={lang} />
+  <ProjectIndex lang={lang} />
 </PageLayout>
