@@ -84,14 +84,4 @@ const head = pageHead({
   </a>
 
   <slot />
-
-  <Fragment slot="scripts">
-    <script>
-      import { trackSections } from '@velezanthony/design/client/toc';
-
-      /* The case study's table of contents follows the section being read. */
-      const toc = document.querySelector('nav.toc');
-      if (toc) trackSections(toc);
-    </script>
-  </Fragment>
 </LibraryBaseLayout>

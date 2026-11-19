@@ -46,10 +46,12 @@ describe('CaseStudy sidebar', () => {
 
     /* Below the details, so it sticks once they have scrolled away and follows the reader down. */
     it('sits in the side column, after the details', async () => {
-      const aside = (await render(CaseStudy, { ...props, headings })).querySelector('aside')!;
+      const column = (await render(CaseStudy, { ...props, headings })).querySelector(
+        '[data-toc-column]',
+      )!;
       /* Astro renders the index's own <script> right after it; content is what counts. */
-      const content = [...aside.children].filter((el) => el.tagName !== 'SCRIPT');
-      expect(content.at(-1)!.matches('nav.toc')).toBe(true);
+      const content = [...column.children].filter((element) => element.tagName !== 'SCRIPT');
+      expect(content.map((element) => element.tagName.toLowerCase())).toEqual(['aside', 'nav']);
     });
 
     /* Two sections are a page, not a document worth an index. */
@@ -57,5 +59,16 @@ describe('CaseStudy sidebar', () => {
       const doc = await render(CaseStudy, { ...props, headings: headings.slice(0, 2) });
       expect(doc.querySelector('nav.toc')).toBeNull();
     });
+  });
+
+  it('renders the write-up in the library article, with the pending items after it', async () => {
+    const doc = await render(
+      CaseStudy,
+      { ...props, todo: ['Benchmarks'] },
+      { default: '<h2 id="a">Uno</h2>' },
+    );
+    const article = doc.querySelector('div[data-copy-label]')!;
+    expect(article.querySelector('.prose h2')).not.toBeNull();
+    expect(text(article.lastElementChild)).toContain('Benchmarks');
   });
 });

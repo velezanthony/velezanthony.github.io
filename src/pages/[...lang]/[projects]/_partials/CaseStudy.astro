@@ -10,7 +10,7 @@ import { useTranslations } from '@ui/translations';
 import type { Locale } from '@core/i18n/locales';
 import type { ProjectStatus } from '@core/projects/status';
 import DownloadCount from '@ui/components/DownloadCount.astro';
-import TableOfContents from '@velezanthony/design/components/molecules/navigation/TableOfContents.astro';
+import Article from '@velezanthony/design/components/organisms/content/Article.astro';
 import { designStrings } from '@velezanthony/design/site';
 import type { DownloadSources, StoreCounts } from '@core/downloads/counts';
 
@@ -61,7 +61,6 @@ const {
 } = Astro.props;
 
 const t = useTranslations(lang);
-const sections = headings.filter((heading) => heading.depth === 2);
 ---
 
 <article class="pt-12 pb-20 lg:pt-16">
@@ -93,100 +92,97 @@ const sections = headings.filter((heading) => heading.depth === 2);
   )}
 
   <div class="mt-12 grid gap-x-16 gap-y-12 grid-cols-1 md:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
-    <div class="min-w-0 lg:order-1">
-      <!-- Beside the sidebar the write-up takes the whole column, past the site-wide reading
-           measure: less scrolling on long write-ups, at about 95 characters a line. Alone in one
-           column it keeps the measure. -->
-      <div class="prose md:[--container-measure:none]">
-        <slot />
-      </div>
-
+    <!-- Sections only in the index: with the sub-headings it outgrows the screen and, sticky, cannot
+         be scrolled. The column runs the article's full height, so the index at its foot can stick
+         once the details above have scrolled away. -->
+    <Article
+      as="div"
+      class="lg:order-1"
+      strings={designStrings(lang)}
+      headings={headings}
+      depth={2}
+      columnClass="space-y-8 lg:order-2"
+    >
       {todo.length > 0 && (
-        <section class="mt-16">
+        <section slot="after" class="mt-16">
           <p class="label mb-4 text-faint">{t('Pendiente de escribir')}</p>
           {todo.map((item) => (
             <Todo what={item} />
           ))}
         </section>
       )}
-    </div>
 
-    <!-- Runs the article's full height, so the index at its foot can stick once the details above
-         have scrolled away. -->
-    <aside class="space-y-8 lg:order-2">
-      <div>
-        <p class="label mb-2 text-faint">{t('Rol')}</p>
-        <p class="text-sm text-ink">{role}</p>
-      </div>
+      <slot />
 
-      <DownloadCount sources={downloads} counts={downloadCounts} lang={lang} variant="field" />
-
-      {stack.length > 0 && (
+      <aside slot="aside" class="space-y-8">
         <div>
-          <p class="label mb-3 text-faint">{t('Stack')}</p>
-          <StackRow items={stack} field />
+          <p class="label mb-2 text-faint">{t('Rol')}</p>
+          <p class="text-sm text-ink">{role}</p>
         </div>
-      )}
 
-      {targets.length > 0 && (
-        <div>
-          <p class="label mb-3 text-faint">{t('Para')}</p>
-          <StackRow items={targets} field />
-        </div>
-      )}
+        <DownloadCount sources={downloads} counts={downloadCounts} lang={lang} variant="field" />
 
-      {compat.length > 0 && (
-        <div>
-          <p class="label mb-3 text-faint">{t('Compatibilidad')}</p>
-          <StackRow items={compat} field />
-        </div>
-      )}
+        {stack.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Stack')}</p>
+            <StackRow items={stack} field />
+          </div>
+        )}
 
-      {quality.length > 0 && (
-        <div>
-          <p class="label mb-3 text-faint">{t('Calidad')}</p>
-          <ul class="space-y-1.5">
-            {quality.map((item) => (
-              <li class="flex items-baseline gap-2 text-sm text-ink">
-                <span class="mt-1.5 size-1.5 shrink-0 bg-state-live" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {targets.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Para')}</p>
+            <StackRow items={targets} field />
+          </div>
+        )}
 
-      {constraints.length > 0 && (
-        <div>
-          <p class="label mb-3 text-faint">{t('Restricciones')}</p>
-          <ul class="space-y-2.5">
-            {constraints.map((constraint) => (
-              <li class="border-l-2 border-rule pl-3 text-sm text-ink">{constraint}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {compat.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Compatibilidad')}</p>
+            <StackRow items={compat} field />
+          </div>
+        )}
 
-      {links.length > 0 && (
-        <div>
-          <p class="label mb-3 text-faint">{t('Enlaces')}</p>
-          <ul class="space-y-2">
-            {links.map((link) => (
-              <li>
-                <Link href={link.href} variant="value">
-                  <span class="font-mono text-mono-list">{link.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {quality.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Calidad')}</p>
+            <ul class="space-y-1.5">
+              {quality.map((item) => (
+                <li class="flex items-baseline gap-2 text-sm text-ink">
+                  <span class="mt-1.5 size-1.5 shrink-0 bg-state-live" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-      {/* Sections only: with the sub-headings the index outgrows the screen and, sticky, cannot be scrolled. */}
-      {/* Two sections are a page, not a document worth an index. */}
-      {sections.length >= 3 && (
-        <TableOfContents headings={sections} strings={designStrings(lang)} />
-      )}
-    </aside>
+        {constraints.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Restricciones')}</p>
+            <ul class="space-y-2.5">
+              {constraints.map((constraint) => (
+                <li class="border-l-2 border-rule pl-3 text-sm text-ink">{constraint}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {links.length > 0 && (
+          <div>
+            <p class="label mb-3 text-faint">{t('Enlaces')}</p>
+            <ul class="space-y-2">
+              {links.map((link) => (
+                <li>
+                  <Link href={link.href} variant="value">
+                    <span class="font-mono text-mono-list">{link.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </Article>
   </div>
 </article>

@@ -6,10 +6,15 @@ type Options = NonNullable<Parameters<AstroContainer['renderToString']>[1]>;
 
 let container: AstroContainer | undefined;
 
-/** Renders a component the way a page would and hands back a queryable document. */
-export async function render(component: Component, props: Options['props'] = {}) {
+/** Renders a component the way a page would and hands back a queryable document. `slots` are
+    HTML fragments (`default` is the unnamed slot). */
+export async function render(
+  component: Component,
+  props: Options['props'] = {},
+  slots: Options['slots'] = {},
+) {
   container ??= await AstroContainer.create();
-  const html = await container.renderToString(component, { props });
+  const html = await container.renderToString(component, { props, slots });
   return parseHTML(`<!doctype html><html><body>${html}</body></html>`).document;
 }
 
