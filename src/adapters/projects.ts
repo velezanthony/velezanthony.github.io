@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { buildCountsOf } from '@/data/build-counts';
-import type { StoreCounts } from '@/data/downloads';
+import { buildCountsOf } from '@/adapters/downloads';
+import type { StoreCounts } from '@/core/downloads/counts';
 import { resolveLocalized } from '@/core/i18n/localized';
 import type { Resolved } from '@/core/i18n/localized';
 import type { Locale } from '@/core/i18n/locales';

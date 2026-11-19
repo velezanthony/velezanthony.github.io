@@ -1,7 +1,8 @@
 ---
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
-import { citationsOf, formatDownloads, toDownloads } from '@/data/downloads';
-import type { DownloadSources, StoreCounts } from '@/data/downloads';
+import { citationsOf, toDownloads } from '@/core/downloads/counts';
+import { formatDownloads } from '@/core/downloads/format';
+import type { DownloadSources, StoreCounts } from '@/core/downloads/counts';
 import { useTranslations } from '@/ui/translations';
 import type { Locale } from '@/core/i18n/locales';
 
