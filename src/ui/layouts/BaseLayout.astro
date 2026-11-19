@@ -1,5 +1,5 @@
 ---
-import { Font } from 'astro:assets';
+import Fonts from '@velezanthony/design/fonts';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
 import { path } from '@core/i18n/utils';
 import { useTranslations } from '@ui/translations';
@@ -64,8 +64,7 @@ const head = pageHead({
   privacyLabel={t('Política de privacidad')}
 >
   <Fragment slot="head">
-    <Font cssVariable="--font-plex-sans" preload />
-    <Font cssVariable="--font-plex-mono" />
+    <Fonts />
 
     <slot name="head" />
   </Fragment>
