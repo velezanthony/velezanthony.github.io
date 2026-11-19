@@ -14,14 +14,13 @@ interface Props {
 }
 
 /**
- * Served from the root `404.astro`, outside `[lang]`, because GitHub Pages serves a
- * single `/404.html` for the whole site and cannot pick a locale. `en/404.astro` renders
- * the same page for the design library's `/en/404/`, which it would otherwise inject.
+ * Served from the root `404.astro`, outside `[lang]`: GitHub Pages serves a single `/404.html`
+ * for the whole site and cannot pick a locale, so there is no `/en/404/`.
  *
  * Both languages are rendered into the document. The default one shows by
  * default; if `sessionStorage` says the reader was browsing in English —
  * written by the script in BaseLayout on every page — it swaps. With no
- * JavaScript, Spanish stays. The English page is always English.
+ * JavaScript, Spanish stays.
  */
 const { lang } = Astro.props;
 const bloques = locales.map((locale: Locale) => {
