@@ -1,13 +1,14 @@
 ---
 import ProjectCard from './ProjectCard.astro';
-import type { LocalisedProject } from '@/adapters/projects';
+import type { CollectionEntry } from 'astro:content';
+import type { Resolved } from '@/core/i18n/localized';
 import type { StoreCounts } from '@/core/downloads/counts';
 import { path } from '@/core/i18n/utils';
 import type { Locale } from '@/core/i18n/locales';
 
 interface Props {
   lang: Locale;
-  projects: LocalisedProject[];
+  projects: Resolved<CollectionEntry<'projects'>>[];
   /** What the build read from each project's stores, by slug. */
   counts?: Record<string, StoreCounts>;
   /** Forwarded to each card. Depends on what precedes the grid. */

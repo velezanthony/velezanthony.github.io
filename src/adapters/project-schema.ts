@@ -1,13 +1,11 @@
 import type { SchemaContext } from 'astro:content';
 import { z } from 'astro/zod';
+import { projectStatuses } from '@/core/projects/status';
 
 /**
  * What a link IS, declared rather than guessed from its host. The docs are moving off
  * `github.io/<repo>/` and into this site, which would quietly break any host regex.
  */
-export const projectStatuses = ['maintained', 'experimental', 'unreleased'] as const;
-export type ProjectStatus = (typeof projectStatuses)[number];
-
 export const linkKinds = ['source', 'docs', 'package'] as const;
 export type LinkKind = (typeof linkKinds)[number];
 

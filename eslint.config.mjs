@@ -21,6 +21,61 @@ export default defineConfig(
   { languageOptions: { globals: { ...globals.node } } },
   { files: ['**/*.astro'], languageOptions: { globals: { ...globals.browser } } },
 
+  /* Layers, as in doc/architecture.md: each one imports only what sits below it. */
+  {
+    files: ['src/core/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['astro', 'astro/*', 'astro:*', 'virtual:*'],
+              message: 'core/ is pure: no Astro.',
+            },
+            {
+              group: ['@/data/**', '@/adapters/**', '@/ui/**', '@/pages/**', '@/client/**'],
+              message: 'core/ imports no other layer: what it needs arrives as a parameter.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/data/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/adapters/**', '@/ui/**', '@/pages/**'],
+              message: 'data/ is content: it knows no network, markup or routes.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/ui/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              /* The layouts are the shell that reads the library's config; nothing else may. */
+              group: ['@/adapters/**', '!@/adapters/design'],
+              message: 'ui/ is presentation: pages hand it the data.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   /* Last, so formatting is Prettier's call alone. */
   prettier,
 );

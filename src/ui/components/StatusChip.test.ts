@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { projectStatuses } from '@/adapters/project-schema';
+import { projectStatuses } from '@/core/projects/status';
 import { render, text } from '@/test-utils';
 import StatusChip from './StatusChip.astro';
 
