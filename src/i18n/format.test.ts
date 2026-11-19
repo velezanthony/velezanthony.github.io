@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { formatMonth, formatRange } from './format';
+import { formatDate, formatMonth, formatRange } from './format';
 
 /* One zone on each side of Greenwich. Building the date in UTC but printing it in local time
    only slips a month to the west; building it in local time but printing in UTC only slips to
@@ -23,6 +23,18 @@ describe.each(['America/Los_Angeles', 'Europe/Madrid'])('in %s', (zone) => {
     it('does not drift at a month boundary', () => {
       expect(formatMonth('en', '2024-01')).toBe('Jan 2024');
       expect(formatMonth('en', '2024-12')).toBe('Dec 2024');
+    });
+  });
+
+  describe('formatDate', () => {
+    it('spells the whole day out in each locale', () => {
+      expect(formatDate('es', '2026-11-10')).toBe('10 de noviembre de 2026');
+      expect(formatDate('en', '2026-11-10')).toBe('10 November 2026');
+    });
+
+    it('does not drift at a year boundary', () => {
+      expect(formatDate('en', '2026-01-01')).toBe('1 January 2026');
+      expect(formatDate('en', '2026-12-31')).toBe('31 December 2026');
     });
   });
 

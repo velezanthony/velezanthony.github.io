@@ -10,6 +10,9 @@ export type Localized<T = string> = Record<Locale, T>;
 /** `YYYY-MM`. Formatted per locale at render time, never stored as prose. */
 export type YearMonth = `${number}-${number}`;
 
+/** `YYYY-MM-DD`. */
+export type IsoDate = `${number}-${number}-${number}`;
+
 export interface DateRange {
   start: YearMonth;
   /** `null` means the role is current. */

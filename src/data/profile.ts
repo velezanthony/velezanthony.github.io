@@ -78,6 +78,10 @@ export const pageTitles = {
     es: 'CV · Desarrollador Full Stack y sistemas',
     en: 'CV · Full Stack Developer and systems',
   },
+  privacy: {
+    es: 'Política de privacidad',
+    en: 'Privacy policy',
+  },
 } satisfies Record<string, Localized>;
 
 /**
@@ -101,6 +105,10 @@ export const seo = {
   cv: {
     es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Gipuzkoa. Django, Laravel, .NET, Angular y sistemas. Listo para imprimir o guardar en PDF.',
     en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Laravel, .NET, Angular and systems. Ready to print or save as PDF.',
+  },
+  privacy: {
+    es: 'Qué datos trata esta web, con qué base y cómo ejercer tus derechos. Las cookies de analítica solo se instalan si las aceptas.',
+    en: 'What data this site handles, on what basis and how to exercise your rights. Analytics cookies are only set if you accept them.',
   },
 } satisfies Record<string, Localized>;
 

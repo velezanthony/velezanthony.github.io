@@ -1,0 +1,25 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import PrivacyPolicy from '@organisms/PrivacyPolicy.astro';
+import { privacyUpdated, resolvePrivacy } from '@data/privacy';
+import { pageTitles, seo } from '@data/profile';
+import { alternates, assertLocale, localeRouteParams } from '@i18n/utils';
+
+export function getStaticPaths() {
+  return localeRouteParams('privacy');
+}
+
+const lang = assertLocale(Astro.params.lang);
+---
+
+<!-- `noindex`: a legal notice ranks for nothing worth having, and the sitemap leaves it out
+     for the same reason (`isIndexable`). -->
+<PageLayout
+  lang={lang}
+  title={pageTitles.privacy[lang]}
+  description={seo.privacy[lang]}
+  alternates={alternates('privacy')}
+  noindex
+>
+  <PrivacyPolicy lang={lang} sections={resolvePrivacy(lang)} updated={privacyUpdated} />
+</PageLayout>
