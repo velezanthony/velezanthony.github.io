@@ -22,10 +22,6 @@ const link = z.object({
 });
 export type ProjectLink = z.infer<typeof link>;
 
-export function linkOf(links: ProjectLink[], kind: LinkKind): string | undefined {
-  return links.find((l) => l.kind === kind)?.href;
-}
-
 /* One entry of a list the site renders with its own separators. A middot written into it doubles
    them, in the wrong colour, and makes three items one that cannot wrap. */
 const listItem = z

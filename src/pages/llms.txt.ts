@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import { profile, spokenLanguages, stackGroups, contact } from '@/data/profile';
 import { experience } from '@/data/experience';
 import { localeOfEntry, path } from '@/core/i18n/utils';
-import { linkOf } from '@/adapters/project-schema';
+import { linkOf } from '@/core/projects/links';
 import type { Locale } from '@/core/i18n/locales';
 
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */

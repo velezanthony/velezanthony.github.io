@@ -1,13 +1,14 @@
 ---
 import { render } from 'astro:content';
 import { fileLastModified } from '@velezanthony/design/last-modified';
-import { breadcrumb, softwareSourceCode, techArticle } from '@/seo/jsonld';
+import { breadcrumb, softwareSourceCode, techArticle } from '@/core/seo/jsonld';
 import PageLayout from '@/ui/layouts/PageLayout.astro';
 import CaseStudy from './_partials/CaseStudy.astro';
 import { getProject, getProjectSlugs } from '@/adapters/projects';
 import { buildCountsOf } from '@/adapters/downloads';
 import { alternates, assertLocale, langParam, path } from '@/core/i18n/utils';
 import { locales, routes } from '@/core/i18n/locales';
+import { PERSON_ID } from '@/site';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();
@@ -33,6 +34,7 @@ const dateModified = entry.filePath ? await fileLastModified(entry.filePath) : u
 const downloadCounts = await buildCountsOf(entry.data.downloads);
 const indexUrl = new URL(path(lang, 'projects'), Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const identity = { site: Astro.site!, personId: PERSON_ID };
 ---
 
 <PageLayout
@@ -47,12 +49,12 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify(softwareSourceCode(entry.data, pageUrl, dateModified))}
+      set:html={JSON.stringify(softwareSourceCode(entry.data, identity, pageUrl, dateModified))}
     />
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify(techArticle(entry.data, lang, pageUrl, dateModified))}
+      set:html={JSON.stringify(techArticle(entry.data, identity, lang, pageUrl, dateModified))}
     />
     <script
       type="application/ld+json"

@@ -1,5 +1,5 @@
-import { defaultLocale } from '@/core/i18n/locales';
-import type { Locale } from '@/core/i18n/locales';
+import { defaultLocale } from './locales';
+import type { Locale } from './locales';
 
 /**
  * A `useTranslations` over a dictionary of English strings keyed by their Spanish source.

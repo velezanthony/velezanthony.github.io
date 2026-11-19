@@ -1,10 +1,10 @@
 import type { HeadConfig } from '@velezanthony/design/head';
 
-import { profile } from '@/data/profile';
 import { locales, ogLocales } from '@/core/i18n/locales';
 import type { Locale } from '@/core/i18n/locales';
 import { alternateLocale } from '@/core/i18n/utils';
 import { person } from './jsonld';
+import type { PersonSource } from './jsonld';
 
 export interface PageHeadInput {
   lang: Locale;
@@ -20,6 +20,10 @@ export interface PageHeadInput {
   /** Path of the page being rendered, for its canonical URL. */
   pathname: string;
   site: URL;
+  /** The `@id` of the site's one Person, shared by every page. */
+  personId: string;
+  /** Whose site this is: the name in titles and cards, and the Person in the JSON-LD. */
+  owner: PersonSource;
   generator: string;
 }
 
@@ -42,9 +46,12 @@ export function pageHead({
   noindex = false,
   pathname,
   site,
+  personId,
+  owner,
   generator,
 }: PageHeadInput): HeadConfig[] {
-  const fullTitle = bareTitle || title === profile.name ? title : `${title} | ${profile.name}`;
+  const { name } = owner.profile;
+  const fullTitle = bareTitle || title === name ? title : `${title} | ${name}`;
   const canonical = new URL(pathname, site).href;
   /* Absolute URL required: crawlers do not resolve relative image paths. */
   const image = new URL('/og.png', site).href;
@@ -81,7 +88,7 @@ export function pageHead({
     meta('property', 'og:image', image),
     meta('property', 'og:image:width', '1200'),
     meta('property', 'og:image:height', '630'),
-    meta('property', 'og:image:alt', profile.name),
+    meta('property', 'og:image:alt', name),
     meta('name', 'twitter:image', image),
     meta('property', 'og:type', 'website'),
     meta('property', 'og:title', fullTitle),
@@ -89,7 +96,7 @@ export function pageHead({
     meta('property', 'og:url', canonical),
     meta('property', 'og:locale', ogLocales[lang]),
     meta('property', 'og:locale:alternate', ogLocales[alternateLocale(lang)]),
-    meta('property', 'og:site_name', profile.name),
+    meta('property', 'og:site_name', name),
     meta('name', 'twitter:card', 'summary_large_image'),
     {
       tag: 'link',
@@ -100,7 +107,7 @@ export function pageHead({
     {
       tag: 'script',
       attrs: { type: 'application/ld+json' },
-      content: serializeJsonLd(person(lang, canonical)),
+      content: serializeJsonLd(person(owner, { site, personId }, lang, canonical)),
     },
   ];
 }

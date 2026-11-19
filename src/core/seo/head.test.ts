@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { owner } from './test-owner';
 import { pageHead, type PageHeadInput } from './head';
 
 const site = new URL('https://velezanthony.github.io');
@@ -11,6 +12,8 @@ const input: PageHeadInput = {
   alternates: { es: '/proyectos/', en: '/en/projects/' },
   pathname: '/proyectos/',
   site,
+  personId: `${site.origin}/#anthony`,
+  owner,
   generator: 'Astro v0',
 };
 

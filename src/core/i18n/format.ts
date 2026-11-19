@@ -1,5 +1,5 @@
-import { ogLocales } from '@/core/i18n/locales';
-import type { Locale } from '@/core/i18n/locales';
+import { ogLocales } from './locales';
+import type { Locale } from './locales';
 import type { IsoDate, YearMonth } from '@/core/types';
 
 export function formatMonth(lang: Locale, value: YearMonth): string {

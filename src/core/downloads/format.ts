@@ -1,5 +1,5 @@
 import type { Locale } from '@/core/i18n/locales';
-import type { Downloads } from '@/core/downloads/counts';
+import type { Downloads } from './counts';
 
 const words = {
   es: { perMonth: 'descargas al mes', total: 'descargas' },

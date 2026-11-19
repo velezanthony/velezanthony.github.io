@@ -5,7 +5,9 @@ import { path } from '@/core/i18n/utils';
 import { useTranslations } from '@/ui/translations';
 import type { Locale } from '@/core/i18n/locales';
 import { gtmId } from '@/adapters/design';
-import { pageHead } from '@/seo/head';
+import { pageHead } from '@/core/seo/head';
+import { owner } from '@/data/person';
+import { PERSON_ID } from '@/site';
 import RememberLocale from './_partials/RememberLocale.astro';
 
 interface Props {
@@ -43,6 +45,8 @@ const head = pageHead({
   noindex,
   pathname: Astro.url.pathname,
   site: Astro.site!,
+  personId: PERSON_ID,
+  owner,
   generator: Astro.generator,
 });
 ---

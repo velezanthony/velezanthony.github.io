@@ -1,32 +1,68 @@
-import type { CollectionEntry } from 'astro:content';
-
-import { address, contact, email, knowsAbout, profile, spokenLanguages } from '@/data/profile';
-import { education } from '@/data/education';
-import { experience } from '@/data/experience';
 import type { Locale } from '@/core/i18n/locales';
 import { path } from '@/core/i18n/utils';
-import { linkOf } from '@/adapters/project-schema';
-import { PERSON_ID, SITE } from '@/site';
+import { linkOf } from '@/core/projects/links';
+import type { Localized } from '@/core/types';
 
-export type ProjectData = CollectionEntry<'projects'>['data'];
+/** What `person` needs to know about the owner, handed in by the caller. */
+export interface PersonSource {
+  profile: { name: string; headline: Localized };
+  email: string;
+  knowsAbout: string[];
+  address: { locality: string; region: string; country: string };
+  spokenLanguages: { code: string }[];
+  contact: { href: string }[];
+  education: { school: string }[];
+  /** Newest first: the first is the current job. */
+  experience: { role: Localized; company: string }[];
+}
+
+/** What `softwareSourceCode` and `techArticle` need to know about a project. */
+export interface ProjectData {
+  name: string;
+  headline: string;
+  tagline: string;
+  stack: string[];
+  targets: string[];
+  compat: string[];
+  links: { kind: string; href: string }[];
+}
+
+/** Where the site lives and the `@id` of its one Person. */
+export interface SiteIdentity {
+  site: URL;
+  personId: string;
+}
 
 const context = 'https://schema.org';
-const author = { '@id': PERSON_ID };
 
 /** The site's one Person, on every page. `@id` is what makes them one. */
-export function person(lang: Locale, pageUrl: string) {
+export function person(
+  {
+    profile,
+    email,
+    knowsAbout,
+    address,
+    spokenLanguages,
+    contact,
+    education,
+    experience,
+  }: PersonSource,
+  { site, personId }: SiteIdentity,
+  lang: Locale,
+  pageUrl: string,
+) {
   const current = experience[0]!;
   return {
     '@context': context,
     '@type': 'Person',
-    '@id': PERSON_ID,
+    '@id': personId,
     mainEntityOfPage: pageUrl,
     name: profile.name,
     email: `mailto:${email}`,
     knowsAbout,
     description: profile.headline[lang],
-    url: new URL(path(lang), SITE).href,
-    image: new URL('/photo.png', SITE).href,
+    url: new URL(path(lang), site).href,
+    image: new URL('/photo.png', site).href,
     jobTitle: current.role[lang],
     address: {
       '@type': 'PostalAddress',
@@ -51,6 +87,7 @@ export function person(lang: Locale, pageUrl: string) {
  */
 export function softwareSourceCode(
   data: ProjectData,
+  { personId }: SiteIdentity,
   pageUrl: string,
   dateModified: string | undefined,
 ) {
@@ -62,7 +99,7 @@ export function softwareSourceCode(
     codeRepository: linkOf(data.links, 'source'),
     programmingLanguage: data.stack,
     license: 'https://opensource.org/licenses/MIT',
-    author,
+    author: { '@id': personId },
     url: pageUrl,
     sameAs: data.links.map((l) => l.href),
     runtimePlatform: data.compat,
@@ -75,6 +112,7 @@ export function softwareSourceCode(
     instead of treating the page as a repository listing. */
 export function techArticle(
   data: ProjectData,
+  { personId }: SiteIdentity,
   lang: Locale,
   pageUrl: string,
   dateModified: string | undefined,
@@ -87,7 +125,7 @@ export function techArticle(
     url: pageUrl,
     inLanguage: lang,
     dateModified,
-    author,
+    author: { '@id': personId },
     about: { '@type': 'SoftwareSourceCode', name: data.name },
   };
 }

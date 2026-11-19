@@ -1,5 +1,5 @@
-import { defaultLocale, locales, routes } from '@/core/i18n/locales';
-import type { Locale, RouteKey } from '@/core/i18n/locales';
+import { defaultLocale, locales, routes } from './locales';
+import type { Locale, RouteKey } from './locales';
 
 function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);

@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { z } from 'astro/zod';
 
-import { linkOf, projectSchema } from './project-schema';
+import { projectSchema } from './project-schema';
 
 /* `image()` needs Astro's asset pipeline; a path string stands in for it here. */
 const schema = projectSchema({ image: () => z.string() } as never);
@@ -133,16 +133,6 @@ describe('projectSchema', () => {
         'visual.kind',
       ]);
     });
-  });
-});
-
-describe('linkOf', () => {
-  it('is the href of the link of that kind', () => {
-    expect(linkOf(valid.links as never, 'docs')).toBe('https://velezanthony.github.io/snake-orm/');
-  });
-
-  it('is undefined when the project has none', () => {
-    expect(linkOf([], 'package')).toBeUndefined();
   });
 });
 

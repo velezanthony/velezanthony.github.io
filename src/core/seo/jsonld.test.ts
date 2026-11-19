@@ -1,14 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
+import { owner } from './test-owner';
 import { breadcrumb, person, softwareSourceCode, techArticle } from './jsonld';
 import type { ProjectData } from './jsonld';
 
 const site = 'https://velezanthony.github.io';
 const personId = `${site}/#anthony`;
+const identity = { site: new URL(site), personId };
 
 describe('person', () => {
-  const es = person('es', `${site}/cv/`);
-  const en = person('en', `${site}/en/projects/`);
+  const es = person(owner, identity, 'es', `${site}/cv/`);
+  const en = person(owner, identity, 'en', `${site}/en/projects/`);
 
   /* One person with many mentions, not one person per page. */
   it('keeps the same @id on every page and in every locale', () => {
@@ -51,14 +53,14 @@ const project = {
   targets: ['PostgreSQL'],
   compat: ['Python ≥ 3.11'],
   links: [
-    { label: 'Source', kind: 'source', href: 'https://github.com/velezanthony/snake-orm' },
-    { label: 'PyPI', kind: 'package', href: 'https://pypi.org/project/snake-orm/' },
+    { kind: 'source', href: 'https://github.com/velezanthony/snake-orm' },
+    { kind: 'package', href: 'https://pypi.org/project/snake-orm/' },
   ],
-} as ProjectData;
+} satisfies ProjectData;
 const page = `${site}/en/projects/snake-orm/`;
 
 describe('softwareSourceCode', () => {
-  const code = softwareSourceCode(project, page, '2026-09-07T00:06:43+02:00');
+  const code = softwareSourceCode(project, identity, page, '2026-09-07T00:06:43+02:00');
 
   it('takes the repository from the source link', () => {
     expect(code.codeRepository).toBe('https://github.com/velezanthony/snake-orm');
@@ -78,14 +80,19 @@ describe('softwareSourceCode', () => {
 
   it('joins stack and targets as keywords, and omits them when there are none', () => {
     expect(code.keywords).toBe('Python, PostgreSQL');
-    const bare = softwareSourceCode({ ...project, stack: [], targets: [] }, page, undefined);
+    const bare = softwareSourceCode(
+      { ...project, stack: [], targets: [] },
+      identity,
+      page,
+      undefined,
+    );
     expect(bare.keywords).toBeUndefined();
   });
 });
 
 describe('techArticle', () => {
   it('is the write-up, in the page language', () => {
-    const article = techArticle(project, 'en', page, undefined);
+    const article = techArticle(project, identity, 'en', page, undefined);
     expect(article.headline).toBe('SnakeORM · A typed Python ORM');
     expect(article.inLanguage).toBe('en');
     expect(article.author).toEqual({ '@id': personId });
