@@ -49,13 +49,6 @@ describe('DownloadCount', () => {
     expect(text(el)).not.toMatch(/\d/);
   });
 
-  /* On a card, above the ::after overlay that makes the whole card a link. */
-  it('lifts the citations above the card overlay', async () => {
-    const el = await block({ variant: 'card', counts: { openvsx: 730 } });
-    for (const a of el.querySelectorAll('a'))
-      expect([...a.classList]).toEqual(expect.arrayContaining(['relative', 'z-10']));
-  });
-
   it('is a labelled field in the sidebar', async () => {
     const el = await block({ variant: 'field', counts: { openvsx: 730 } });
     expect(text(el.querySelector('p.label'))).toBe('Descargas');

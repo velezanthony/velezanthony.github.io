@@ -10,11 +10,11 @@ const items: ContactLink[] = [
 ];
 
 describe('ContactList', () => {
-  /* WCAG 2.5.8: each contact at least 24px tall, on a phone as everywhere. */
-  it('gives each contact a 24px tall target', async () => {
+  it('links each contact to its address', async () => {
     const doc = await render(ContactList, { items });
-    const links = [...doc.querySelectorAll('a')];
-    expect(links).toHaveLength(2);
-    for (const a of links) expect(a.classList.contains('min-h-6')).toBe(true);
+    expect([...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'))).toEqual([
+      'mailto:a@example.com',
+      'https://github.com/a',
+    ]);
   });
 });

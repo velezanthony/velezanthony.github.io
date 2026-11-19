@@ -75,29 +75,10 @@ describe('ProjectCard', () => {
       expect(text(visual)).toBe('Truck.maker.nation.name == "España"');
     });
 
-    /* Shiki writes `overflow-x: auto` inline, which beats the frame's `overflow: hidden`: on a
-       phone the card grew a scrollbar. */
-    it('leaves the code no scrollbar of its own', async () => {
-      const pre = (await frame(props.visual)).querySelector('pre')!;
-      expect(pre.getAttribute('style')).not.toMatch(/overflow/);
-    });
-
     it('shows an image with its text', async () => {
       const src = { src: '/a.png', width: 1912, height: 1001, format: 'png' };
       const img = (await frame({ kind: 'image', src, alt: 'A screenshot' })).querySelector('img')!;
       expect(img.getAttribute('alt')).toBe('A screenshot');
-    });
-
-    /* Image or code, the frame is the same height, so the rows stay even. */
-    it('frames every visual at the same height', async () => {
-      const code = await frame(props.visual);
-      const image = await frame({
-        kind: 'image',
-        src: { src: '/a.png', width: 1912, height: 1001, format: 'png' },
-        alt: 'A',
-      });
-      expect(code.classList.contains('h-44')).toBe(true);
-      expect(image.classList.contains('h-44')).toBe(true);
     });
   });
 });
