@@ -32,7 +32,6 @@ Then open http://localhost:4321 — it forwards to `/es/`.
 | `npm run build` | `astro check` **then** `astro build`. Type errors fail the build |
 | `npm run preview` | Serves `dist/` as it will be served in production |
 | `npm run check` | Type checking on its own |
-| `npm run i18n:status` | Lists source strings with no English translation |
 | `npm run todo` | Lists the `todo:` entries still open in the case studies |
 
 ## Dependencies

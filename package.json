@@ -10,7 +10,6 @@
     "build": "astro check && astro build",
     "check": "astro check",
     "preview": "astro preview",
-    "i18n:status": "node --experimental-strip-types scripts/i18n-status.mjs",
     "todo": "rg -n 'todo:' -A20 src/content/projects | rg \"^\\s*- '\" || true",
     "astro": "astro",
     "test": "vitest run",

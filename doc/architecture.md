@@ -86,7 +86,7 @@ Two failure modes, deliberately different:
 | | Result |
 | --- | --- |
 | String not in the catalogue | Build fails — `astro check` runs before `astro build`. |
-| String present but `PENDING` | Builds, renders the Spanish source. `npm run i18n:status` lists them. |
+| String present but `PENDING` | Builds, renders the Spanish source. `rg TODO:translate src` lists them. |
 
 Three kinds of text, three homes:
 
