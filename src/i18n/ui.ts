@@ -27,7 +27,6 @@ export const en = {
   'Ir al contenido': 'Skip to content',
   'Volver arriba': 'Back to top',
   'Navegación principal': 'Main navigation',
-  Idioma: 'Language',
   Contacto: 'Contact',
   'Código fuente': 'Source',
   'Portfolio hecho con Astro': 'Portfolio built with Astro',

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Link from '@atoms/Link.astro';
-import LocaleSwitch from '@molecules/LocaleSwitch.astro';
+import LocaleSwitch from '@velezanthony/design/components/molecules/navigation/LocaleSwitch.astro';
 import ThemeToggle from '@velezanthony/design/components/molecules/controls/ThemeToggle.astro';
 import { designStrings } from '@/design/site-config';
 import BackToTop from '@organisms/BackToTop.astro';
@@ -33,7 +33,7 @@ const t = useTranslations(lang);
       </Link>
 
       <div class="flex items-center gap-6">
-        <LocaleSwitch lang={lang} hrefs={alternates} />
+        <LocaleSwitch lang={lang} hrefs={alternates} strings={designStrings(lang)} />
         <ThemeToggle strings={designStrings(lang)} class="ml-1 print-hidden" />
         <button
           type="button"
