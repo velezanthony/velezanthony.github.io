@@ -1,0 +1,59 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SiteHeader from './_partials/SiteHeader.astro';
+import SiteFooter from './_partials/SiteFooter.astro';
+import BackToTop from '@velezanthony/design/components/organisms/chrome/BackToTop.astro';
+import { designStrings } from '@velezanthony/design/site';
+import type { PageSeo } from '@velezanthony/design/seo-schema';
+import type { PageHeadInput } from '@velezanthony/design/seo';
+import { contact, profile } from '@data/profile';
+import { gtmId } from '@velezanthony/design/site';
+import type { Locale, RouteKey } from '@core/i18n/locales';
+
+/** Every public page except the print CV and the 404. */
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  seo?: PageSeo;
+  schema?: PageHeadInput['schema'];
+  alternates: Record<Locale, string>;
+  current?: RouteKey | 'home';
+}
+
+const { lang, title, description, seo, schema, alternates, current } = Astro.props;
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={description}
+  seo={seo}
+  schema={schema}
+  alternates={alternates}
+>
+  <Fragment slot="head">
+    <slot name="head" />
+  </Fragment>
+
+  <div class="flex min-h-screen flex-col">
+    <SiteHeader lang={lang} name={profile.name} alternates={alternates} current={current} />
+
+    <main id="main" class="mx-auto w-full max-w-(--container-page) flex-1 px-6 lg:px-10">
+      <slot />
+    </main>
+
+    <SiteFooter
+      lang={lang}
+      name={profile.name}
+      contact={contact}
+      year={new Date().getFullYear()}
+      cookieControl={Boolean(gtmId)}
+    />
+  </div>
+
+  {/* The library's carries no print rule; a wrapper keeps it off the printed page. */}
+  <div class="print-hidden">
+    <BackToTop strings={designStrings(lang)} />
+  </div>
+</BaseLayout>

@@ -5,14 +5,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@atoms/*": ["src/components/atoms/*"],
-      "@molecules/*": ["src/components/molecules/*"],
-      "@organisms/*": ["src/components/organisms/*"],
-      "@layouts/*": ["src/layouts/*"],
+      "@core/*": ["src/core/*"],
       "@data/*": ["src/data/*"],
-      "@i18n/*": ["src/i18n/*"],
-      "@styles/*": ["src/styles/*"]
+      "@adapters/*": ["src/adapters/*"],
+      "@client/*": ["src/client/*"],
+      "@ui/*": ["src/ui/*"]
     }
   }
 }

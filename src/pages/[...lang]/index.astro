@@ -1,10 +1,10 @@
 ---
-import PageLayout from '@layouts/PageLayout.astro';
-import HeroSection from './_sections/HeroSection.astro';
-import NowSection from './_sections/NowSection.astro';
-import TrackRecordSection from './_sections/TrackRecordSection.astro';
+import PageLayout from '@ui/layouts/PageLayout.astro';
+import Hero from './_partials/Hero.astro';
+import Now from './_partials/Now.astro';
+import TrackRecord from './_partials/TrackRecord.astro';
 import { pageTitles, seo } from '@data/profile';
-import { alternates, assertLocale, localeParams } from '@i18n/utils';
+import { alternates, assertLocale, localeParams } from '@core/i18n/utils';
 
 export const getStaticPaths = localeParams;
 
@@ -18,7 +18,7 @@ const lang = assertLocale(Astro.params.lang);
   alternates={alternates()}
   current="home"
 >
-  <HeroSection lang={lang} />
-  <NowSection lang={lang} />
-  <TrackRecordSection lang={lang} />
+  <Hero lang={lang} />
+  <Now lang={lang} />
+  <TrackRecord lang={lang} />
 </PageLayout>

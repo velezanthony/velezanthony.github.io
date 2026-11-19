@@ -1,0 +1,55 @@
+---
+import { getEntry, render } from 'astro:content';
+import Article from '@velezanthony/design/components/organisms/content/Article.astro';
+import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
+import { designStrings } from '@velezanthony/design/site';
+import PageLayout from '@ui/layouts/PageLayout.astro';
+import { useTranslations } from '@ui/translations';
+import { formatDate } from '@core/i18n/format';
+import { alternates, assertLocale, localeRouteParams } from '@core/i18n/utils';
+
+export function getStaticPaths() {
+  return localeRouteParams('privacy');
+}
+
+const lang = assertLocale(Astro.params.lang);
+const t = useTranslations(lang);
+
+const entry = await getEntry('privacies', lang);
+if (!entry) throw new Error(`No privacy policy for locale: ${lang}`);
+const { Content } = await render(entry);
+const { title, description, updated } = entry.data;
+---
+
+<!-- `noindex`: a legal notice ranks for nothing worth having, and the sitemap leaves it out
+     for the same reason (`isIndexable`). -->
+<PageLayout
+  lang={lang}
+  title={title}
+  description={description}
+  alternates={alternates('privacy')}
+  seo={{ noindex: true, ...entry.data.seo }}
+>
+  <article class="pt-14 pb-20 lg:pt-20">
+    <p class="label mb-5 text-faint">{t('Privacidad')}</p>
+
+    <Heading level={1} size="xl">
+      {title}
+    </Heading>
+
+    <p class="mt-4 text-sm text-faint">
+      {t('Última actualización')}: <time datetime={updated}>{formatDate(lang, updated)}</time>
+    </p>
+
+    <!-- Four sections: no index. Without it the text takes the page's width, as the header and
+         footer do, and the cookie table fits without scrolling. -->
+    <Article
+      as="div"
+      class="mt-10 md:[--prose-measure:100%] md:[--wide-max:100%]"
+      strings={designStrings(lang)}
+      toc={false}
+    >
+      <Content />
+    </Article>
+  </article>
+</PageLayout>

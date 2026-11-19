@@ -31,12 +31,17 @@ jobs:
 
       - run: npm ci
 
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+
       # `astro check` runs here too — a type error must fail the deploy,
       # not ship silently.
       #
-      # The GTM container ID is only ever set here. Unset, the tag simply is not
-      # rendered, so local and fork builds stay untracked without a code path of
-      # their own.
+      # The GTM container ID is only ever set here. Set, the consent banner and the
+      # footer's cookie control render, and GTM loads only once a visitor accepts.
+      # Unset, none of it renders, so local and fork builds stay untracked
+      # without a code path of their own.
       - run: npm run build
         env:
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}

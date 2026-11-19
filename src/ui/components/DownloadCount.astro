@@ -1,0 +1,77 @@
+---
+import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
+import { citationsOf, toDownloads } from '@core/downloads/counts';
+import { formatDownloads } from '@core/downloads/format';
+import type { DownloadSources, StoreCounts } from '@core/downloads/counts';
+import { useTranslations } from '@ui/translations';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  sources: DownloadSources | undefined;
+  /** What the build read, pypistats included. The default, kept wherever the browser gets less. */
+  counts: StoreCounts;
+  lang: Locale;
+  /** `card`: one faint line under a card's status. `field`: a labelled field of the sidebar.
+      `inline`: the count alone, after a separator, inside a line of its own (the printed CV). */
+  variant?: 'card' | 'field' | 'inline';
+}
+
+const { sources, counts, lang, variant = 'card' } = Astro.props;
+const t = useTranslations(lang);
+const cited = sources ? citationsOf(sources) : [];
+const text = sources ? formatDownloads(toDownloads(sources, counts), lang) : undefined;
+const data = {
+  'data-downloads': JSON.stringify(sources),
+  'data-counts': JSON.stringify(counts),
+  'data-lang': lang,
+};
+---
+
+{/*
+  The build's count is written in and shown: it is what a visitor without JavaScript sees, and
+  what stays if the browser's fresh request fails. The script then asks again and replaces it
+  store by store. Each declared store is cited; one with no count waits hidden.
+*/}
+{sources &&
+  cited.length > 0 &&
+  (variant === 'inline' ? (
+    <span hidden={!text} {...data}>
+      <span aria-hidden="true"> · </span>
+      <span data-downloads-text>{text}</span>
+    </span>
+  ) : variant === 'card' ? (
+    <p hidden={!text} {...data} class="mt-2 font-mono text-xs text-faint">
+      <span data-downloads-text>{text}</span>
+      {cited.map((source) => (
+        <span data-downloads-item={source.store} hidden={counts[source.store] === undefined}>
+          <span aria-hidden="true"> · </span>
+          {/* Above the card's ::after overlay, or a click would open the write-up. */}
+          <Link href={source.href} variant="quiet" class="relative z-10">
+            {source.label}
+          </Link>
+        </span>
+      ))}
+    </p>
+  ) : (
+    <div hidden={!text} {...data}>
+      <p class="label mb-2 text-faint">{t('Descargas')}</p>
+      <p class="text-sm text-ink" data-downloads-text>
+        {text}
+      </p>
+      <p class="mt-1 flex flex-wrap gap-x-3 font-mono text-xs">
+        {cited.map((source) => (
+          <span data-downloads-item={source.store} hidden={counts[source.store] === undefined}>
+            <Link href={source.href} variant="quiet">
+              {source.label}
+            </Link>
+          </span>
+        ))}
+      </p>
+    </div>
+  ))}
+
+<script>
+  import { hydrateDownloads } from '@client/downloads';
+
+  void hydrateDownloads(document);
+</script>

@@ -1,0 +1,27 @@
+---
+import SectionHead from '@velezanthony/design/components/molecules/content/SectionHead.astro';
+import ProjectGrid from '@ui/components/ProjectGrid.astro';
+import { path } from '@core/i18n/utils';
+import { useTranslations } from '@ui/translations';
+import { getBuildCounts, getProjects } from '@adapters/projects';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const featured = (await getProjects(lang)).filter(({ entry }) => entry.data.featured);
+const counts = await getBuildCounts(featured);
+---
+
+<section class="band py-16">
+  <SectionHead
+    eyebrow={t('Ahora')}
+    title={t('En qué estoy trabajando')}
+    action={{ href: path(lang, 'projects'), label: t('Ver todas las herramientas') }}
+  />
+
+  <ProjectGrid lang={lang} projects={featured} counts={counts} closed={false} />
+</section>

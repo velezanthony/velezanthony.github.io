@@ -1,4 +1,7 @@
-import type { ContactLink, SpokenLanguage, StackGroup, Localized } from '@data/types';
+import type { ContactLink, SpokenLanguage, StackGroup, Localized } from '@core/types';
+import { SITE, SITE_HOST } from '@data/site';
+
+export const email = 'velezanthony2000@gmail.com';
 
 export const profile = {
   name: 'Anthony Velez Tapia',
@@ -15,10 +18,11 @@ export const profile = {
 
   location: 'Hernani, Gipuzkoa',
 
+  /** A list, not a sentence: rendered with separators that never start or end a line. */
   availability: {
-    es: 'Híbrido en Gipuzkoa · Remoto en España · Proyectos freelance',
-    en: 'Hybrid in Gipuzkoa · Remote within Spain · Freelance projects',
-  } satisfies Localized,
+    es: ['Híbrido en Gipuzkoa', 'Remoto en España', 'Proyectos freelance'],
+    en: ['Hybrid in Gipuzkoa', 'Remote within Spain', 'Freelance projects'],
+  } satisfies Localized<string[]>,
 
   photo: '/photo.png',
 } as const;
@@ -30,7 +34,8 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Frontend', en: 'Frontend' },
-    items: 'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Bootstrap, Alpine.js, HTMX',
+    items:
+      'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Bootstrap, Alpine.js, HTMX',
   },
   {
     label: { es: 'Bases de datos', en: 'Databases' },
@@ -38,11 +43,13 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: { es: 'Cloud y DevOps', en: 'Cloud and DevOps' },
-    items: 'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Gunicorn / WSGI',
+    items:
+      'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Gunicorn / WSGI',
   },
   {
     label: { es: 'Sistemas y redes', en: 'Systems and networking' },
-    items: 'Linux / Windows Server, Active Directory, DNS, Nginx, Apache, Proxmox, SSH, VitalPBX / Asterisk',
+    items:
+      'Linux / Windows Server, Active Directory, DNS, Nginx, Apache, Proxmox, SSH, VitalPBX / Asterisk',
   },
   {
     label: { es: 'Herramientas', en: 'Tools' },
@@ -84,8 +91,8 @@ export const seo = {
     en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular. Five open source tools of my own.',
   },
   projects: {
-    es: 'Cinco herramientas open source: dos extensiones de VS Code, un language server para Django, un ORM tipado en Python y un panel de Docker en terminal.',
-    en: 'Five open source tools: two VS Code extensions, a Django language server, a typed Python ORM and a terminal Docker dashboard. All MIT licensed.',
+    es: 'Cinco herramientas open source: dos extensiones de VS Code (Django Language Service y Cotton Props), un catálogo de componentes Django, un ORM tipado en Python y un panel Docker en terminal.',
+    en: 'Five open source tools: two VS Code extensions (Django Language Service and Cotton Props), a Django component catalogue, a typed Python ORM and a terminal Docker dashboard.',
   },
   experience: {
     es: 'Cuatro años: arquitectura Django en Zenit Solar, AWS en Eywa Space, VoIP en SWAP y un SaaS multi-tenant en Laravel llevado a producción en VITE.',
@@ -100,8 +107,8 @@ export const seo = {
 export const contact: ContactLink[] = [
   {
     label: 'Email',
-    href: 'mailto:velezanthony2000@gmail.com',
-    handle: 'velezanthony2000@gmail.com',
+    href: `mailto:${email}`,
+    handle: email,
     icon: 'mail',
   },
   {
@@ -126,15 +133,49 @@ export const cvContact: ContactLink[] = [
   contact[0]!,
   {
     label: 'Portfolio',
-    href: 'https://velezanthony.github.io',
-    handle: 'velezanthony.github.io',
+    href: SITE,
+    handle: SITE_HOST,
     icon: 'external',
   },
   ...contact.slice(1),
 ];
 
 export const spokenLanguages: SpokenLanguage[] = [
-  { name: { es: 'Castellano', en: 'Spanish' }, level: { es: 'Nativo', en: 'Native' } },
-  { name: { es: 'Euskera', en: 'Basque' }, level: { es: 'Nativo', en: 'Native' } },
-  { name: { es: 'Inglés', en: 'English' }, level: { es: 'B1', en: 'B1' } },
+  { code: 'es', name: { es: 'Castellano', en: 'Spanish' }, level: { es: 'Nativo', en: 'Native' } },
+  { code: 'eu', name: { es: 'Euskera', en: 'Basque' }, level: { es: 'Nativo', en: 'Native' } },
+  { code: 'en', name: { es: 'Inglés', en: 'English' }, level: { es: 'B1', en: 'B1' } },
+];
+
+/** Where the person is, for the JSON-LD. Town-level on purpose. */
+export const address = { locality: 'Hernani', region: 'Gipuzkoa', country: 'ES' };
+
+/** What the JSON-LD says the person knows. Technology names, so not translated. */
+export const knowsAbout = [
+  'Django',
+  'Python',
+  'Flask',
+  'PHP',
+  'Laravel',
+  'Symfony',
+  'C#',
+  '.NET',
+  'Java',
+  'TypeScript',
+  'Angular',
+  'React',
+  'HTMX',
+  'PostgreSQL',
+  'MySQL',
+  'SQL Server',
+  'AWS',
+  'Docker',
+  'GitHub Actions',
+  'Linux',
+  'Nginx',
+  'Proxmox',
+  'DNS',
+  'Asterisk',
+  'VoIP',
+  'Software architecture',
+  'Multi-tenancy',
 ];

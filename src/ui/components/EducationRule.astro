@@ -1,0 +1,27 @@
+---
+/** Marks a stretch of the timeline spent studying. It names which one and when, because two
+    unlabelled rules read as a rendering fault; the full title lives in the education section. */
+import type { Study } from '@core/types';
+import type { Variant } from './variant';
+
+interface Props {
+  study: Study;
+  variant?: Variant;
+}
+
+const { study, variant = 'site' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'flex items-center gap-3',
+    /* On paper it stays with the entry it introduces, never alone at the top of a page. */
+    variant === 'cv' ? 'break-after-avoid py-1.5' : 'py-3',
+  ]}
+>
+  <span class="h-px flex-1 bg-rule" aria-hidden="true"></span>
+  <span class="label shrink-0 text-faint tabular-nums">
+    {study.abbr} · {study.startYear} – {study.endYear}
+  </span>
+  <span class="h-px flex-1 bg-rule" aria-hidden="true"></span>
+</div>

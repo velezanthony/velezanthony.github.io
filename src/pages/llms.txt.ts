@@ -2,7 +2,9 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { profile, spokenLanguages, stackGroups, contact } from '@data/profile';
 import { experience } from '@data/experience';
-import { path } from '@i18n/utils';
+import { localeOfEntry, path } from '@core/i18n/utils';
+import { linkOf } from '@core/projects/links';
+import type { Locale } from '@core/i18n/locales';
 
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */
 const plain = (text: string) => text.replaceAll('**', '');
@@ -23,9 +25,9 @@ const period = (start: string, end: string | null) => `${start} → ${end ?? 'pr
 export const GET: APIRoute = async ({ site }) => {
   /** Every route comes from `path()`, so renaming a segment moves this map with the site. */
   const url = (route: string) => new URL(route, site).href;
-  const both = (route: (lang: 'es' | 'en') => string) => `${url(route('en'))} (es: ${url(route('es'))})`;
+  const both = (route: (lang: Locale) => string) => `${url(route('en'))} (es: ${url(route('es'))})`;
 
-  const entries = await getCollection('projects', ({ id }) => id.startsWith('en/'));
+  const entries = await getCollection('projects', ({ id }) => localeOfEntry(id) === 'en');
   const projects = entries.sort((a, b) => a.data.order - b.data.order);
 
   const lines: string[] = [
@@ -38,7 +40,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Profile',
     '',
-    `- location: ${profile.location}, Spain — ${profile.availability.en.replaceAll(' · ', ', ')}`,
+    `- location: ${profile.location}, Spain — ${profile.availability.en.join(', ')}`,
     `- languages: ${spokenLanguages.map((l) => l.name.en).join(', ')}`,
     ...stackGroups.map((group) => `- ${group.label.en.toLowerCase()}: ${group.items}`),
     ...contact.map((link) => `- ${link.label.toLowerCase()}: ${link.handle}`),
@@ -57,12 +59,11 @@ export const GET: APIRoute = async ({ site }) => {
   lines.push('## Projects', '');
 
   for (const { data } of projects) {
-    const link = (re: RegExp) => data.links.find((l) => re.test(l.href))?.href;
     const facts = [
       `write-up: ${both((lang) => path(lang, 'projects', data.slug))}`,
-      `code: ${link(/github\.com/) ?? 'not public'}`,
-      `package: ${link(/pypi\.org|marketplace\.visualstudio\.com|npmjs\.com/) ?? 'not published'}`,
-      `docs: ${link(/github\.io/) ?? 'none'}`,
+      `code: ${linkOf(data.links, 'source') ?? 'not public'}`,
+      `package: ${linkOf(data.links, 'package') ?? 'not published'}`,
+      `docs: ${linkOf(data.links, 'docs') ?? 'none'}`,
       `status: ${data.status}`,
     ];
     lines.push(`- [${data.name}](${url(path('en', 'projects', data.slug))}): ${data.tagline}`);

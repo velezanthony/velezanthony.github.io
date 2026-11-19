@@ -1,0 +1,47 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import type { CollectionEntry } from 'astro:content';
+import type { Resolved } from '@core/i18n/localized';
+import type { StoreCounts } from '@core/downloads/counts';
+import { path } from '@core/i18n/utils';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  lang: Locale;
+  projects: Resolved<CollectionEntry<'projects'>>[];
+  /** What the build read from each project's stores, by slug. */
+  counts?: Record<string, StoreCounts>;
+  /** Forwarded to each card. Depends on what precedes the grid. */
+  headingLevel?: 2 | 3;
+  /** Close the list with a rule. Off inside a band, whose own edge already is one. */
+  closed?: boolean;
+  class?: string;
+}
+
+const {
+  lang,
+  projects,
+  counts = {},
+  headingLevel = 3,
+  closed = true,
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={[closed && 'border-b border-rule', className]}>
+  {projects.map(({ entry }) => (
+    <ProjectCard
+      name={entry.data.name}
+      tagline={entry.data.tagline}
+      status={entry.data.status}
+      downloads={entry.data.downloads}
+      downloadCounts={counts[entry.data.slug]}
+      stack={entry.data.stack}
+      targets={entry.data.targets}
+      visual={entry.data.visual}
+      href={path(lang, 'projects', entry.data.slug)}
+      lang={lang}
+      headingLevel={headingLevel}
+    />
+  ))}
+</div>

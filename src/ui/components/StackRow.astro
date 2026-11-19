@@ -1,0 +1,55 @@
+---
+import InlineList from '@velezanthony/design/components/atoms/display/InlineList.astro';
+import type { Variant } from './variant';
+
+interface Props {
+  items: string[];
+  /** Optional label rendered before the list, e.g. "Stack". */
+  label?: string;
+  /** `cv` drops to the document scale's smallest step. */
+  size?: Variant;
+  /** Label above the list instead of inline — for narrow metadata columns. */
+  stacked?: boolean;
+  /** The row IS the value of a labelled field, as in the case study's sidebar. It then takes the
+      ink of every other value there and the mono list size that matches their weight; left as
+      metadata, small and faint like the label above it, it read as a second label. */
+  field?: boolean;
+  class?: string;
+}
+
+const {
+  items,
+  label,
+  size = 'site',
+  stacked = false,
+  field = false,
+  class: className,
+} = Astro.props;
+
+const sizes = {
+  site: 'text-xs leading-relaxed',
+  cv: 'text-cv-micro',
+} as const;
+---
+
+{items.length > 0 && (
+  <div
+    class:list={[
+      'stack-row font-mono',
+      field ? 'text-mono-list text-ink' : ['text-faint', sizes[size]],
+      label && !stacked && 'flex items-baseline',
+      className,
+    ]}
+  >
+    {label && stacked && <span class="label mb-1.5 block text-faint">{label}</span>}
+    {label && !stacked && <span class="mr-1.5 shrink-0 font-medium text-muted">{label}</span>}
+    <InlineList items={items} class="min-w-0 flex-1" />
+  </div>
+)}
+
+<style>
+  /* Three mono cells: the " · " the separator replaces. */
+  .stack-row {
+    --separator: 3ch;
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
+import TimelineList from '@ui/components/Timeline.astro';
+import { useTranslations } from '@ui/translations';
+import { experience } from '@data/experience';
+import { education } from '@data/education';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="pt-14 pb-16 lg:pt-20">
+  <p class="label mb-5 text-faint">{t('Experiencia')}</p>
+
+  <Heading level={1} size="xl">
+    {t('Trayectoria profesional')}
+  </Heading>
+
+  <TimelineList lang={lang} jobs={experience} studies={education} headingLevel={2} class="mt-10" />
+</section>

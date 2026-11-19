@@ -1,0 +1,60 @@
+---
+import ExperienceItem from './ExperienceItem.astro';
+import EducationRule from './EducationRule.astro';
+import type { Job, Study } from '@core/types';
+import { timelineEntries } from '@core/timeline/entries';
+import { formatRange } from '@core/i18n/format';
+import { useTranslations } from '@ui/translations';
+import type { Locale } from '@core/i18n/locales';
+import type { Variant } from './variant';
+
+interface Props {
+  lang: Locale;
+  /** Newest first. */
+  jobs: Job[];
+  studies: Study[];
+  /** `cv` switches every child to the denser, page-costed rendering. */
+  variant?: Variant;
+  limit?: number;
+  /** Forwarded to each item. Depends on what precedes the timeline. */
+  headingLevel?: 2 | 3;
+  class?: string;
+}
+
+const {
+  lang,
+  jobs,
+  studies,
+  variant = 'site',
+  limit,
+  headingLevel = 3,
+  class: className,
+} = Astro.props;
+const t = useTranslations(lang);
+
+const entries = timelineEntries(jobs, studies, limit);
+
+/** The education rule draws its own line; a closing border here would double it. */
+const closed = entries.at(-1)?.kind !== 'study';
+---
+
+<div class:list={[closed && 'border-b border-rule', className]}>
+  {entries.map((entry, i) =>
+    entry.kind === 'study' ? (
+      <EducationRule study={entry.study} variant={variant} />
+    ) : (
+      <ExperienceItem
+        company={entry.job.company}
+        role={entry.job.role[lang]}
+        location={entry.job.location?.[lang]}
+        range={formatRange(lang, entry.job.start, entry.job.end, t('Actualidad'))}
+        highlights={entry.job.highlights[lang]}
+        stack={entry.job.stack}
+        lang={lang}
+        variant={variant}
+        headingLevel={headingLevel}
+        flush={entries[i - 1]?.kind === 'study'}
+      />
+    ),
+  )}
+</div>

@@ -1,0 +1,27 @@
+---
+import SectionHead from '@velezanthony/design/components/molecules/content/SectionHead.astro';
+import Timeline from '@ui/components/Timeline.astro';
+import { path } from '@core/i18n/utils';
+import { useTranslations } from '@ui/translations';
+import { experience } from '@data/experience';
+import { education } from '@data/education';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="pt-16 pb-20">
+  <SectionHead
+    eyebrow={t('Trayectoria')}
+    title={t('Experiencia reciente')}
+    size="md"
+    action={{ href: path(lang, 'experience'), label: t('Ver la trayectoria completa') }}
+  />
+
+  <Timeline lang={lang} jobs={experience} studies={education} limit={3} />
+</section>

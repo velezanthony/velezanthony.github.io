@@ -1,0 +1,67 @@
+---
+import LocaleSwitch from '@velezanthony/design/components/molecules/navigation/LocaleSwitch.astro';
+import ThemeToggle from '@velezanthony/design/components/molecules/controls/ThemeToggle.astro';
+import { designStrings } from '@velezanthony/design/site';
+import { path } from '@core/i18n/utils';
+import { useTranslations } from '@ui/translations';
+import type { Locale, RouteKey } from '@core/i18n/locales';
+import type { Phrase } from '@data/ui';
+
+interface Props {
+  lang: Locale;
+  /** The site's name, which is the person's. */
+  name: string;
+  alternates: Record<Locale, string>;
+  /** Route key of the current page, used for `aria-current`. */
+  current?: RouteKey | 'home';
+}
+
+const { lang, name, alternates, current } = Astro.props;
+const t = useTranslations(lang);
+
+const nav: { key: RouteKey; label: Phrase }[] = [
+  { key: 'projects', label: 'Proyectos' },
+  { key: 'experience', label: 'Experiencia' },
+  { key: 'cv', label: 'CV' },
+];
+---
+
+<header class="bg-chrome">
+  <!-- Two rows on a phone, one from md up. The name and the controls share the first row and the
+       nav takes the whole second one: three links fit in view, so they are not hidden behind a
+       menu, and the header stays free of JavaScript. Source order stays name, nav, controls, so
+       Tab reaches the main navigation first at every width. -->
+  <div class="mx-auto grid max-w-(--container-page) grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2 px-6 py-4 md:grid-cols-[1fr_auto_auto] md:gap-x-8 md:py-5 lg:px-10">
+    <a
+      href={path(lang)}
+      aria-current={current === 'home' ? 'page' : undefined}
+      class="col-start-1 row-start-1 inline-flex min-h-6 items-center justify-self-start font-mono text-lg font-semibold tracking-tight text-ink decoration-accent-line decoration-2 underline-offset-4 hover:underline"
+    >
+      {name}
+    </a>
+
+    <nav
+      aria-label={t('Navegación principal')}
+      class="col-span-2 row-start-2 md:col-span-1 md:col-start-2 md:row-start-1"
+    >
+      <ul class="flex flex-wrap items-center gap-x-5 gap-y-1">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={path(lang, item.key)}
+              aria-current={current === item.key ? 'page' : undefined}
+              class="inline-flex min-h-6 min-w-6 items-center justify-center py-1 font-mono text-sm text-ink transition-shadow hover:shadow-[inset_0_-1px_0_var(--color-ink)] aria-[current]:shadow-[inset_0_-2px_0_var(--color-accent-line)]"
+            >
+              {t(item.label)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="col-start-2 row-start-1 flex items-center gap-1 border-ink/25 md:col-start-3 md:border-l md:pl-5">
+      <LocaleSwitch lang={lang} hrefs={alternates} strings={designStrings(lang)} />
+      <ThemeToggle strings={designStrings(lang)} class="print-hidden" />
+    </div>
+  </div>
+</header>

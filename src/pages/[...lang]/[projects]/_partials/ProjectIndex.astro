@@ -1,0 +1,31 @@
+---
+import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
+import Text from '@velezanthony/design/components/atoms/display/Text.astro';
+import ProjectGrid from '@ui/components/ProjectGrid.astro';
+import { useTranslations } from '@ui/translations';
+import { getBuildCounts, getProjects } from '@adapters/projects';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getProjects(lang);
+const counts = await getBuildCounts(projects);
+---
+
+<section class="pt-14 pb-20 lg:pt-20">
+  <p class="label mb-5 text-faint">{t('Proyectos')}</p>
+
+  <Heading level={1} size="xl">
+    {t('Herramientas propias')}
+  </Heading>
+
+  <Text class="mt-3" measure>
+    {t('Todo el código es abierto y con licencia MIT.')}
+  </Text>
+
+  <ProjectGrid lang={lang} projects={projects} counts={counts} headingLevel={2} class="mt-10" />
+</section>

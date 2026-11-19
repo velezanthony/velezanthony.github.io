@@ -1,0 +1,164 @@
+/* Extends the library's theme (`theme` in docs.config.mjs): it is compiled in the same Tailwind pass, so its tokens also get utilities. */
+
+/* What only the portfolio has: the to-do notes, the CV sheet and its type scale, two column widths. */
+@theme {
+  --color-todo: light-dark(#92400e, #fbbf24);
+  --color-todo-soft: light-dark(#fffbeb, #1c1608);
+  --color-todo-rule: light-dark(#f59e0b, #a16207);
+
+  --sheet-width: 210mm;
+  --sheet-height: 297mm;
+  --sheet-pad-x: 15mm;
+  --sheet-pad-y: 13mm;
+
+  /* Mono lists of technology names, as values beside sans text of 14px. Plex Mono shares Plex
+     Sans' metrics but every glyph takes a full advance, so a run carries more ink. One step down
+     evens the weight; inline code takes 0.9em for the same reason. */
+  --text-mono-list: 0.8125rem; /* 13px */
+  --text-mono-list--line-height: 1.7;
+
+  --cv-scale: 1;
+
+  --text-cv-name: calc(28pt * var(--cv-scale)); /* 37.3px */
+  --text-cv-name--line-height: 1;
+  --text-cv-name--letter-spacing: -0.02em;
+
+  --text-cv-headline: calc(11pt * var(--cv-scale)); /* 14.7px — 2.5× the name, as the reference */
+  --text-cv-headline--line-height: 1.3;
+
+  --text-cv-head: calc(10pt * var(--cv-scale)); /* 13.3px — section landmarks */
+  --text-cv-head--line-height: 1.2;
+  --text-cv-head--letter-spacing: 0.12em;
+
+  --text-cv-role: calc(9.5pt * var(--cv-scale)); /* 12.7px */
+  --text-cv-role--line-height: 1.3;
+
+  --text-cv-body: calc(9pt * var(--cv-scale)); /* 12px — bullets, profile, stack groups */
+  --text-cv-body--line-height: 1.35;
+
+  --text-cv-meta: calc(8.5pt * var(--cv-scale)); /* 11.3px — dates, location, contact */
+  --text-cv-meta--line-height: 1.3;
+
+  --text-cv-micro: calc(8pt * var(--cv-scale)); /* 10.7px — the stack line */
+  --text-cv-micro--line-height: 1.35;
+
+  /* ~75 characters of 15px row text, for single-column widths. */
+  --container-measure-row: 36rem;
+
+  /* The right column of every two-column layout, from md: case-study sidebar, card and job meta.
+     The content beside it takes the rest of the page. 18rem from lg, below. */
+  --container-aside: 14rem;
+}
+
+@media (max-width: 48rem) {
+  :root {
+    --cv-scale: 1.17;
+    --text-cv-name: 30px;
+    --sheet-pad-x: 6vw;
+    --sheet-pad-y: 8vw;
+  }
+}
+
+@media (max-width: 30rem) {
+  :root {
+    --text-cv-name: 24px;
+  }
+}
+
+@media print {
+  :root {
+    --cv-scale: 1;
+    --text-cv-name: calc(28pt * var(--cv-scale));
+    --sheet-pad-x: 15mm;
+    --sheet-pad-y: 13mm;
+  }
+}
+
+/* The side column narrows between md and lg, where two columns start: 14rem leaves the content
+   ~425px at 768. From lg it is 18rem. */
+@media (min-width: 64rem) {
+  :root {
+    --container-aside: 18rem;
+  }
+}
+
+/* Full-bleed surface without a wrapper element: the spread shadow paints
+   it, `clip-path` stops it widening the document. */
+@utility band {
+  background-color: var(--color-raised);
+  box-shadow:
+    0 0 0 100vmax var(--color-raised),
+    inset 0 1px 0 var(--color-rule),
+    inset 0 -1px 0 var(--color-rule);
+  clip-path: inset(0 -100vmax);
+}
+
+@layer base {
+  .sheet {
+    font-size: var(--text-cv-body);
+    line-height: var(--text-cv-body--line-height);
+  }
+}
+
+@utility cv-head {
+  font-size: var(--text-cv-head);
+  font-weight: 700;
+  letter-spacing: var(--text-cv-head--letter-spacing);
+  line-height: var(--text-cv-head--line-height);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 13mm 15mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  .sheet {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    box-shadow: none;
+    padding: 0;
+    border: 0;
+  }
+
+  .sheet *,
+  .sheet *::before,
+  .sheet *::after {
+    border-color: transparent;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* A list item stays whole. A job does not: a tall one kept whole left the page before it a
+     fifth empty, so it may break between its points, its heading held to the first. */
+  li {
+    break-inside: avoid;
+  }
+}

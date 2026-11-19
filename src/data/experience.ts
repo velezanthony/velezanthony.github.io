@@ -1,4 +1,4 @@
-import type { Job } from '@data/types';
+import type { Job } from '@core/types';
 
 /** Newest first. Unknown facts are left out, never guessed. */
 export const experience: Job[] = [
@@ -25,7 +25,18 @@ export const experience: Job[] = [
         'Defined the data model and its indexes **with the team**, code first for the legacy migration, with seeders for the load tests.',
       ],
     },
-    stack: ['Django', 'Django Cotton', 'Python', 'PostgreSQL', 'HTMX', 'Alpine.js', 'Tailwind CSS', 'Ruff', 'MyPy', 'Docker'],
+    stack: [
+      'Django',
+      'Django Cotton',
+      'Python',
+      'PostgreSQL',
+      'HTMX',
+      'Alpine.js',
+      'Tailwind CSS',
+      'Ruff',
+      'MyPy',
+      'Docker',
+    ],
   },
   {
     company: 'SWAP Energia',
@@ -159,7 +170,18 @@ export const experience: Job[] = [
         'Built two clients against that API: a web platform in **Angular** (SPA) and a **native Android app in Java**, in Android Studio.',
       ],
     },
-    stack: ['C#', '.NET Framework', 'REST', 'SQL Server', 'Java', 'Android', 'Android Studio', 'Angular', 'TypeScript', 'JWT'],
+    stack: [
+      'C#',
+      '.NET Framework',
+      'REST',
+      'SQL Server',
+      'Java',
+      'Android',
+      'Android Studio',
+      'Angular',
+      'TypeScript',
+      'JWT',
+    ],
   },
   {
     company: 'SJL',

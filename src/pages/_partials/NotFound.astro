@@ -1,0 +1,142 @@
+---
+import BaseLayout from '@ui/layouts/BaseLayout.astro';
+import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
+import Text from '@velezanthony/design/components/atoms/display/Text.astro';
+import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
+import ContactList from '@ui/components/ContactList.astro';
+import { contact, profile } from '@data/profile';
+import { defaultLocale, locales } from '@core/i18n/locales';
+import { alternateLocale, alternates, path } from '@core/i18n/utils';
+import { useTranslations } from '@ui/translations';
+import type { Locale } from '@core/i18n/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+/**
+ * Served from the root `404.astro`, outside `[lang]`: GitHub Pages serves a single `/404.html`
+ * for the whole site and cannot pick a locale, so there is no `/en/404/`.
+ *
+ * Both languages are rendered into the document. The default one shows by
+ * default; if `sessionStorage` says the reader was browsing in English —
+ * written by the script in BaseLayout on every page — it swaps. With no
+ * JavaScript, Spanish stays.
+ */
+const { lang } = Astro.props;
+const bloques = locales.map((locale: Locale) => {
+  const t = useTranslations(locale);
+  return {
+    locale,
+    t,
+    destinos: [
+      { label: t('Inicio'), href: path(locale), hint: t('Quién soy y qué construyo') },
+      {
+        label: t('Proyectos'),
+        href: path(locale, 'projects'),
+        hint: t('Cinco herramientas open source'),
+      },
+      {
+        label: t('Experiencia'),
+        href: path(locale, 'experience'),
+        hint: t('Dónde he trabajado y en qué'),
+      },
+      { label: t('CV'), href: path(locale, 'cv'), hint: t('Para descargar o imprimir') },
+    ],
+  };
+});
+
+const td = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={td('Página no encontrada')}
+  description={td('La ruta que buscas no existe.')}
+  alternates={alternates()}
+  seo={{ noindex: true }}
+>
+  <Fragment slot="head">
+    {lang === defaultLocale ? (
+      <style is:inline>
+        [data-locale='en'] [data-lang='es'],
+        :root:not([data-locale='en']) [data-lang='en'] {
+          display: none;
+        }
+      </style>
+    ) : (
+      <style is:inline>
+        [data-lang='es'] {
+          display: none;
+        }
+      </style>
+    )}
+  </Fragment>
+
+  <main
+    id="main"
+    data-title-en={`${useTranslations('en')('Página no encontrada')} | ${profile.name}`}
+    class="mx-auto flex min-h-screen max-w-(--container-page) flex-col justify-center px-6 py-20 lg:px-10"
+  >
+    {bloques.map(({ locale, t, destinos }) => (
+      <div data-lang={locale} lang={locale}>
+        <div class="grid gap-x-14 gap-y-12 grid-cols-1 md:grid-cols-[minmax(0,1fr)_var(--container-aside)]">
+          <div>
+            <p class="label mb-6 text-faint">404</p>
+
+            <Heading level={1} size="xl">
+              {t('Página no encontrada')}
+            </Heading>
+
+            <Text class="mt-4" measure>
+              {t('La ruta que buscas no existe. Pero ya que estás aquí:')}
+            </Text>
+
+            <ul class="mt-10 border-b border-rule">
+              {destinos.map(({ label, href, hint }) => (
+                <li class="group relative border-t border-rule py-4">
+                  <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <a
+                      href={href}
+                      class="font-medium text-ink transition-colors after:absolute after:inset-0 after:content-[''] group-hover:text-accent"
+                    >
+                      {label}
+                    </a>
+                    <span class="text-sm text-faint">{hint}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="flex flex-col gap-8 lg:pt-1">
+            <div>
+              <p class="label mb-3 text-faint">{t('Contacto')}</p>
+              <ContactList items={contact} direction="column" />
+            </div>
+
+            <div>
+              <Link href={path(alternateLocale(locale))} variant="action">
+                {t('¿Prefieres inglés?')}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </main>
+</BaseLayout>
+
+<script>
+  import { safeGet, storageOf } from '@velezanthony/design/client/storage';
+  import { LANG_KEY } from '@core/i18n/locales';
+
+  /* The page is built once, in Spanish. A reader who arrived from the English site gets the
+     English blocks and title, which the page carries for exactly this. */
+  if (safeGet(storageOf('sessionStorage'), LANG_KEY) === 'en') {
+    const root = document.documentElement;
+    root.lang = 'en';
+    root.dataset.locale = 'en';
+    document.title = document.querySelector('main')?.dataset.titleEn ?? document.title;
+  }
+</script>
