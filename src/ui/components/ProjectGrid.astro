@@ -1,9 +1,9 @@
 ---
 import ProjectCard from './ProjectCard.astro';
-import type { LocalisedProject } from '@/data/projects';
+import type { LocalisedProject } from '@/adapters/projects';
 import type { StoreCounts } from '@/data/downloads';
-import { path } from '@/i18n/utils';
-import type { Locale } from '@/i18n/ui';
+import { path } from '@/core/i18n/utils';
+import type { Locale } from '@/data/ui';
 
 interface Props {
   lang: Locale;

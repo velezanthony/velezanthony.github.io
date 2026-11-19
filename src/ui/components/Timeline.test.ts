@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { Job, Study } from '@/data/types';
+import type { Job, Study } from '@/core/types';
 import { render, text } from '@/test-utils';
 import Timeline from './Timeline.astro';
 

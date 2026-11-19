@@ -5,7 +5,7 @@
  * Spanish rather than breaking the page. What the build does fail on is a
  * string that is not in the catalogue at all.
  */
-import { en, PENDING } from '../src/i18n/ui.ts';
+import { en, PENDING } from '../src/data/ui.ts';
 
 const entries = Object.entries(en);
 const pending = entries.filter(([, value]) => value === PENDING).map(([key]) => key);

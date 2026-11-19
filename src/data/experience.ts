@@ -1,4 +1,4 @@
-import type { Job } from './types';
+import type { Job } from '@/core/types';
 
 /** Newest first. Unknown facts are left out, never guessed. */
 export const experience: Job[] = [

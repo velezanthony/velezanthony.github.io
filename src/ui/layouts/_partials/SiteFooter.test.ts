@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ContactLink } from '@/data/types';
+import type { ContactLink } from '@/core/types';
 import { SITE_SOURCE } from '@/site';
 import { render, text } from '@/test-utils';
 import SiteFooter from './SiteFooter.astro';

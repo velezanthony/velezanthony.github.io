@@ -1,10 +1,10 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { buildCountsOf } from './build-counts';
-import type { StoreCounts } from './downloads';
-import { resolveLocalized } from '@/i18n/localized';
-import type { Resolved } from '@/i18n/localized';
-import type { Locale } from '@/i18n/ui';
+import { buildCountsOf } from '@/data/build-counts';
+import type { StoreCounts } from '@/data/downloads';
+import { resolveLocalized } from '@/core/i18n/localized';
+import type { Resolved } from '@/core/i18n/localized';
+import type { Locale } from '@/data/ui';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 

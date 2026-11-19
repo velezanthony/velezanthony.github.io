@@ -1,6 +1,6 @@
 import { createCountsCache, formatDownloads, mergeCounts, toDownloads } from '@/data/downloads';
 import type { DownloadSources, StoreCounts } from '@/data/downloads';
-import type { Locale } from '@/i18n/ui';
+import type { Locale } from '@/data/ui';
 
 const read = <T>(el: Element, attribute: string, fallback: T): T => {
   try {

@@ -1,7 +1,7 @@
 /* Relative, not `@i18n/ui`: `astro.config.mjs` imports this file, and it loads before the
    tsconfig aliases exist. */
-import { PENDING, defaultLocale, en, locales, routes } from './ui';
-import type { Locale, Phrase, RouteKey } from './ui';
+import { PENDING, defaultLocale, en, locales, routes } from '@/data/ui';
+import type { Locale, Phrase, RouteKey } from '@/data/ui';
 
 function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);

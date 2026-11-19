@@ -3,7 +3,7 @@ import PageLayout from '@/ui/layouts/PageLayout.astro';
 import PrivacyPolicy from './_partials/PrivacyPolicy.astro';
 import { privacyUpdated, resolvePrivacy } from '@/data/privacy';
 import { pageTitles, seo } from '@/data/profile';
-import { alternates, assertLocale, localeRouteParams } from '@/i18n/utils';
+import { alternates, assertLocale, localeRouteParams } from '@/core/i18n/utils';
 
 export function getStaticPaths() {
   return localeRouteParams('privacy');

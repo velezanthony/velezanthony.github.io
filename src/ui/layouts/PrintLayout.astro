@@ -5,8 +5,8 @@ import LocaleSwitch from '@velezanthony/design/components/molecules/navigation/L
 import ThemeToggle from '@velezanthony/design/components/molecules/controls/ThemeToggle.astro';
 import BackToTop from '@velezanthony/design/components/organisms/chrome/BackToTop.astro';
 import { designStrings } from '@/adapters/design';
-import { path, useTranslations } from '@/i18n/utils';
-import type { Locale } from '@/i18n/ui';
+import { path, useTranslations } from '@/core/i18n/utils';
+import type { Locale } from '@/data/ui';
 
 interface Props {
   lang: Locale;

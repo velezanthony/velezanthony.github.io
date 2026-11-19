@@ -2,7 +2,7 @@
 import PageLayout from '@/ui/layouts/PageLayout.astro';
 import { pageTitles, seo } from '@/data/profile';
 import ProjectIndex from './_partials/ProjectIndex.astro';
-import { alternates, assertLocale, localeRouteParams } from '@/i18n/utils';
+import { alternates, assertLocale, localeRouteParams } from '@/core/i18n/utils';
 
 export function getStaticPaths() {
   return localeRouteParams('projects');

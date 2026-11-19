@@ -1,5 +1,5 @@
-import { defaultLocale } from './ui';
-import type { Locale } from './ui';
+import { defaultLocale } from '@/data/ui';
+import type { Locale } from '@/data/ui';
 import { localeOfEntry } from './utils';
 
 export interface Resolved<T> {

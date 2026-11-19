@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { Job } from '@/data/types';
+import type { Job } from '@/core/types';
 import CaseStudy from '@/pages/[...lang]/[projects]/_partials/CaseStudy.astro';
 import Education from '@/pages/[...lang]/[experience]/_partials/Education.astro';
 import { render } from '@/test-utils';

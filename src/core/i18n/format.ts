@@ -1,6 +1,6 @@
-import { ogLocales } from './ui';
-import type { Locale } from './ui';
-import type { IsoDate, YearMonth } from '@/data/types';
+import { ogLocales } from '@/data/ui';
+import type { Locale } from '@/data/ui';
+import type { IsoDate, YearMonth } from '@/core/types';
 
 export function formatMonth(lang: Locale, value: YearMonth): string {
   const [year, month] = value.split('-').map(Number);

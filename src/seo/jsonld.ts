@@ -3,8 +3,8 @@ import type { CollectionEntry } from 'astro:content';
 import { address, contact, email, knowsAbout, profile, spokenLanguages } from '@/data/profile';
 import { education } from '@/data/education';
 import { experience } from '@/data/experience';
-import type { Locale } from '@/i18n/ui';
-import { path } from '@/i18n/utils';
+import type { Locale } from '@/data/ui';
+import { path } from '@/core/i18n/utils';
 import { linkOf } from '@/adapters/project-schema';
 import { PERSON_ID, SITE } from '@/site';
 

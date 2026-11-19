@@ -1,4 +1,4 @@
-import type { Locale } from '@/i18n/ui';
+import type { Locale } from './ui';
 
 /** Where a project's download count is published. Each key names the package in that store. */
 export interface DownloadSources {

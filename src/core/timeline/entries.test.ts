@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { Job, Study } from '@/data/types';
-import { timelineEntries } from './timeline-entries';
+import type { Job, Study } from '@/core/types';
+import { timelineEntries } from './entries';
 
 const job = (start: Job['start']) => ({ start, company: start }) as Job;
 const study = (startYear: number) => ({ startYear, abbr: String(startYear) }) as Study;

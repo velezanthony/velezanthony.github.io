@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ContactLink } from '@/data/types';
+import type { ContactLink } from '@/core/types';
 import { render } from '@/test-utils';
 import ContactList from './ContactList.astro';
 

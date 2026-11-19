@@ -4,10 +4,10 @@ import { fileLastModified } from '@velezanthony/design/last-modified';
 import { breadcrumb, softwareSourceCode, techArticle } from '@/seo/jsonld';
 import PageLayout from '@/ui/layouts/PageLayout.astro';
 import CaseStudy from './_partials/CaseStudy.astro';
-import { getProject, getProjectSlugs } from '@/data/projects';
+import { getProject, getProjectSlugs } from '@/adapters/projects';
 import { buildCountsOf } from '@/data/build-counts';
-import { alternates, assertLocale, langParam, path } from '@/i18n/utils';
-import { locales, routes } from '@/i18n/ui';
+import { alternates, assertLocale, langParam, path } from '@/core/i18n/utils';
+import { locales, routes } from '@/data/ui';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();
