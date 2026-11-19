@@ -51,7 +51,7 @@ export interface SpokenLanguage {
 export interface ContactLink {
   label: string;
   href: string;
-  /** Key of an icon in `src/components/atoms/Icon.astro`. */
+  /** Key of an icon in the library's `Icon`. */
   icon: 'mail' | 'external' | 'github' | 'linkedin';
   /** Shown as the visible text; falls back to `label`. */
   handle?: string;
