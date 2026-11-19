@@ -2,7 +2,7 @@
 import ContactList from '@ui/components/ContactList.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import type { ContactLink } from '@core/types';
-import { SITE_HOST, SITE_SOURCE } from '@data/site';
+import { LIBRARY_SOURCE, SITE_HOST, SITE_SOURCE } from '@data/site';
 import { path } from '@core/i18n/utils';
 import { designStrings } from '@velezanthony/design/site';
 import { useTranslations } from '@ui/translations';
@@ -33,9 +33,19 @@ const t = useTranslations(lang);
 
       <div class="md:justify-self-end md:text-right">
         <p class="label mb-4 text-faint">{t('Código fuente')}</p>
-        <Link href={SITE_SOURCE} variant="quiet">
-          <span class="font-mono text-sm">{SITE_HOST}</span>
-        </Link>
+        {/* The site, and the design library it is built on. */}
+        <ul class="space-y-2">
+          <li>
+            <Link href={SITE_SOURCE} variant="quiet">
+              <span class="font-mono text-sm">{SITE_HOST}</span>
+            </Link>
+          </li>
+          <li>
+            <Link href={LIBRARY_SOURCE} variant="quiet">
+              <span class="font-mono text-sm">@velezanthony/design</span>
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
 

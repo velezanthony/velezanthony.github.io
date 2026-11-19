@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { ContactLink } from '@core/types';
-import { SITE_SOURCE } from '@data/site';
+import { LIBRARY_SOURCE, SITE_SOURCE } from '@data/site';
 import { render, text } from '@ui/test-utils';
 import SiteFooter from './_partials/SiteFooter.astro';
 import SiteHeader from './_partials/SiteHeader.astro';
@@ -43,6 +43,13 @@ describe('SiteFooter', () => {
     const doc = await render(SiteFooter, { lang: 'en', ...footer });
     expect(doc.querySelector('a[href="mailto:a@example.com"]')).not.toBeNull();
     expect(doc.querySelectorAll(`a[href="${SITE_SOURCE}"]`)).toHaveLength(2);
+  });
+
+  it('links to the source of the design library the site is built on', async () => {
+    const doc = await render(SiteFooter, { lang: 'en', ...footer });
+    expect(doc.querySelector(`a[href="${LIBRARY_SOURCE}"]`)?.textContent?.trim()).toBe(
+      '@velezanthony/design',
+    );
   });
 
   it('links to the privacy page of its language', async () => {
