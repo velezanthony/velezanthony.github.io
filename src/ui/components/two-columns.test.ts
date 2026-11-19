@@ -4,8 +4,8 @@ import type { Job } from '@/data/types';
 import CaseStudySection from '@/pages/[...lang]/[projects]/_sections/CaseStudySection.astro';
 import EducationSection from '@/pages/[...lang]/[experience]/_sections/EducationSection.astro';
 import { render } from '@/test/render';
-import ProjectCard from '@/components/molecules/ProjectCard.astro';
-import Timeline from '@/components/organisms/Timeline.astro';
+import ProjectCard from './ProjectCard.astro';
+import Timeline from './Timeline.astro';
 
 const job: Job = {
   company: 'Acme',

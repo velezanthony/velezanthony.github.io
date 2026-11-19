@@ -1,14 +1,14 @@
 ---
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
-import ContactList from '@/components/molecules/ContactList.astro';
-import Timeline from '@/components/organisms/Timeline.astro';
+import ContactList from '@/ui/components/ContactList.astro';
+import Timeline from '@/ui/components/Timeline.astro';
 import { cvContact, profile, spokenLanguages, stackGroups } from '@/data/profile';
 import { segments } from '@/data/emphasis';
 import { education } from '@/data/education';
 import { useTranslations } from '@/i18n/utils';
 import { experience } from '@/data/experience';
 import type { Locale } from '@/i18n/ui';
-import DownloadCount from '@/components/molecules/DownloadCount.astro';
+import DownloadCount from '@/ui/components/DownloadCount.astro';
 import type { DownloadSources, StoreCounts } from '@/data/downloads';
 
 interface Props {

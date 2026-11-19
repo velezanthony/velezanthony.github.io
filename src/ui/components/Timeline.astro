@@ -1,12 +1,12 @@
 ---
-import ExperienceItem from '@/components/molecules/ExperienceItem.astro';
-import EducationRule from '@/components/molecules/EducationRule.astro';
+import ExperienceItem from './ExperienceItem.astro';
+import EducationRule from './EducationRule.astro';
 import type { Job, Study } from '@/data/types';
 import { timelineEntries } from './timeline-entries';
 import { formatRange } from '@/i18n/format';
 import { useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-import type { Variant } from '@/components/variant';
+import type { Variant } from './variant';
 
 interface Props {
   lang: Locale;
