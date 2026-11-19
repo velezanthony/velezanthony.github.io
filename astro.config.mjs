@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 
 import { docs } from '@velezanthony/design/integration';
-import tailwindcss from '@tailwindcss/vite';
 
 import { boundAnimationLoops } from './src/build/bound-animation-loops.ts';
 import { pruneOrphanAssets } from './src/build/prune-orphan-assets.ts';
@@ -47,8 +46,4 @@ export default defineConfig({
   },
 
   integrations: [boundAnimationLoops(), pruneOrphanAssets(), docs(docsConfig)],
-
-  vite: {
-    plugins: [tailwindcss()],
-  },
 });
