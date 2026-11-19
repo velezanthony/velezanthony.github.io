@@ -70,8 +70,9 @@ export const projectSchema = ({ image }: SchemaContext) =>
 
     /** The CV line. Required rather than falling back to `tagline`: that one is written as a
         meta description and runs past 140 characters, which on paper is two lines per tool
-        and turns the list back into a paragraph. One clause, no dash — the CV draws its own. */
-    cvLine: z.string().max(100),
+        and turns the list back into a paragraph. One clause, no dash — the CV draws its own.
+        Left out, the project stays off the CV: not every project is a tool for other people. */
+    cvLine: z.string().max(100).optional(),
 
     status: z.enum(projectStatuses),
     role: z.string(),
