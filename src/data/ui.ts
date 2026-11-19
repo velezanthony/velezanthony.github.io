@@ -11,6 +11,7 @@ export const en = {
   'Navegación principal': 'Main navigation',
   Contacto: 'Contact',
   'Código fuente': 'Source',
+  Librería: 'Library',
   'Portfolio hecho con Astro': 'Portfolio built with Astro',
 
   Disponibilidad: 'Availability',

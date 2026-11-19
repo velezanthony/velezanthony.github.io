@@ -31,21 +31,20 @@ const t = useTranslations(lang);
         <ContactList items={contact} />
       </div>
 
-      <div class="md:justify-self-end md:text-right">
-        <p class="label mb-4 text-faint">{t('Código fuente')}</p>
-        {/* The site, and the design library it is built on. */}
-        <ul class="space-y-2">
-          <li>
-            <Link href={SITE_SOURCE} variant="quiet">
-              <span class="font-mono text-sm">{SITE_HOST}</span>
-            </Link>
-          </li>
-          <li>
-            <Link href={LIBRARY_SOURCE} variant="quiet">
-              <span class="font-mono text-sm">@velezanthony/design</span>
-            </Link>
-          </li>
-        </ul>
+      <div class="space-y-8 md:justify-self-end md:text-right">
+        <div>
+          <p class="label mb-4 text-faint">{t('Código fuente')}</p>
+          <Link href={SITE_SOURCE} variant="quiet">
+            <span class="font-mono text-sm">{SITE_HOST}</span>
+          </Link>
+        </div>
+        {/* The design library this site is built on. */}
+        <div>
+          <p class="label mb-4 text-faint">{t('Librería')}</p>
+          <Link href={LIBRARY_SOURCE} variant="quiet">
+            <span class="font-mono text-sm">@velezanthony/design</span>
+          </Link>
+        </div>
       </div>
     </div>
 
