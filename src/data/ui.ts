@@ -8,7 +8,6 @@ export const en = {
   Proyectos: 'Projects',
   Experiencia: 'Experience',
   CV: 'CV',
-  'Ir al contenido': 'Skip to content',
   'Navegación principal': 'Main navigation',
   Contacto: 'Contact',
   'Código fuente': 'Source',
@@ -37,8 +36,6 @@ export const en = {
   Rol: 'Role',
   'Caso de estudio': 'Case study',
   'Volver a proyectos': 'Back to projects',
-  'Esta página aún no está traducida. Se muestra la versión en castellano.':
-    'This page has not been translated yet. Showing the Spanish version.',
 
   Perfil: 'Profile',
   'Stack técnico': 'Technical stack',
@@ -62,15 +59,7 @@ export const en = {
   'Pendiente de escribir': 'Still to write',
 
   Privacidad: 'Privacy',
-  'Política de privacidad': 'Privacy policy',
   'Última actualización': 'Last updated',
-  'Preferencias de cookies': 'Cookie preferences',
-  'Aviso de cookies': 'Cookie notice',
-  'Cambiar el tema de color': 'Toggle color theme',
-  'Uso cookies de analítica solo si las aceptas. La web funciona igual sin ellas.':
-    'I use analytics cookies only if you accept them. The site works the same without them.',
-  Aceptar: 'Accept',
-  Rechazar: 'Reject',
 } as const satisfies Record<string, string | Pending>;
 
 /** Every source string the UI is allowed to render. */

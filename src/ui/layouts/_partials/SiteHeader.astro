@@ -61,7 +61,7 @@ const nav: { key: RouteKey; label: Phrase }[] = [
 
     <div class="col-start-2 row-start-1 flex items-center gap-1 border-ink/25 md:col-start-3 md:border-l md:pl-5">
       <LocaleSwitch lang={lang} hrefs={alternates} strings={designStrings(lang)} />
-      <ThemeToggle label={t('Cambiar el tema de color')} class="print-hidden" />
+      <ThemeToggle strings={designStrings(lang)} class="print-hidden" />
     </div>
   </div>
 </header>

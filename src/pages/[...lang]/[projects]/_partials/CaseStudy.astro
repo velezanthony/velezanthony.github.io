@@ -87,7 +87,7 @@ const t = useTranslations(lang);
 
   {translationPending && (
     <p class="mt-8 border-l-2 border-accent bg-accent-soft px-4 py-3 text-sm text-accent">
-      {t('Esta página aún no está traducida. Se muestra la versión en castellano.')}
+      {designStrings(lang)['translation.fallbackNotice']}
     </p>
   )}
 

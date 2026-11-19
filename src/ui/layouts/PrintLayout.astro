@@ -35,7 +35,7 @@ const t = useTranslations(lang);
 
       <div class="flex items-center gap-6">
         <LocaleSwitch lang={lang} hrefs={alternates} strings={designStrings(lang)} />
-        <ThemeToggle label={t('Cambiar el tema de color')} class="ml-1 print-hidden" />
+        <ThemeToggle strings={designStrings(lang)} class="ml-1 print-hidden" />
         <button
           type="button"
           data-print

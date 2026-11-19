@@ -4,6 +4,7 @@ import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import type { ContactLink } from '@core/types';
 import { SITE_HOST, SITE_SOURCE } from '@data/site';
 import { path } from '@core/i18n/utils';
+import { designStrings } from '@velezanthony/design/site';
 import { useTranslations } from '@ui/translations';
 import type { Locale } from '@core/i18n/locales';
 
@@ -58,7 +59,7 @@ const t = useTranslations(lang);
               data-consent-open
               class="inline-flex min-h-6 cursor-pointer items-center text-muted transition-colors hover:text-ink"
             >
-              {t('Preferencias de cookies')}
+              {designStrings(lang)['consent.preferences']}
             </button>
           </li>
         )}

@@ -3,10 +3,9 @@ import Fonts from '@velezanthony/design/fonts';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
 import { pageHead, type PageHeadInput } from '@velezanthony/design/seo';
 import type { PageSeo } from '@velezanthony/design/seo-schema';
-import { gtmId } from '@velezanthony/design/site';
+import { designStrings, gtmId } from '@velezanthony/design/site';
 import { path } from '@core/i18n/utils';
 import { person } from '@core/seo/jsonld';
-import { useTranslations } from '@ui/translations';
 import type { Locale } from '@core/i18n/locales';
 import { owner } from '@data/person';
 import { PERSON_ID } from '@data/site';
@@ -26,7 +25,7 @@ interface Props {
 }
 
 const { lang, title, description, seo, schema = [], alternates, bodyClass } = Astro.props;
-const t = useTranslations(lang);
+const strings = designStrings(lang);
 const { pathname } = Astro.url;
 const noindex = seo?.noindex ?? false;
 
@@ -55,11 +54,7 @@ const head = await pageHead({
   bodyClass={['min-h-screen bg-canvas antialiased', bodyClass].filter(Boolean).join(' ')}
   gtmId={gtmId}
   privacyUrl={path(lang, 'privacy')}
-  label={t('Aviso de cookies')}
-  message={t('Uso cookies de analítica solo si las aceptas. La web funciona igual sin ellas.')}
-  acceptLabel={t('Aceptar')}
-  rejectLabel={t('Rechazar')}
-  privacyLabel={t('Política de privacidad')}
+  strings={strings}
 >
   <Fragment slot="head">
     <meta name="generator" content={Astro.generator} />
@@ -80,7 +75,7 @@ const head = await pageHead({
     href="#main"
     class="label sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:border focus:border-rule focus:bg-canvas focus:px-3 focus:py-2 focus:text-ink"
   >
-    {t('Ir al contenido')}
+    {strings.skipToContent}
   </a>
 
   <slot />
