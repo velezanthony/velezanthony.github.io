@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { Job } from '@/data/types';
 import CaseStudy from '@/pages/[...lang]/[projects]/_partials/CaseStudy.astro';
 import Education from '@/pages/[...lang]/[experience]/_partials/Education.astro';
-import { render } from '@/test/render';
+import { render } from '@/test-utils';
 import ProjectCard from './ProjectCard.astro';
 import Timeline from './Timeline.astro';
 

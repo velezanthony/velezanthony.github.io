@@ -5,7 +5,7 @@ import { education } from '@/data/education';
 import { experience } from '@/data/experience';
 import type { Locale } from '@/i18n/ui';
 import { path } from '@/i18n/utils';
-import { linkOf } from '@/schemas/project';
+import { linkOf } from '@/adapters/project-schema';
 import { PERSON_ID, SITE } from '@/site';
 
 export type ProjectData = CollectionEntry<'projects'>['data'];

@@ -3,9 +3,9 @@ import BaseLayout from './BaseLayout.astro';
 import SiteHeader from './_partials/SiteHeader.astro';
 import SiteFooter from './_partials/SiteFooter.astro';
 import BackToTop from '@velezanthony/design/components/organisms/chrome/BackToTop.astro';
-import { designStrings } from '@/design/site-config';
+import { designStrings } from '@/adapters/design';
 import { contact, profile } from '@/data/profile';
-import { gtmId } from '@/design/site-config';
+import { gtmId } from '@/adapters/design';
 import type { Locale, RouteKey } from '@/i18n/ui';
 
 /** Every public page except the print CV and the 404. */

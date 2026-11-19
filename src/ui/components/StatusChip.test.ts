@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { projectStatuses } from '@/schemas/project';
-import { render, text } from '@/test/render';
+import { projectStatuses } from '@/adapters/project-schema';
+import { render, text } from '@/test-utils';
 import StatusChip from './StatusChip.astro';
 
 describe('StatusChip', () => {

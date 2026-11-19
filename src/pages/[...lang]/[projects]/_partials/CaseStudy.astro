@@ -8,10 +8,10 @@ import StackRow from '@/ui/components/StackRow.astro';
 import StatusChip from '@/ui/components/StatusChip.astro';
 import { useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-import type { ProjectStatus } from '@/schemas/project';
+import type { ProjectStatus } from '@/adapters/project-schema';
 import DownloadCount from '@/ui/components/DownloadCount.astro';
 import TableOfContents from '@velezanthony/design/components/molecules/navigation/TableOfContents.astro';
-import { designStrings } from '@/design/site-config';
+import { designStrings } from '@/adapters/design';
 import type { DownloadSources, StoreCounts } from '@/data/downloads';
 
 interface Props {

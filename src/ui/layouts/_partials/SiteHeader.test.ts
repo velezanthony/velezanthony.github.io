@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render, text } from '@/test/render';
+import { render, text } from '@/test-utils';
 import SiteHeader from './SiteHeader.astro';
 
 const props = {

@@ -42,7 +42,7 @@ Then open http://localhost:4321 — it forwards to `/es/`.
 | Package | Why |
 | --- | --- |
 | `astro` | Static site generator. Routing, i18n, content collections, image pipeline, self-hosted fonts |
-| `@velezanthony/design` | The design library. It brings Tailwind, the code themes, the build steps and the last-modified dates. The portfolio's own tokens live in `@theme` inside `src/styles/site.css` (the `theme` option of `docs.config.mjs`) |
+| `@velezanthony/design` | The design library. It brings Tailwind, the code themes, the build steps and the last-modified dates. The portfolio's own tokens live in `@theme` inside `src/site.css` (the `theme` option of `docs.config.mjs`) |
 
 **Development**
 
@@ -75,7 +75,7 @@ src/
 | A job, a degree, contact details | `src/data/` |
 | A project case study | `src/content/projects/<locale>/<slug>.md` |
 | UI strings | `src/i18n/ui.ts` |
-| Colours, type scale, spacing | `@theme` in `src/styles/site.css` (the library's tokens come with `@velezanthony/design`) |
+| Colours, type scale, spacing | `@theme` in `src/site.css` (the library's tokens come with `@velezanthony/design`) |
 
 Records in `src/data/` carry both languages on the same object, so a missing translation is a type error rather than a page that quietly renders Spanish.
 

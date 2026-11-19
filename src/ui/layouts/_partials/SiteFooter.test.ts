@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { ContactLink } from '@/data/types';
 import { SITE_SOURCE } from '@/site';
-import { render, text } from '@/test/render';
+import { render, text } from '@/test-utils';
 import SiteFooter from './SiteFooter.astro';
 
 const contact: ContactLink[] = [

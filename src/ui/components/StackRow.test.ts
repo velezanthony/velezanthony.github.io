@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render } from '@/test/render';
+import { render } from '@/test-utils';
 import StackRow from './StackRow.astro';
 
 const row = async (props: Record<string, unknown>) =>

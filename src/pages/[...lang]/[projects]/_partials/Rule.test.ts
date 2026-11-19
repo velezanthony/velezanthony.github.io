@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render } from '@/test/render';
+import { render } from '@/test-utils';
 import Rule from './Rule.astro';
 
 describe('Rule', () => {

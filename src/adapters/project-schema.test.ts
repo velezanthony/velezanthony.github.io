@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { z } from 'astro/zod';
 
-import { linkOf, projectSchema } from './project';
+import { linkOf, projectSchema } from './project-schema';
 
 /* `image()` needs Astro's asset pipeline; a path string stands in for it here. */
 const schema = projectSchema({ image: () => z.string() } as never);
