@@ -7,7 +7,7 @@ Astro 7 · static output · Spanish + English · GitHub Pages at `https://veleza
 ```
 src/
 ├── core/       pure logic: no Astro, no fetch, no DOM; what it needs arrives as a parameter
-├── data/       content only: profile, experience, education, privacy text, UI phrases
+├── data/       content only: profile, experience, education, UI phrases
 ├── adapters/   what touches Astro or the network: content collections, stores
 ├── client/     browser scripts
 ├── ui/         components and layouts, reused across pages
@@ -49,6 +49,7 @@ Pages and partials read the data layer. `ui/components/` receive plain props, ne
 
 | | Backend | Why |
 | --- | --- | --- |
+| Privacy policy | Content Collection, `src/data/privacies/<locale>.md` | Legal prose, rendered with the library's `Article`; the last-updated date is frontmatter. |
 | Projects | Content Collection, `src/data/projects/<locale>/<slug>.md` | Each one carries a case study — prose with headings and decisions. Frontmatter is the structured half. |
 | Experience · education · profile | Typed TS modules in `src/data/` | Records with no prose body, rendered into the site and the print CV. |
 
@@ -102,10 +103,11 @@ Three kinds of text, three homes:
 ```
 src/
 ├── content.config.ts · site.css
-├── core/             types.ts · i18n/ · downloads/ · timeline/ · privacy/ · projects/ · seo/
-├── data/             site · profile · experience · education · emphasis · privacy · person · ui
-│   └── projects/     es/ · en/  case studies in Markdown (the library reads only src/content/docs/)
-├── adapters/         projects · project-schema · downloads
+├── core/             types.ts · i18n/ · downloads/ · timeline/ · projects/ · seo/
+├── data/             site · profile · experience · education · emphasis · person · ui
+│   ├── projects/     es/ · en/  case studies in Markdown (the library reads only src/content/docs/)
+│   └── privacies/    es.md · en.md  the privacy policy in Markdown
+├── adapters/         projects · project-schema · privacy-schema · downloads
 ├── client/           downloads · storage
 ├── ui/
 │   ├── components/   ContactList · DownloadCount · StackRow · StatusChip · ProjectGrid
