@@ -1,15 +1,15 @@
 ---
 import { Font } from 'astro:assets';
-import { PUBLIC_GTM_ID } from 'astro:env/client';
 import '@styles/theme.css';
 import { profile } from '@data/profile';
-import { alternateLocale, useTranslations } from '@i18n/utils';
+import { alternateLocale, path, useTranslations } from '@i18n/utils';
 import { locales, ogLocales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
 import { person } from '@/seo/jsonld';
 import { THEME_KEY } from '@/client/storage';
 import RememberLocale from '@atoms/RememberLocale.astro';
-import ConsentBanner from '@organisms/ConsentBanner.astro';
+import ConsentBanner from '@velezanthony/design/components/organisms/privacy/ConsentBanner.astro';
+import { designStrings, gtmId } from '@/design/site-config';
 import { themeColors } from '@styles/theme-colors';
 
 interface Props {
@@ -136,7 +136,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     {
       /* Tag Manager is not in the page: the banner's script loads it, and only for a visitor who
          accepted. It is the only way in, so with no ID there is nothing to ask about. */
-      PUBLIC_GTM_ID && <ConsentBanner lang={lang} gtmId={PUBLIC_GTM_ID} />
+      gtmId && (
+        <ConsentBanner
+          gtmId={gtmId}
+          privacyUrl={path(lang, 'privacy')}
+          strings={designStrings(lang)}
+        />
+      )
     }
   </body>
 </html>
+
+<script>
+  import { bootDocs } from '@velezanthony/design/components/layouts/boot.ts';
+
+  /* The library's client wiring: it reads the page for what it finds (the consent banner, the
+     theme toggle) and ignores the rest. Its modules are not exported; this one is. */
+  bootDocs();
+</script>
