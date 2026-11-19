@@ -2,10 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import { locales } from '@/core/i18n/locales';
 import { email, profile } from './profile';
-import { privacySections, privacyUpdated, resolvePrivacy } from './privacy';
+import { resolvePrivacy } from '@/core/privacy/resolve';
+import { privacySections, privacyUpdated } from './privacy';
 
 const blocksOf = (kind: string) =>
-  resolvePrivacy('en')
+  resolvePrivacy(privacySections, 'en')
     .flatMap((section) => section.blocks)
     .filter((block) => block.kind === kind);
 
@@ -16,14 +17,16 @@ describe('privacySections', () => {
   });
 
   it('names the controller from the profile, not from a copy', () => {
-    const [first] = resolvePrivacy('en');
+    const [first] = resolvePrivacy(privacySections, 'en');
     expect(JSON.stringify(first)).toContain(profile.name);
     expect(JSON.stringify(first)).toContain(`mailto:${email}`);
   });
 
   /* A row with a missing cell shifts every cell after it, in one language only. */
   it.each(locales)('every table row has a cell per column in %s', (lang) => {
-    for (const block of resolvePrivacy(lang).flatMap((section) => section.blocks)) {
+    for (const block of resolvePrivacy(privacySections, lang).flatMap(
+      (section) => section.blocks,
+    )) {
       if (block.kind !== 'table') continue;
       for (const row of block.rows) expect(row).toHaveLength(block.head.length);
     }
@@ -31,7 +34,7 @@ describe('privacySections', () => {
 
   it('has the same table shape in every locale', () => {
     const shape = (lang: (typeof locales)[number]) =>
-      resolvePrivacy(lang)
+      resolvePrivacy(privacySections, lang)
         .flatMap((section) => section.blocks)
         .map((block) =>
           block.kind === 'table'
@@ -52,14 +55,14 @@ describe('privacySections', () => {
 
   /* What the page promises must be what the code deletes (`analyticsCookiesToDelete`). */
   it('lists the Google Analytics cookies the consent code removes', () => {
-    const section = resolvePrivacy('es').find(({ id }) => id === 'cookies');
+    const section = resolvePrivacy(privacySections, 'es').find(({ id }) => id === 'cookies');
     const table = section?.blocks.find((block) => block.kind === 'table');
     expect(table?.kind === 'table' && table.rows.map((row) => row[0])).toEqual(['_ga', '_ga_<ID>']);
   });
 
   it('has no empty text in either language', () => {
     for (const lang of locales) {
-      const json = JSON.stringify(resolvePrivacy(lang));
+      const json = JSON.stringify(resolvePrivacy(privacySections, lang));
       expect(json).not.toContain('""');
     }
   });

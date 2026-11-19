@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ResolvedSection } from '@/data/privacy';
+import type { ResolvedSection } from '@/core/privacy/resolve';
 import { render, text } from '@/test-utils';
 import PrivacyPolicy from './PrivacyPolicy.astro';
 

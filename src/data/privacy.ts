@@ -1,6 +1,6 @@
 import { email, profile } from './profile';
-import type { IsoDate, Localized } from '@/core/types';
-import type { Locale } from '@/core/i18n/locales';
+import type { IsoDate } from '@/core/types';
+import type { PrivacySection } from '@/core/privacy/resolve';
 
 /**
  * The privacy policy, as content: like the experience, it is prose with two languages, and a
@@ -12,20 +12,7 @@ import type { Locale } from '@/core/i18n/locales';
  */
 export const privacyUpdated: IsoDate = '2026-11-10';
 
-type Block =
-  | { kind: 'text'; text: Localized }
-  | { kind: 'list'; items: Localized<string[]> }
-  | { kind: 'table'; caption: Localized; head: Localized<string[]>; rows: Localized<string[][]> }
-  | { kind: 'links'; items: { label: Localized; href: string }[] };
-
-interface Section {
-  /** The anchor of the section, and its key. Not translated. */
-  id: string;
-  title: Localized;
-  blocks: Block[];
-}
-
-export const privacySections: Section[] = [
+export const privacySections: PrivacySection[] = [
   {
     id: 'controller',
     title: { es: 'Quién está detrás', en: 'Who runs this site' },
@@ -261,43 +248,3 @@ export const privacySections: Section[] = [
     ],
   },
 ];
-
-export type ResolvedBlock =
-  | { kind: 'text'; text: string }
-  | { kind: 'list'; items: string[] }
-  | { kind: 'table'; caption: string; head: string[]; rows: string[][] }
-  | { kind: 'links'; items: { label: string; href: string }[] };
-
-export interface ResolvedSection {
-  id: string;
-  title: string;
-  blocks: ResolvedBlock[];
-}
-
-/** The policy in one language, for a presentational component that knows no `Localized`. */
-export function resolvePrivacy(lang: Locale): ResolvedSection[] {
-  return privacySections.map(({ id, title, blocks }) => ({
-    id,
-    title: title[lang],
-    blocks: blocks.map((block): ResolvedBlock => {
-      switch (block.kind) {
-        case 'text':
-          return { kind: 'text', text: block.text[lang] };
-        case 'list':
-          return { kind: 'list', items: block.items[lang] };
-        case 'table':
-          return {
-            kind: 'table',
-            caption: block.caption[lang],
-            head: block.head[lang],
-            rows: block.rows[lang],
-          };
-        case 'links':
-          return {
-            kind: 'links',
-            items: block.items.map(({ label, href }) => ({ label: label[lang], href })),
-          };
-      }
-    }),
-  }));
-}
