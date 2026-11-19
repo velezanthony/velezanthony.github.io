@@ -25,7 +25,6 @@ export const en = {
   Experiencia: 'Experience',
   CV: 'CV',
   'Ir al contenido': 'Skip to content',
-  'Volver arriba': 'Back to top',
   'Navegación principal': 'Main navigation',
   Contacto: 'Contact',
   'Código fuente': 'Source',

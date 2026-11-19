@@ -2,7 +2,8 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import SiteHeader from '@organisms/SiteHeader.astro';
 import SiteFooter from '@organisms/SiteFooter.astro';
-import BackToTop from '@organisms/BackToTop.astro';
+import BackToTop from '@velezanthony/design/components/organisms/chrome/BackToTop.astro';
+import { designStrings } from '@/design/site-config';
 import { contact, profile } from '@data/profile';
 import { gtmId } from '@/design/site-config';
 import type { Locale, RouteKey } from '@i18n/ui';
@@ -49,5 +50,8 @@ const { lang, title, bareTitle, description, alternates, current, noindex } = As
     />
   </div>
 
-  <BackToTop lang={lang} />
+  {/* The library's carries no print rule; a wrapper keeps it off the printed page. */}
+  <div class="print-hidden">
+    <BackToTop strings={designStrings(lang)} />
+  </div>
 </BaseLayout>
