@@ -1,20 +1,13 @@
 // @ts-check
 import { defineConfig, envField } from 'astro/config';
 
-import sitemap from '@astrojs/sitemap';
 import { docs } from '@velezanthony/design/integration';
 import tailwindcss from '@tailwindcss/vite';
 
 import { boundAnimationLoops } from './src/build/bound-animation-loops.ts';
 import { pruneOrphanAssets } from './src/build/prune-orphan-assets.ts';
-import { sitemapPages } from './src/build/sitemap-pages.ts';
 import docsConfig from './docs.config.mjs';
 import { defaultLocale, locales } from './src/i18n/ui.ts';
-import { SITEMAP_XSL } from './src/seo/sitemap/files.ts';
-import { git } from './src/seo/sitemap/git.ts';
-import { createLastmod } from './src/seo/sitemap/lastmod.ts';
-import { createSerialize, isIndexable } from './src/seo/sitemap/links.ts';
-import { sourcesOf } from './src/seo/sitemap/sources.ts';
 import { SITE } from './src/site.ts';
 import { codeThemes } from './src/styles/code-themes.ts';
 
@@ -61,18 +54,7 @@ export default defineConfig({
     },
   },
 
-  integrations: [
-    boundAnimationLoops(),
-    pruneOrphanAssets(),
-    docs(docsConfig),
-    sitemap({
-      xslURL: `/${SITEMAP_XSL}`,
-      namespaces: { news: false, image: false, video: false, xhtml: true },
-      filter: isIndexable,
-      serialize: createSerialize(createLastmod(git, sourcesOf)),
-    }),
-    sitemapPages(SITE),
-  ],
+  integrations: [boundAnimationLoops(), pruneOrphanAssets(), docs(docsConfig)],
 
   vite: {
     plugins: [tailwindcss()],

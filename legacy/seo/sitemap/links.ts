@@ -1,10 +1,10 @@
 import type { SitemapItem } from '@astrojs/sitemap';
 
 /* Relative imports only: `astro.config.mjs` loads this before the tsconfig aliases exist. */
-import { defaultLocale } from '../../i18n/ui';
-import type { Locale } from '../../i18n/ui';
-import type { RouteKey } from '../../i18n/ui';
-import { alternateLocale, localizePath, parsePath } from '../../i18n/utils';
+import { defaultLocale } from '../../../src/i18n/ui';
+import type { Locale } from '../../../src/i18n/ui';
+import type { RouteKey } from '../../../src/i18n/ui';
+import { alternateLocale, localizePath, parsePath } from '../../../src/i18n/utils';
 
 type Lastmod = (locale: Locale, segments: string[]) => string | undefined;
 
