@@ -8,7 +8,6 @@ import { pruneOrphanAssets } from './src/build/prune-orphan-assets.ts';
 import docsConfig from './docs.config.mjs';
 import { defaultLocale, locales } from './src/i18n/ui.ts';
 import { SITE } from './src/site.ts';
-import { codeThemes } from './src/styles/code-themes.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -39,10 +38,8 @@ export default defineConfig({
      * dependency. External links in Markdown bodies are written as plain
      * anchors instead — there are four of them.
      */
-    shikiConfig: {
-      themes: codeThemes,
-      wrap: false,
-    },
+    /* The library's `docs()` sets the code themes; this only keeps long lines unwrapped. */
+    shikiConfig: { wrap: false },
   },
 
   integrations: [boundAnimationLoops(), pruneOrphanAssets(), docs(docsConfig)],
