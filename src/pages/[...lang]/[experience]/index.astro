@@ -1,9 +1,9 @@
 ---
-import PageLayout from '@layouts/PageLayout.astro';
-import TimelineSection from './_sections/TimelineSection.astro';
-import EducationSection from './_sections/EducationSection.astro';
-import { alternates, assertLocale, localeRouteParams } from '@i18n/utils';
-import { pageTitles, seo } from '@data/profile';
+import PageLayout from '@/layouts/PageLayout.astro';
+import TimelineSection from '@/pages/[...lang]/[experience]/_sections/TimelineSection.astro';
+import EducationSection from '@/pages/[...lang]/[experience]/_sections/EducationSection.astro';
+import { alternates, assertLocale, localeRouteParams } from '@/i18n/utils';
+import { pageTitles, seo } from '@/data/profile';
 
 export function getStaticPaths() {
   return localeRouteParams('experience');

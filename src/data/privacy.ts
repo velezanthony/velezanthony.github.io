@@ -1,6 +1,6 @@
-import { email, profile } from '@data/profile';
-import type { IsoDate, Localized } from '@data/types';
-import type { Locale } from '@i18n/ui';
+import { email, profile } from './profile';
+import type { IsoDate, Localized } from './types';
+import type { Locale } from '@/i18n/ui';
 
 /**
  * The privacy policy, as content: like the experience, it is prose with two languages, and a

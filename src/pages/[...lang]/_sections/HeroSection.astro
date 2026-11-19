@@ -1,10 +1,10 @@
 ---
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import Text from '@velezanthony/design/components/atoms/display/Text.astro';
-import ContactList from '@molecules/ContactList.astro';
-import { contact, profile } from '@data/profile';
-import { useTranslations } from '@i18n/utils';
-import type { Locale } from '@i18n/ui';
+import ContactList from '@/components/molecules/ContactList.astro';
+import { contact, profile } from '@/data/profile';
+import { useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
 import InlineList from '@velezanthony/design/components/atoms/display/InlineList.astro';
 
 interface Props {

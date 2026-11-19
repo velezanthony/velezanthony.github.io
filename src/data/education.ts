@@ -1,4 +1,4 @@
-import type { Study } from '@data/types';
+import type { Study } from './types';
 
 export const education: Study[] = [
   {

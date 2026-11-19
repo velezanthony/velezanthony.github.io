@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import SiteHeader from '@organisms/SiteHeader.astro';
-import SiteFooter from '@organisms/SiteFooter.astro';
+import BaseLayout from './BaseLayout.astro';
+import SiteHeader from '@/components/organisms/SiteHeader.astro';
+import SiteFooter from '@/components/organisms/SiteFooter.astro';
 import BackToTop from '@velezanthony/design/components/organisms/chrome/BackToTop.astro';
 import { designStrings } from '@/design/site-config';
-import { contact, profile } from '@data/profile';
+import { contact, profile } from '@/data/profile';
 import { gtmId } from '@/design/site-config';
-import type { Locale, RouteKey } from '@i18n/ui';
+import type { Locale, RouteKey } from '@/i18n/ui';
 
 /** Every public page except the print CV and the 404. */
 interface Props {

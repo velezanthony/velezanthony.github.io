@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { locales } from '@i18n/ui';
+import { locales } from '@/i18n/ui';
 import { email, profile } from './profile';
 import { privacySections, privacyUpdated, resolvePrivacy } from './privacy';
 

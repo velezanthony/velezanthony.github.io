@@ -1,10 +1,10 @@
 ---
-import PrintLayout from '@layouts/PrintLayout.astro';
-import CvDocument from './_sections/CvDocument.astro';
-import { getBuildCounts, getProjects } from '@data/projects';
+import PrintLayout from '@/layouts/PrintLayout.astro';
+import CvDocument from '@/pages/[...lang]/[cv]/_sections/CvDocument.astro';
+import { getBuildCounts, getProjects } from '@/data/projects';
 import { SITE } from '@/site';
-import { pageTitles, seo } from '@data/profile';
-import { alternates, assertLocale, localeRouteParams, path } from '@i18n/utils';
+import { pageTitles, seo } from '@/data/profile';
+import { alternates, assertLocale, localeRouteParams, path } from '@/i18n/utils';
 
 export function getStaticPaths() {
   return localeRouteParams('cv');

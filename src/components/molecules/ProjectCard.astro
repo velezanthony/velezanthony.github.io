@@ -4,12 +4,12 @@ import { Code } from 'astro:components';
 import type { CollectionEntry } from 'astro:content';
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import Text from '@velezanthony/design/components/atoms/display/Text.astro';
-import StackRow from '@molecules/StackRow.astro';
-import StatusChip from '@molecules/StatusChip.astro';
-import DownloadCount from '@molecules/DownloadCount.astro';
-import type { DownloadSources, StoreCounts } from '@data/downloads';
-import { useTranslations } from '@i18n/utils';
-import type { Locale } from '@i18n/ui';
+import StackRow from './StackRow.astro';
+import StatusChip from './StatusChip.astro';
+import DownloadCount from './DownloadCount.astro';
+import type { DownloadSources, StoreCounts } from '@/data/downloads';
+import { useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
 import type { ProjectStatus } from '@/schemas/project';
 import { codeThemes } from '@velezanthony/design/code-themes';
 

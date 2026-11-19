@@ -1,10 +1,10 @@
 import type { CollectionEntry } from 'astro:content';
 
-import { address, contact, email, knowsAbout, profile, spokenLanguages } from '@data/profile';
-import { education } from '@data/education';
-import { experience } from '@data/experience';
-import type { Locale } from '@i18n/ui';
-import { path } from '@i18n/utils';
+import { address, contact, email, knowsAbout, profile, spokenLanguages } from '@/data/profile';
+import { education } from '@/data/education';
+import { experience } from '@/data/experience';
+import type { Locale } from '@/i18n/ui';
+import { path } from '@/i18n/utils';
 import { linkOf } from '@/schemas/project';
 import { PERSON_ID, SITE } from '@/site';
 

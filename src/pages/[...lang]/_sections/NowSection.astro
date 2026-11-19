@@ -1,9 +1,9 @@
 ---
 import SectionHead from '@velezanthony/design/components/molecules/content/SectionHead.astro';
-import ProjectGrid from '@organisms/ProjectGrid.astro';
-import { path, useTranslations } from '@i18n/utils';
-import { getBuildCounts, getProjects } from '@data/projects';
-import type { Locale } from '@i18n/ui';
+import ProjectGrid from '@/components/organisms/ProjectGrid.astro';
+import { path, useTranslations } from '@/i18n/utils';
+import { getBuildCounts, getProjects } from '@/data/projects';
+import type { Locale } from '@/i18n/ui';
 
 interface Props {
   lang: Locale;

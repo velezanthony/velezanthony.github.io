@@ -1,10 +1,10 @@
 import type { HeadConfig } from '@velezanthony/design/head';
 
-import { profile } from '@data/profile';
-import { locales, ogLocales } from '@i18n/ui';
-import type { Locale } from '@i18n/ui';
-import { alternateLocale } from '@i18n/utils';
-import { person } from '@/seo/jsonld';
+import { profile } from '@/data/profile';
+import { locales, ogLocales } from '@/i18n/ui';
+import type { Locale } from '@/i18n/ui';
+import { alternateLocale } from '@/i18n/utils';
+import { person } from './jsonld';
 
 export interface PageHeadInput {
   lang: Locale;

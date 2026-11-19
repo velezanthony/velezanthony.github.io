@@ -2,17 +2,17 @@
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import Text from '@velezanthony/design/components/atoms/display/Text.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
-import Todo from '@atoms/Todo.astro';
-import Rule from '@atoms/Rule.astro';
-import StackRow from '@molecules/StackRow.astro';
-import StatusChip from '@molecules/StatusChip.astro';
-import { useTranslations } from '@i18n/utils';
-import type { Locale } from '@i18n/ui';
+import Todo from '@/components/atoms/Todo.astro';
+import Rule from '@/components/atoms/Rule.astro';
+import StackRow from '@/components/molecules/StackRow.astro';
+import StatusChip from '@/components/molecules/StatusChip.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
 import type { ProjectStatus } from '@/schemas/project';
-import DownloadCount from '@molecules/DownloadCount.astro';
+import DownloadCount from '@/components/molecules/DownloadCount.astro';
 import TableOfContents from '@velezanthony/design/components/molecules/navigation/TableOfContents.astro';
 import { designStrings } from '@/design/site-config';
-import type { DownloadSources, StoreCounts } from '@data/downloads';
+import type { DownloadSources, StoreCounts } from '@/data/downloads';
 
 interface Props {
   lang: Locale;

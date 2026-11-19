@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { profile, spokenLanguages, stackGroups, contact } from '@data/profile';
-import { experience } from '@data/experience';
-import { localeOfEntry, path } from '@i18n/utils';
+import { profile, spokenLanguages, stackGroups, contact } from '@/data/profile';
+import { experience } from '@/data/experience';
+import { localeOfEntry, path } from '@/i18n/utils';
 import { linkOf } from '@/schemas/project';
-import type { Locale } from '@i18n/ui';
+import type { Locale } from '@/i18n/ui';
 
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */
 const plain = (text: string) => text.replaceAll('**', '');

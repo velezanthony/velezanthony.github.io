@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import Text from '@velezanthony/design/components/atoms/display/Text.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
-import ContactList from '@molecules/ContactList.astro';
-import { contact, profile } from '@data/profile';
-import { defaultLocale, locales } from '@i18n/ui';
-import { alternateLocale, alternates, path, useTranslations } from '@i18n/utils';
-import type { Locale } from '@i18n/ui';
+import ContactList from '@/components/molecules/ContactList.astro';
+import { contact, profile } from '@/data/profile';
+import { defaultLocale, locales } from '@/i18n/ui';
+import { alternateLocale, alternates, path, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
 
 interface Props {
   lang: Locale;

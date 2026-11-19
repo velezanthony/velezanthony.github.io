@@ -1,11 +1,11 @@
 ---
 import { Font } from 'astro:assets';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
-import { path, useTranslations } from '@i18n/utils';
-import type { Locale } from '@i18n/ui';
+import { path, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
 import { gtmId } from '@/design/site-config';
 import { pageHead } from '@/seo/head';
-import RememberLocale from '@atoms/RememberLocale.astro';
+import RememberLocale from '@/components/atoms/RememberLocale.astro';
 
 interface Props {
   lang: Locale;

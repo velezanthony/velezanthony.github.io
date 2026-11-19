@@ -1,4 +1,4 @@
-import type { ContactLink, SpokenLanguage, StackGroup, Localized } from '@data/types';
+import type { ContactLink, SpokenLanguage, StackGroup, Localized } from './types';
 import { SITE, SITE_HOST } from '@/site';
 
 export const email = 'velezanthony2000@gmail.com';

@@ -5,14 +5,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@atoms/*": ["src/components/atoms/*"],
-      "@molecules/*": ["src/components/molecules/*"],
-      "@organisms/*": ["src/components/organisms/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@data/*": ["src/data/*"],
-      "@i18n/*": ["src/i18n/*"],
-      "@styles/*": ["src/styles/*"]
+      "@/*": ["src/*"]
     }
   }
 }

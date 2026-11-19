@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import type { Phrase } from '@i18n/ui';
+import type { Phrase } from './ui';
 import {
   alternateLocale,
   alternates,
@@ -16,8 +16,8 @@ import {
 } from './utils';
 
 /* The catalogue has no pending phrase today, so one is planted to exercise the fallback. */
-vi.mock('@i18n/ui', async (importOriginal) => {
-  const ui = await importOriginal<typeof import('@i18n/ui')>();
+vi.mock('./ui', async (importOriginal) => {
+  const ui = await importOriginal<typeof import('./ui')>();
   return { ...ui, en: { ...ui.en, 'Frase pendiente': ui.PENDING } };
 });
 const pending = 'Frase pendiente' as Phrase;

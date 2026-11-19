@@ -1,10 +1,10 @@
 ---
-import PageLayout from '@layouts/PageLayout.astro';
-import HeroSection from './_sections/HeroSection.astro';
-import NowSection from './_sections/NowSection.astro';
-import TrackRecordSection from './_sections/TrackRecordSection.astro';
-import { pageTitles, seo } from '@data/profile';
-import { alternates, assertLocale, localeParams } from '@i18n/utils';
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroSection from '@/pages/[...lang]/_sections/HeroSection.astro';
+import NowSection from '@/pages/[...lang]/_sections/NowSection.astro';
+import TrackRecordSection from '@/pages/[...lang]/_sections/TrackRecordSection.astro';
+import { pageTitles, seo } from '@/data/profile';
+import { alternates, assertLocale, localeParams } from '@/i18n/utils';
 
 export const getStaticPaths = localeParams;
 
