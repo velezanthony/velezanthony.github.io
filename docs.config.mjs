@@ -42,6 +42,7 @@ export default defineDocsConfig({
       '/docker-control-center/sitemap.xml',
       '/cotton-props/sitemap.xml',
       '/django-language-service/sitemap.xml',
+      '/design/sitemap.xml',
     ],
   },
 });
