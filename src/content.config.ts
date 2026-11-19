@@ -1,5 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { collections as designCollections } from '@velezanthony/design/content';
 
 import { projectSchema } from '@/schemas/project';
 
@@ -13,4 +14,4 @@ const projects = defineCollection({
   schema: projectSchema,
 });
 
-export const collections = { projects };
+export const collections = { ...designCollections, projects };
