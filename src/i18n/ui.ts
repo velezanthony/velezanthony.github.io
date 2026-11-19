@@ -3,11 +3,6 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'es';
 
-export const localeNames: Record<Locale, string> = {
-  es: 'Español',
-  en: 'English',
-};
-
 /** Open Graph wants a territory too. */
 export const ogLocales: Record<Locale, string> = {
   es: 'es_ES',
