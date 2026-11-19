@@ -82,6 +82,7 @@ export const en = {
   'Última actualización': 'Last updated',
   'Preferencias de cookies': 'Cookie preferences',
   'Aviso de cookies': 'Cookie notice',
+  'Cambiar el tema de color': 'Toggle color theme',
   'Uso cookies de analítica solo si las aceptas. La web funciona igual sin ellas.':
     'I use analytics cookies only if you accept them. The site works the same without them.',
   Aceptar: 'Accept',

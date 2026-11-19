@@ -4,7 +4,7 @@ import '@styles/theme.css';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
 import { path, useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
-import { designStrings, gtmId } from '@/design/site-config';
+import { gtmId } from '@/design/site-config';
 import { pageHead } from '@/seo/head';
 import RememberLocale from '@atoms/RememberLocale.astro';
 
@@ -53,7 +53,11 @@ const head = pageHead({
   bodyClass={['min-h-screen bg-canvas antialiased', bodyClass].filter(Boolean).join(' ')}
   gtmId={gtmId}
   privacyUrl={path(lang, 'privacy')}
-  strings={designStrings(lang)}
+  label={t('Aviso de cookies')}
+  message={t('Uso cookies de analítica solo si las aceptas. La web funciona igual sin ellas.')}
+  acceptLabel={t('Aceptar')}
+  rejectLabel={t('Rechazar')}
+  privacyLabel={t('Política de privacidad')}
 >
   <Fragment slot="head">
     <Font cssVariable="--font-plex-sans" preload />
