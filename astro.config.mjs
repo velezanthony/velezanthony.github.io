@@ -3,8 +3,6 @@ import { defineConfig } from 'astro/config';
 
 import { docs } from '@velezanthony/design/integration';
 
-import { boundAnimationLoops } from './src/build/bound-animation-loops.ts';
-import { pruneOrphanAssets } from './src/build/prune-orphan-assets.ts';
 import docsConfig from './docs.config.mjs';
 import { defaultLocale, locales } from './src/i18n/ui.ts';
 import { SITE } from './src/site.ts';
@@ -42,5 +40,5 @@ export default defineConfig({
     shikiConfig: { wrap: false },
   },
 
-  integrations: [boundAnimationLoops(), pruneOrphanAssets(), docs(docsConfig)],
+  integrations: [docs(docsConfig)],
 });
