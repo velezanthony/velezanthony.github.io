@@ -1,8 +1,28 @@
 import { describe, expect, it } from 'vitest';
 
-import { owner } from './test-owner';
 import { breadcrumb, person, softwareSourceCode, techArticle } from './jsonld';
-import type { ProjectData } from './jsonld';
+import type { PersonSource, ProjectData } from './jsonld';
+
+/** A made-up owner for the tests: `core/` does not import the real content. */
+const owner: PersonSource = {
+  profile: {
+    name: 'Anthony Velez Tapia',
+    headline: { es: 'Desarrollador Full Stack', en: 'Full Stack Developer' },
+  },
+  email: 'velezanthony2000@gmail.com',
+  knowsAbout: ['Python', 'Django'],
+  address: { locality: 'Pamplona', region: 'Navarra', country: 'ES' },
+  spokenLanguages: [{ code: 'es' }, { code: 'eu' }, { code: 'en' }],
+  contact: [
+    { href: 'mailto:velezanthony2000@gmail.com' },
+    { href: 'https://github.com/velezanthony' },
+    { href: 'https://linkedin.com/in/anthony-velez-tapia' },
+  ],
+  education: [{ school: 'SEIM' }],
+  experience: [
+    { role: { es: 'Desarrollador Full Stack', en: 'Full Stack Developer' }, company: 'Dinycon' },
+  ],
+};
 
 const site = 'https://velezanthony.github.io';
 const personId = `${site}/#anthony`;
