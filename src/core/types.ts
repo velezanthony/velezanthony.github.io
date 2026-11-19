@@ -13,7 +13,7 @@ export type YearMonth = `${number}-${number}`;
 /** `YYYY-MM-DD`. */
 export type IsoDate = `${number}-${number}-${number}`;
 
-export interface DateRange {
+interface DateRange {
   start: YearMonth;
   /** `null` means the role is current. */
   end: YearMonth | null;

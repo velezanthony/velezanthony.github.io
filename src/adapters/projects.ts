@@ -6,7 +6,7 @@ import { resolveLocalized } from '@core/i18n/localized';
 import type { Resolved } from '@core/i18n/localized';
 import type { Locale } from '@core/i18n/locales';
 
-export type ProjectEntry = CollectionEntry<'projects'>;
+type ProjectEntry = CollectionEntry<'projects'>;
 
 export type LocalisedProject = Resolved<ProjectEntry>;
 

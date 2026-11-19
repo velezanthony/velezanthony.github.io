@@ -7,8 +7,8 @@ import { projectStatuses } from '@core/projects/status';
  * What a link IS, declared rather than guessed from its host. The docs are moving off
  * `github.io/<repo>/` and into this site, which would quietly break any host regex.
  */
-export const linkKinds = ['source', 'docs', 'package'] as const;
-export type LinkKind = (typeof linkKinds)[number];
+const linkKinds = ['source', 'docs', 'package'] as const;
+type LinkKind = (typeof linkKinds)[number];
 
 /* Consumers pick THE repository and THE docs; a second one would be silently ignored. */
 const single: LinkKind[] = ['source', 'docs'];
@@ -19,7 +19,6 @@ const link = z.object({
   kind: z.enum(linkKinds),
   href: z.url(),
 });
-export type ProjectLink = z.infer<typeof link>;
 
 /* One entry of a list the site renders with its own separators. A middot written into it doubles
    them, in the wrong colour, and makes three items one that cannot wrap. */
