@@ -20,7 +20,8 @@ const { lang, name, contact, year, cookieControl = false } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<footer class="border-t border-rule">
+{/* `docs-footer` is the library's inverted surface: it redefines the tokens in its scope. */}
+<footer class="docs-footer">
   <div class="mx-auto max-w-(--container-page) px-6 py-12 lg:px-10">
     <div class="grid gap-10 md:grid-cols-2">
       <div>
@@ -36,7 +37,7 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <div class="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-rule pt-6 font-mono text-xs text-faint">
+    <div class="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-ink/20 pt-6 font-mono text-xs text-muted">
       <p>
         © {year} {name}
       </p>
