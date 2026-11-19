@@ -66,8 +66,7 @@ export default defineConfig(
         {
           patterns: [
             {
-              /* The layouts are the shell that reads the library's config; nothing else may. */
-              group: ['@/adapters/**', '!@/adapters/design'],
+              group: ['@/adapters/**'],
               message: 'ui/ is presentation: pages hand it the data.',
             },
           ],

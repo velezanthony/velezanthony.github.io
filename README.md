@@ -58,7 +58,7 @@ Fonts (IBM Plex Sans and Mono) are downloaded and self-hosted at build time by A
 src/
 ├── core/             pure logic: i18n, downloads, timeline, privacy, seo (no Astro, no fetch)
 ├── data/             content: profile · experience · education · privacy · ui phrases
-├── adapters/         Astro and network: projects · downloads · library config
+├── adapters/         Astro and network: projects · downloads
 ├── client/           browser scripts
 ├── ui/               components/ · layouts/
 ├── pages/            routes, with page-specific pieces in `_partials/`

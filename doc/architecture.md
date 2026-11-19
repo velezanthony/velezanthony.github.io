@@ -8,7 +8,7 @@ Astro 7 · static output · Spanish + English · GitHub Pages at `https://veleza
 src/
 ├── core/       pure logic: no Astro, no fetch, no DOM; what it needs arrives as a parameter
 ├── data/       content only: profile, experience, education, privacy text, UI phrases
-├── adapters/   what touches Astro or the network: content collections, stores, library config
+├── adapters/   what touches Astro or the network: content collections, stores
 ├── client/     browser scripts
 ├── ui/         components and layouts, reused across pages
 └── pages/      routes, each with its own `_partials/`
@@ -20,7 +20,7 @@ src/
 | --- | --- |
 | `core/` | `astro`, `astro:*`, `data/`, `adapters/`, `ui/`, `pages/`, `client/` |
 | `data/` | `adapters/`, `ui/`, `pages/` |
-| `ui/` | `adapters/` (except `adapters/design`, which the layouts read) |
+| `ui/` | `adapters/` |
 
 `core/seo` therefore takes the owner, the project and the site identity as parameters; `data/person.ts` and the pages hand them in. Tests live next to their file (`*.test.ts`); the logic ones are in `core/`, `adapters/` and `client/`.
 
@@ -103,7 +103,7 @@ src/
 ├── content.config.ts · site.ts · site.css
 ├── core/             types.ts · i18n/ · downloads/ · timeline/ · privacy/ · projects/ · seo/
 ├── data/             profile · experience · education · emphasis · privacy · person · ui
-├── adapters/         projects · project-schema · downloads · design
+├── adapters/         projects · project-schema · downloads
 ├── client/           downloads · storage
 ├── ui/
 │   ├── components/   ContactList · DownloadCount · StackRow · StatusChip · ProjectGrid
