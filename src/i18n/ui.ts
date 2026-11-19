@@ -26,7 +26,6 @@ export const en = {
   CV: 'CV',
   'Ir al contenido': 'Skip to content',
   'Volver arriba': 'Back to top',
-  'Cambiar tema': 'Switch theme',
   'Navegación principal': 'Main navigation',
   Idioma: 'Language',
   Contacto: 'Contact',
