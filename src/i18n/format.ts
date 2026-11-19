@@ -1,6 +1,5 @@
-import { ogLocales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
-import type { IsoDate, YearMonth } from '@data/types';
+import type { YearMonth } from '@data/types';
 
 export function formatMonth(lang: Locale, value: YearMonth): string {
   const [year, month] = value.split('-').map(Number);
@@ -20,16 +19,4 @@ export function formatRange(
   presentLabel: string,
 ): string {
   return `${formatMonth(lang, start)} – ${end ? formatMonth(lang, end) : presentLabel}`;
-}
-
-/** `10 de noviembre de 2026`. Built and printed in UTC, so no time zone moves the day. The
-    territory comes from the Open Graph locale: a bare `en` is American, and day-first is how
-    this site is read. */
-export function formatDate(lang: Locale, value: IsoDate): string {
-  const [year, month, day] = value.split('-').map(Number);
-  const date = new Date(Date.UTC(year!, month! - 1, day!));
-  return new Intl.DateTimeFormat(ogLocales[lang].replace('_', '-'), {
-    dateStyle: 'long',
-    timeZone: 'UTC',
-  }).format(date);
 }

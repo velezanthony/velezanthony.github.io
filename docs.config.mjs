@@ -5,6 +5,8 @@ export default defineDocsConfig({
   name: 'Anthony Velez Tapia',
   locales: ['es', 'en'],
   defaultLocale: 'es',
+  /* La política vale para el portfolio y para las webs de documentación de los proyectos. */
+  privacy: { page: true },
   /* Every project publishes its docs to `github.io/<project>/` with a sitemap of its own. Typed
      here, and `src/docs-config.test.ts` keeps it equal to the projects collection. */
   sitemap: {
