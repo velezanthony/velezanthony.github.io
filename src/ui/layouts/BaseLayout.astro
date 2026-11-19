@@ -3,8 +3,7 @@ import Fonts from '@velezanthony/design/fonts';
 import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
 import { pageHead, type PageHeadInput } from '@velezanthony/design/seo';
 import type { PageSeo } from '@velezanthony/design/seo-schema';
-import { designStrings, gtmId } from '@velezanthony/design/site';
-import { path } from '@core/i18n/utils';
+import { designStrings, gtmId, privacyUrl } from '@velezanthony/design/site';
 import { person } from '@core/seo/jsonld';
 import type { Locale } from '@core/i18n/locales';
 import { owner } from '@data/person';
@@ -53,7 +52,7 @@ const head = await pageHead({
   head={head}
   bodyClass={['min-h-screen bg-canvas antialiased', bodyClass].filter(Boolean).join(' ')}
   gtmId={gtmId}
-  privacyUrl={path(lang, 'privacy')}
+  privacyUrl={privacyUrl(lang)}
   strings={strings}
 >
   <Fragment slot="head">
