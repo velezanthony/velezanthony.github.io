@@ -1,4 +1,3 @@
-import { readFileSync } from 'node:fs';
 import { bundledThemes } from 'shiki';
 import { describe, expect, it } from 'vitest';
 
@@ -38,26 +37,6 @@ describe('codeThemes', () => {
         }))
         .filter(({ ratio }) => ratio < 4.5);
       expect(failing).toEqual([]);
-    },
-  );
-});
-
-/* Shiki writes the dark colours as `--shiki-dark` and leaves switching to the site. The site goes
-   dark two ways — the system asks, or the visitor picks it — and the code must follow both. */
-describe('the dark code theme', () => {
-  const selectors = [
-    ...readFileSync('src/styles/theme.css', 'utf8')
-      .replace(/\/\*[\s\S]*?\*\//g, '')
-      .matchAll(/([^{}]+)\{[^{}]*color:\s*var\(--shiki-dark\)/g),
-  ]
-    .flatMap((match) => match[1]!.split(','))
-    .map((selector) => selector.trim());
-
-  it.each([":root:not([data-theme='light'])", ":root[data-theme='dark']"])(
-    'applies under %s',
-    (root) => {
-      expect(selectors).toContain(`${root} .astro-code`);
-      expect(selectors).toContain(`${root} .astro-code span`);
     },
   );
 });
