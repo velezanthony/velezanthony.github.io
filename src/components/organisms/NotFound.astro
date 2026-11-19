@@ -128,7 +128,8 @@ const td = useTranslations(lang);
 </BaseLayout>
 
 <script>
-  import { LANG_KEY, safeGet, storageOf } from '@/client/storage';
+  import { safeGet, storageOf } from '@velezanthony/design/client/storage';
+  import { LANG_KEY } from '@/client/storage';
 
   /* The page is built once, in Spanish. A reader who arrived from the English site gets the
      English blocks and title, which the page carries for exactly this. */

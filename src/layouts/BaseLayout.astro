@@ -1,16 +1,12 @@
 ---
 import { Font } from 'astro:assets';
 import '@styles/theme.css';
-import { profile } from '@data/profile';
-import { alternateLocale, path, useTranslations } from '@i18n/utils';
-import { locales, ogLocales } from '@i18n/ui';
+import LibraryBaseLayout from '@velezanthony/design/components/layouts/BaseLayout.astro';
+import { path, useTranslations } from '@i18n/utils';
 import type { Locale } from '@i18n/ui';
-import { person } from '@/seo/jsonld';
-import { THEME_KEY } from '@/client/storage';
-import RememberLocale from '@atoms/RememberLocale.astro';
-import ConsentBanner from '@velezanthony/design/components/organisms/chrome/ConsentBanner.astro';
 import { designStrings, gtmId } from '@/design/site-config';
-import { themeColors } from '@velezanthony/design/theme-colors';
+import { pageHead } from '@/seo/head';
+import RememberLocale from '@atoms/RememberLocale.astro';
 
 interface Props {
   lang: Locale;
@@ -38,84 +34,33 @@ const {
 } = Astro.props;
 const t = useTranslations(lang);
 
-const fullTitle = bareTitle || title === profile.name ? title : `${title} | ${profile.name}`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const head = pageHead({
+  lang,
+  title,
+  bareTitle,
+  description,
+  alternates,
+  noindex,
+  pathname: Astro.url.pathname,
+  site: Astro.site!,
+  generator: Astro.generator,
+});
 ---
 
-<!doctype html>
-<html lang={lang}>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
-
-    <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex" />}
-
-    {!noindex && <link rel="canonical" href={canonical.href} />}
-    {!noindex &&
-      locales.map((locale) => (
-        <link
-          rel="alternate"
-          hreflang={locale}
-          href={new URL(alternates[locale], Astro.site).href}
-        />
-      ))}
-    {!noindex && (
-      <link rel="alternate" hreflang="x-default" href={new URL(alternates.es, Astro.site).href} />
-    )}
-
-    {/* Absolute URL required: crawlers do not resolve relative image paths. */}
-    <meta property="og:image" content={new URL('/og.png', Astro.site).href} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={profile.name} />
-    <meta name="twitter:image" content={new URL('/og.png', Astro.site).href} />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical.href} />
-    <meta property="og:locale" content={ogLocales[lang]} />
-    <meta property="og:locale:alternate" content={ogLocales[alternateLocale(lang)]} />
-    <meta property="og:site_name" content={profile.name} />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content={themeColors.light} media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content={themeColors.dark} media="(prefers-color-scheme: dark)" />
-
+<LibraryBaseLayout
+  lang={lang}
+  head={head}
+  bodyClass={['min-h-screen bg-canvas antialiased', bodyClass].filter(Boolean).join(' ')}
+  gtmId={gtmId}
+  privacyUrl={path(lang, 'privacy')}
+  strings={designStrings(lang)}
+>
+  <Fragment slot="head">
     <Font cssVariable="--font-plex-sans" preload />
     <Font cssVariable="--font-plex-mono" />
 
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(person(lang, canonical.href))}
-    />
-    <script is:inline define:vars={{ key: THEME_KEY, colors: themeColors }}>
-      /* Runs before first paint: without it the page renders in the system
-         theme and then flips, which is the flash every toggle has to avoid.
-         Inline, so it cannot import. */
-      try {
-        const saved = localStorage.getItem(key);
-        if (saved === 'dark' || saved === 'light') {
-          document.documentElement.dataset.theme = saved;
-          /* The same as syncThemeColor: the browser bar follows the choice. */
-          for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
-            meta.setAttribute('content', colors[saved]);
-          }
-        }
-      } catch {
-        /* Storage blocked: the system theme stands. */
-      }
-    </script>
-
     <slot name="head" />
-  </head>
+  </Fragment>
 
   {
     /* Not on the 404 itself: served at arbitrary paths, it would read as Spanish and overwrite
@@ -123,34 +68,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     !noindex && <RememberLocale />
   }
 
-  <body class:list={['min-h-screen bg-canvas antialiased', bodyClass]}>
-    <a
-      href="#main"
-      class="label sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:border focus:border-rule focus:bg-canvas focus:px-3 focus:py-2 focus:text-ink"
-    >
-      {t('Ir al contenido')}
-    </a>
+  <a
+    href="#main"
+    class="label sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:border focus:border-rule focus:bg-canvas focus:px-3 focus:py-2 focus:text-ink"
+  >
+    {t('Ir al contenido')}
+  </a>
 
-    <slot />
+  <slot />
 
-    {
-      /* Tag Manager is not in the page: the banner's script loads it, and only for a visitor who
-         accepted. It is the only way in, so with no ID there is nothing to ask about. */
-      gtmId && (
-        <ConsentBanner
-          gtmId={gtmId}
-          privacyUrl={path(lang, 'privacy')}
-          strings={designStrings(lang)}
-        />
-      )
-    }
-  </body>
-</html>
+  <Fragment slot="scripts">
+    <script>
+      import { trackSections } from '@velezanthony/design/client/toc';
 
-<script>
-  import { bootDocs } from '@velezanthony/design/components/layouts/boot.ts';
-
-  /* The library's client wiring: it reads the page for what it finds (the consent banner, the
-     theme toggle) and ignores the rest. Its modules are not exported; this one is. */
-  bootDocs();
-</script>
+      /* The case study's table of contents follows the section being read. */
+      const toc = document.querySelector('nav.toc');
+      if (toc) trackSections(toc);
+    </script>
+  </Fragment>
+</LibraryBaseLayout>

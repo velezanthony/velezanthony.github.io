@@ -7,7 +7,8 @@
 ---
 
 <script>
-  import { LANG_KEY, safeSet, storageOf } from '@/client/storage';
+  import { safeSet, storageOf } from '@velezanthony/design/client/storage';
+  import { LANG_KEY } from '@/client/storage';
   import { parsePath } from '@i18n/utils';
 
   safeSet(storageOf('sessionStorage'), LANG_KEY, parsePath(location.pathname).lang);

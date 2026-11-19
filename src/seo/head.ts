@@ -1,14 +1,10 @@
-import type { ComponentProps } from 'astro/types';
-import type Shell from '@velezanthony/design/components/layouts/Shell.astro';
+import type { HeadConfig } from '@velezanthony/design/head';
 
 import { profile } from '@data/profile';
 import { locales, ogLocales } from '@i18n/ui';
 import type { Locale } from '@i18n/ui';
 import { alternateLocale } from '@i18n/utils';
 import { person } from '@/seo/jsonld';
-
-/** One `<head>` tag as data, the shape the library's layout renders. */
-export type HeadTag = ComponentProps<typeof Shell>['head'][number];
 
 export interface PageHeadInput {
   lang: Locale;
@@ -27,7 +23,7 @@ export interface PageHeadInput {
   generator: string;
 }
 
-function meta(key: 'name' | 'property', name: string, content: string): HeadTag {
+function meta(key: 'name' | 'property', name: string, content: string): HeadConfig {
   return { tag: 'meta', attrs: { [key]: name, content } };
 }
 
@@ -36,7 +32,7 @@ function serializeJsonLd(value: unknown): string {
   return JSON.stringify(value).replaceAll('<', '\\u003c');
 }
 
-/** The page's `<head>` as data: title, indexing, social cards and the Person it is about. */
+/** The page's `<head>` as the data the library's layout renders: title, indexing, social cards and the Person it is about. */
 export function pageHead({
   lang,
   title,
@@ -47,7 +43,7 @@ export function pageHead({
   pathname,
   site,
   generator,
-}: PageHeadInput): HeadTag[] {
+}: PageHeadInput): HeadConfig[] {
   const fullTitle = bareTitle || title === profile.name ? title : `${title} | ${profile.name}`;
   const canonical = new URL(pathname, site).href;
   /* Absolute URL required: crawlers do not resolve relative image paths. */
@@ -61,7 +57,7 @@ export function pageHead({
     ...(noindex
       ? []
       : [
-          { tag: 'link', attrs: { rel: 'canonical', href: canonical } } satisfies HeadTag,
+          { tag: 'link', attrs: { rel: 'canonical', href: canonical } } satisfies HeadConfig,
           ...locales.map(
             (locale) =>
               ({
@@ -71,7 +67,7 @@ export function pageHead({
                   hreflang: locale,
                   href: new URL(alternates[locale], site).href,
                 },
-              }) satisfies HeadTag,
+              }) satisfies HeadConfig,
           ),
           {
             tag: 'link',
@@ -80,7 +76,7 @@ export function pageHead({
               hreflang: 'x-default',
               href: new URL(alternates.es, site).href,
             },
-          } satisfies HeadTag,
+          } satisfies HeadConfig,
         ]),
     meta('property', 'og:image', image),
     meta('property', 'og:image:width', '1200'),
