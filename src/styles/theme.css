@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* The library's components bring their own utility classes; Tailwind skips `node_modules` unless told. */
+@source '../../node_modules/@velezanthony/design/src/components';
+
 /* Tokens. Neutrals are an OKLCH ramp at hue 195 so they share the
    accent's hue — do not swap them for Tailwind's default greys.
    Ratios below are against each token's own surface. */
