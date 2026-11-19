@@ -66,6 +66,8 @@ src/
 └── site.css
 ```
 
+Imports cross folders through one alias per layer (`@core`, `@data`, `@adapters`, `@client`, `@ui`); ESLint forbids `../` and enforces which layer may import which.
+
 `doc/architecture.md` records the decisions and the reasoning behind them. Read it before changing structure.
 
 ## Editing content

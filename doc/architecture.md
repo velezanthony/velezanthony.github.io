@@ -14,13 +14,14 @@ src/
 └── pages/      routes, each with its own `_partials/`
 ```
 
-**Dependencies point down only**, and ESLint (`no-restricted-imports`, `eslint.config.mjs`) enforces it:
+**Dependencies point down only**, and ESLint (`no-restricted-imports`, `eslint.config.mjs`) enforces it through the aliases below:
 
 | Layer | May not import |
 | --- | --- |
-| `core/` | `astro`, `astro:*`, `data/`, `adapters/`, `ui/`, `pages/`, `client/` |
-| `data/` | `adapters/`, `ui/`, `pages/` |
-| `ui/` | `adapters/` |
+| `core/` | `astro`, `astro:*`, `@data`, `@adapters`, `@ui`, `@pages`, `@client` |
+| `data/` | `@adapters`, `@ui`, `@pages` |
+| `ui/` | `@adapters`, `@pages` |
+| `adapters/` | `@ui`, `@pages` |
 
 `core/seo` therefore takes the owner, the project and the site identity as parameters; `data/person.ts` and the pages hand them in. Tests live next to their file (`*.test.ts`); the logic ones are in `core/`, `adapters/` and `client/`.
 
@@ -100,16 +101,17 @@ Three kinds of text, three homes:
 
 ```
 src/
-├── content.config.ts · site.ts · site.css
+├── content.config.ts · site.css
 ├── core/             types.ts · i18n/ · downloads/ · timeline/ · privacy/ · projects/ · seo/
-├── data/             profile · experience · education · emphasis · privacy · person · ui
+├── data/             site · profile · experience · education · emphasis · privacy · person · ui
 ├── adapters/         projects · project-schema · downloads
 ├── client/           downloads · storage
 ├── ui/
 │   ├── components/   ContactList · DownloadCount · StackRow · StatusChip · ProjectGrid
 │   │                 ProjectCard · Timeline · ExperienceItem · EducationRule · variant.ts
 │   ├── layouts/      BaseLayout · PageLayout · PrintLayout · _partials/
-│   └── translations.ts
+│   ├── translations.ts
+│   └── test-utils.ts
 ├── pages/
 │   ├── 404.astro · _partials/NotFound.astro · llms.txt.ts · robots.txt.ts
 │   └── [...lang]/
@@ -138,4 +140,11 @@ The route segment is a dynamic param named after the folder's English concept, b
 
 ### Imports
 
-**One alias, `@/*` → `src/*`.** Anything outside the file's own folder is imported through it, so the layer is written on the import line. Only a file's own folder and the `_partials/` below it are imported relatively: relative means colocated, `@/` means shared. Writing `../_partials/…` across pages means it is no longer a partial — promote it to `@/ui/components/`.
+**One alias per layer:** `@core/*`, `@data/*`, `@adapters/*`, `@client/*` and `@ui/*` map to `src/<layer>/*`. There is no `@pages`: nothing imports a route, and no alias for the whole `src/` either, so a layer cannot be skipped by accident. Any import that leaves the file's own folder goes through an alias, so the layer is written on the import line; ESLint rejects `../` in `src/`. Only `./` is relative: the file's own folder and the `_partials/` below it. Relative means colocated, an alias means shared. Writing `../_partials/…` across pages means it is no longer a partial — promote it to `@ui/components/`.
+
+```ts
+import { alternates, path } from '@core/i18n/utils';
+import { profile } from '@data/profile';
+import { getProjects } from '@adapters/projects';
+import { useTranslations } from '@ui/translations';
+```
