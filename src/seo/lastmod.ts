@@ -1,8 +1,6 @@
 /** Runs git and returns its trimmed stdout. Throws when git fails, as `execFileSync` does. */
 export type Git = (args: string[]) => string;
 
-type SourcesOf = (locale: string, segments: string[]) => string[];
-
 /**
  * The date of the last commit that touched a file, or undefined.
  *
@@ -41,15 +39,4 @@ export function createCommitDates(git: Git) {
     }
     return dates.get(path);
   };
-}
-
-/** A page's `<lastmod>`: the newest commit among the files it is built from. */
-export function createLastmod(git: Git, sourcesOf: SourcesOf) {
-  const commitDate = createCommitDates(git);
-  return (locale: string, segments: string[]): string | undefined =>
-    sourcesOf(locale, segments)
-      .map(commitDate)
-      .filter((date): date is string => date !== undefined)
-      .sort()
-      .at(-1);
 }

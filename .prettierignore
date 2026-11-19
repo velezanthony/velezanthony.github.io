@@ -1,5 +1,4 @@
 dist/
-legacy/
 .astro/
 package-lock.json
 

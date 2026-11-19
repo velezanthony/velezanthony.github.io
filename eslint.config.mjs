@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
 /* No typed linting: `astro check` already owns types, and the parser has to write a `.tsx`
    per `.astro` file to type-check one. */
 export default defineConfig(
-  { ignores: ['dist/', '.astro/', 'legacy/'] },
+  { ignores: ['dist/', '.astro/'] },
 
   js.configs.recommended,
   tseslint.configs.recommended,
