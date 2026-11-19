@@ -5,6 +5,8 @@ export default defineDocsConfig({
   name: 'Anthony Velez Tapia',
   locales: ['es', 'en'],
   defaultLocale: 'es',
+  /* Tokens and styles of the portfolio only; the library compiles them with its own theme. */
+  theme: 'src/styles/site.css',
   /* The policy is the portfolio's own page, one for the whole domain; the library only links it. */
   privacyUrl: { es: '/privacidad/', en: '/en/privacy/' },
   /* Every project publishes its docs to `github.io/<project>/` with a sitemap of its own. Typed

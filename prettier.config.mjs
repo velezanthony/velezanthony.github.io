@@ -9,6 +9,6 @@ export default {
   singleQuote: true,
   overrides: [{ files: '*.astro', options: { parser: 'astro' } }],
 
-  /* The stylesheet that defines `@theme` and the custom utilities, so they sort as Tailwind's own. */
-  tailwindStylesheet: './src/styles/theme.css',
+  /* The library's stylesheet: it owns Tailwind and the tokens, and the portfolio's own are not in its tree. */
+  tailwindStylesheet: './node_modules/@velezanthony/design/src/components/styles/theme.css',
 };

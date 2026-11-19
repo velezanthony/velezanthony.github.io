@@ -5,7 +5,7 @@ Astro 7 · static output · Spanish + English · GitHub Pages at `https://veleza
 ## Layers
 
 ```
-tokens        @theme in src/styles/theme.css
+tokens        @theme in src/styles/site.css
   ↓
 atoms         Tag · Heading · Text · Link · Icon
   ↓
@@ -120,7 +120,7 @@ src/
 │       ├── [projects]/    index.astro · [slug].astro · _sections/
 │       ├── [experience]/  index.astro · _sections/
 │       └── [cv]/          index.astro · _sections/
-├── styles/           theme.css
+├── styles/           site.css
 └── content.config.ts
 ```
 

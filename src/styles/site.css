@@ -1,6 +1,4 @@
-/* The library's tokens, base, prose, code and motion. Its stylesheet also scans its components for
-   the utility classes they use, so nothing else is needed for them to render. */
-@import '@velezanthony/design/theme.css';
+/* Extends the library's theme (`theme` in docs.config.mjs): it is compiled in the same Tailwind pass, so its tokens also get utilities. */
 
 /* What only the portfolio has: the to-do notes, the CV sheet and its type scale, two column widths. */
 @theme {

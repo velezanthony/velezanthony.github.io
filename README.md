@@ -42,7 +42,7 @@ Then open http://localhost:4321 — it forwards to `/es/`.
 | Package | Why |
 | --- | --- |
 | `astro` | Static site generator. Routing, i18n, content collections, image pipeline, self-hosted fonts |
-| `tailwindcss` + `@tailwindcss/vite` | Styling. Design tokens live in `@theme` inside `src/styles/theme.css` |
+| `tailwindcss` + `@tailwindcss/vite` | Peers of the design library, which owns the Tailwind setup. The portfolio's own tokens live in `@theme` inside `src/styles/site.css` (the `theme` option of `docs.config.mjs`) |
 | `zod` | Schema for the project content collection. A malformed entry fails the build |
 
 **Development**
@@ -64,7 +64,7 @@ src/
 ├── content/projects/ case studies, one folder per locale
 ├── data/             experience · education · profile
 ├── i18n/             ui.ts · utils.ts · format.ts
-└── styles/           theme.css
+└── styles/           site.css
 ```
 
 `doc/architecture.md` records the decisions and the reasoning behind them. Read it before changing structure.
@@ -76,7 +76,7 @@ src/
 | A job, a degree, contact details | `src/data/` |
 | A project case study | `src/content/projects/<locale>/<slug>.md` |
 | UI strings | `src/i18n/ui.ts` |
-| Colours, type scale, spacing | `@theme` in `src/styles/theme.css` |
+| Colours, type scale, spacing | `@theme` in `src/styles/site.css` (the library's tokens come with `@velezanthony/design`) |
 
 Records in `src/data/` carry both languages on the same object, so a missing translation is a type error rather than a page that quietly renders Spanish.
 
