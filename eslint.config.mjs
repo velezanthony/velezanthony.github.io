@@ -6,6 +6,12 @@ import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+/* Crossing folders goes through an alias; `./` stays for a file's own folder. */
+const parentFolder = {
+  group: ['..', '../**'],
+  message: 'Cross folders through an alias (@core, @data, @adapters, @client, @ui).',
+};
+
 /* No typed linting: `astro check` already owns types, and the parser has to write a `.tsx`
    per `.astro` file to type-check one. */
 export default defineConfig(
@@ -21,7 +27,12 @@ export default defineConfig(
   { languageOptions: { globals: { ...globals.node } } },
   { files: ['**/*.astro'], languageOptions: { globals: { ...globals.browser } } },
 
-  /* Layers, as in doc/architecture.md: each one imports only what sits below it. */
+  /* Layers, as in doc/architecture.md: each one imports only what sits below it, through its alias.
+     `no-restricted-imports` keeps one option per file, so every block repeats `parentFolder`. */
+  {
+    files: ['src/**'],
+    rules: { 'no-restricted-imports': ['error', { patterns: [parentFolder] }] },
+  },
   {
     files: ['src/core/**'],
     rules: {
@@ -29,12 +40,13 @@ export default defineConfig(
         'error',
         {
           patterns: [
+            parentFolder,
             {
               group: ['astro', 'astro/*', 'astro:*', 'virtual:*'],
               message: 'core/ is pure: no Astro.',
             },
             {
-              group: ['@/data/**', '@/adapters/**', '@/ui/**', '@/pages/**', '@/client/**'],
+              group: ['@data/**', '@adapters/**', '@ui/**', '@pages/**', '@client/**'],
               message: 'core/ imports no other layer: what it needs arrives as a parameter.',
             },
           ],
@@ -49,8 +61,9 @@ export default defineConfig(
         'error',
         {
           patterns: [
+            parentFolder,
             {
-              group: ['@/adapters/**', '@/ui/**', '@/pages/**'],
+              group: ['@adapters/**', '@ui/**', '@pages/**'],
               message: 'data/ is content: it knows no network, markup or routes.',
             },
           ],
@@ -65,9 +78,27 @@ export default defineConfig(
         'error',
         {
           patterns: [
+            parentFolder,
             {
-              group: ['@/adapters/**'],
+              group: ['@adapters/**', '@pages/**'],
               message: 'ui/ is presentation: pages hand it the data.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/adapters/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            parentFolder,
+            {
+              group: ['@ui/**', '@pages/**'],
+              message: 'adapters/ feed the pages: they know no markup or routes.',
             },
           ],
         },
