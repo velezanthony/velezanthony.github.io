@@ -15,6 +15,9 @@ export const ogLocales: Record<Locale, string> = {
 export const routes = {
   projects: { es: 'proyectos', en: 'projects' },
   experience: { es: 'experiencia', en: 'experience' },
+  /* Docs pages of the library (`src/content/docs/articulos/`): their URL is the folder's in every
+     locale, so the English one is not translated. */
+  articles: { es: 'articulos', en: 'articulos' },
   cv: { es: 'cv', en: 'cv' },
   privacy: { es: 'privacidad', en: 'privacy' },
 } as const satisfies Record<string, Record<Locale, string>>;

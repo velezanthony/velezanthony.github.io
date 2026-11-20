@@ -25,8 +25,19 @@ describe('SiteHeader', () => {
     expect([...doc.querySelectorAll(`${nav} a`)].map(text)).toEqual([
       'Projects',
       'Experience',
+      'Articles',
       'CV',
     ]);
+  });
+
+  /* The articles are docs pages of the library, whose URL keeps the folder name in every locale. */
+  it('links the articles where the docs serve them', async () => {
+    const en = await render(SiteHeader, props);
+    const es = await render(SiteHeader, { ...props, lang: 'es' });
+    const href = (doc: Document) =>
+      doc.querySelector('#site-nav li:nth-child(3) a')?.getAttribute('href');
+    expect(href(en)).toBe('/en/articulos/');
+    expect(href(es)).toBe('/articulos/');
   });
 
   it('marks the current section', async () => {

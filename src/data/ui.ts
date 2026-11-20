@@ -7,6 +7,7 @@ export const en = {
   'Full Stack Developer': 'Full Stack Developer',
   Proyectos: 'Projects',
   Experiencia: 'Experience',
+  Artículos: 'Articles',
   CV: 'CV',
   'Navegación principal': 'Main navigation',
   Menú: 'Menu',
