@@ -9,6 +9,7 @@ export const en = {
   Experiencia: 'Experience',
   CV: 'CV',
   'Navegación principal': 'Main navigation',
+  Menú: 'Menu',
   Contacto: 'Contact',
   'Código fuente': 'Source',
   Librería: 'Library',

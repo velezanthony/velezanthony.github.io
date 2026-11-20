@@ -20,14 +20,13 @@ describe('SiteHeader', () => {
     current: 'projects',
   };
 
-  it('links every section, with no menu to open', async () => {
+  it('links every section, in order', async () => {
     const doc = await render(SiteHeader, props);
     expect([...doc.querySelectorAll(`${nav} a`)].map(text)).toEqual([
       'Projects',
       'Experience',
       'CV',
     ]);
-    expect(doc.querySelector('[aria-expanded]')).toBeNull();
   });
 
   it('marks the current section', async () => {
@@ -35,6 +34,31 @@ describe('SiteHeader', () => {
     expect([...doc.querySelectorAll(`${nav} a[aria-current="page"]`)].map(text)).toEqual([
       'Projects',
     ]);
+  });
+
+  describe('menu button', () => {
+    it('controls the navigation and starts closed', async () => {
+      const doc = await render(SiteHeader, props);
+      const button = doc.querySelector('button[data-menu-toggle]')!;
+      expect(button.getAttribute('type')).toBe('button');
+      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(doc.getElementById(button.getAttribute('aria-controls')!)?.matches(nav)).toBe(true);
+    });
+
+    it('is named in the page language', async () => {
+      const en = await render(SiteHeader, props);
+      const es = await render(SiteHeader, { ...props, lang: 'es' });
+      expect(text(en.querySelector('button[data-menu-toggle]'))).toBe('Menu');
+      expect(text(es.querySelector('button[data-menu-toggle]'))).toBe('Menú');
+    });
+
+    /* Tab order stays name, menu, links, controls at every width. */
+    it('comes right before the navigation it opens', async () => {
+      const doc = await render(SiteHeader, props);
+      expect(doc.querySelector('button[data-menu-toggle]')?.nextElementSibling?.matches(nav)).toBe(
+        true,
+      );
+    });
   });
 });
 
