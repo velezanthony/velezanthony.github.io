@@ -37,6 +37,18 @@ export default defineDocsConfig({
             },
           ],
         },
+        {
+          label: 'TypeScript',
+          items: [
+            {
+              label: 'Angular',
+              items: [
+                'articulos/angular-directivas-o-componentes',
+                'articulos/angular-componente-no-ocupa-el-ancho',
+              ],
+            },
+          ],
+        },
       ],
     },
     {

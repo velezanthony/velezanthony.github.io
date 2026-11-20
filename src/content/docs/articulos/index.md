@@ -20,6 +20,12 @@ Notas técnicas sobre problemas que me he encontrado y cómo los resuelvo, agrup
       organizar las consultas para que no vuelvan.
     - [Multi-tenancy en Django](multi-tenancy-django.md): cuatro estrategias para aislar a los
       clientes de un SaaS y cuándo elegir cada una.
+- **TypeScript**
+  - **Angular**
+    - [Directiva o componente para un input en Angular](angular-directivas-o-componentes.md): por
+      qué con Reactive Forms prefiero una directiva sobre el input nativo, y cuándo no.
+    - [Tu componente de Angular no ocupa el ancho](angular-componente-no-ocupa-el-ancho.md): el
+      elemento host que envuelve cada componente, por qué es `inline` y cómo arreglarlo.
 
 ## Sistemas
 
