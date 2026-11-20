@@ -1,4 +1,4 @@
-import { defineDocsConfig } from '@velezanthony/design/integration';
+import { defineDocsConfig, MissingTranslation } from '@velezanthony/design/integration';
 
 /* Literales, no `src/core/i18n/locales.ts`: la librería carga este fichero fuera del pipeline de Vite. */
 export default defineDocsConfig({
@@ -11,6 +11,55 @@ export default defineDocsConfig({
     image: { src: '/og.png', alt: 'Anthony Velez Tapia' },
   },
   favicon: '/favicon-32.png',
+  /* The header links the articles in both locales: an untranslated one shows the Spanish text under
+     the English URL, with the notice, `noindex` and a canonical to the original, instead of a 404. */
+  translations: { missing: MissingTranslation.FALLBACK },
+  /* The articles, by area. Every article lives flat in `articulos/<slug>.md`, so its URL is
+     `/articulos/<slug>/` whatever its place in the menu: the tree below is formed only by each
+     section's `sidebar` (no `dir`), and can be reorganised later without breaking a published URL
+     (GitHub Pages has no 301 redirects). The articles index stays outside them, on the top-level
+     sidebar. Only areas that have articles get a group. */
+  nav: [
+    {
+      label: { es: 'Desarrollo', en: 'Development' },
+      sidebar: [
+        {
+          label: { es: 'Conceptos', en: 'Concepts' },
+          items: ['articulos/api-rest-spa-vs-htmx'],
+        },
+        {
+          label: 'Python',
+          items: [
+            'articulos/orm-tipado-sin-generar-codigo',
+            {
+              label: 'Django',
+              items: ['articulos/consultas-n-mas-1-django', 'articulos/multi-tenancy-django'],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      label: { es: 'Sistemas', en: 'Systems' },
+      sidebar: [
+        {
+          label: 'Cloud',
+          items: [{ label: 'AWS', items: ['articulos/aws-arquitectura-basica'] }],
+        },
+        {
+          label: { es: 'Contenedores', en: 'Containers' },
+          items: ['articulos/django-docker-gunicorn-nginx'],
+        },
+        {
+          label: { es: 'Virtualización', en: 'Virtualisation' },
+          items: ['articulos/proxmox-laboratorio'],
+        },
+      ],
+    },
+  ],
+  sidebar: ['articulos'],
+  /* The site's name is already the author's: «© year name by author» would say it twice. */
+  footer: { author: false },
   /* Open Graph wants a territory too; `docs.config.test.ts` keeps it equal to `ogLocales`. */
   ogLocales: { es: 'es_ES', en: 'en_GB' },
   /* Tokens and styles of the portfolio only; the library compiles them with its own theme. */
