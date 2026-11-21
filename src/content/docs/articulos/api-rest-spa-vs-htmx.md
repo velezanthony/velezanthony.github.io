@@ -115,8 +115,9 @@ Lo que da Alpine:
 Cuando la lógica crece, la saco del HTML a un módulo y la registro con `Alpine.data`. La plantilla
 solo nombra el componente, y la lógica se puede probar como cualquier JavaScript:
 
+::::tabs
+:::tab[components/order-line.js]
 ```js
-// static/js/components/order-line.js
 export default (price) => ({
   price,
   quantity: 1,
@@ -125,28 +126,37 @@ export default (price) => ({
   },
 });
 ```
-
+:::
+:::tab[main.js]
 ```js
-// static/js/main.js
 import Alpine from "alpinejs";
 import orderLine from "./components/order-line.js";
 
 Alpine.data("orderLine", orderLine);
 Alpine.start();
 ```
+:::
+:::tab[plantilla.html]
+```html
+<div x-data="orderLine(12.5)">…</div>
+```
+:::
+::::
 
 Ese `import Alpine from "alpinejs"` necesita un *bundler* (Vite, esbuild) o un *import map* que
 diga al navegador de dónde sale `alpinejs`. Sin paso de build, cargas Alpine desde un CDN y
 registras los componentes en el evento `alpine:init`, que salta antes de que Alpine recorra la
 página. El script de los componentes va antes que el de Alpine:
 
+::::tabs
+:::tab[base.html]
 ```html
 <script src="{% static 'js/components.js' %}"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 ```
-
+:::
+:::tab[components.js]
 ```js
-// static/js/components.js
 document.addEventListener("alpine:init", () => {
   Alpine.data("orderLine", (price) => ({
     price,
@@ -157,10 +167,13 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 ```
-
+:::
+:::tab[plantilla.html]
 ```html
 <div x-data="orderLine(12.5)">…</div>
 ```
+:::
+::::
 
 **Depende de cuánta reactividad necesites.** Si es la de formularios, listados y paneles, Alpine
 basta. Si la aplicación vive en el cliente (mucho estado, edición en tiempo real, modo sin
@@ -206,21 +219,24 @@ En cada app reparto el trabajo en tres ficheros:
 - **`selectors.py`** lee, con la precarga ya decidida. Lo explico en
   [Consultas N+1 en Django](consultas-n-mas-1-django.md).
 
+::::tabs
+:::tab[sales/forms.py]
 ```python
-# sales/forms.py
 class ProductForm(forms.Form):
     name = forms.CharField(max_length=200)
-
-
-# sales/services.py
+```
+:::
+:::tab[sales/services.py]
+```python
 def create_product(*, seller: Seller, name: str) -> Product:
     with transaction.atomic():
         product = Product.objects.create(seller=seller, name=name)
         # ...any other write that must succeed or fail together
     return product
-
-
-# sales/views.py
+```
+:::
+:::tab[sales/views.py]
+```python
 def new_product(request, seller_id):
     seller = get_object_or_404(Seller, pk=seller_id)
     form = ProductForm(request.POST or None)
@@ -230,15 +246,17 @@ def new_product(request, seller_id):
     status = 422 if form.errors else 200
     return render(request, "sales/_product_form.html", {"form": form, "seller": seller}, status=status)
 ```
-
+:::
+:::tab[sales/_product_form.html]
 ```html
-<!-- sales/_product_form.html -->
 <form hx-post="{% url 'sales:new_product' seller.pk %}" hx-swap="outerHTML">
   {% csrf_token %}
   {{ form }}
   <button>Guardar</button>
 </form>
 ```
+:::
+::::
 
 Con errores, la vista responde **422** (*Unprocessable Content*), que dice la verdad sobre la
 respuesta. Pero htmx 2 no pinta los 4xx por defecto: hay que decirle que el 422 sí se sustituye,
