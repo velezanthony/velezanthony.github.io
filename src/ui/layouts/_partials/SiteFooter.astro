@@ -1,5 +1,6 @@
 ---
 import ContactList from '@ui/components/ContactList.astro';
+import CookieSettingsButton from '@velezanthony/design/components/atoms/actions/CookieSettingsButton.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import type { ContactLink } from '@core/types';
 import { LIBRARY_SOURCE, SITE_HOST, SITE_SOURCE } from '@data/site';
@@ -16,14 +17,16 @@ interface Props {
   year: number;
   /** Whether the site asks for cookie consent, and so has a choice to reopen. */
   cookieControl?: boolean;
+  /** Classes added to the `<footer>`'s own, for the layout that places it. */
+  class?: string;
 }
 
-const { lang, name, contact, year, cookieControl = false } = Astro.props;
+const { lang, name, contact, year, cookieControl = false, class: className } = Astro.props;
 const t = useTranslations(lang);
 ---
 
 {/* `surface-inverse` is the library's inverted surface: it redefines the tokens in its scope. */}
-<footer class="surface-inverse">
+<footer class:list={['surface-inverse', className]}>
   <div class="mx-auto max-w-(--container-page) px-6 py-12 lg:px-10">
     <div class="grid gap-10 md:grid-cols-2">
       <div>
@@ -61,15 +64,8 @@ const t = useTranslations(lang);
         </li>
         {cookieControl && (
           <li>
-            {/* A button, not a link: it acts on the page, it goes nowhere. Tailwind's preflight
-                sets `cursor: default` on buttons. */}
-            <button
-              type="button"
-              data-consent-open
-              class="inline-flex min-h-6 cursor-pointer items-center text-muted transition-colors hover:text-ink"
-            >
-              {designStrings(lang)['consent.preferences']}
-            </button>
+            {/* The library's button, the one its own footer uses: the consent script listens to it. */}
+            <CookieSettingsButton strings={designStrings(lang)} />
           </li>
         )}
         <li>

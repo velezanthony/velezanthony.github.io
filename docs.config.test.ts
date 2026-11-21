@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import docsConfig from './docs.config.mjs';
@@ -30,5 +30,13 @@ describe('values repeated from the site sources', () => {
   it('the title suffix and the social image alt are the owner name', () => {
     expect(docsConfig.seo?.titleSuffix).toBe(profile.name);
     expect(docsConfig.seo?.image?.alt).toBe(profile.name);
+  });
+});
+
+/* The articles are docs pages of the library: they wear the site's own footer, not the library's. */
+describe('components.Footer', () => {
+  it('points to the adapter of the site footer', () => {
+    expect(docsConfig.components?.Footer).toBe('./src/ui/layouts/_partials/DocsFooter.astro');
+    expect(existsSync(docsConfig.components?.Footer ?? '')).toBe(true);
   });
 });
