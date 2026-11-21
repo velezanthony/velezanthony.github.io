@@ -25,7 +25,7 @@ export default defineDocsConfig({
       sidebar: [
         {
           label: { es: 'Conceptos', en: 'Concepts' },
-          items: ['articulos/api-rest-spa-vs-htmx'],
+          items: ['articulos/api-rest-spa-vs-htmx', 'articulos/orm-code-first-database-first'],
         },
         {
           label: { es: 'Herramientas', en: 'Tools' },

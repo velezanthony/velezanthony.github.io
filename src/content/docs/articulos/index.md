@@ -12,6 +12,8 @@ Notas técnicas sobre problemas que me he encontrado y cómo los resuelvo, agrup
 - **Conceptos**
   - [API REST y SPA vs monolito con HTMX y Alpine](api-rest-spa-vs-htmx.md): con cuál es más
     sencillo cada aspecto, y cómo decido.
+  - [Code First o Database First: claves compuestas en seis ORMs](orm-code-first-database-first.md):
+    por qué prefiero diseñar primero la base de datos y qué ORMs respetan sus claves compuestas.
 - **Herramientas**
   - [Cómo deshacer errores en Git sin perder trabajo](git-deshacer-errores.md): qué comando usar
     en cada situación, desde `restore` y `reset` hasta `revert`, `stash` y `reflog`.
