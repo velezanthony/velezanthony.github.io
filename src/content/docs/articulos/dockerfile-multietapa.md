@@ -8,11 +8,13 @@ seo:
 
 Una API en NestJS con un Dockerfile de una sola etapa acaba con todo dentro: el código TypeScript,
 el compilador, las dependencias de desarrollo, los tests y, si te descuidas, la carpeta `.git`.
-Funciona, pero cada despliegue sube cosas que en producción no se ejecutan nunca, y el proceso
-corre como `root`. Y para desarrollar aparece un `Dockerfile.dev` aparte que, con el tiempo, deja
-de parecerse al de producción.
+Funciona, pero la imagen pesa mucho más de lo necesario: cada despliegue sube y arranca cosas que en
+producción no se ejecutan nunca. Y para desarrollar aparece un `Dockerfile.dev` aparte que, con el
+tiempo, deja de parecerse al de producción.
 
-La solución fue un único Dockerfile con varias **etapas**.
+La solución fue un único Dockerfile con varias **etapas**. Su objetivo es que la imagen final
+**pese menos y lleve solo las dependencias que necesita para ejecutarse**. El build tarda algo más,
+porque hay más etapas, pero la imagen resultante ocupa menos y se sube y se descarga antes.
 
 ## Qué es una etapa
 
@@ -152,6 +154,8 @@ y llevarte solo el resultado a la final.
 
 ## En resumen
 
+- Las etapas hacen el build algo más largo, pero la imagen de producción pesa menos, lleva menos
+  dependencias y se transfiere más rápido.
 - Cada `FROM` es una etapa, y la imagen final solo lleva la última que construyes.
 - Compila en una etapa, instala las dependencias de producción en otra y copia solo los
   resultados a la final.
