@@ -28,6 +28,10 @@ export default defineDocsConfig({
           items: ['articulos/api-rest-spa-vs-htmx'],
         },
         {
+          label: { es: 'Herramientas', en: 'Tools' },
+          items: ['articulos/git-deshacer-errores'],
+        },
+        {
           label: 'Python',
           items: [
             'articulos/orm-tipado-sin-generar-codigo',
@@ -49,6 +53,10 @@ export default defineDocsConfig({
             },
           ],
         },
+        {
+          label: 'PHP',
+          items: [{ label: 'Symfony', items: ['articulos/doctrine-consultas-dinamicas'] }],
+        },
       ],
     },
     {
@@ -60,7 +68,11 @@ export default defineDocsConfig({
         },
         {
           label: { es: 'Contenedores', en: 'Containers' },
-          items: ['articulos/django-docker-gunicorn-nginx'],
+          items: ['articulos/django-docker-gunicorn-nginx', 'articulos/dockerfile-multietapa'],
+        },
+        {
+          label: 'CI/CD',
+          items: ['articulos/github-actions-imagenes-docker'],
         },
         {
           label: { es: 'Virtualización', en: 'Virtualisation' },
