@@ -84,9 +84,6 @@ export default defineDocsConfig({
   sidebar: ['articulos'],
   /* The articles wear the site's own footer, the same as every other page, instead of the library's. */
   components: { Footer: './src/ui/layouts/_partials/DocsFooter.astro' },
-  /* Only for the library footer left on the dev-only SEO panel: the site's name is already the
-     author's, so «© year name by author» would say it twice. */
-  footer: { author: false },
   /* Open Graph wants a territory too; `docs.config.test.ts` keeps it equal to `ogLocales`. */
   ogLocales: { es: 'es_ES', en: 'en_GB' },
   /* Tokens and styles of the portfolio only; the library compiles them with its own theme. */
