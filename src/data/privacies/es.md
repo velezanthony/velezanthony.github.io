@@ -12,16 +12,12 @@ Soy Anthony Velez Tapia y esta es mi web personal, mi portfolio. No te pido ning
 
 Esta web no tiene formularios, cuentas ni publicidad, y no vendo ni cedo datos. Esto es todo lo que pasa con los tuyos.
 
-<div class="table-scroll" tabindex="0">
-
 | Origen | Qué se trata | Para qué y con qué base |
 | --- | --- | --- |
 | GitHub Pages | Tu dirección IP, tu navegador y la página que pides, en los registros del servidor. GitHub aloja la web y trata esos registros por su cuenta. | Servir la web y mantenerla segura. Interés legítimo (art. 6.1.f RGPD). |
 | Google Tag Manager y Google Analytics 4 | Un identificador anónimo en una cookie, las páginas que ves, tu tipo de dispositivo y navegador y una ubicación aproximada. Solo si aceptas. Lo trata Google Ireland Limited. | Saber qué se lee y mejorar la web. Tu consentimiento (art. 6.1.a RGPD). Si los datos viajan a Estados Unidos, la transferencia se ampara en el Marco de Privacidad de Datos UE-EE. UU. |
 | Recuentos de descargas | Tu navegador pide el número de descargas a shields.io (PyPI), Open VSX (Eclipse Foundation) y Visual Studio Marketplace (Microsoft). Con la petición, esos servicios reciben tu IP. No usan cookies. | Mostrar cuántas veces se ha descargado cada herramienta. Interés legítimo (art. 6.1.f RGPD). No hace falta consentimiento. |
 | Tu navegador | El tema, el idioma de la última página y tu elección sobre las cookies. Se guardan en localStorage y sessionStorage y nunca salen de tu navegador. | Recordar tus preferencias. Ni yo ni nadie más los trata. |
-
-</div>
 
 Cada servicio tiene su propia política de privacidad:
 
@@ -34,14 +30,10 @@ Cada servicio tiene su propia política de privacidad:
 
 Solo uso cookies de analítica, y solo si las aceptas. Mientras no aceptes, ni siquiera se carga Google Tag Manager.
 
-<div class="table-scroll" tabindex="0">
-
 | Nombre | Proveedor | Para qué | Duración | Tipo |
 | --- | --- | --- | --- | --- |
 | \_ga | Google Ireland Limited | Distingue a un visitante de otro | 2 años | Analítica, de tercero |
 | \_ga\_\<ID> | Google Ireland Limited | Guarda el estado de la sesión de Google Analytics 4 | 2 años | Analítica, de tercero |
-
-</div>
 
 El tema, el idioma y tu elección viven en el almacenamiento del navegador. No son cookies y no necesitan consentimiento.
 
