@@ -30,13 +30,13 @@ describe('SiteHeader', () => {
     ]);
   });
 
-  /* The articles are docs pages of the library, whose URL keeps the folder name in every locale. */
+  /* The articles are docs pages of the library; the English index has a translated URL of its own. */
   it('links the articles where the docs serve them', async () => {
     const en = await render(SiteHeader, props);
     const es = await render(SiteHeader, { ...props, lang: 'es' });
     const href = (doc: Document) =>
       doc.querySelector('#site-nav li:nth-child(3) a')?.getAttribute('href');
-    expect(href(en)).toBe('/en/articulos/');
+    expect(href(en)).toBe('/en/articles/');
     expect(href(es)).toBe('/articulos/');
   });
 
