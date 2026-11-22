@@ -174,12 +174,12 @@ Algunos matices que la tabla no recoge:
 - **Doctrine** admite incluso que la clave foránea sea parte de la clave, que es justo el caso de
   `order_line`. A cambio, la 3.0 retiró la generación de entidades desde la base de datos, así que
   en Database First el mapeo lo escribes tú. Para el día a día con su QueryBuilder, tienes
-  [consultas dinámicas con Doctrine](doctrine-consultas-dinamicas.md).
+  [consultas dinámicas con Doctrine](../php/symfony/doctrine-consultas-dinamicas.md).
 - **Django** las tiene desde la 5.2, pero su propia documentación reconoce que el soporte en
   relaciones y en el admin sigue en desarrollo, y las migraciones no saben convertir una clave
   simple en compuesta una vez creada la tabla. `inspectdb` sí genera el `CompositePrimaryKey`.
   Para el rendimiento, lo que más pesa en Django sigue siendo otra cosa: las
-  [consultas N+1](consultas-n-mas-1-django.md).
+  [consultas N+1](../python/django/consultas-n-mas-1-django.md).
 - **Eloquent** lo dice claramente en su documentación: las claves compuestas no están soportadas, y
   propone añadir índices únicos de varias columnas además de una clave de una sola columna. Se
   pidió en 2015 en una incidencia que acabó cerrada sin implementarlo, y en 2023 se volvió a

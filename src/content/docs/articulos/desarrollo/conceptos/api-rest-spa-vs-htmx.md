@@ -217,7 +217,7 @@ En cada app reparto el trabajo en tres ficheros:
 - **`services.py`** escribe. Funciones que reciben datos ya validados y guardan dentro de
   `transaction.atomic()`, para que un fallo a mitad no deje la base de datos a medias.
 - **`selectors.py`** lee, con la precarga ya decidida. Lo explico en
-  [Consultas N+1 en Django](consultas-n-mas-1-django.md).
+  [Consultas N+1 en Django](../python/django/consultas-n-mas-1-django.md).
 
 ::::tabs
 :::tab[sales/forms.py]

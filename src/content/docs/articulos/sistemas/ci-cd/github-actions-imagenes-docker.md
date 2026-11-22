@@ -22,7 +22,7 @@ disparadores) y qué pasos sigue.
 
 ## El workflow
 
-La imagen es la del [Dockerfile multietapa](dockerfile-multietapa.md), y el workflow construye su
+La imagen es la del [Dockerfile multietapa](../contenedores/dockerfile-multietapa.md), y el workflow construye su
 etapa `prod`:
 
 ```yaml

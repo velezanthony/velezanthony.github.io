@@ -55,7 +55,7 @@ Asterisk, su panel web, bases de datos y firewall. Docker recomienda un servicio
 además Asterisk necesita abrir miles de puertos para el audio (de 10000 a 20000 por defecto). Se
 puede forzar, pero es más sencillo con una máquina virtual: un Debian en Proxmox o en VirtualBox,
 con su IP en tu red. Cuento la diferencia entre los dos en
-[Proxmox como laboratorio](proxmox-laboratorio.md).
+[Proxmox como laboratorio](../virtualizacion/proxmox-laboratorio.md).
 
 ## Hasta dónde llegué
 

@@ -63,7 +63,7 @@ flowchart TB
   entorno desde un gestor de secretos.
 
 Cómo se empaqueta la aplicación en sí (Dockerfile, Gunicorn, Nginx) lo explico en
-[Django con Docker, Gunicorn y Nginx](django-docker-gunicorn-nginx.md). En AWS, el papel de Nginx lo
+[Django con Docker, Gunicorn y Nginx](../../contenedores/django-docker-gunicorn-nginx.md). En AWS, el papel de Nginx lo
 pueden asumir en parte el ALB (proxy y HTTPS) y S3 con CloudFront (estáticos).
 
 ## Una web estática no necesita servidor

@@ -240,7 +240,7 @@ La ventaja: la estrategia de carga vive en **una sola función**. Si mañana la 
 relación, la añado en el selector y quedan arregladas todas las vistas que lo usan. La escritura
 (`services.py`) y los formularios que se validan en el servidor (`forms.py`) completan la
 estructura; los explico en
-[API REST y SPA vs monolito con HTMX y Alpine](api-rest-spa-vs-htmx.md).
+[API REST y SPA vs monolito con HTMX y Alpine](../../conceptos/api-rest-spa-vs-htmx.md).
 
 ## 7. Trampas habituales
 

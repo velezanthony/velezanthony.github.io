@@ -15,7 +15,7 @@ hardening completa: es la lista corta que aplico siempre, en este orden, en Debi
 
 Si es la primera vez, haz la secuencia en una máquina virtual de laboratorio con un snapshot antes de
 tocar SSH. Equivocarse ahí sale gratis. Lo cuento en
-[Proxmox para un laboratorio o preproducción](proxmox-laboratorio.md).
+[Proxmox para un laboratorio o preproducción](../virtualizacion/proxmox-laboratorio.md).
 
 :::
 

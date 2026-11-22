@@ -92,7 +92,7 @@ mismo.
 :::
 
 El montaje completo de Nginx delante de Django lo cuento en
-[Django con Docker, Gunicorn y Nginx](django-docker-gunicorn-nginx.md).
+[Django con Docker, Gunicorn y Nginx](../contenedores/django-docker-gunicorn-nginx.md).
 
 ### WordPress con la URL del sitio en `https://`
 
@@ -167,7 +167,7 @@ recibe **HTTP**. Dos consecuencias:
 proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
 ```
 
-En [Arquitectura básica en AWS](aws-arquitectura-basica.md) uso justo ese montaje: el ALB termina
+En [Arquitectura básica en AWS](../cloud/aws/aws-arquitectura-basica.md) uso justo ese montaje: el ALB termina
 HTTPS con un certificado de ACM.
 
 ### Una CDN en modo "flexible"

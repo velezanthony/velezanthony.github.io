@@ -14,30 +14,35 @@ export default defineDocsConfig({
   /* The header links the articles in both locales: an untranslated one shows the Spanish text under
      the English URL, with the notice, `noindex` and a canonical to the original, instead of a 404. */
   translations: { missing: MissingTranslation.FALLBACK },
-  /* The articles, by area. Every article lives flat in `articulos/<slug>.md`, so its URL is
-     `/articulos/<slug>/` whatever its place in the menu: the tree below is formed only by each
-     section's `sidebar` (no `dir`), and can be reorganised later without breaking a published URL
-     (GitHub Pages has no 301 redirects). The articles index stays outside them, on the top-level
-     sidebar. Only areas that have articles get a group. */
+  /* The articles, by area. Each article lives in the folder of its menu group
+     (`articulos/<section>/<group>/<slug>.md`), so the folders mirror the tree below. The articles
+     index stays outside the sections, on the top-level sidebar. Only areas that have articles get a
+     group. */
   nav: [
     {
       label: { es: 'Desarrollo', en: 'Development' },
       sidebar: [
         {
           label: { es: 'Conceptos', en: 'Concepts' },
-          items: ['articulos/api-rest-spa-vs-htmx', 'articulos/orm-code-first-database-first'],
+          items: [
+            'articulos/desarrollo/conceptos/api-rest-spa-vs-htmx',
+            'articulos/desarrollo/conceptos/orm-code-first-database-first',
+          ],
         },
         {
           label: { es: 'Herramientas', en: 'Tools' },
-          items: ['articulos/git-deshacer-errores'],
+          items: ['articulos/desarrollo/herramientas/git-deshacer-errores'],
         },
         {
           label: 'Python',
           items: [
-            'articulos/orm-tipado-sin-generar-codigo',
+            'articulos/desarrollo/python/orm-tipado-sin-generar-codigo',
             {
               label: 'Django',
-              items: ['articulos/consultas-n-mas-1-django', 'articulos/multi-tenancy-django'],
+              items: [
+                'articulos/desarrollo/python/django/consultas-n-mas-1-django',
+                'articulos/desarrollo/python/django/multi-tenancy-django',
+              ],
             },
           ],
         },
@@ -47,15 +52,20 @@ export default defineDocsConfig({
             {
               label: 'Angular',
               items: [
-                'articulos/angular-directivas-o-componentes',
-                'articulos/angular-componente-no-ocupa-el-ancho',
+                'articulos/desarrollo/typescript/angular/angular-directivas-o-componentes',
+                'articulos/desarrollo/typescript/angular/angular-componente-no-ocupa-el-ancho',
               ],
             },
           ],
         },
         {
           label: 'PHP',
-          items: [{ label: 'Symfony', items: ['articulos/doctrine-consultas-dinamicas'] }],
+          items: [
+            {
+              label: 'Symfony',
+              items: ['articulos/desarrollo/php/symfony/doctrine-consultas-dinamicas'],
+            },
+          ],
         },
       ],
     },
@@ -64,34 +74,39 @@ export default defineDocsConfig({
       sidebar: [
         {
           label: 'Cloud',
-          items: [{ label: 'AWS', items: ['articulos/aws-arquitectura-basica'] }],
+          items: [
+            { label: 'AWS', items: ['articulos/sistemas/cloud/aws/aws-arquitectura-basica'] },
+          ],
         },
         {
           label: { es: 'Contenedores', en: 'Containers' },
-          items: ['articulos/django-docker-gunicorn-nginx', 'articulos/dockerfile-multietapa'],
+          items: [
+            'articulos/sistemas/contenedores/django-docker-gunicorn-nginx',
+            'articulos/sistemas/contenedores/dockerfile-multietapa',
+          ],
         },
         {
           label: 'CI/CD',
-          items: ['articulos/github-actions-imagenes-docker'],
+          items: ['articulos/sistemas/ci-cd/github-actions-imagenes-docker'],
         },
         {
           label: { es: 'Virtualización', en: 'Virtualisation' },
-          items: ['articulos/proxmox-laboratorio'],
+          items: ['articulos/sistemas/virtualizacion/proxmox-laboratorio'],
         },
         {
           label: { es: 'Redes', en: 'Networking' },
           items: [
-            'articulos/nginx-err-too-many-redirects',
-            'articulos/dns-cambiar-servidor-sin-caida',
+            'articulos/sistemas/redes/nginx-err-too-many-redirects',
+            'articulos/sistemas/redes/dns-cambiar-servidor-sin-caida',
           ],
         },
         {
           label: { es: 'Seguridad', en: 'Security' },
-          items: ['articulos/linux-primeros-pasos-servidor'],
+          items: ['articulos/sistemas/seguridad/linux-primeros-pasos-servidor'],
         },
         {
           label: { es: 'Telefonía', en: 'Telephony' },
-          items: ['articulos/vitalpbx-asterisk-centralita'],
+          items: ['articulos/sistemas/telefonia/vitalpbx-asterisk-centralita'],
         },
       ],
     },

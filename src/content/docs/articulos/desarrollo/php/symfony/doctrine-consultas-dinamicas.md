@@ -167,7 +167,7 @@ consulta para la lista y otra más por cada relación que la vista toca.
 
 El `addSelect('c')` lo evita. Le dice a Doctrine que traiga también las categorías en la misma
 consulta y las asigne a cada producto. Es lo que Doctrine llama un *fetch join*. Es exactamente el
-mismo problema que cuento en [Consultas N+1 en Django](consultas-n-mas-1-django.md), donde la
+mismo problema que cuento en [Consultas N+1 en Django](../../python/django/consultas-n-mas-1-django.md), donde la
 solución equivalente es `select_related`.
 
 ## La paginación
