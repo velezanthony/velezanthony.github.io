@@ -10,7 +10,6 @@ import { buildCountsOf } from '@adapters/downloads';
 import { alternates, assertLocale, langParam, path } from '@core/i18n/utils';
 import { locales, routes } from '@core/i18n/locales';
 import { PERSON_ID } from '@data/site';
-import { profile } from '@data/profile';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();
