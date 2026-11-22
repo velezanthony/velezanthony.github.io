@@ -92,7 +92,6 @@ Lo que trae:
 [Cotton Props](/es/proyectos/cotton-props/) hace **el mismo trabajo**: ayudar a
 escribir componentes y detectar errores. La diferencia es dónde vive cada una y qué puede enseñar.
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><td></td><th scope="col">gallery</th><th scope="col">props</th></tr>
@@ -103,7 +102,6 @@ escribir componentes y detectar errores. La diferencia es dónde vive cada una y
     <tr><th scope="row">Previsualiza</th><td>Sí</td><td>No</td></tr>
   </tbody>
 </table>
-</div>
 
 Ésta previsualiza porque corre dentro del proyecto. Ésa no puede, porque vive en el editor y el
 editor no renderiza. Son los dos sitios donde se trabaja con componentes.
@@ -125,7 +123,6 @@ convención**. Documentas el componente una vez y lo aprovechan el editor y la g
 **Y de ahí sale el playground gratis.** Como la anotación declara el tipo de cada prop, la galería
 sabe qué control pintar sin que nadie se lo configure:
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><th scope="col">Tipo anotado</th><th scope="col">Control que genera</th></tr>
@@ -137,7 +134,6 @@ sabe qué control pintar sin que nadie se lo configure:
     <tr><th scope="row"><code>number</code></th><td>Campo numérico</td></tr>
   </tbody>
 </table>
-</div>
 
 Cambias el valor y el componente se vuelve a renderizar. Los controles no son una lista que haya que
 mantener aparte: **son una lectura de la documentación que ya escribiste**.
@@ -160,7 +156,6 @@ La galería no es solo un visor: es una puerta que puedes poner en el pipeline.
 y mientras escribes no tienes IntelliSense en el editor. Es exactamente el límite contrario al de la
 extensión, y por eso existen las dos: cada una cubre lo que la otra no alcanza.
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><td></td><th scope="col">No puede</th></tr>
@@ -170,7 +165,6 @@ extensión, y por eso existen las dos: cada una cubre lo que la otra no alcanza.
     <tr><th scope="row">props</th><td>Renderizar el componente como lo diseñaste</td></tr>
   </tbody>
 </table>
-</div>
 
 **La detección es por regex**, igual que en la extensión. Un componente escrito de una forma lo
 bastante rara se sale de lo que la herramienta considera un componente, y entonces no lo ve.

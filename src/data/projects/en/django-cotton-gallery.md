@@ -91,7 +91,6 @@ What it ships:
 [Cotton Props](/en/projects/cotton-props/) does **the same job**: help you write
 components and catch mistakes. What differs is where each one lives and what it can show.
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><td></td><th scope="col">gallery</th><th scope="col">props</th></tr>
@@ -102,7 +101,6 @@ components and catch mistakes. What differs is where each one lives and what it 
     <tr><th scope="row">Previews</th><td>Yes</td><td>No</td></tr>
   </tbody>
 </table>
-</div>
 
 This one previews because it runs inside the project. That one cannot, because it lives in the
 editor and the editor does not render. They are the two places component work happens.
@@ -125,7 +123,6 @@ it.
 **And the playground falls out of it for free.** Because the annotation declares each prop's type,
 the gallery knows which control to draw without anyone configuring it:
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><th scope="col">Annotated type</th><th scope="col">Control it generates</th></tr>
@@ -137,7 +134,6 @@ the gallery knows which control to draw without anyone configuring it:
     <tr><th scope="row"><code>number</code></th><td>Numeric field</td></tr>
   </tbody>
 </table>
-</div>
 
 Change a value and the component re-renders. The controls are not a list to be maintained
 separately: **they are a reading of the documentation you already wrote**.
@@ -160,7 +156,6 @@ The gallery is not only a viewer: it is a gate you can put in the pipeline.
 while you type there is no IntelliSense in the editor. It is exactly the inverse of the extension's
 limit, and that is why both exist: each covers what the other cannot reach.
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><td></td><th scope="col">Cannot</th></tr>
@@ -170,7 +165,6 @@ limit, and that is why both exist: each covers what the other cannot reach.
     <tr><th scope="row">props</th><td>Render the component the way you designed it</td></tr>
   </tbody>
 </table>
-</div>
 
 **Detection is regex-based**, same as the extension. A component written in an odd enough way falls
 outside what the tool considers a component, and then it cannot see it.

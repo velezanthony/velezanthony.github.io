@@ -82,7 +82,6 @@ Lo que hace, en concreto:
 [django-cotton-gallery](/es/proyectos/django-cotton-gallery/) hace **el mismo trabajo**: ayudar a
 escribir componentes y detectar errores. La diferencia es dónde vive cada una y qué puede enseñar.
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><td></td><th scope="col">props</th><th scope="col">gallery</th></tr>
@@ -93,7 +92,6 @@ escribir componentes y detectar errores. La diferencia es dónde vive cada una y
     <tr><th scope="row">Previsualiza</th><td>No</td><td>Sí</td></tr>
   </tbody>
 </table>
-</div>
 
 Ésta no previsualiza porque es ayuda del editor, y el editor no renderiza tu proyecto. Ésa sí,
 porque corre dentro de él. Son los dos sitios donde se trabaja con componentes.
@@ -117,7 +115,6 @@ mostrar ni prop que validar, así que había que construirlo primero.
 
 **Lo que salió de ahí:**
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><th scope="col">Hueco</th><th scope="col">Qué construí</th></tr>
@@ -128,7 +125,6 @@ mostrar ni prop que validar, así que había que construirlo primero.
     <tr><th scope="row">Sin avisos</th><td>Diagnósticos entre errores, avisos y sugerencias</td></tr>
   </tbody>
 </table>
-</div>
 
 Y el **árbol de componentes** casi de regalo: una vez que la extensión sabe qué componentes existen
 y dónde están, enseñarlos y buscarlos sale gratis.
