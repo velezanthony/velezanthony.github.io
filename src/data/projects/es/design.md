@@ -1,8 +1,8 @@
 ---
 slug: design
 name: '@velezanthony/design'
-headline: Integración de Astro para sitios de documentación
 tagline: 'Integración de Astro y librería de componentes para documentación: de Markdown a un sitio multilingüe con búsqueda, SEO y sitemap, sin escribir un layout.'
+summary: "Caso de estudio de @velezanthony/design: distribuir fuente, capas con una regla de dependencia, fallar en el build, lo que salió mal y sus límites."
 status: maintained
 role: Autor y mantenedor
 order: 6

@@ -1,8 +1,8 @@
 ---
 slug: cotton-props
 name: Cotton Props
-headline: IntelliSense para VS Code
 tagline: IntelliSense completo para Django Cotton en VS Code — autocompletado, hover docs, diagnósticos con quick fix y explorador de componentes.
+summary: "Caso de estudio de Cotton Props: por qué escribí desde cero el IntelliSense de Django Cotton para VS Code, cómo funciona por dentro y qué aprendí."
 cvLine: "IntelliSense de Django Cotton para VS Code: autocompletado, hover, diagnósticos y quick fix."
 status: maintained
 role: Autor y mantenedor

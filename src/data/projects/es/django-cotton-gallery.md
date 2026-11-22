@@ -1,8 +1,8 @@
 ---
 slug: django-cotton-gallery
 name: Django Cotton Gallery
-headline: Playground de Django Cotton
 tagline: Playground drop-in para librerías de componentes Django Cotton — preview en vivo con controles generados de tus anotaciones, lint y panel de métricas.
+summary: "Caso de estudio de Django Cotton Gallery: un formato de anotación que leen la galería y la extensión de VS Code, el aislamiento del preview y sus límites."
 cvLine: "Catálogo vivo de componentes Django Cotton: controles generados de tus anotaciones, y lint."
 status: maintained
 role: Autor y mantenedor

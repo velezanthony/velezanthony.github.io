@@ -1,8 +1,8 @@
 ---
 slug: docker-control-center
 name: Docker Control Center
-headline: Docker panel in the terminal
 tagline: What Docker Desktop does, in the terminal. A script with no UI, no daemon and nothing resident, for servers where you cannot install that.
+summary: "Docker Control Center case study: a terminal Docker dashboard with no daemon, why it moved from a Makefile to a script, and what I would change."
 cvLine: "Terminal Docker dashboard for servers: no interface, no daemon, nothing resident."
 status: maintained
 role: Author and maintainer

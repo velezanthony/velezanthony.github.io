@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { breadcrumb, person, softwareSourceCode, techArticle } from './jsonld';
+import { breadcrumb, person, techArticle } from './jsonld';
 import type { PersonSource, ProjectData } from './jsonld';
 
 /** A made-up owner for the tests: `core/` does not import the real content. */
@@ -67,56 +67,43 @@ describe('person', () => {
 
 const project = {
   name: 'SnakeORM',
-  headline: 'A typed Python ORM',
-  tagline: 'Deep typed relationship navigation.',
-  stack: ['Python'],
-  targets: ['PostgreSQL'],
-  compat: ['Python ≥ 3.11'],
+  summary: 'SnakeORM case study: the decisions behind a typed Python ORM and what went wrong.',
   links: [
     { kind: 'source', href: 'https://github.com/velezanthony/snake-orm' },
     { kind: 'package', href: 'https://pypi.org/project/snake-orm/' },
+    { kind: 'docs', href: 'https://velezanthony.github.io/snake-orm/' },
   ],
 } satisfies ProjectData;
 const page = `${site}/en/projects/snake-orm/`;
 
-describe('softwareSourceCode', () => {
-  const code = softwareSourceCode(project, identity, page, '2026-09-07T00:06:43+02:00');
-
-  it('takes the repository from the source link', () => {
-    expect(code.codeRepository).toBe('https://github.com/velezanthony/snake-orm');
-  });
-
-  it('ties every declared link to the page as the same thing', () => {
-    expect(code.url).toBe(page);
-    expect(code.sameAs).toEqual([
-      'https://github.com/velezanthony/snake-orm',
-      'https://pypi.org/project/snake-orm/',
-    ]);
-  });
-
-  it('is authored by the person, by reference', () => {
-    expect(code.author).toEqual({ '@id': personId });
-  });
-
-  it('joins stack and targets as keywords, and omits them when there are none', () => {
-    expect(code.keywords).toBe('Python, PostgreSQL');
-    const bare = softwareSourceCode(
-      { ...project, stack: [], targets: [] },
-      identity,
-      page,
-      undefined,
-    );
-    expect(bare.keywords).toBeUndefined();
-  });
-});
-
 describe('techArticle', () => {
-  it('is the write-up, in the page language', () => {
-    const article = techArticle(project, identity, 'en', page, undefined);
-    expect(article.headline).toBe('SnakeORM · A typed Python ORM');
+  const article = techArticle(project, identity, 'en', page, '2026-09-07T00:06:43+02:00');
+
+  it('is the case study, in the page language', () => {
+    expect(article['@type']).toBe('TechArticle');
+    expect(article.headline).toBe('SnakeORM: decisions, mistakes and limits');
+    expect(article.description).toBe(project.summary);
+    expect(article.url).toBe(page);
     expect(article.inLanguage).toBe('en');
     expect(article.author).toEqual({ '@id': personId });
-    expect(article.about).toEqual({ '@type': 'SoftwareSourceCode', name: 'SnakeORM' });
+  });
+
+  /* The software lives on its docs site; this page is about it, and never claims to be it. */
+  it('is about the software at its documentation, not at this page', () => {
+    expect(article.about).toEqual({
+      '@type': 'SoftwareSourceCode',
+      name: 'SnakeORM',
+      url: 'https://velezanthony.github.io/snake-orm/',
+      codeRepository: 'https://github.com/velezanthony/snake-orm',
+      sameAs: ['https://github.com/velezanthony/snake-orm', 'https://pypi.org/project/snake-orm/'],
+    });
+  });
+
+  it('falls back to the repository when the project has no docs', () => {
+    const links = project.links.filter((l) => l.kind !== 'docs');
+    const about = techArticle({ ...project, links }, identity, 'en', page, undefined).about;
+    expect(about.url).toBe('https://github.com/velezanthony/snake-orm');
+    expect(about.sameAs).toEqual(['https://pypi.org/project/snake-orm/']);
   });
 });
 

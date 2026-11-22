@@ -1,8 +1,8 @@
 ---
 slug: django-language-service
 name: Django Language Service
-headline: Language server for Django
 tagline: Language server that indexes models, views, forms and urls into a project graph, autocompletes the real variables of each template and draws an ER diagram.
+summary: "Django Language Service case study: a language server that refuses to guess, its hexagonal architecture, its limits and where it stands."
 cvLine: "Django language server: template IntelliSense, formatting and an interactive ER diagram."
 status: unreleased
 role: Author and maintainer

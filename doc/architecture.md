@@ -56,7 +56,7 @@ The library is the shell; the portfolio is the content and everything that is ab
 | Tailwind, `theme.css`, light and dark themes | Its extra tokens and utilities, `src/site.css` |
 | The document shell, `BaseLayout`: `<html>`, `<head>`, theme script, consent banner | Its own header, footer and print sheet (`PageLayout`, `PrintLayout`) |
 | `Article`: prose, table of contents, code copy, image zoom | The case-study sidebar and the privacy page around it |
-| `pageHead`: title, description, canonical, `hreflang`, Open Graph, JSON-LD slot | The JSON-LD itself: `Person`, `SoftwareSourceCode`, `TechArticle`, `BreadcrumbList` |
+| `pageHead`: title, description, canonical, `hreflang`, Open Graph, JSON-LD slot | The JSON-LD itself: `Person`, `TechArticle`, `BreadcrumbList` |
 | Interface phrases for its own components | The portfolio's phrases (`src/data/ui.ts`) and its wording of the library's ones (`ui` in `docs.config.mjs`) |
 | The sitemap, its index and `lastmod` from git | The list of project sitemaps to include, `robots.txt`, `llms.txt` |
 | Fonts (IBM Plex), self-hosted | — |
@@ -191,7 +191,7 @@ flowchart LR
   page --> layout["PageLayout → BaseLayout"]
 ```
 
-1. **Content.** `src/data/projects/<locale>/<slug>.md`: structured frontmatter (name, headline, status, stack, links, downloads…) and the write-up as the body.
+1. **Content.** `src/data/projects/<locale>/<slug>.md`: structured frontmatter (name, summary, status, stack, links, downloads…) and the write-up as the body.
 2. **Collection.** `src/content.config.ts` loads them with a glob loader. The default `generateId` drops the folder, so `es/foo.md` and `en/foo.md` would collide; it is overridden to keep the locale in the id. `adapters/project-schema.ts` validates the frontmatter, including the library's `seo` block.
 3. **Adapter.** `adapters/projects.ts` resolves the locale through `core/i18n/localized.ts`: the English entry when it exists, otherwise the Spanish source flagged `translationPending`, so the page shows a notice instead of a 404.
 4. **Route.** `src/pages/[...lang]/[projects]/[slug].astro` enumerates every slug in every locale. `[...lang]` is empty for Spanish and `en` for English; `[projects]` becomes `proyectos` or `projects` from `routes` in `core/i18n/locales.ts`. The page renders the entry, reads `dateModified` from git, gets the build's download counts and builds its JSON-LD.
@@ -272,11 +272,11 @@ The `<title>` is `title | suffix`. Each part is resolved separately by the libra
 
 | Suffix comes from | Example |
 | --- | --- |
-| 1. The page's `seo.titleSuffix` (the `.md` frontmatter, or what the page passes) | case studies pass `titleSuffix: false` |
+| 1. The page's `seo.titleSuffix` (the `.md` frontmatter, or what the page passes) | case studies pass `titleSuffix: false` when it does not fit |
 | 2. The site's `seo.titleSuffix` in `docs.config.mjs` | `Anthony Velez Tapia` |
 | 3. The site's `name` | `Anthony Velez Tapia` |
 
-A case study's title is already `name · headline`, the phrase someone would search for; adding the suffix would push it past what results pages show. Its frontmatter `seo` is spread after that default, so one file can still bring the suffix back.
+A case study's title is `name: decisions, mistakes and limits` (`decisiones, errores y límites`), and its description the frontmatter `summary`: the page tells how the project was made, while the product's own searches belong to its documentation site, so the two never compete. The suffix goes on only when the whole title fits in 60 characters (`core/projects/case-study.ts`). Its frontmatter `seo` is spread after that default, so one file can still override either.
 
 ### Structured data
 
@@ -285,8 +285,7 @@ The library draws no JSON-LD of its own; the portfolio declares it in `src/core/
 | Schema | On | Why |
 | --- | --- | --- |
 | `Person` | Every page | One `@id` (`PERSON_ID`) everywhere, so search engines see one person with many mentions |
-| `SoftwareSourceCode` | Case studies | Ties the write-up to the repository and packages through `sameAs` |
-| `TechArticle` | Case studies | Lets answer engines quote the write-up as an article |
+| `TechArticle` | Case studies | Lets answer engines quote the write-up as an article; its `about` is the software at its docs site (the repository without one), with packages as `sameAs`, never this page |
 | `BreadcrumbList` | Case studies | Projects index → project |
 
 ### Sitemap, robots and llms.txt
@@ -383,7 +382,7 @@ CI runs lint, format check, tests and the build, in that order, before anything 
 - **No redirects when a URL changes.** GitHub Pages has no 301, and HTML redirect pages are clutter. The links are edited, and Search Console handles the move.
 - **Spanish at `/`, unprefixed.** The root is the URL people paste, so it serves the home instead of redirecting to `/es/`.
 - **`Person` JSON-LD stays in code.** It varies per locale (job title, description, URL) and per page (`mainEntityOfPage`), so it cannot be one static block in `docs.config.mjs`.
-- **`titleSuffix: false` on case studies.** Their title is already the search phrase plus the name; a suffix would get it truncated.
+- **Case studies, not product pages.** Their title and description describe how the project was made; the docs site owns the product's searches and its software entity. The suffix is dropped where it would get the title truncated.
 - **The privacy policy is Markdown.** It is prose with a date, rendered by the same `Article` as the case studies, and a test keeps its email in step with the profile.
 - **Download counts are refreshed on the client.** The build's figure is the baseline and what readers without JavaScript see; the browser updates it store by store, so a static site does not show numbers months old.
 - **`dateModified` and `lastmod` come from git.** A date someone has to remember to bump stops being true.

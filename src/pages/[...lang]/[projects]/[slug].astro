@@ -1,7 +1,8 @@
 ---
 import { render } from 'astro:content';
 import { fileLastModified } from '@velezanthony/design/last-modified';
-import { breadcrumb, softwareSourceCode, techArticle } from '@core/seo/jsonld';
+import { breadcrumb, techArticle } from '@core/seo/jsonld';
+import { caseStudyTitle, suffixFits } from '@core/projects/case-study';
 import PageLayout from '@ui/layouts/PageLayout.astro';
 import CaseStudy from './_partials/CaseStudy.astro';
 import { getProject, getProjectSlugs } from '@adapters/projects';
@@ -9,6 +10,7 @@ import { buildCountsOf } from '@adapters/downloads';
 import { alternates, assertLocale, langParam, path } from '@core/i18n/utils';
 import { locales, routes } from '@core/i18n/locales';
 import { PERSON_ID } from '@data/site';
+import { profile } from '@data/profile';
 
 export async function getStaticPaths() {
   const slugs = await getProjectSlugs();
@@ -35,15 +37,22 @@ const downloadCounts = await buildCountsOf(entry.data.downloads);
 const indexUrl = new URL(path(lang, 'projects'), Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const identity = { site: Astro.site!, personId: PERSON_ID };
+
+/* A case study, not the product: the product's own searches belong to its docs site. The site's
+   suffix (the owner's name) goes on only where the whole title still fits in a results page. */
+const title = caseStudyTitle(entry.data.name, lang);
+const seo = {
+  ...(!suffixFits(title, profile.name) && { titleSuffix: false as const }),
+  ...entry.data.seo,
+};
 ---
 
 <PageLayout
   lang={lang}
-  title={`${entry.data.name} · ${entry.data.headline}`}
-  description={entry.data.tagline}
-  seo={{ titleSuffix: false, ...entry.data.seo }}
+  title={title}
+  description={entry.data.summary}
+  seo={seo}
   schema={[
-    softwareSourceCode(entry.data, identity, pageUrl, dateModified),
     techArticle(entry.data, identity, lang, pageUrl, dateModified),
     breadcrumb([
       { name: routes.projects[lang], url: indexUrl },

@@ -1,8 +1,8 @@
 ---
 slug: design
 name: '@velezanthony/design'
-headline: Astro integration for documentation sites
 tagline: 'Astro integration and component library for documentation: from Markdown to a multilingual site with search, SEO and a sitemap, without writing a layout.'
+summary: "@velezanthony/design case study: shipping source, layers with a dependency rule, failing in the build, what went wrong and its limits."
 status: maintained
 role: Author and maintainer
 order: 6
