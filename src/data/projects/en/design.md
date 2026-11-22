@@ -63,6 +63,35 @@ the portfolio was built with Astro. Two systems, two different looks.
 I wanted every repo's documentation to look and behave the same, and to match the portfolio. The
 tokens and the first atoms came out of the portfolio itself.
 
+MkDocs with Material built the whole site from Markdown, and it worked. What I missed was something
+else:
+
+- **My own style on the web**, not the theme's.
+- **Sections the way I wanted them**: some parts didn't look right to me and I couldn't change them
+  without fighting the theme.
+- **Room for my own pieces**: above all a proper cookie notice that works with Google Tag Manager and
+  Analytics without loading anything before consent.
+
+## What I studied
+
+It is not built on MkDocs or Starlight, and it doesn't copy them. I studied how they work and, above
+all, how the final result looks, kept what I liked and added what I was missing.
+
+| From… | What I liked | What didn't convince me | What I added |
+| --- | --- | --- | --- |
+| Markdown | Writing plain text, with relative links that work on GitHub. | — | My own directives (`::nav-tree`, tabs, callouts) and a build that fails on a broken link. |
+| MkDocs Material | Callouts, tabs, built-in search and publishing the `README.md` as the home page. | Not being able to change how some sections look without fighting the theme. | My own design system, generated folder indexes and a migrator from MkDocs. |
+| Starlight | Being Astro, Pagefind search and replaceable components. | Starting from its design instead of my own. | Typed config in three groups, a translated URL per page and an SEO panel in dev. |
+
+| | This library | MkDocs Material | Starlight |
+| --- | --- | --- | --- |
+| Base | Astro | MkDocs (Python) | Astro |
+| Design | Its own design system | Material theme, highly configurable | Starlight theme, customisable |
+| Folder indexes | Generated, with static pagination | Through plugins | Through plugins |
+| Cookies and analytics | Consent and Google Tag Manager | Consent and Google Analytics built in | Added by hand |
+| Replaceable components | Only the footer | Theme templates | Many, the header included |
+| Ecosystem | One person | Very large; in maintenance mode since November 2025, with Zensical as its successor | Large, with plugins and themes |
+
 ## What it is
 
 An Astro integration and a component library for documentation sites. A repo adds an Astro
@@ -300,6 +329,15 @@ plugins on top of it; with any other processor, the build fails.
 
 **It is cut to fit my sites.** It works for any repo, but the choices — GitHub Pages, a sub-folder
 per project, the portfolio at the root — are mine. Its own documentation is in Spanish only.
+
+**Only the footer can be replaced.** `site.components.Footer` swaps the footer for your own; the header
+can't be, because I haven't needed it.
+
+**Search Console, halfway.** It generates the `sitemap.xml` you submit to Search Console, but it doesn't
+add the verification tag: the property is verified through DNS or Analytics.
+
+**It doesn't take contributions.** I maintain it. Anyone who wants to adapt it can fork it: its
+documentation explains which personal data to remove and how to maintain their copy.
 
 ## Status
 

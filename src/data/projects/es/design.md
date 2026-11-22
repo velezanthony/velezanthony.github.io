@@ -63,6 +63,35 @@ portfolio estaba en Astro. Dos sistemas, con dos aspectos distintos.
 Quería que la documentación de todos los repos se viera y se comportara igual, y que se pareciera al
 portfolio. Los tokens y los primeros átomos salieron del propio portfolio.
 
+MkDocs con Material generaba todo el sitio a partir del Markdown, y funcionaba. Lo que echaba en falta
+era otra cosa:
+
+- **Mi estilo en la web**, no el del tema.
+- **Secciones a mi gusto**: había partes cuyo aspecto no me convencía y no podía cambiarlas sin pelearme
+  con el tema.
+- **Meter lo mío**: sobre todo un aviso de cookies bien hecho, que funcione con Google Tag Manager y
+  Analytics sin cargar nada antes del consentimiento.
+
+## Lo que estudié
+
+No está construida sobre MkDocs ni sobre Starlight, ni las copia. Estudié cómo funcionan y, sobre
+todo, cómo queda el resultado final, me quedé con lo que me gustaba y añadí lo que me faltaba.
+
+| De… | Me gustó | No me convencía | Qué añadí |
+| --- | --- | --- | --- |
+| Markdown | Escribir en texto plano, con enlaces relativos que funcionan en GitHub. | — | Directivas propias (`::nav-tree`, pestañas, cajas de aviso) y un build que falla con un enlace roto. |
+| MkDocs Material | Las cajas de aviso, las pestañas, la búsqueda integrada y publicar el `README.md` como portada. | No poder cambiar el aspecto de algunas secciones sin luchar contra el tema. | Mi propio sistema de diseño, índices de carpeta generados y un migrador desde MkDocs. |
+| Starlight | Que sea Astro, la búsqueda con Pagefind y poder sustituir componentes. | Partir de su diseño y no de uno propio. | Configuración tipada en tres grupos, URL traducida por página y un panel SEO en desarrollo. |
+
+| | Esta librería | MkDocs Material | Starlight |
+| --- | --- | --- | --- |
+| Base | Astro | MkDocs (Python) | Astro |
+| Diseño | Sistema de diseño propio | Tema Material, muy configurable | Tema de Starlight, personalizable |
+| Índices de carpeta | Generados, con paginación estática | Con plugins | Con plugins |
+| Cookies y analítica | Consentimiento y Google Tag Manager | Consentimiento y Google Analytics integrados | Se añaden a mano |
+| Componentes sustituibles | Solo el pie | Plantillas del tema | Muchos, también la cabecera |
+| Ecosistema | Una sola persona | Muy grande; en mantenimiento desde noviembre de 2025, con Zensical como sucesor | Grande, con plugins y temas |
+
 ## Qué es
 
 Una integración de Astro y una librería de componentes para sitios de documentación. Un repo añade
@@ -299,6 +328,15 @@ sobre él; con cualquier otro, el build falla.
 **Está hecha a la medida de mis sitios.** Sirve para cualquier repo, pero las decisiones —GitHub
 Pages, una subcarpeta por proyecto, el portfolio en la raíz— son las mías. Su propia documentación
 está solo en castellano.
+
+**Solo se sustituye el pie.** `site.components.Footer` cambia el pie por uno propio; la cabecera no,
+porque no lo he necesitado.
+
+**Search Console, a medias.** Genera el `sitemap.xml` que se envía a Search Console, pero no pone la
+etiqueta de verificación: la propiedad se verifica por DNS o con Analytics.
+
+**No acepta contribuciones.** La mantengo yo. Quien quiera adaptarla puede hacer un fork: su
+documentación explica qué datos personales quitar y cómo mantener su copia.
 
 ## Estado
 
