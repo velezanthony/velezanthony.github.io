@@ -44,9 +44,8 @@ visual:
   code: |
     // docs.config.mjs
     export default defineDocsConfig({
-      name: 'My repo',
-      locales: ['en', 'es'],
-      translations: { missing: MissingTranslation.LINK },
+      site: { name: 'My repo' },
+      i18n: { locales: ['en', 'es'], missing: MissingTranslation.LINK },
     });
 
     // astro.config.mjs
