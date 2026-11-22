@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Herramientas de desarrollo"
+  title: "Herramientas para desarrolladores"
   description: "Herramientas del día a día explicadas por situación, como deshacer errores en Git sin perder trabajo con restore, reset, revert y reflog."
 ---
 

@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Conceptos de desarrollo"
+  title: "Conceptos de arquitectura de software"
   description: "Decisiones de arquitectura explicadas con comparativas: API REST con SPA frente a htmx y ORMs Code First frente a Database First."
 ---
 

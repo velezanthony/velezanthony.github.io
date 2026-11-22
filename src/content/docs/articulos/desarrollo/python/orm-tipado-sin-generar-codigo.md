@@ -1,5 +1,6 @@
 ---
 seo:
+  title: "ORM tipado en Python sin generar código"
   description: "Cómo hacer que mypy y Pyright entiendan un ORM de Python sin generar código ni plugins: descriptores con __get__ sobrecargado, genéricos y dataclass_transform."
 ---
 

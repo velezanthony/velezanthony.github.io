@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Artículos de sistemas"
+  title: "Artículos de sistemas y DevOps"
   description: "Artículos de sistemas e infraestructura: Docker, CI/CD, AWS, Nginx, DNS, seguridad en Linux, Proxmox y centralitas con Asterisk y VitalPBX."
 ---
 
