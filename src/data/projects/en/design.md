@@ -22,7 +22,7 @@ compat:
   - 'Node ≥ 22.23.4'
 quality:
   - 'Layers enforced by ESLint, and a test that checks every rule still fires'
-  - 'Over 3,300 Vitest tests, real Astro builds included'
+  - 'Over 4,200 Vitest tests, real Astro builds included'
   - 'V8 coverage published in CI'
   - 'Stryker mutation testing: sharded in parallel, and incremental on every PR'
 constraints:
@@ -72,7 +72,23 @@ else:
 - **Room for my own pieces**: above all a proper cookie notice that works with Google Tag Manager and
   Analytics without loading anything before consent.
 
-## What I studied
+## What it is
+
+An Astro integration and a component library for documentation sites. A repo writes its Markdown and
+one config file, and the library does the rest:
+
+- **Pages in several languages**, with a policy for the ones that are not translated.
+- **Navigation**: sidebar, generated folder indexes (list, table or cards) and previous / next.
+- **Search** with Pagefind, per language.
+- **SEO**: title, description, Open Graph, canonical, `hreflang`, JSON-LD and `sitemap.xml`.
+- **Cookies and analytics**: a consent notice and Google Tag Manager, loading nothing before consent.
+- **Rich Markdown**: callouts, tabs, Mermaid diagrams and code blocks with a copy button.
+- **A design system** with light and dark themes, and standalone components to build your own pages.
+  This portfolio is built with them.
+- **An "SEO on page" panel** that only exists in development and checks each page as you write.
+- **A MkDocs migrator** that converts a repo's syntax without moving its `.md` files.
+
+### Compared with MkDocs Material and Starlight
 
 It is not built on MkDocs or Starlight, and it doesn't copy them. I studied how they work and, above
 all, how the final result looks, kept what I liked and added what I was missing.
@@ -91,145 +107,6 @@ all, how the final result looks, kept what I liked and added what I was missing.
 | Cookies and analytics | Consent and Google Tag Manager | Consent and Google Analytics built in | Added by hand |
 | Replaceable components | Only the footer | Theme templates | Many, the header included |
 | Ecosystem | One person | Very large; in maintenance mode since November 2025, with Zensical as its successor | Large, with plugins and themes |
-
-## What it is
-
-An Astro integration and a component library for documentation sites. A repo adds an Astro
-subproject, writes a `docs.config.mjs` and its Markdown, and the library supplies the rest:
-
-```js
-// docs.config.mjs
-import { defineDocsConfig, MissingTranslation } from '@velezanthony/design/integration';
-
-export default defineDocsConfig({
-  name: 'My repo',
-  locales: ['en', 'es'],
-  translations: { missing: MissingTranslation.LINK },
-  external: [{ slug: 'changelog', file: '../CHANGELOG.md' }],
-});
-```
-
-```js
-// astro.config.mjs
-import { defineDocsSite } from '@velezanthony/design/integration';
-import docsConfig from './docs.config.mjs';
-
-export default defineDocsSite(docsConfig, { base: '/my-repo' });
-```
-
-With that, the site gets:
-
-- Pages in every locale, `sitemap.xml` and a favicon, without a single file in `src/pages/`.
-- A policy for pages that are not translated.
-- SEO: title, description, Open Graph, canonical, `hreflang` and whatever JSON-LD the site
-  declares. The sitemap's `lastmod` comes from each file's last commit.
-- Search with Pagefind, per locale.
-- A Tailwind 4 theme with its tokens, and components in Atomic Design: atoms, molecules, organisms
-  and the `BaseLayout` and `DocsLayout` layouts.
-- An "SEO on page" panel that only exists under `astro dev` and reviews every page while you write.
-- A MkDocs migrator that converts a repo's syntax without moving its `.md` files.
-
-## How it works
-
-### The config
-
-`astro.config.mjs` imports `docs.config.mjs` and hands it to `docs()`, which validates it with zod
-and fills in the defaults. An unknown key fails the build and names its path
-(`ui.es.search.placeholdr`).
-
-The content loader cannot read that config off the integration object: Astro drops the properties it
-does not know. So the integration publishes it in a virtual module,
-`virtual:@velezanthony/design/config`, served by a Vite plugin with `JSON.stringify`. The collection
-and the routes read it from there. It is the same pattern Starlight uses, and it has one consequence:
-only data travels. Computed JSON-LD is computed in `docs.config.mjs` and passed in ready-made.
-
-The site's `content.config.ts` is one line:
-
-```ts
-export { collections } from '@velezanthony/design/content';
-```
-
-### Astro's hooks
-
-Most of the work happens in `astro:config:setup`. The integration requires `site`, reads
-`PUBLIC_GTM_ID` with Vite's `loadEnv` (the `.env` files are not in `process.env` yet at that point),
-adds its plugins to the Markdown processor, registers the fonts, the Shiki themes and the virtual
-module plugin, and injects the routes: `/[...slug]` for every page, `/sitemap.xml` and the favicon.
-If the site has its own page on one of those routes, its page wins and a warning names it at
-startup.
-
-In `astro:config:done` it copies the virtual module's types, because `injectTypes` does not exist
-earlier. In `astro:build:done` it builds the Pagefind index over `dist/`.
-
-`astro dev` only restarts when `astro.config.mjs` changes, not what it imports, so the integration
-also watches `docs.config.mjs`.
-
-### The content loader
-
-It reads the `.md` files in the content folder and the files in `external[]` (a `CHANGELOG.md` at
-the repo root, for instance). For each one it works out slug, locale and title, applies the
-translation policies and checks `sidebar`, `nav` and `footer` against the real pages. Then it
-rewrites relative `.md` links into site URLs, renders, and checks every `#anchor` against the
-headings of all pages.
-
-It collects every error before failing, with file and line. Under `astro dev` it watches the sources
-and reloads when any of them changes; a failure shows up in the log without taking the server down.
-
-### Development and build
-
-The search index is built after `astro build`, so search only works on a production build.
-
-The SEO panel is the opposite case: its routes are injected only in development. ESLint forbids
-anything published from importing the panel's folder, and a build test checks that `dist/` never
-mentions it.
-
-### The site's CSS
-
-The library owns Tailwind: the site has no `@import 'tailwindcss'` of its own. If it needs its own
-tokens or styles, it declares them with the `theme` option:
-
-```js
-theme: 'src/styles/site.css',
-```
-
-The library's `theme.css` imports `@velezanthony/design/site-theme` last, and the integration points
-that specifier at the site's CSS through a Vite alias. Tailwind honours the alias when it resolves
-`@import`, so the site's `@theme` blocks generate utilities in the same pass as the library's
-palette.
-
-### Sites on a sub-path
-
-Every docs site is published at `https://velezanthony.github.io/<repo>/`, which is why `base` is
-mandatory and every URL carries it. GitHub Pages serves a single `/404.html` for the whole domain, so
-the library generates no 404: the portfolio provides it at the root, along with `robots.txt` and the
-sitemap index. This site's `docs.config.mjs` lists every project's sitemap, and a test keeps that
-list equal to the projects collection.
-
-### Locales
-
-When a page is not translated, the site chooses what the other locale gets:
-
-- `link`: the sidebar links to the original, with a badge for its language.
-- `omit`: it does not appear.
-- `fallback`: the original is served under the other locale's URL, with a notice, `noindex` and a
-  canonical pointing back.
-
-The policy is set for the whole site and a page can override it in its frontmatter. Two files of the
-same page with different policies fail the build.
-
-### Pieces for a layout of your own
-
-A site that is not documentation can use the pieces on their own:
-
-- `BaseLayout` renders `<html>` and `<head>` with the theme and the consent banner, and leaves the
-  `<body>` to the caller, with `head`, default and `scripts` slots.
-- `Article` is the content of a docs page: the `.prose`, the table of contents and their JavaScript,
-  with slots for content of your own.
-- `pageHead` returns the `<head>` tags (canonical, `hreflang`, Open Graph, Twitter and JSON-LD) using
-  the site's config.
-- `seoSchema` is the frontmatter `seo` block, for use in any collection.
-
-This portfolio is built that way.
 
 ## Decisions
 
@@ -252,17 +129,32 @@ an `as const` object with a derived type.
 JavaScript), `components/` (presentational: they take props, they do not fetch data) and `astro/`,
 the only layer that knows about Astro. `core/` imports nothing but zod.
 
-ESLint enforces it, folder by folder. `boundaries.test.ts` lints in-memory snippets under the path
-they would have in each layer and checks that every forbidden import still errors, so deleting a rule
-turns a test red. Another test keeps the docs' map of `src/` equal to the real tree.
-
-When Astro changes an API, the change stays inside `astro/`.
+ESLint enforces it, folder by folder, and a test checks that every forbidden import still errors:
+deleting a rule turns a test red. When Astro changes an API, the change stays inside `astro/`.
 
 ### Fail the build
 
-A broken relative link or `#anchor`, a page with no title, a locale suffix missing from `locales` or
+A broken relative link or `#anchor`, a page with no title, a locale suffix missing from the config or
 an SEO image that does not exist all fail the build. I would rather find out when building than when
 publishing.
+
+## How it works inside
+
+**The config.** The site writes a single `docs.config.mjs`, typed and grouped into `site`, `i18n` and
+`content`. The library validates it on startup: an unknown key fails the build with its path.
+
+**The content.** A loader reads the `.md` files, takes each one's language and title, rewrites
+relative links to site URLs and checks every anchor against the real pages. It collects every error
+before failing, with file and line.
+
+**Routes and build.** The library injects the pages, the `sitemap.xml` and the favicon, without a
+single file in `src/pages/`. When the build ends, Pagefind indexes the site for search. The SEO panel
+is only injected in development, and a test checks it never reaches what gets published.
+
+**The CSS.** The library owns Tailwind. If the site needs its own tokens or styles, it declares them in
+the config and they go into the same compilation as the library's.
+
+The details are in the [library's documentation](https://velezanthony.github.io/design/).
 
 ## What went wrong
 
@@ -272,8 +164,8 @@ The library generated its own 404, one per locale, and even carried a fix so tha
 another language kept the title template. But GitHub Pages serves one `/404.html` for the whole
 domain, and a docs site lives in a sub-folder: that page was never going to be served.
 
-I removed it as a breaking change, with its routes, layouts and strings. The 404 and the privacy
-policy now come from the portfolio, once for the whole domain.
+I removed it, with its routes, layouts and strings. The 404 and the privacy policy now come from the
+portfolio, once for the whole domain.
 
 ### An upward dependency
 
@@ -288,37 +180,9 @@ them: the workflow failed until CI started generating them first. A module whose
 copied as text into an inline script, the one that restores the sidebar's scroll position, broke
 under instrumentation, so I left it out.
 
-When merging the shards' reports, Stryker rewrites the whole incremental baseline, not just the part
-it measured, so each shard hands back only its own files. Test ids are renumbered on merge, and the
-merge stops if a mutant points at a test its report does not define.
-
-## Where it is used
-
-- In this portfolio, which uses `BaseLayout`, `Article`, `pageHead` and the `theme` option.
-- In the documentation of four projects — Docker Control Center, cotton-props, Django Cotton Gallery
-  and SnakeORM — migrated from MkDocs.
-
-The migrator converts MkDocs syntax in place, rewrites anchors to the ids the library generates
-(MkDocs and github-slugger do not produce the same ones), will not run if `docs/` has uncommitted
-changes, and finishes with a suggested config read from `mkdocs.yml` and a list of what it did not
-translate.
-
-## How it is tested
-
-Over 3,300 Vitest tests, of five kinds: pure core, client code with an injected environment,
-components through Astro's container, adapters with test doubles built from the real schema, and
-full Astro builds of fixtures. V8 coverage goes into the CI summary.
-
-Coverage says which lines run; mutation says whether the tests would notice a change in them.
-Mutating everything is around 12,000 mutants, which on a single machine takes hours. Hence two
-workflows:
-
-- A manual one that splits the files into shards of similar weight (12 by default), runs them in
-  parallel, merges the results and caches the baseline on `main`.
-- An incremental one on every PR and every push to `main`, on two machines, that restores that
-  baseline and only reruns mutants whose code or tests changed. The first run took a little over
-  eight minutes, reused 83 % of the results and left the score at 82 %. It is informational: it does
-  not fail on the score.
+Mutating everything means about 12,000 mutants, hours on a single machine. I solved it by splitting
+them into shards that run in parallel and with an incremental run on every PR, which only repeats the
+mutants whose code or tests have changed.
 
 ## Limits
 
@@ -330,8 +194,8 @@ plugins on top of it; with any other processor, the build fails.
 **It is cut to fit my sites.** It works for any repo, but the choices — GitHub Pages, a sub-folder
 per project, the portfolio at the root — are mine. Its own documentation is in Spanish only.
 
-**Only the footer can be replaced.** `site.components.Footer` swaps the footer for your own; the header
-can't be, because I haven't needed it.
+**Only the footer can be replaced.** The site can swap the footer for its own; the header can't be,
+because I haven't needed it.
 
 **Search Console, halfway.** It generates the `sitemap.xml` you submit to Search Console, but it doesn't
 add the verification tag: the property is verified through DNS or Analytics.
@@ -341,4 +205,7 @@ documentation explains which personal data to remove and how to maintain their c
 
 ## Status
 
-Published on GitHub and in active development. The repository is public.
+Published on GitHub and in active development. It is used by this portfolio and by the documentation
+of four projects — Docker Control Center, cotton-props, Django Cotton Gallery and SnakeORM —,
+migrated from MkDocs. It is covered by over 4,200 tests, with real Astro builds, and mutation testing
+on every PR. The repository is public.

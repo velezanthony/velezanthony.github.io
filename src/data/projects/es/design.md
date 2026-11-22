@@ -22,7 +22,7 @@ compat:
   - 'Node ≥ 22.23.4'
 quality:
   - 'Capas impuestas por ESLint, y un test que comprueba que cada regla sigue saltando'
-  - 'Más de 3.300 tests en Vitest, con builds reales de Astro incluidos'
+  - 'Más de 4.200 tests en Vitest, con builds reales de Astro incluidos'
   - 'Cobertura de V8 publicada en CI'
   - 'Mutation testing con Stryker: por trozos en paralelo, e incremental en cada PR'
 constraints:
@@ -67,12 +67,31 @@ MkDocs con Material generaba todo el sitio a partir del Markdown, y funcionaba. 
 era otra cosa:
 
 - **Mi estilo en la web**, no el del tema.
-- **Secciones a mi gusto**: había partes cuyo aspecto no me convencía y no podía cambiarlas sin pelearme
-  con el tema.
+- **Secciones a mi gusto**: había partes cuyo aspecto no me convencía y no podía cambiarlas sin
+  pelearme con el tema.
 - **Meter lo mío**: sobre todo un aviso de cookies bien hecho, que funcione con Google Tag Manager y
   Analytics sin cargar nada antes del consentimiento.
 
-## Lo que estudié
+## Qué es
+
+Una integración de Astro y una librería de componentes para sitios de documentación. Un repo escribe
+su Markdown y un archivo de configuración, y la librería pone el resto:
+
+- **Páginas en varios idiomas**, con una política para las que no están traducidas.
+- **Navegación**: barra lateral, índices de carpeta generados (lista, tabla o tarjetas) y anterior /
+  siguiente.
+- **Búsqueda** con Pagefind, por idioma.
+- **SEO**: título, descripción, Open Graph, canonical, `hreflang`, JSON-LD y `sitemap.xml`.
+- **Cookies y analítica**: aviso de consentimiento y Google Tag Manager, sin cargar nada antes de
+  aceptar.
+- **Markdown enriquecido**: cajas de aviso, pestañas, diagramas Mermaid y bloques de código con botón
+  de copiar.
+- **Un sistema de diseño** con tema claro y oscuro, y componentes sueltos para montar páginas propias.
+  Este portfolio está hecho con ellos.
+- **Un panel «SEO on page»** que solo existe en desarrollo y revisa cada página mientras escribes.
+- **Un migrador de MkDocs** que convierte la sintaxis de un repo sin mover sus `.md`.
+
+### Frente a MkDocs Material y Starlight
 
 No está construida sobre MkDocs ni sobre Starlight, ni las copia. Estudié cómo funcionan y, sobre
 todo, cómo queda el resultado final, me quedé con lo que me gustaba y añadí lo que me faltaba.
@@ -91,144 +110,6 @@ todo, cómo queda el resultado final, me quedé con lo que me gustaba y añadí 
 | Cookies y analítica | Consentimiento y Google Tag Manager | Consentimiento y Google Analytics integrados | Se añaden a mano |
 | Componentes sustituibles | Solo el pie | Plantillas del tema | Muchos, también la cabecera |
 | Ecosistema | Una sola persona | Muy grande; en mantenimiento desde noviembre de 2025, con Zensical como sucesor | Grande, con plugins y temas |
-
-## Qué es
-
-Una integración de Astro y una librería de componentes para sitios de documentación. Un repo añade
-un subproyecto de Astro, escribe un `docs.config.mjs` y su Markdown, y la librería pone el resto:
-
-```js
-// docs.config.mjs
-import { defineDocsConfig, MissingTranslation } from '@velezanthony/design/integration';
-
-export default defineDocsConfig({
-  name: 'My repo',
-  locales: ['en', 'es'],
-  translations: { missing: MissingTranslation.LINK },
-  external: [{ slug: 'changelog', file: '../CHANGELOG.md' }],
-});
-```
-
-```js
-// astro.config.mjs
-import { defineDocsSite } from '@velezanthony/design/integration';
-import docsConfig from './docs.config.mjs';
-
-export default defineDocsSite(docsConfig, { base: '/my-repo' });
-```
-
-Con eso el sitio tiene:
-
-- Páginas en todos sus idiomas, `sitemap.xml` y favicon, sin un solo fichero en `src/pages/`.
-- Una política para las páginas que no están traducidas.
-- SEO: título, descripción, Open Graph, canonical, `hreflang` y el JSON-LD que declare el sitio. El
-  `lastmod` del sitemap sale del último commit de cada fichero.
-- Búsqueda con Pagefind, por idioma.
-- Un tema de Tailwind 4 con sus tokens, y componentes en Atomic Design: átomos, moléculas,
-  organismos y los layouts `BaseLayout` y `DocsLayout`.
-- Un panel «SEO on page» que solo existe con `astro dev` y revisa cada página mientras escribes.
-- Un migrador de MkDocs que convierte la sintaxis de un repo sin mover sus `.md`.
-
-## Cómo funciona
-
-### La configuración
-
-`astro.config.mjs` importa `docs.config.mjs` y se lo pasa a `docs()`, que lo valida con zod y rellena
-los valores por defecto. Una clave desconocida rompe el build con su ruta
-(`ui.es.search.placeholdr`).
-
-El loader de contenido no puede leer esa config del objeto de la integración: Astro descarta las
-propiedades que no conoce. Así que la integración la publica en un módulo virtual,
-`virtual:@velezanthony/design/config`, que sirve un plugin de Vite con `JSON.stringify`. De ahí la
-leen la colección y las rutas. Es el mismo patrón que usa Starlight, y tiene una consecuencia: solo
-viajan datos. Un JSON-LD calculado se calcula en `docs.config.mjs` y se pasa ya hecho.
-
-El `content.config.ts` del sitio es una línea:
-
-```ts
-export { collections } from '@velezanthony/design/content';
-```
-
-### Los hooks de Astro
-
-Casi todo pasa en `astro:config:setup`. La integración exige `site`, lee `PUBLIC_GTM_ID` con
-`loadEnv` de Vite (en ese hook los `.env` aún no están en `process.env`), añade sus plugins al
-procesador de Markdown, registra las fuentes, los temas de Shiki y el plugin del módulo virtual, e
-inyecta las rutas: `/[...slug]` para todas las páginas, `/sitemap.xml` y el favicon. Si el sitio
-tiene su propia página en una de esas rutas, gana la suya y se avisa al arrancar.
-
-En `astro:config:done` copia los tipos del módulo virtual, porque `injectTypes` no existe antes. Y en
-`astro:build:done` construye el índice de Pagefind sobre `dist/`.
-
-`astro dev` solo se reinicia cuando cambia `astro.config.mjs`, no lo que importa, así que la
-integración vigila también `docs.config.mjs`.
-
-### El loader de contenido
-
-Lee los `.md` de la carpeta de contenido y los ficheros de `external[]` (un `CHANGELOG.md` de la raíz
-del repo, por ejemplo). De cada uno saca slug, idioma y título, aplica las políticas de traducción y
-valida `sidebar`, `nav` y `footer` contra las páginas reales. Después reescribe los enlaces `.md`
-relativos a URLs del sitio, renderiza y comprueba cada `#ancla` con los encabezados de todas las
-páginas ya conocidos.
-
-Acumula todos los errores antes de fallar, con fichero y línea. En `astro dev` vigila las fuentes y
-recarga al cambiar cualquiera; un fallo sale en el log sin tirar el servidor.
-
-### Desarrollo y build
-
-El índice de búsqueda se construye después de `astro build`, así que la búsqueda solo funciona con un
-build de producción.
-
-El panel de SEO es el caso contrario: sus rutas se inyectan solo en desarrollo. ESLint prohíbe que
-nada publicado importe la carpeta del panel, y un test de build comprueba que `dist/` no lo menciona.
-
-### El CSS del sitio
-
-La librería es la dueña de Tailwind: el sitio no tiene su propio `@import 'tailwindcss'`. Si
-necesita tokens o estilos suyos, los declara con la opción `theme`:
-
-```js
-theme: 'src/styles/site.css',
-```
-
-El `theme.css` de la librería importa `@velezanthony/design/site-theme` en último lugar, y la
-integración apunta ese especificador al CSS del sitio con un alias de Vite. Tailwind respeta el alias
-al resolver `@import`, así que los `@theme` del sitio generan utilidades en la misma pasada que la
-paleta de la librería.
-
-### Sitios en una subcarpeta
-
-Cada sitio de docs se publica en `https://velezanthony.github.io/<repo>/`, por eso `base` es
-obligatorio y todas las URLs lo llevan. GitHub Pages sirve un único `/404.html` para todo el dominio,
-así que la librería no genera ninguna 404: la pone el portfolio en la raíz, igual que el `robots.txt`
-y el índice de sitemaps. El `docs.config.mjs` de esta web lista el sitemap de cada proyecto, y un
-test lo mantiene igual que la colección de proyectos.
-
-### Idiomas
-
-Cuando una página no está traducida, el sitio elige qué pasa en el otro idioma:
-
-- `link`: la barra lateral enlaza al original, con una insignia de su idioma.
-- `omit`: no aparece.
-- `fallback`: el original se sirve bajo la URL del otro idioma, con un aviso, `noindex` y canonical
-  al original.
-
-La política se declara para todo el sitio y una página puede cambiarla en su frontmatter. Dos
-ficheros de la misma página con políticas distintas rompen el build.
-
-### Piezas para un layout propio
-
-Un sitio que no es de documentación puede usar las piezas sueltas:
-
-- `BaseLayout` pinta `<html>` y `<head>` con el tema y el consentimiento, y deja el `<body>` a quien
-  lo usa, con las ranuras `head`, la de por defecto y `scripts`.
-- `Article` es el contenido de una página de docs: el `.prose`, el índice y su JavaScript, con
-  ranuras para meter contenido propio.
-- `pageHead` devuelve las etiquetas del `<head>` (canonical, `hreflang`, Open Graph, Twitter y
-  JSON-LD) con la config del sitio.
-- `seoSchema` es el bloque `seo` del frontmatter, para usarlo en cualquier colección.
-
-Este portfolio está montado así.
 
 ## Decisiones
 
@@ -251,17 +132,32 @@ código no puede usar sintaxis de TypeScript que no sea borrable. ESLint prohíb
 (JavaScript del navegador), `components/` (presentacionales: reciben props, no buscan datos) y
 `astro/`, la única capa que conoce Astro. `core/` no importa nada salvo zod.
 
-Lo hace cumplir ESLint, carpeta a carpeta. `boundaries.test.ts` lintea fragmentos en memoria con la
-ruta que tendrían en cada capa y comprueba que cada import prohibido sigue dando error, así que borrar
-una regla pone un test en rojo. Otro test mantiene el mapa de `src/` de la documentación igual que el
-árbol real.
-
-Cuando Astro cambia una API, el cambio queda en `astro/`.
+Lo hace cumplir ESLint, carpeta a carpeta, y un test comprueba que cada import prohibido sigue dando
+error: borrar una regla pone un test en rojo. Cuando Astro cambia una API, el cambio queda en
+`astro/`.
 
 ### Fallar en el build
 
 Rompen el build un enlace relativo o un `#ancla` rotos, una página sin título, un sufijo de idioma que
-no está en `locales` o una imagen SEO que no existe. Prefiero enterarme al construir que al publicar.
+no está en la config o una imagen SEO que no existe. Prefiero enterarme al construir que al publicar.
+
+## Cómo funciona por dentro
+
+**La configuración.** El sitio escribe un único `docs.config.mjs`, tipado y agrupado en `site`, `i18n`
+y `content`. La librería lo valida al arrancar: una clave desconocida rompe el build con su ruta.
+
+**El contenido.** Un loader lee los `.md`, saca de cada uno su idioma y su título, reescribe los
+enlaces relativos a URLs del sitio y comprueba cada ancla contra las páginas reales. Acumula todos los
+errores antes de fallar, con archivo y línea.
+
+**Las rutas y el build.** La librería inyecta las páginas, el `sitemap.xml` y el favicon, sin un solo
+archivo en `src/pages/`. Al terminar el build, Pagefind indexa el sitio para la búsqueda. El panel SEO
+solo se inyecta en desarrollo, y un test comprueba que no llega a lo publicado.
+
+**El CSS.** La librería es la dueña de Tailwind. Si el sitio necesita tokens o estilos propios, los
+declara en la config y entran en la misma compilación que los de la librería.
+
+El detalle está en la [documentación de la librería](https://velezanthony.github.io/design/).
 
 ## Lo que salió mal
 
@@ -271,8 +167,8 @@ La librería generaba su propia 404, una por idioma, e incluso tenía un arreglo
 otro idioma conservara la plantilla del título. Pero GitHub Pages sirve un único `/404.html` para
 todo el dominio, y un sitio de docs vive en una subcarpeta: esa página no se iba a servir nunca.
 
-La quité como cambio que rompe, con sus rutas, layouts y textos. La 404 y la política de privacidad
-las pone ahora el portfolio, una vez para todo el dominio.
+La quité, con sus rutas, layouts y textos. La 404 y la política de privacidad las pone ahora el
+portfolio, una vez para todo el dominio.
 
 ### Una dependencia hacia arriba
 
@@ -287,36 +183,9 @@ Astro los genera: el workflow falló hasta que el CI empezó a generarlos antes.
 funciones se copian como texto a un script en línea, el que restaura el scroll de la barra lateral,
 se rompía al instrumentarlo, y lo dejé fuera.
 
-Al unir los informes de los trozos, Stryker reescribe la base incremental entera, no solo la parte
-que ha medido, así que cada trozo devuelve solo sus ficheros. Los ids de los tests se renumeran al
-unir, y la unión se para si un mutante apunta a un test que su informe no define.
-
-## Dónde se usa
-
-- En este portfolio, que usa `BaseLayout`, `Article`, `pageHead` y la opción `theme`.
-- En la documentación de cuatro proyectos —Docker Control Center, cotton-props, Django Cotton Gallery
-  y SnakeORM—, migrada desde MkDocs.
-
-El migrador convierte la sintaxis de MkDocs en su sitio, reescribe las anclas a los ids que genera la
-librería (MkDocs y github-slugger no los generan igual), no corre si `docs/` tiene cambios sin
-confirmar y termina con una config sugerida, leída de `mkdocs.yml`, y la lista de lo que no ha
-traducido.
-
-## Cómo se prueba
-
-Más de 3.300 tests en Vitest, de cinco tipos: núcleo puro, cliente con el entorno inyectado,
-componentes con el contenedor de Astro, adaptadores con dobles construidos con el esquema real, y
-builds completos de Astro sobre fixtures. La cobertura de V8 sale en el resumen de CI.
-
-La cobertura dice qué líneas se ejecutan; la mutación, si los tests notarían un cambio en ellas.
-Mutar todo son unos 12.000 mutantes, que en una sola máquina son horas. Por eso hay dos workflows:
-
-- Uno manual que reparte los ficheros en trozos de peso parecido (12 por defecto), los ejecuta en
-  paralelo, une los resultados y guarda la base en la caché de `main`.
-- Uno incremental en cada PR y en cada push a `main`, con dos máquinas, que restaura esa base y solo
-  repite los mutantes cuyo código o tests han cambiado. La primera ejecución tardó algo más de ocho
-  minutos, reutilizó el 83 % de los resultados y dejó la puntuación en el 82 %. Es informativo: no
-  falla por la puntuación.
+Mutar todo son unos 12.000 mutantes, horas en una sola máquina. Lo resolví repartiéndolos en trozos
+en paralelo y con una ejecución incremental en cada PR, que solo repite los mutantes cuyo código o
+tests han cambiado.
 
 ## Límites
 
@@ -329,8 +198,8 @@ sobre él; con cualquier otro, el build falla.
 Pages, una subcarpeta por proyecto, el portfolio en la raíz— son las mías. Su propia documentación
 está solo en castellano.
 
-**Solo se sustituye el pie.** `site.components.Footer` cambia el pie por uno propio; la cabecera no,
-porque no lo he necesitado.
+**Solo se sustituye el pie.** El sitio puede cambiar el pie por uno propio; la cabecera no, porque no
+lo he necesitado.
 
 **Search Console, a medias.** Genera el `sitemap.xml` que se envía a Search Console, pero no pone la
 etiqueta de verificación: la propiedad se verifica por DNS o con Analytics.
@@ -340,4 +209,7 @@ documentación explica qué datos personales quitar y cómo mantener su copia.
 
 ## Estado
 
-Publicada en GitHub y en desarrollo activo. El repositorio es público.
+Publicada en GitHub y en desarrollo activo. La usan este portfolio y la documentación de cuatro
+proyectos —Docker Control Center, cotton-props, Django Cotton Gallery y SnakeORM—, migrada desde
+MkDocs. La cubren más de 4.200 tests, con builds reales de Astro, y mutation testing en cada PR. El
+repositorio es público.
