@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import { fileLastModified } from '@velezanthony/design/last-modified';
 import { breadcrumb, techArticle } from '@core/seo/jsonld';
-import { caseStudyTitle, suffixFits } from '@core/projects/case-study';
+import { caseStudyTitle } from '@core/projects/case-study';
 import PageLayout from '@ui/layouts/PageLayout.astro';
 import CaseStudy from './_partials/CaseStudy.astro';
 import { getProject, getProjectSlugs } from '@adapters/projects';
@@ -38,13 +38,10 @@ const indexUrl = new URL(path(lang, 'projects'), Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const identity = { site: Astro.site!, personId: PERSON_ID };
 
-/* A case study, not the product: the product's own searches belong to its docs site. The site's
-   suffix (the owner's name) goes on only where the whole title still fits in a results page. */
+/* A case study, not the product: the product's own searches belong to its docs site. Like every
+   portfolio page, it carries the site's suffix (the owner's name). */
 const title = caseStudyTitle(entry.data.name, lang);
-const seo = {
-  ...(!suffixFits(title, profile.name) && { titleSuffix: false as const }),
-  ...entry.data.seo,
-};
+const seo = { ...entry.data.seo };
 ---
 
 <PageLayout

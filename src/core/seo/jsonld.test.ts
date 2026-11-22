@@ -81,7 +81,7 @@ describe('techArticle', () => {
 
   it('is the case study, in the page language', () => {
     expect(article['@type']).toBe('TechArticle');
-    expect(article.headline).toBe('SnakeORM: decisions, mistakes and limits');
+    expect(article.headline).toBe('SnakeORM: case study');
     expect(article.description).toBe(project.summary);
     expect(article.url).toBe(page);
     expect(article.inLanguage).toBe('en');
