@@ -1,5 +1,9 @@
 /* Extends the library's theme (`theme` in docs.config.mjs): it is compiled in the same Tailwind pass, so its tokens also get utilities. */
 
+/* Where scripts run. The header's menu button shows, and folds the navigation, only there: without
+   JavaScript the navigation stays in view instead of behind a button that cannot open it. */
+@custom-variant scripting (@media (scripting: enabled));
+
 /* What only the portfolio has: the to-do notes, the CV sheet and its type scale, two column widths. */
 @theme {
   --color-todo: light-dark(#92400e, #fbbf24);

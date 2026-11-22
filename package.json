@@ -19,7 +19,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@velezanthony/design": "github:velezanthony/design#v0.1.0",
+    "@velezanthony/design": "github:velezanthony/design#v0.2.0",
     "astro": "^7.4.13"
   },
   "devDependencies": {

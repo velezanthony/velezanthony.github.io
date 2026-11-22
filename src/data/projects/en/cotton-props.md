@@ -1,8 +1,8 @@
 ---
 slug: cotton-props
 name: Cotton Props
-headline: IntelliSense for VS Code
 tagline: Full IntelliSense for Django Cotton in VS Code — autocomplete, hover docs, diagnostics with quick fixes and a component explorer.
+summary: "Cotton Props case study: why I wrote Django Cotton IntelliSense for VS Code from scratch, how it works inside, its limits and what I learnt."
 cvLine: "Django Cotton IntelliSense for VS Code: autocomplete, hover docs, diagnostics and quick fixes."
 status: maintained
 role: Author and maintainer
@@ -81,7 +81,6 @@ What it does, concretely:
 [django-cotton-gallery](/en/projects/django-cotton-gallery/) does **the same job**: help you write
 components and catch mistakes. What differs is where each one lives and what it can show.
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><td></td><th scope="col">props</th><th scope="col">gallery</th></tr>
@@ -92,7 +91,6 @@ components and catch mistakes. What differs is where each one lives and what it 
     <tr><th scope="row">Previews</th><td>No</td><td>Yes</td></tr>
   </tbody>
 </table>
-</div>
 
 This one does not preview because it is editor tooling, and the editor does not render your
 project. That one does, because it runs inside it. They are the two places component work happens.
@@ -116,7 +114,6 @@ prop to validate, so the model had to be built first.
 
 **What came out of it:**
 
-<div class="table-scroll">
 <table>
   <thead>
     <tr><th scope="col">Gap</th><th scope="col">What I built</th></tr>
@@ -127,7 +124,6 @@ prop to validate, so the model had to be built first.
     <tr><th scope="row">No warnings</th><td>Diagnostics across errors, warnings and hints</td></tr>
   </tbody>
 </table>
-</div>
 
 And the **component tree** almost for free: once the extension knows which components exist and
 where they live, listing and searching them costs nothing extra.

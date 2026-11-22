@@ -6,6 +6,19 @@ import { localeOfEntry, path } from '@core/i18n/utils';
 import { linkOf } from '@core/projects/links';
 import type { Locale } from '@core/i18n/locales';
 
+/** What this file reads of a page of the library's `docs` collection, which it types as unknown. */
+interface DocPage {
+  /** Identity: the file path without its locale, shared by the translations. */
+  slug: string;
+  /** The page's own URL, from its frontmatter `slug`. */
+  urlSlug?: string;
+  locale: Locale;
+  title: string;
+  sourcePath: string;
+  kind: 'native' | 'external' | 'generated';
+  seo?: { description?: string };
+}
+
 /** The CV renders `**bold**`; a model reading plain text only sees the asterisks. */
 const plain = (text: string) => text.replaceAll('**', '');
 
@@ -30,13 +43,24 @@ export const GET: APIRoute = async ({ site }) => {
   const entries = await getCollection('projects', ({ id }) => localeOfEntry(id) === 'en');
   const projects = entries.sort((a, b) => a.data.order - b.data.order);
 
+  /* The articles are the library's docs pages: an index (`_index.md`) is a listing, not an article.
+     The URL is the page's own `slug` when it declares one, its file path otherwise. */
+  const docs = (await getCollection('docs'))
+    .map(({ data }) => data as DocPage)
+    .filter((doc) => doc.kind === 'native' && !/(^|\/)_index(\.\w+)?\.md$/.test(doc.sourcePath));
+  const articleUrl = (doc: DocPage) => url(`${path(doc.locale)}${doc.urlSlug ?? doc.slug}/`);
+  const articles = docs
+    .filter((doc) => doc.locale === 'en')
+    .sort((a, b) => a.slug.localeCompare(b.slug))
+    .map((en) => ({ en, es: docs.find((doc) => doc.locale === 'es' && doc.slug === en.slug) }));
+
   const lines: string[] = [
     `# ${profile.name}`,
     '',
     `> ${plain(profile.headline.en)}`,
     '>',
-    '> This file lists every page of the portfolio and, for each project, where its code, its',
-    '> package and its documentation live.',
+    '> This file lists every page of the portfolio, every article and, for each project, where its',
+    '> code, its package and its documentation live.',
     '',
     '## Profile',
     '',
@@ -71,12 +95,22 @@ export const GET: APIRoute = async ({ site }) => {
     lines.push('');
   }
 
+  lines.push('## Articles', '');
+
+  for (const { en, es } of articles) {
+    const description = en.seo?.description ? `: ${en.seo.description}` : '';
+    lines.push(`- [${en.title}](${articleUrl(en)})${description}`);
+    if (es) lines.push(`  - es: ${articleUrl(es)}`);
+  }
+  lines.push('');
+
   lines.push(
     '## Pages',
     '',
     `- Home: ${both((lang) => path(lang))} — who I am and the selected work`,
     `- Projects: ${both((lang) => path(lang, 'projects'))} — every project`,
     `- Experience: ${both((lang) => path(lang, 'experience'))} — roles and what was built`,
+    `- Articles: ${both((lang) => path(lang, 'articles'))} — every article, by area`,
     `- CV: ${both((lang) => path(lang, 'cv'))} — printable résumé`,
     '',
   );

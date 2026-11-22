@@ -1,5 +1,6 @@
 import type { Locale } from '@core/i18n/locales';
 import { path } from '@core/i18n/utils';
+import { caseStudyTitle } from '@core/projects/case-study';
 import { linkOf } from '@core/projects/links';
 import type { Localized } from '@core/types';
 
@@ -16,14 +17,11 @@ export interface PersonSource {
   experience: { role: Localized; company: string }[];
 }
 
-/** What `softwareSourceCode` and `techArticle` need to know about a project. */
+/** What `techArticle` needs to know about a project. */
 export interface ProjectData {
   name: string;
-  headline: string;
-  tagline: string;
-  stack: string[];
-  targets: string[];
-  compat: string[];
+  /** The case study's meta description. */
+  summary: string;
   links: { kind: string; href: string }[];
 }
 
@@ -81,35 +79,11 @@ export function person(
 }
 
 /**
- * The project itself. This page is the entity; every declared link is the same thing elsewhere.
- * Without `sameAs` a search engine has no way to tie the write-up to the published package, so
- * the package and the page compete instead of reinforcing each other.
+ * The case study, as an article ABOUT the software. The software's own home is its documentation
+ * site, which answers the "what is it, how do I use it" searches: declaring this page as the
+ * software would make the two compete for them. So `about` points at the docs (the repository when
+ * there are none), and every other declared link is the same software elsewhere.
  */
-export function softwareSourceCode(
-  data: ProjectData,
-  { personId }: SiteIdentity,
-  pageUrl: string,
-  dateModified: string | undefined,
-) {
-  return {
-    '@context': context,
-    '@type': 'SoftwareSourceCode',
-    name: data.name,
-    description: data.tagline,
-    codeRepository: linkOf(data.links, 'source'),
-    programmingLanguage: data.stack,
-    license: 'https://opensource.org/licenses/MIT',
-    author: { '@id': personId },
-    url: pageUrl,
-    sameAs: data.links.map((l) => l.href),
-    runtimePlatform: data.compat,
-    keywords: [...data.stack, ...data.targets].join(', ') || undefined,
-    dateModified,
-  };
-}
-
-/** The write-up IS an article, and saying so is what lets an answer engine quote it as one
-    instead of treating the page as a repository listing. */
 export function techArticle(
   data: ProjectData,
   { personId }: SiteIdentity,
@@ -117,16 +91,23 @@ export function techArticle(
   pageUrl: string,
   dateModified: string | undefined,
 ) {
+  const home = linkOf(data.links, 'docs') ?? linkOf(data.links, 'source');
   return {
     '@context': context,
     '@type': 'TechArticle',
-    headline: `${data.name} · ${data.headline}`,
-    description: data.tagline,
+    headline: caseStudyTitle(data.name, lang),
+    description: data.summary,
     url: pageUrl,
     inLanguage: lang,
     dateModified,
     author: { '@id': personId },
-    about: { '@type': 'SoftwareSourceCode', name: data.name },
+    about: {
+      '@type': 'SoftwareSourceCode',
+      name: data.name,
+      url: home,
+      codeRepository: linkOf(data.links, 'source'),
+      sameAs: data.links.map((l) => l.href).filter((href) => href !== home),
+    },
   };
 }
 

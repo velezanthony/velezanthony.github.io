@@ -10,8 +10,8 @@ const schema = projectSchema({ image: () => z.string() } as never);
 const valid = {
   slug: 'snake-orm',
   name: 'SnakeORM',
-  headline: 'A typed Python ORM',
   tagline: 'Deep typed relationship navigation.',
+  summary: `SnakeORM case study: ${'why a typed Python ORM, the decisions, what went wrong. '.repeat(2)}`,
   cvLine: 'A typed Python ORM',
   status: 'maintained',
   role: 'Author',
@@ -70,6 +70,17 @@ describe('projectSchema', () => {
 
   it('rejects a fractional order', () => {
     expect(errorsOf({ ...valid, order: 1.5 })).toEqual(['order']);
+  });
+
+  /* The meta description of the case study: under 120 says too little, over 160 gets cut. */
+  it.each([119, 161])('rejects a summary of %i characters', (length) => {
+    expect(errorsOf({ ...valid, summary: 'x'.repeat(length) })).toEqual(['summary']);
+  });
+
+  it("requires a summary: the tagline describes the product, which is the docs site's query", () => {
+    const rest: Partial<typeof valid> = { ...valid };
+    delete rest.summary;
+    expect(errorsOf(rest)).toEqual(['summary']);
   });
 
   it('rejects a CV line over 100 characters', () => {

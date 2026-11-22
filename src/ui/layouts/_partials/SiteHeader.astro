@@ -22,15 +22,20 @@ const t = useTranslations(lang);
 const nav: { key: RouteKey; label: Phrase }[] = [
   { key: 'projects', label: 'Proyectos' },
   { key: 'experience', label: 'Experiencia' },
+  { key: 'articles', label: 'Artículos' },
   { key: 'cv', label: 'CV' },
 ];
 ---
 
 <header class="bg-chrome">
-  <!-- Two rows on a phone, one from md up. The name and the controls share the first row and the
-       nav takes the whole second one: three links fit in view, so they are not hidden behind a
-       menu, and the header stays free of JavaScript. Source order stays name, nav, controls, so
-       Tab reaches the main navigation first at every width. -->
+  <!-- From md up, one row: name, nav, controls. Below md the name and the controls share the first
+       row and the nav sits behind a «Menú» button on the second, which opens it underneath.
+       Progressive enhancement: the button only shows where scripts run (`scripting:`), and the nav
+       only folds while that button says `aria-expanded="false"` (`peer-aria-`). Without JavaScript
+       neither applies, the button stays hidden and the nav is in view, so every page stays one
+       tap away. `client/menu.ts` toggles the state and closes it on Escape, handing focus back.
+       Source order stays name, menu, nav, controls, so Tab reaches the navigation first at every
+       width. -->
   <div class="mx-auto grid max-w-(--container-page) grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2 px-6 py-4 md:grid-cols-[1fr_auto_auto] md:gap-x-8 md:py-5 lg:px-10">
     <a
       href={path(lang)}
@@ -40,17 +45,29 @@ const nav: { key: RouteKey; label: Phrase }[] = [
       {name}
     </a>
 
-    <nav
-      aria-label={t('Navegación principal')}
-      class="col-span-2 row-start-2 md:col-span-1 md:col-start-2 md:row-start-1"
+    <!-- The library's «Menú» (the docs sidebar's toggle): a label in a ruled box, + and −. -->
+    <button
+      type="button"
+      data-menu-toggle
+      aria-controls="site-nav"
+      aria-expanded="false"
+      class="peer label col-span-2 hidden min-h-11 w-full cursor-pointer items-center justify-between border border-rule px-3.5 text-ink after:text-muted after:content-['+'] aria-expanded:after:content-['−'] scripting:max-md:flex"
     >
-      <ul class="flex flex-wrap items-center gap-x-5 gap-y-1">
+      {t('Menú')}
+    </button>
+
+    <nav
+      id="site-nav"
+      aria-label={t('Navegación principal')}
+      class="col-span-2 md:col-span-1 md:col-start-2 md:row-start-1 scripting:max-md:peer-aria-[expanded=false]:hidden"
+    >
+      <ul class="flex flex-col gap-y-1 md:flex-row md:flex-wrap md:items-center md:gap-x-5">
         {nav.map((item) => (
           <li>
             <a
               href={path(lang, item.key)}
               aria-current={current === item.key ? 'page' : undefined}
-              class="inline-flex min-h-6 min-w-6 items-center justify-center py-1 font-mono text-sm text-ink transition-shadow hover:shadow-[inset_0_-1px_0_var(--color-ink)] aria-[current]:shadow-[inset_0_-2px_0_var(--color-accent-line)]"
+              class="inline-flex min-h-11 min-w-6 items-center py-1 font-mono text-sm text-ink transition-shadow hover:shadow-[inset_0_-1px_0_var(--color-ink)] aria-[current]:shadow-[inset_0_-2px_0_var(--color-accent-line)] md:min-h-6 md:justify-center"
             >
               {t(item.label)}
             </a>
@@ -65,3 +82,9 @@ const nav: { key: RouteKey; label: Phrase }[] = [
     </div>
   </div>
 </header>
+
+<script>
+  import { bindMenu } from '@client/menu';
+
+  bindMenu(document);
+</script>

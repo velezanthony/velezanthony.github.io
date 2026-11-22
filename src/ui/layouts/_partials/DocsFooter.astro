@@ -1,0 +1,25 @@
+---
+import type { FooterProps } from '@velezanthony/design/integration';
+import { contact, profile } from '@data/profile';
+import { assertLocale } from '@core/i18n/utils';
+import SiteFooter from './SiteFooter.astro';
+
+/* The footer of the library's docs pages (the articles), set by `components.Footer` in
+   `docs.config.mjs`: the site's own, fed from the same data as `PageLayout`. The library's
+   `siteName`, `strings`, `privacyUrl` and `footer` are not used: the site footer has its own. The library's header links only
+   the articles, so this footer also links the portfolio's pages. */
+type Props = FooterProps;
+
+const { lang, year, cookieControl } = Astro.props;
+---
+
+{/* The docs body is a flex column: `mt-auto` keeps the footer at the bottom of a short page. */}
+<SiteFooter
+  class="mt-auto"
+  lang={assertLocale(lang)}
+  name={profile.name}
+  contact={contact}
+  year={year}
+  cookieControl={cookieControl}
+  portfolio
+/>

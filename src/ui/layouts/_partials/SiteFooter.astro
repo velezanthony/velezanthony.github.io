@@ -1,5 +1,6 @@
 ---
 import ContactList from '@ui/components/ContactList.astro';
+import CookieSettingsButton from '@velezanthony/design/components/atoms/actions/CookieSettingsButton.astro';
 import Link from '@velezanthony/design/components/atoms/actions/Link.astro';
 import type { ContactLink } from '@core/types';
 import { LIBRARY_SOURCE, SITE_HOST, SITE_SOURCE } from '@data/site';
@@ -16,19 +17,52 @@ interface Props {
   year: number;
   /** Whether the site asks for cookie consent, and so has a choice to reopen. */
   cookieControl?: boolean;
+  /** Whether to link the portfolio's pages: on the articles, whose header links only the articles. */
+  portfolio?: boolean;
+  /** Classes added to the `<footer>`'s own, for the layout that places it. */
+  class?: string;
 }
 
-const { lang, name, contact, year, cookieControl = false } = Astro.props;
+const {
+  lang,
+  name,
+  contact,
+  year,
+  cookieControl = false,
+  portfolio = false,
+  class: className,
+} = Astro.props;
 const t = useTranslations(lang);
+
+const pages = [
+  { href: path(lang), label: t('Inicio') },
+  { href: path(lang, 'projects'), label: t('Proyectos') },
+  { href: path(lang, 'experience'), label: t('Experiencia') },
+  { href: path(lang, 'cv'), label: t('CV') },
+];
 ---
 
 {/* `surface-inverse` is the library's inverted surface: it redefines the tokens in its scope. */}
-<footer class="surface-inverse">
+<footer class:list={['surface-inverse', className]}>
   <div class="mx-auto max-w-(--container-page) px-6 py-12 lg:px-10">
     <div class="grid gap-10 md:grid-cols-2">
       <div>
         <p class="label mb-4 text-faint">{t('Contacto')}</p>
         <ContactList items={contact} />
+        {portfolio && (
+          <nav aria-label="Portfolio" class="mt-8">
+            <p class="label mb-4 text-faint">Portfolio</p>
+            <ul class="flex flex-wrap gap-x-6 gap-y-2">
+              {pages.map((page) => (
+                <li>
+                  <Link href={page.href} variant="quiet">
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
 
       <div class="space-y-8 md:justify-self-end md:text-right">
@@ -61,15 +95,8 @@ const t = useTranslations(lang);
         </li>
         {cookieControl && (
           <li>
-            {/* A button, not a link: it acts on the page, it goes nowhere. Tailwind's preflight
-                sets `cursor: default` on buttons. */}
-            <button
-              type="button"
-              data-consent-open
-              class="inline-flex min-h-6 cursor-pointer items-center text-muted transition-colors hover:text-ink"
-            >
-              {designStrings(lang)['consent.preferences']}
-            </button>
+            {/* The library's button, the one its own footer uses: the consent script listens to it. */}
+            <CookieSettingsButton strings={designStrings(lang)} />
           </li>
         )}
         <li>

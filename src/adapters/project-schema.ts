@@ -62,14 +62,15 @@ export const projectSchema = ({ image }: SchemaContext) =>
     slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'lowercase words joined by single dashes'),
     name: z.string(),
 
-    /** Leads the `<title>`. The phrase someone would actually search for —
-        the package name alone has no search volume yet. */
-    headline: z.string(),
-
     tagline: z.string(),
 
-    /** The CV line. Required rather than falling back to `tagline`: that one is written as a
-        meta description and runs past 140 characters, which on paper is two lines per tool
+    /** The meta description of the page, which is a case study: the problem, the decisions, what
+        went wrong, the limits. Not the tagline: that one says what the product does, which is the
+        search its documentation site answers, and the two pages would compete for it. */
+    summary: z.string().min(120).max(160),
+
+    /** The CV line. Required rather than falling back to `tagline`: that one runs past 140
+        characters, which on paper is two lines per tool
         and turns the list back into a paragraph. One clause, no dash — the CV draws its own.
         Left out, the project stays off the CV: not every project is a tool for other people. */
     cvLine: z.string().max(100).optional(),
@@ -114,7 +115,7 @@ export const projectSchema = ({ image }: SchemaContext) =>
 
     downloads: downloads.optional(),
 
-    /** The library's `seo` block (title, description, image, noindex…). The title and the
-        description are derived from `name`, `headline` and `tagline`: write it only to override. */
+    /** The library's `seo` block (title, description, image, noindex…). The title is derived from
+        `name` and the description is `summary`: write it only to override. */
     seo: seoSchema.optional(),
   });

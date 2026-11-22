@@ -1,8 +1,8 @@
 ---
 slug: snake-orm
 name: SnakeORM
-headline: ORM en Python tipado para mypy y Pyright
 tagline: "Un ORM en Python que grita en vez de adivinar: navegación de relaciones tipada de punta a punta, sin codegen ni plugin. mypy y Pyright lo leen nativos."
+summary: "Caso de estudio de SnakeORM: por qué un ORM en Python tipado sin codegen ni plugins, las decisiones que lo sostienen, lo que salió mal y sus límites."
 cvLine: "ORM en Python con navegación de relaciones tipada que mypy y Pyright resuelven sin codegen."
 status: maintained
 role: Autor
@@ -131,7 +131,9 @@ Y no es una crítica a Django: es una cuestión de fechas.
 Lo que sostiene la declaración tipada es **`dataclass_transform` (PEP 681), que llegó en Python
 3.11**. Permite decirle al type-checker que un decorador propio se comporta como `@dataclass`, de
 modo que entiende los campos declarados sin que nadie genere stubs. Es la misma pieza sobre la que
-se apoyan SQLAlchemy 2.0 y Pydantic v2.
+se apoyan SQLAlchemy 2.0 y Pydantic v2. La técnica entera —descriptores, genéricos y
+`dataclass_transform`— la explico en el artículo
+[Un ORM tipado sin generar código](/articulos/desarrollo/python/orm-tipado-sin-generar-codigo/).
 
 SnakeORM pide **Python 3.11 o superior** y usa eso desde el primer día. El ORM de Django es de
 2005: no solo es anterior a `dataclass_transform`, es anterior a las anotaciones de variables
@@ -520,5 +522,7 @@ Una guía que enseña un camino que ya no funciona. Una puerta que mide otra cos
 
 ## Estado
 
-Publicado en PyPI como beta —`pip install --pre snake-orm`— y en desarrollo activo. No ha corrido
-en producción todavía. Código abierto con licencia MIT.
+Publicado en PyPI como beta y en desarrollo activo. No ha corrido en producción todavía. Código
+abierto con licencia MIT.
+
+Cómo instalarlo y usarlo está en su [documentación](https://velezanthony.github.io/snake-orm/).
