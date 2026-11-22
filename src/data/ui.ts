@@ -54,7 +54,7 @@ export const en = {
   'La ruta que buscas no existe. Pero ya que estás aquí:':
     'That page does not exist. But while you are here:',
   'Quién soy y qué construyo': 'Who I am and what I build',
-  'Cinco herramientas open source': 'Five open source tools',
+  'Seis herramientas open source': 'Six open source tools',
   'Dónde he trabajado y en qué': 'Where I have worked and on what',
   'Para descargar o imprimir': 'To download or print',
   '¿Prefieres inglés?': 'Prefer Spanish?',

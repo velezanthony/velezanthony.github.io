@@ -12,8 +12,8 @@ export const profile = {
   } satisfies Localized,
 
   summary: {
-    es: '**Cuatro años, seis stacks y tres arquitecturas en producción**: API REST con clientes desacoplados, SPA y monolito SSR con HTMX. Diseño el modelo de datos —SQL Server y PostgreSQL, database first y code first— y **levanté en solitario un SaaS multi-tenant hasta producción**. Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS, en un equipo de cuatro. Bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes llevé la **infraestructura AWS completa** de las startups de una venture builder y monté su preproducción on-premise en Proxmox. **Cinco herramientas open source propias: dos en PyPI y una en el VS Code Marketplace**, entre ellas un ORM en Python que mypy y Pyright resuelven sin generación de código.',
-    en: '**Four years, six stacks and three architectures in production**: REST APIs with decoupled clients, SPAs and SSR monoliths with HTMX. I design the data model —SQL Server and PostgreSQL, database first and code first— and **took a multi-tenant SaaS to production single-handedly**. Today I define the **code architecture** for the refactor of a SaaS marketplace, in a team of four. I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that I ran the **full AWS infrastructure** of a venture builder’s startups and built their on-premise pre-production on Proxmox. **Five open source tools of my own: two on PyPI and one on the VS Code Marketplace**, among them a Python ORM whose typing mypy and Pyright resolve with no code generation.',
+    es: '**Cuatro años, seis stacks y tres arquitecturas en producción**: API REST con clientes desacoplados, SPA y monolito SSR con HTMX. Diseño el modelo de datos —SQL Server y PostgreSQL, database first y code first— y **levanté en solitario un SaaS multi-tenant hasta producción**. Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS, en un equipo de cuatro. Bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes llevé la **infraestructura AWS completa** de las startups de una venture builder y monté su preproducción on-premise en Proxmox. **Seis herramientas open source propias: dos en PyPI y una en el VS Code Marketplace**, entre ellas un ORM en Python que mypy y Pyright resuelven sin generación de código.',
+    en: '**Four years, six stacks and three architectures in production**: REST APIs with decoupled clients, SPAs and SSR monoliths with HTMX. I design the data model —SQL Server and PostgreSQL, database first and code first— and **took a multi-tenant SaaS to production single-handedly**. Today I define the **code architecture** for the refactor of a SaaS marketplace, in a team of four. I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that I ran the **full AWS infrastructure** of a venture builder’s startups and built their on-premise pre-production on Proxmox. **Six open source tools of my own: two on PyPI and one on the VS Code Marketplace**, among them a Python ORM whose typing mypy and Pyright resolve with no code generation.',
   } satisfies Localized,
 
   location: 'Hernani, Gipuzkoa',
@@ -87,12 +87,12 @@ export const pageTitles = {
  */
 export const seo = {
   home: {
-    es: 'Desarrollador Full Stack y administrador de sistemas en Gipuzkoa. Django, Python, Laravel y .NET; Angular. Cinco herramientas open source propias.',
-    en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular. Five open source tools of my own.',
+    es: 'Desarrollador Full Stack y administrador de sistemas en Gipuzkoa. Django, Python, Laravel y .NET; Angular. Seis herramientas open source propias.',
+    en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular. Six open source tools of my own.',
   },
   projects: {
-    es: 'Cinco herramientas open source: dos extensiones de VS Code (Django Language Service y Cotton Props), un catálogo de componentes Django, un ORM tipado en Python y un panel Docker en terminal.',
-    en: 'Five open source tools: two VS Code extensions (Django Language Service and Cotton Props), a Django component catalogue, a typed Python ORM and a terminal Docker dashboard.',
+    es: 'Seis herramientas open source: un ORM Python tipado, dos extensiones de VS Code y un catálogo de componentes para Django, un panel Docker y una librería Astro.',
+    en: 'Six open source tools: a typed Python ORM, two VS Code extensions and a component catalogue for Django, a terminal Docker dashboard and an Astro docs library.',
   },
   experience: {
     es: 'Cuatro años: arquitectura Django en Zenit Solar, AWS en Eywa Space, VoIP en SWAP y un SaaS multi-tenant en Laravel llevado a producción en VITE.',
