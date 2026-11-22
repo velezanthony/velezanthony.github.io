@@ -15,6 +15,9 @@ un ORM de código abierto que escribo y que todavía está **en beta**, para que
 relaciones y consultas **sin generar código y sin plugins del comprobador de tipos**. Solo con
 herramientas estándar del sistema de tipos de Python.
 
+Por qué decidí construirlo así, qué salió mal por el camino y dónde se queda corto lo cuento en el
+[caso de estudio de SnakeORM](/proyectos/snake-orm/).
+
 ## El problema: un ORM dinámico devuelve `Any`
 
 Un ORM dinámico construye sus atributos en tiempo de ejecución: metaclases, `__getattr__`,

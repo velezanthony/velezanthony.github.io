@@ -32,6 +32,25 @@ describe('DocsFooter (the site footer on docs pages)', () => {
     expect(doc.querySelector('a[href="/en/privacy/"]')).not.toBeNull();
   });
 
+  /* The articles wear the library's header, which links only the articles: the footer takes the
+     reader from an article back to the portfolio. */
+  it('links back to the portfolio pages, in the page locale', async () => {
+    const hrefs = (doc: ParentNode) =>
+      [...doc.querySelectorAll('nav[aria-label="Portfolio"] a')].map((a) => a.getAttribute('href'));
+    expect(hrefs(await render(DocsFooter, props('es')))).toEqual([
+      '/',
+      '/proyectos/',
+      '/experiencia/',
+      '/cv/',
+    ]);
+    expect(hrefs(await render(DocsFooter, props('en')))).toEqual([
+      '/en/',
+      '/en/projects/',
+      '/en/experience/',
+      '/en/cv/',
+    ]);
+  });
+
   it('lets the footer sit at the bottom of the docs page column', async () => {
     const doc = await render(DocsFooter, props('es'));
     expect(doc.querySelector('footer')!.classList.contains('mt-auto')).toBe(true);

@@ -131,7 +131,9 @@ Y no es una crítica a Django: es una cuestión de fechas.
 Lo que sostiene la declaración tipada es **`dataclass_transform` (PEP 681), que llegó en Python
 3.11**. Permite decirle al type-checker que un decorador propio se comporta como `@dataclass`, de
 modo que entiende los campos declarados sin que nadie genere stubs. Es la misma pieza sobre la que
-se apoyan SQLAlchemy 2.0 y Pydantic v2.
+se apoyan SQLAlchemy 2.0 y Pydantic v2. La técnica entera —descriptores, genéricos y
+`dataclass_transform`— la explico en el artículo
+[Un ORM tipado sin generar código](/articulos/desarrollo/python/orm-tipado-sin-generar-codigo/).
 
 SnakeORM pide **Python 3.11 o superior** y usa eso desde el primer día. El ORM de Django es de
 2005: no solo es anterior a `dataclass_transform`, es anterior a las anotaciones de variables

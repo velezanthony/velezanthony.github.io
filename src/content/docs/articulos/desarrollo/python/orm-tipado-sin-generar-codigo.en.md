@@ -16,6 +16,9 @@ an open-source ORM I'm writing that is still **in beta**, so that mypy and Pyrig
 models, columns, relations and queries **without code generation and without type checker
 plugins**. Just with standard tools from Python's type system.
 
+Why I chose to build it this way, what went wrong along the way and where it falls short are in the
+[SnakeORM case study](/en/projects/snake-orm/).
+
 ## The problem: a dynamic ORM returns `Any`
 
 A dynamic ORM builds its attributes at runtime: metaclasses, `__getattr__`, field names as

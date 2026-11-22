@@ -6,7 +6,8 @@ import SiteFooter from './SiteFooter.astro';
 
 /* The footer of the library's docs pages (the articles), set by `components.Footer` in
    `docs.config.mjs`: the site's own, fed from the same data as `PageLayout`. The library's
-   `siteName`, `strings`, `privacyUrl` and `footer` are not used: the site footer has its own. */
+   `siteName`, `strings`, `privacyUrl` and `footer` are not used: the site footer has its own. The library's header links only
+   the articles, so this footer also links the portfolio's pages. */
 type Props = FooterProps;
 
 const { lang, year, cookieControl } = Astro.props;
@@ -20,4 +21,5 @@ const { lang, year, cookieControl } = Astro.props;
   contact={contact}
   year={year}
   cookieControl={cookieControl}
+  portfolio
 />
