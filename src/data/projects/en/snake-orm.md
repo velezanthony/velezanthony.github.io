@@ -482,5 +482,7 @@ teaches a road that no longer works. A gate that measures something else and say
 
 ## Status
 
-Published on PyPI as a beta —`pip install --pre snake-orm`— and under active development. It has
-not run in production yet. Open source, MIT licensed.
+Published on PyPI as a beta and under active development. It has not run in production yet. Open
+source, MIT licensed.
+
+How to install and use it is in its [documentation](https://velezanthony.github.io/snake-orm/).

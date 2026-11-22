@@ -520,5 +520,7 @@ Una guía que enseña un camino que ya no funciona. Una puerta que mide otra cos
 
 ## Estado
 
-Publicado en PyPI como beta —`pip install --pre snake-orm`— y en desarrollo activo. No ha corrido
-en producción todavía. Código abierto con licencia MIT.
+Publicado en PyPI como beta y en desarrollo activo. No ha corrido en producción todavía. Código
+abierto con licencia MIT.
+
+Cómo instalarlo y usarlo está en su [documentación](https://velezanthony.github.io/snake-orm/).

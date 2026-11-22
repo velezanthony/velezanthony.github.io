@@ -198,6 +198,4 @@ Published on PyPI and **on its first stable release**: the annotation grammar an
 Runs on Python 3.10 and above, Django 4.2 to 6.x. Documentation published, changelog kept. Open
 source, MIT licensed.
 
-```bash
-pip install django-cotton-gallery
-```
+How to install and use it is in its [documentation](https://velezanthony.github.io/django-cotton-gallery/).

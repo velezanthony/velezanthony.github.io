@@ -199,6 +199,4 @@ ajustes `DJANGO_COTTON_GALLERY_*` son API pública, y no se renombran ni se quit
 Funciona sobre Python 3.10 en adelante y Django 4.2 a 6.x. Documentación publicada y changelog al
 día. Código abierto con licencia MIT.
 
-```bash
-pip install django-cotton-gallery
-```
+Cómo instalarla y usarla está en su [documentación](https://velezanthony.github.io/django-cotton-gallery/).
