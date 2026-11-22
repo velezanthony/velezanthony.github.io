@@ -78,6 +78,21 @@ export default defineDocsConfig({
           label: { es: 'Virtualización', en: 'Virtualisation' },
           items: ['articulos/proxmox-laboratorio'],
         },
+        {
+          label: { es: 'Redes', en: 'Networking' },
+          items: [
+            'articulos/nginx-err-too-many-redirects',
+            'articulos/dns-cambiar-servidor-sin-caida',
+          ],
+        },
+        {
+          label: { es: 'Seguridad', en: 'Security' },
+          items: ['articulos/linux-primeros-pasos-servidor'],
+        },
+        {
+          label: { es: 'Telefonía', en: 'Telephony' },
+          items: ['articulos/vitalpbx-asterisk-centralita'],
+        },
       ],
     },
   ],
