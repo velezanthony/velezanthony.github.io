@@ -3,6 +3,18 @@ slug: articles/development/python/django/django-n-plus-1-queries
 seo:
   title: "Django N+1 queries: from 101 to 1"
   description: "How to find and fix N+1 queries in Django step by step: from 101 queries to 1 with debug-toolbar, select_related, prefetch_related and annotate."
+  schema:
+    - '@type': TechArticle
+      headline: "N+1 queries in Django: from 101 queries to 1"
+      description: "How to find and fix N+1 queries in Django step by step: from 101 queries to 1 with debug-toolbar, select_related, prefetch_related and annotate."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # N+1 queries in Django: from 101 queries to 1

@@ -3,6 +3,18 @@ slug: articles/development/python/typed-orm-without-code-generation
 seo:
   title: "A typed Python ORM without codegen"
   description: "How to make mypy and Pyright understand a Python ORM without code generation or plugins: descriptors with overloaded __get__, generics and dataclass_transform."
+  schema:
+    - '@type': TechArticle
+      headline: "A typed ORM without code generation"
+      description: "How to make mypy and Pyright understand a Python ORM without code generation or plugins: descriptors with overloaded __get__, generics and dataclass_transform."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # A typed ORM without code generation

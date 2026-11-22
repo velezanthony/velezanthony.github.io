@@ -3,6 +3,18 @@ slug: articles/development/python/django/django-multi-tenancy
 seo:
   title: "Multi-tenancy in Django: 4 approaches"
   description: "Four ways to isolate SaaS customers in Django: separate databases, hybrid, schema per tenant and tenant_id, with the trade-offs and when to use each one."
+  schema:
+    - '@type': TechArticle
+      headline: "Multi-tenancy in Django: four strategies"
+      description: "Four ways to isolate SaaS customers in Django: separate databases, hybrid, schema per tenant and tenant_id, with the trade-offs and when to use each one."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Multi-tenancy in Django: four strategies

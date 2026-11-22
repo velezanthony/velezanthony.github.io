@@ -2,6 +2,18 @@
 seo:
   title: "GitHub Actions e imágenes Docker"
   description: "Un workflow de GitHub Actions que construye, etiqueta con semver y sha y publica imágenes Docker en Docker Hub: disparadores, secretos y caché."
+  schema:
+    - '@type': TechArticle
+      headline: "GitHub Actions: construir, versionar y publicar imágenes Docker"
+      description: "Un workflow de GitHub Actions que construye, etiqueta con semver y sha y publica imágenes Docker en Docker Hub: disparadores, secretos y caché."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # GitHub Actions: construir, versionar y publicar imágenes Docker

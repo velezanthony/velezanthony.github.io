@@ -3,6 +3,18 @@ slug: articles/systems/containers/multi-stage-dockerfile
 seo:
   title: "Multi-stage Dockerfile for Node.js"
   description: "One Dockerfile with a development stage and a lean production image: build stages, --target, layer order for caching and a non-root user, using a NestJS API."
+  schema:
+    - '@type': TechArticle
+      headline: "Multi-stage Dockerfile: development and production in a single file"
+      description: "One Dockerfile with a development stage and a lean production image: build stages, --target, layer order for caching and a non-root user, using a NestJS API."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Multi-stage Dockerfile: development and production in a single file

@@ -2,6 +2,18 @@
 seo:
   title: "Multi-tenancy en Django"
   description: "Cuatro formas de aislar a los clientes de un SaaS en Django: bases de datos separadas, híbrido, esquema por tenant y tenant_id, y cuándo usar cada una."
+  schema:
+    - '@type': TechArticle
+      headline: "Multi-tenancy en Django: cuatro estrategias"
+      description: "Cuatro formas de aislar a los clientes de un SaaS en Django: bases de datos separadas, híbrido, esquema por tenant y tenant_id, y cuándo usar cada una."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Multi-tenancy en Django: cuatro estrategias

@@ -2,6 +2,18 @@
 seo:
   title: "Consultas N+1 en Django"
   description: "Cómo encontrar y arreglar consultas N+1 en Django paso a paso: de 101 consultas a 1 con debug-toolbar, select_related, prefetch_related y annotate."
+  schema:
+    - '@type': TechArticle
+      headline: "Consultas N+1 en Django: de 101 consultas a 1"
+      description: "Cómo encontrar y arreglar consultas N+1 en Django paso a paso: de 101 consultas a 1 con debug-toolbar, select_related, prefetch_related y annotate."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Consultas N+1 en Django: de 101 consultas a 1

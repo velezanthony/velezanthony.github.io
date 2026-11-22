@@ -3,6 +3,18 @@ slug: articles/systems/cloud/aws/aws-basic-architecture
 seo:
   title: "Basic AWS architecture: Django and S3"
   description: "The basic AWS building blocks, Django on AWS and how to serve a static site from S3 with a CDN (CloudFront) in front: faster, more secure and cheaper."
+  schema:
+    - '@type': TechArticle
+      headline: "Basic architecture on AWS: Django and static sites"
+      description: "The basic AWS building blocks, Django on AWS and how to serve a static site from S3 with a CDN (CloudFront) in front: faster, more secure and cheaper."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Basic architecture on AWS: Django and static sites

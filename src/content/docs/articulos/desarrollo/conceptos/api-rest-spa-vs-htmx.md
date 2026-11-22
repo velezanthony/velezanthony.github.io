@@ -2,6 +2,18 @@
 seo:
   title: "API REST y SPA vs HTMX y Alpine"
   description: "API REST con SPA frente a monolito Django con htmx y Alpine, aspecto por aspecto: código, despliegue, depuración, estado, validación y errores."
+  schema:
+    - '@type': TechArticle
+      headline: "API REST y SPA vs monolito con HTMX y Alpine"
+      description: "API REST con SPA frente a monolito Django con htmx y Alpine, aspecto por aspecto: código, despliegue, depuración, estado, validación y errores."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # API REST y SPA vs monolito con HTMX y Alpine

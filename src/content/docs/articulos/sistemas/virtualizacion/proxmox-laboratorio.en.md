@@ -3,6 +3,18 @@ slug: articles/systems/virtualisation/proxmox-lab
 seo:
   title: "Proxmox for a lab and pre-production"
   description: "What Proxmox VE is, what I use it for (lab, testing and pre-production), why I would not pick it for serious production, and practical tips to get started."
+  schema:
+    - '@type': TechArticle
+      headline: "Proxmox for a lab or pre-production"
+      description: "What Proxmox VE is, what I use it for (lab, testing and pre-production), why I would not pick it for serious production, and practical tips to get started."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Proxmox for a lab or pre-production

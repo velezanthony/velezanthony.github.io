@@ -2,6 +2,18 @@
 seo:
   title: "Arquitectura básica en AWS"
   description: "Las piezas básicas de AWS, Django en AWS y cómo servir una web estática desde S3 con una CDN (CloudFront) delante: más rápido, seguro y barato."
+  schema:
+    - '@type': TechArticle
+      headline: "Arquitectura básica en AWS: Django y webs estáticas"
+      description: "Las piezas básicas de AWS, Django en AWS y cómo servir una web estática desde S3 con una CDN (CloudFront) delante: más rápido, seguro y barato."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Arquitectura básica en AWS: Django y webs estáticas

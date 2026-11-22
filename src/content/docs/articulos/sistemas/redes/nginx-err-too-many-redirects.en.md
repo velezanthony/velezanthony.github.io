@@ -3,6 +3,18 @@ slug: articles/systems/networking/nginx-err-too-many-redirects
 seo:
   title: "ERR_TOO_MANY_REDIRECTS with Nginx"
   description: "Why a site behind Nginx falls into a redirect loop when you force HTTPS: where TLS terminates, X-Forwarded-Proto, and how to diagnose it with curl."
+  schema:
+    - '@type': TechArticle
+      headline: "ERR_TOO_MANY_REDIRECTS: Nginx, HTTPS and redirects"
+      description: "Why a site behind Nginx falls into a redirect loop when you force HTTPS: where TLS terminates, X-Forwarded-Proto, and how to diagnose it with curl."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # ERR_TOO_MANY_REDIRECTS: Nginx, HTTPS and redirects

@@ -2,6 +2,18 @@
 seo:
   title: "Git: cómo deshacer un commit"
   description: "Deshacer errores en Git sin perder trabajo, por situación: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash y reflog para recuperar."
+  schema:
+    - '@type': TechArticle
+      headline: "Cómo deshacer errores en Git sin perder trabajo"
+      description: "Deshacer errores en Git sin perder trabajo, por situación: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash y reflog para recuperar."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Cómo deshacer errores en Git sin perder trabajo

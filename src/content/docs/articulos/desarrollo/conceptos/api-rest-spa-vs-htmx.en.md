@@ -3,6 +3,18 @@ slug: articles/development/concepts/rest-api-spa-vs-htmx
 seo:
   title: "REST API and SPA vs htmx and Alpine"
   description: "REST API with a SPA versus a Django monolith with htmx and Alpine, aspect by aspect: code, deployment, debugging, state, validation and errors."
+  schema:
+    - '@type': TechArticle
+      headline: "REST API and SPA vs a monolith with htmx and Alpine"
+      description: "REST API with a SPA versus a Django monolith with htmx and Alpine, aspect by aspect: code, deployment, debugging, state, validation and errors."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # REST API and SPA vs a monolith with htmx and Alpine

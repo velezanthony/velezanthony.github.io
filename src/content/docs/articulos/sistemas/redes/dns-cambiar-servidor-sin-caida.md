@@ -2,6 +2,18 @@
 seo:
   title: "Cambiar de servidor sin caída: DNS"
   description: "Mover una web a un servidor nuevo sin cortes: qué es el TTL, por qué la propagación son cachés caducando, el orden de los pasos y cómo comprobarlo con dig."
+  schema:
+    - '@type': TechArticle
+      headline: "Cambiar de servidor sin caída: DNS y TTL"
+      description: "Mover una web a un servidor nuevo sin cortes: qué es el TTL, por qué la propagación son cachés caducando, el orden de los pasos y cómo comprobarlo con dig."
+      inLanguage: es
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Cambiar de servidor sin caída: DNS y TTL

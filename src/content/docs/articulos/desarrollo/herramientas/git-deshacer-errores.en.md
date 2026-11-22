@@ -3,6 +3,18 @@ slug: articles/development/tools/git-undo-mistakes
 seo:
   title: "Git: how to undo a commit"
   description: "Undo mistakes in Git without losing work, case by case: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash, and reflog to recover."
+  schema:
+    - '@type': TechArticle
+      headline: "How to undo mistakes in Git without losing work"
+      description: "Undo mistakes in Git without losing work, case by case: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash, and reflog to recover."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # How to undo mistakes in Git without losing work

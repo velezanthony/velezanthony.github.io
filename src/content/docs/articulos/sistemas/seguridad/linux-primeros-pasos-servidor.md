@@ -2,6 +2,18 @@
 seo:
   title: "Primeros pasos con un servidor Linux"
   description: "Lo primero que hago con un VPS nuevo en Debian o Ubuntu: actualizar, usuario con sudo, claves SSH, sin contraseña ni root, ufw, fail2ban y actualizaciones."
+  schema:
+    - '@type': TechArticle
+      headline: "Lo primero que hago al recibir un servidor Linux"
+      description: "Lo primero que hago con un VPS nuevo en Debian o Ubuntu: actualizar, usuario con sudo, claves SSH, sin contraseña ni root, ufw, fail2ban y actualizaciones."
+      inLanguage: es
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Lo primero que hago al recibir un servidor Linux

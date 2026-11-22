@@ -2,6 +2,18 @@
 seo:
   title: "Consultas dinámicas con Doctrine"
   description: "Filtros opcionales con el QueryBuilder de Doctrine en Symfony: condiciones según los filtros, parámetros contra la inyección SQL, joins sin N+1 y paginación."
+  schema:
+    - '@type': TechArticle
+      headline: "Consultas dinámicas con el QueryBuilder de Doctrine en Symfony"
+      description: "Filtros opcionales con el QueryBuilder de Doctrine en Symfony: condiciones según los filtros, parámetros contra la inyección SQL, joins sin N+1 y paginación."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Consultas dinámicas con el QueryBuilder de Doctrine en Symfony

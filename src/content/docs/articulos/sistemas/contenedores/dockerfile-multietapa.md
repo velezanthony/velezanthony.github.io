@@ -2,6 +2,18 @@
 seo:
   title: "Dockerfile multietapa para Node.js"
   description: "Un solo Dockerfile con etapa de desarrollo y una imagen de producción ligera: etapas, --target, orden de capas para la caché y usuario sin root."
+  schema:
+    - '@type': TechArticle
+      headline: "Dockerfile multietapa: desarrollo y producción en un solo fichero"
+      description: "Un solo Dockerfile con etapa de desarrollo y una imagen de producción ligera: etapas, --target, orden de capas para la caché y usuario sin root."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Dockerfile multietapa: desarrollo y producción en un solo fichero

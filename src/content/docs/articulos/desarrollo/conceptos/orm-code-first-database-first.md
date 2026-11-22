@@ -2,6 +2,18 @@
 seo:
   title: "Code First o Database First en ORMs"
   description: "Code First o Database First: cómo decidir y cómo tratan las claves compuestas EF Core, Hibernate, Doctrine, Django, Eloquent y SQLAlchemy."
+  schema:
+    - '@type': TechArticle
+      headline: "Code First o Database First: claves compuestas en seis ORMs"
+      description: "Code First o Database First: cómo decidir y cómo tratan las claves compuestas EF Core, Hibernate, Doctrine, Django, Eloquent y SQLAlchemy."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Code First o Database First: claves compuestas en seis ORMs

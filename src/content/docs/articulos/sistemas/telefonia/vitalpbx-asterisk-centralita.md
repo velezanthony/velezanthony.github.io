@@ -2,6 +2,18 @@
 seo:
   title: "Asterisk y VitalPBX frente a Twilio"
   description: "Montar tu propia centralita con Asterisk y VitalPBX en lugar de pagar Twilio por minuto, qué sigues necesitando para la IA de voz y por qué en una VM."
+  schema:
+    - '@type': TechArticle
+      headline: "Tu propia centralita: Asterisk y VitalPBX frente a Twilio"
+      description: "Montar tu propia centralita con Asterisk y VitalPBX en lugar de pagar Twilio por minuto, qué sigues necesitando para la IA de voz y por qué en una VM."
+      inLanguage: es
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Tu propia centralita: Asterisk y VitalPBX frente a Twilio

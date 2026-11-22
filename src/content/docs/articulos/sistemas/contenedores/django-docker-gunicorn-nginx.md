@@ -1,6 +1,18 @@
 ---
 seo:
   description: "Cómo desplegar Django con Docker, Gunicorn y Nginx: Dockerfile, Gunicorn, configuración de Nginx, compose.yaml con PostgreSQL, ajustes de proxy y migraciones."
+  schema:
+    - '@type': TechArticle
+      headline: "Django con Docker, Gunicorn y Nginx"
+      description: "Cómo desplegar Django con Docker, Gunicorn y Nginx: Dockerfile, Gunicorn, configuración de Nginx, compose.yaml con PostgreSQL, ajustes de proxy y migraciones."
+      inLanguage: es
+      datePublished: '2026-11-21'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Django con Docker, Gunicorn y Nginx

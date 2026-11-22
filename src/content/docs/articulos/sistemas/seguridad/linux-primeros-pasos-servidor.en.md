@@ -3,6 +3,18 @@ slug: articles/systems/security/linux-server-first-steps
 seo:
   title: "First steps with a new Linux server"
   description: "What I do first with a new Debian or Ubuntu VPS: update, a sudo user, SSH keys, no passwords or root login, ufw, fail2ban and automatic security updates."
+  schema:
+    - '@type': TechArticle
+      headline: "The first things I do when I get a Linux server"
+      description: "What I do first with a new Debian or Ubuntu VPS: update, a sudo user, SSH keys, no passwords or root login, ufw, fail2ban and automatic security updates."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # The first things I do when I get a Linux server

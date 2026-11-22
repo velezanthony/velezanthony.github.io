@@ -3,6 +3,18 @@ slug: articles/systems/ci-cd/github-actions-docker-images
 seo:
   title: "GitHub Actions and Docker images"
   description: "A GitHub Actions workflow that builds Docker images, tags them with semver and sha, and pushes them to Docker Hub: triggers, secrets and build cache."
+  schema:
+    - '@type': TechArticle
+      headline: "GitHub Actions: build, version and publish Docker images"
+      description: "A GitHub Actions workflow that builds Docker images, tags them with semver and sha, and pushes them to Docker Hub: triggers, secrets and build cache."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # GitHub Actions: build, version and publish Docker images

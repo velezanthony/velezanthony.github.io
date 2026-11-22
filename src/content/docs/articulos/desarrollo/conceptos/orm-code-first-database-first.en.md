@@ -3,6 +3,18 @@ slug: articles/development/concepts/orm-code-first-vs-database-first
 seo:
   title: "ORM: Code First vs Database First"
   description: "Code First or Database First: how to decide, and how EF Core, Hibernate, Doctrine, Django, Eloquent and SQLAlchemy handle composite primary keys."
+  schema:
+    - '@type': TechArticle
+      headline: "Code First or Database First: composite keys in six ORMs"
+      description: "Code First or Database First: how to decide, and how EF Core, Hibernate, Doctrine, Django, Eloquent and SQLAlchemy handle composite primary keys."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Code First or Database First: composite keys in six ORMs

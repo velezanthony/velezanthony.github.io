@@ -3,6 +3,18 @@ slug: articles/systems/networking/dns-server-migration-without-downtime
 seo:
   title: "Switch servers without downtime: DNS"
   description: "Moving a website to a new server without an outage: what TTL is, why propagation is just caches expiring, the order of the steps and how to check it with dig."
+  schema:
+    - '@type': TechArticle
+      headline: "Moving servers without downtime: DNS and TTL"
+      description: "Moving a website to a new server without an outage: what TTL is, why propagation is just caches expiring, the order of the steps and how to check it with dig."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Moving servers without downtime: DNS and TTL

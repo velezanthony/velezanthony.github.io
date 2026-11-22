@@ -3,6 +3,18 @@ slug: articles/systems/containers/django-docker-gunicorn-nginx
 seo:
   title: "Django with Docker, Gunicorn and Nginx"
   description: "Deploying Django with Docker, Gunicorn and Nginx: the Dockerfile, Gunicorn settings, Nginx config, compose.yaml with PostgreSQL, proxy settings and migrations."
+  schema:
+    - '@type': TechArticle
+      headline: "Django with Docker, Gunicorn and Nginx"
+      description: "Deploying Django with Docker, Gunicorn and Nginx: the Dockerfile, Gunicorn settings, Nginx config, compose.yaml with PostgreSQL, proxy settings and migrations."
+      inLanguage: en
+      datePublished: '2026-11-22'
+      dateModified: '2026-11-22'
+      author:
+        '@type': Person
+        '@id': https://velezanthony.github.io/#anthony
+        name: Anthony Velez Tapia
+        url: https://velezanthony.github.io/
 ---
 
 # Django with Docker, Gunicorn and Nginx
