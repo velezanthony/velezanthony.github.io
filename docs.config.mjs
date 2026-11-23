@@ -93,7 +93,15 @@ export default defineDocsConfig({
                   'articulos/desarrollo/python/django/multi-tenancy-django',
                 ],
               },
+              {
+                label: { es: 'Python estricto', en: 'Strict Python' },
+                items: ['articulos/desarrollo/python/estricto/stack-python-estricto'],
+              },
             ],
+          },
+          {
+            label: 'JavaScript',
+            items: ['articulos/desarrollo/javascript/alpine-js-proxy-librerias'],
           },
           {
             label: 'TypeScript',

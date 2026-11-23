@@ -33,6 +33,27 @@ describe('values repeated from the site sources', () => {
   });
 });
 
+/* The menu is typed by hand too. An article left out of it does not fail the build: the library
+   hangs it in a second copy of its area at the end of the sidebar, after every other area. */
+describe('content.nav', () => {
+  const root = 'src/content/docs';
+  const articles = readdirSync(`${root}/articulos`, { recursive: true, encoding: 'utf8' })
+    .filter((file) => file.endsWith('.md') && !file.endsWith('.en.md'))
+    .filter((file) => !file.split('/').at(-1)?.startsWith('_'))
+    .map((file) => `articulos/${file.replace(/\.md$/, '')}`);
+
+  type Entry = string | { items: readonly Entry[] };
+  const ids = (entries: readonly Entry[]): string[] =>
+    entries.flatMap((entry) => (typeof entry === 'string' ? [entry] : ids(entry.items)));
+  const listed = (docsConfig.content?.nav ?? []).flatMap((area) =>
+    'sidebar' in area ? ids(area.sidebar as readonly Entry[]) : [],
+  );
+
+  it('lists every article in the menu of its area', () => {
+    expect(listed.sort()).toEqual(articles.sort());
+  });
+});
+
 /* The articles are docs pages of the library: they wear the site's own footer, not the library's. */
 describe('site.components.Footer', () => {
   it('points to the adapter of the site footer', () => {
