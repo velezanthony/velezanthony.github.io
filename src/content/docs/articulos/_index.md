@@ -1,9 +1,9 @@
 ---
 seo:
   title: "Artículos de desarrollo y sistemas"
-  description: "Artículos técnicos sobre Django, Angular, Symfony, Git, Docker, AWS, Nginx, DNS y Linux: rendimiento, arquitectura, despliegue e infraestructura."
+  description: "Artículos técnicos de desarrollo y sistemas: guías, comparativas y problemas reales con Python, Django, Alpine.js, Angular, Docker, AWS, Nginx y Linux."
 ---
 
 # Artículos
 
-Notas técnicas sobre problemas que me he encontrado y cómo los resuelvo, agrupadas por área.
+Guías, comparativas y problemas reales de desarrollo y sistemas, agrupados por área.
