@@ -95,7 +95,16 @@ export default defineDocsConfig({
               },
               {
                 label: { es: 'Python estricto', en: 'Strict Python' },
-                items: ['articulos/desarrollo/python/estricto/stack-python-estricto'],
+                items: [
+                  'articulos/desarrollo/python/estricto/stack-python-estricto',
+                  'articulos/desarrollo/python/estricto/ruff-reglas',
+                  'articulos/desarrollo/python/estricto/mypy-pyright-estricto',
+                  'articulos/desarrollo/python/estricto/django-orm-tipado',
+                  'articulos/desarrollo/python/estricto/tests-de-tipos',
+                  'articulos/desarrollo/python/estricto/pytest-a-fondo',
+                  'articulos/desarrollo/python/estricto/mutation-testing',
+                  'articulos/desarrollo/python/estricto/matriz-ci-python',
+                ],
               },
             ],
           },

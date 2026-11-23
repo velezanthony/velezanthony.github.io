@@ -118,6 +118,8 @@ extend-select = ["S101"]
 "tests/**" = ["S101"]
 ```
 
+**A fondo:** [Ruff: qué reglas activar y cómo no tener tres versiones](ruff-reglas.md).
+
 ## 3. mypy en modo estricto: el compilador que faltaba
 
 [mypy](https://mypy.readthedocs.io/) lee las anotaciones y comprueba que el código las respeta. Es lo
@@ -178,6 +180,9 @@ un modelo. Por eso el CI de [Django Cotton Gallery](https://velezanthony.github.
 
 :::
 
+**A fondo:** [mypy y Pyright en modo estricto](mypy-pyright-estricto.md) y
+[el ORM de Django tipado](django-orm-tipado.md).
+
 ### Tests de tipos: que los tipos digan lo que prometen
 
 Si tu código **es** una API con tipos, como un ORM, los tipos también se prueban. En [SnakeORM](https://velezanthony.github.io/snake-orm/) hay dos
@@ -198,6 +203,8 @@ model: str = truck.id  # EXPECT: assignment
 [Un test](https://github.com/velezanthony/snake-orm/blob/main/src/test/typing/test_type_checkers.py) pasa los dos comprobadores sobre esos archivos y
 exige que den error **exactamente** en esas líneas. Si un día el código deja de rechazar
 `truck.no_declarada`, el tipado ha abierto un agujero y el test lo dice.
+
+**A fondo:** [Tests de tipos](tests-de-tipos.md).
 
 ## 4. Los tests: de los casos conocidos a los que no se te ocurren
 
@@ -229,6 +236,8 @@ bien; excluir algo sin motivo sería esconder un error.
 
 Si Hypothesis encuentra un valor que lo rompe, lo reduce al ejemplo más corto posible antes de
 enseñártelo.
+
+**A fondo:** [pytest: de las fixtures a los tests que fallan a veces](pytest-a-fondo.md).
 
 ### Cobertura: qué código no prueba nadie
 
@@ -264,11 +273,13 @@ todas, unos 70 minutos: lo que tardaría una sola máquina. Lo reparto así:
 | Cuándo | Máquinas | Qué hace |
 |---|---|---|
 | En cada PR ([`mutation-incremental.yml`](https://github.com/velezanthony/design/blob/main/.github/workflows/mutation-incremental.yml)) | 2 | Parte de la caché y solo repite los mutantes cuyo código o tests han cambiado |
-| A mano, sobre `main` ([`mutation.yml`](https://github.com/velezanthony/design/blob/main/.github/workflows/mutation.yml)) | 12 por defecto, hasta 20 (recomiendo no pasar de 16) | Pasa todos los mutantes y guarda la caché nueva de la que parten los PR |
+| A mano, sobre `main` ([`mutation.yml`](https://github.com/velezanthony/design/blob/main/.github/workflows/mutation.yml)) | 12 por defecto, hasta 20 (recomiendo no pasar de 16) | Pasa todos los mutantes y guarda la caché nueva de la que parten las PR |
 
-La pasada completa va sobre `main` porque los PR no ven las cachés de otras ramas.
+La pasada completa va sobre `main` porque las PR no ven las cachés de otras ramas.
 
 :::
+
+**A fondo:** [Mutation testing: el test que prueba tus tests](mutation-testing.md).
 
 ## 5. Las dependencias: lo que no escribes tú
 
@@ -313,6 +324,8 @@ Windows ([Django 4.2](https://github.com/velezanthony/django-cotton-gallery/acti
 [arreglo](https://github.com/velezanthony/django-cotton-gallery/commit/fcb8a9d0e0e76a9351f30e192af64ab1b47fe259) fue cambiar `str(path)` por
 `path.as_posix()`, que usa `/` en cualquier sistema. Sin Windows en la matriz, lo habría descubierto
 un usuario.
+
+**A fondo:** [La matriz de CI: lo que solo falla en otra versión o en otro sistema](matriz-ci-python.md).
 
 ## 7. El paquete: comprobarlo antes de publicarlo
 

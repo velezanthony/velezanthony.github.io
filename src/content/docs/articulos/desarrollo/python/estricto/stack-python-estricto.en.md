@@ -124,6 +124,8 @@ extend-select = ["S101"]
 "tests/**" = ["S101"]
 ```
 
+**In depth:** [Ruff: which rules to turn on, and how not to end up with three versions](ruff-reglas.md).
+
 ## 3. mypy in strict mode: the missing compiler
 
 [mypy](https://mypy.readthedocs.io/) reads the annotations and checks that the code respects them.
@@ -189,6 +191,9 @@ fields. That is why the CI of
 
 :::
 
+**In depth:** [mypy and Pyright in strict mode](mypy-pyright-estricto.md) and
+[the typed Django ORM](django-orm-tipado.md).
+
 ### Type tests: making the types say what they promise
 
 If your code **is** a typed API, like an ORM, the types are tested too. In
@@ -210,6 +215,8 @@ model: str = truck.id  # EXPECT: assignment
 [A test](https://github.com/velezanthony/snake-orm/blob/main/src/test/typing/test_type_checkers.py)
 runs both checkers on those files and requires them to error **exactly** on those lines. If one day
 the code stops rejecting `truck.no_declarada`, the typing has opened a hole and the test says so.
+
+**In depth:** [Type tests](tests-de-tipos.md).
 
 ## 4. Tests: from the known cases to the ones you would never think of
 
@@ -243,6 +250,8 @@ contract promises is fine; excluding something without a reason would be hiding 
 
 If Hypothesis finds a value that breaks it, it shrinks it to the shortest possible example before
 showing it to you.
+
+**In depth:** [pytest: from fixtures to tests that fail now and then](pytest-a-fondo.md).
 
 ### Coverage: which code nobody tests
 
@@ -286,6 +295,8 @@ about 70 minutes: what a single machine would take. This is how I split it:
 The full run goes on `main` because PRs cannot see the caches of other branches.
 
 :::
+
+**In depth:** [Mutation testing: the test that tests your tests](mutation-testing.md).
 
 ## 5. Dependencies: the code you do not write
 
@@ -339,6 +350,8 @@ and
 The [fix](https://github.com/velezanthony/django-cotton-gallery/commit/fcb8a9d0e0e76a9351f30e192af64ab1b47fe259)
 was to change `str(path)` to `path.as_posix()`, which uses `/` on every system. Without Windows in
 the matrix, a user would have found it.
+
+**In depth:** [The CI matrix: what only fails on another version or another system](matriz-ci-python.md).
 
 ## 7. The package: check it before publishing
 
