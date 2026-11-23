@@ -56,6 +56,7 @@ export const en = {
   'Quién soy y qué construyo': 'Who I am and what I build',
   'Seis herramientas open source': 'Six open source tools',
   'Dónde he trabajado y en qué': 'Where I have worked and on what',
+  'Guías, comparativas y problemas reales': 'Guides, comparisons and real problems',
   'Para descargar o imprimir': 'To download or print',
   '¿Prefieres inglés?': 'Prefer Spanish?',
 
