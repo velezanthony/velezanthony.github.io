@@ -74,6 +74,7 @@ export default defineDocsConfig({
           {
             label: { es: 'Conceptos', en: 'Concepts' },
             items: [
+              'articulos/desarrollo/conceptos/ssr-spa-ssg-pwa-api',
               'articulos/desarrollo/conceptos/api-rest-spa-vs-htmx',
               'articulos/desarrollo/conceptos/orm-code-first-database-first',
             ],
@@ -86,12 +87,17 @@ export default defineDocsConfig({
             label: 'Python',
             items: [
               'articulos/desarrollo/python/orm-tipado-sin-generar-codigo',
+              'articulos/desarrollo/python/organizar-proyecto-django',
               {
                 label: 'Django',
                 items: [
                   'articulos/desarrollo/python/django/consultas-n-mas-1-django',
                   'articulos/desarrollo/python/django/multi-tenancy-django',
                 ],
+              },
+              {
+                label: 'Flask',
+                items: ['articulos/desarrollo/python/flask/flask-dependencias'],
               },
               {
                 label: { es: 'Python estricto', en: 'Strict Python' },
