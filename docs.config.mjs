@@ -66,10 +66,11 @@ export default defineDocsConfig({
     /* The articles, by area. Each article lives in the folder of its menu group
        (`articulos/<section>/<group>/<slug>.md`), so the folders mirror the tree below. The articles
        index stays outside the sections, on the top-level sidebar. Only areas that have articles get a
-       group. */
+       group. Each section's `dir` makes the header link its own index instead of its first group. */
     nav: [
       {
         label: { es: 'Desarrollo', en: 'Development' },
+        dir: 'articulos/desarrollo',
         sidebar: [
           {
             label: { es: 'Conceptos', en: 'Concepts' },
@@ -143,6 +144,7 @@ export default defineDocsConfig({
       },
       {
         label: { es: 'Sistemas', en: 'Systems' },
+        dir: 'articulos/sistemas',
         sidebar: [
           {
             label: 'Cloud',
