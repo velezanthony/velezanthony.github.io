@@ -17,6 +17,7 @@ export const en = {
   'Portfolio hecho con Astro': 'Portfolio built with Astro',
 
   Disponibilidad: 'Availability',
+  'También he trabajado con': 'I have also worked with',
   Ahora: 'Now',
   'En qué estoy trabajando': "What I'm working on",
   'Ver todas las herramientas': 'See every tool',

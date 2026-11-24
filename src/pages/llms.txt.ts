@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { profile, spokenLanguages, stackGroups, contact } from '@data/profile';
+import { profile, previousStack, spokenLanguages, stackGroups, contact } from '@data/profile';
 import { experience } from '@data/experience';
 import { localeOfEntry, path } from '@core/i18n/utils';
 import { linkOf } from '@core/projects/links';
@@ -64,9 +64,11 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Profile',
     '',
+    `- role: ${profile.role}`,
     `- location: ${profile.location}, Spain — ${profile.availability.en.join(', ')}`,
     `- languages: ${spokenLanguages.map((l) => l.name.en).join(', ')}`,
     ...stackGroups.map((group) => `- ${group.label.en.toLowerCase()}: ${group.items}`),
+    `- ${previousStack.label.en.toLowerCase()}: ${previousStack.items}`,
     ...contact.map((link) => `- ${link.label.toLowerCase()}: ${link.handle}`),
     '',
     '## Experience',

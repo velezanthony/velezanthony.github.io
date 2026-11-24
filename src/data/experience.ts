@@ -48,12 +48,12 @@ export const experience: Job[] = [
       es: [
         'Web corporativa en **Angular** desde cero, SPA, entregada.',
         'Desarrollé **nuevas funcionalidades** en un SaaS de gestión de fincas en **Symfony**: monolito SSR con **multi-tenancy** de esquema compartido.',
-        '**Centralita propia con VitalPBX sobre Asterisk** para autohospedar la telefonía en la nube y **ahorrar**: llamadas internas funcionando en local, a falta del troncal y del salto a AWS, todo documentado.',
+        '**Centralita propia con VitalPBX sobre Asterisk** para autohospedar la telefonía en la nube y **ahorrar**: dejé operativas las llamadas internas en local y documentado el paso al troncal y a AWS.',
       ],
       en: [
         'Corporate website in **Angular** from scratch, an SPA, delivered.',
         'Developed **new features** in a property management SaaS in **Symfony**: an SSR monolith with shared-schema **multi-tenancy**.',
-        '**In-house PBX with VitalPBX on Asterisk** to self-host cloud telephony and **cut its cost**: internal calls working locally, pending the carrier trunk and the move to AWS, all documented.',
+        '**In-house PBX with VitalPBX on Asterisk** to self-host cloud telephony and **cut its cost**: I got internal calls working locally and documented the move to the carrier trunk and to AWS.',
       ],
     },
     stack: ['Angular', 'Symfony', 'PHP', 'Bootstrap', 'VitalPBX', 'Asterisk', 'Linux'],
@@ -70,15 +70,15 @@ export const experience: Job[] = [
     highlights: {
       es: [
         'Me encargué del **código y la infraestructura completa** de las startups de una **venture builder**, más encargos de Eywa y de otras del grupo.',
-        'Monté un **Proxmox on-premise desde cero** como entorno de producto y desarrollo, con réplicas locales de las máquinas cloud: **coste fijo propio** en lugar de un entorno cloud por proyecto.',
+        'Monté desde cero un **entorno de preproducción on-premise en Proxmox** que replicaba las máquinas cloud: cada despliegue pasaba del Docker local a Proxmox y, de ahí, a producción, sin gastar en más máquinas cloud. Así **detecté errores que habrían llegado a producción**.',
         'Heredé y mantuve la **infraestructura AWS** —EC2, RDS, S3, Lambda, ECR, balanceadores y redes privadas— y arreglé los **pipelines de CI/CD** en GitHub Actions.',
-        'Gestioné dominios y DNS de los clientes del grupo, migré el correo corporativo vía MX, publiqué landings estáticas —alguna en el propio Proxmox— y prototipé en **Figma**.',
+        'Gestioné los dominios, el DNS y la migración del correo corporativo de los clientes del grupo; además, publiqué landings estáticas y prototipé en **Figma**.',
       ],
       en: [
         'Took charge of the **code and the entire infrastructure** of a **venture builder**’s startups, plus work for Eywa and others in the group.',
-        'Built an **on-premise Proxmox from scratch** as a product and development environment, with local replicas of the cloud machines: a **fixed in-house cost** instead of a cloud environment per project.',
+        'Built from scratch an **on-premise pre-production environment on Proxmox** that replicated the cloud machines: every deployment went from local Docker to Proxmox and only then to production, with no extra cloud machines. It **caught bugs that would have reached production**.',
         'Inherited and maintained the **AWS infrastructure** —EC2, RDS, S3, Lambda, ECR, load balancers and private networks— and fixed the **CI/CD pipelines** in GitHub Actions.',
-        'Managed domains and DNS for the group’s clients, migrated corporate email over MX, published static landings —some on that same Proxmox— and prototyped in **Figma**.',
+        'Managed the domains, DNS and corporate email migration of the group’s clients; I also published static landings and prototyped in **Figma**.',
       ],
     },
     stack: [
@@ -115,15 +115,13 @@ export const experience: Job[] = [
     end: '2024-12',
     highlights: {
       es: [
-        'Desarrollé **en solitario** y llevé a producción una **aplicación de control horario en Laravel**: monolito SSR con **una base de datos por tenant** y una central para identidad y enrutado.',
-        'Frontend sobre plantilla comercial; **backend, modelo de datos code first y lógica de negocio propios**.',
+        '**Diseñé, desarrollé y llevé a producción**, con la responsabilidad técnica completa, una **aplicación de control horario en Laravel**: monolito SSR con **una base de datos por tenant** y una central para identidad y enrutado. **Backend, modelo de datos code first y lógica de negocio propios**; el frontend, sobre una plantilla comercial.',
         'Fichaje con geolocalización, vacaciones con validación de solapamiento y flujo de aprobación, roles de administración, RRHH y empleado, y cuadros de mando por rol.',
         'Desarrollo a medida en Laravel y optimización de los CMS y e-commerce de cliente (WordPress, PrestaShop, Wix): dominios, DNS, hosting, HTTPS y las redirecciones del **SEO técnico**.',
         'Dirigí los **departamentos de desarrollo y SEO**, con estrategia SEO/SEM por sector y automatización de los procesos internos del equipo.',
       ],
       en: [
-        'Built **single-handedly** and took to production a **time-tracking application in Laravel**: an SSR monolith with **a database per tenant** and a central one for identity and routing.',
-        'The frontend ran on a commercial template; the **backend, code-first data model and business logic were my own**.',
+        '**Designed, built and took to production**, with full technical responsibility, a **time-tracking application in Laravel**: an SSR monolith with **a database per tenant** and a central one for identity and routing. The **backend, code-first data model and business logic were my own**; the frontend ran on a commercial template.',
         'Clock-in with geolocation, leave with overlap validation and an approval flow, admin, HR and employee roles, and per-role dashboards.',
         'Bespoke development in Laravel and optimisation of client CMS and e-commerce sites (WordPress, PrestaShop, Wix): domains, DNS, hosting, HTTPS and the redirects **technical SEO** called for.',
         'Ran the **development and SEO departments**, with SEO/SEM strategy per sector and automation of the team’s internal processes.',
@@ -160,12 +158,12 @@ export const experience: Job[] = [
     end: '2023-06',
     highlights: {
       es: [
-        'Desarrollé **íntegro y en solitario** un producto interno de control de repuestos: arquitectura **desacoplada de API REST** con sus propios clientes, sin SSR.',
+        '**Diseñé y desarrollé**, con la responsabilidad técnica completa, un producto interno de control de repuestos: arquitectura **desacoplada de API REST** con sus propios clientes, sin SSR.',
         'Diseñé la base de datos en **SQL Server** y monté encima una **API REST en C#/.NET Framework** (database first): CRUD completo, **autenticación JWT** y acceso por roles.',
         'Construí dos clientes contra esa API: plataforma web en **Angular** (SPA) y **app nativa Android en Java**, en Android Studio.',
       ],
       en: [
-        'Built **end to end and single-handedly** an internal spare-parts product: a **decoupled REST API** architecture with its own clients, no SSR.',
+        '**Designed and built**, with full technical responsibility, an internal spare-parts product: a **decoupled REST API** architecture with its own clients, no SSR.',
         'Designed the **SQL Server** database and built a **REST API in C#/.NET Framework** on top (database first): full CRUD, **JWT authentication** and role-based access.',
         'Built two clients against that API: a web platform in **Angular** (SPA) and a **native Android app in Java**, in Android Studio.',
       ],

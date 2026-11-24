@@ -6,7 +6,8 @@ import type { Localized } from '@core/types';
 
 /** What `person` needs to know about the owner, handed in by the caller. */
 export interface PersonSource {
-  profile: { name: string; headline: Localized };
+  /** `role` is the profile title; the job titles in `experience` stay as history. */
+  profile: { name: string; role: string; headline: Localized };
   email: string;
   knowsAbout: string[];
   address: { locality: string; region: string; country: string };
@@ -61,7 +62,7 @@ export function person(
     description: profile.headline[lang],
     url: new URL(path(lang), site).href,
     image: new URL('/photo.png', site).href,
-    jobTitle: current.role[lang],
+    jobTitle: profile.role,
     address: {
       '@type': 'PostalAddress',
       addressLocality: address.locality,

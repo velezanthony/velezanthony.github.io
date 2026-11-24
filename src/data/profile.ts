@@ -6,15 +6,25 @@ export const email = 'velezanthony2000@gmail.com';
 export const profile = {
   name: 'Anthony Velez Tapia',
 
+  role: 'Software Engineer',
+
   headline: {
-    es: 'Desarrollador Full Stack y administrador de sistemas. Django y Python con Angular; antes .NET, Java, Laravel y Symfony. Construyo herramientas open source para el día a día del desarrollador.',
-    en: 'Full Stack Developer and systems administrator. Django and Python with Angular; .NET, Java, Laravel and Symfony before that. I build open source tools for a developer’s day-to-day.',
+    es: 'Desarrollo, despliego y mantengo software en producción, en la nube o en servidores propios. Desde la arquitectura de las aplicaciones hasta la infraestructura que las sostiene.',
+    en: 'I build, deploy and maintain software in production, in the cloud or on my own servers. From the architecture of the applications to the infrastructure that runs them.',
   } satisfies Localized,
 
   summary: {
-    es: '**Cuatro años, seis stacks y tres arquitecturas en producción**: API REST con clientes desacoplados, SPA y monolito SSR con HTMX. Diseño el modelo de datos —SQL Server y PostgreSQL, database first y code first— y **levanté en solitario un SaaS multi-tenant hasta producción**. Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS, en un equipo de cuatro. Bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes llevé la **infraestructura AWS completa** de las startups de una venture builder y monté su preproducción on-premise en Proxmox. **Seis herramientas open source propias: dos en PyPI y una en el VS Code Marketplace**, entre ellas un ORM en Python que mypy y Pyright resuelven sin generación de código.',
-    en: '**Four years, six stacks and three architectures in production**: REST APIs with decoupled clients, SPAs and SSR monoliths with HTMX. I design the data model —SQL Server and PostgreSQL, database first and code first— and **took a multi-tenant SaaS to production single-handedly**. Today I define the **code architecture** for the refactor of a SaaS marketplace, in a team of four. I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that I ran the **full AWS infrastructure** of a venture builder’s startups and built their on-premise pre-production on Proxmox. **Six open source tools of my own: two on PyPI and one on the VS Code Marketplace**, among them a Python ORM whose typing mypy and Pyright resolve with no code generation.',
+    es: 'Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS en Python y Django, en un equipo de cuatro, y bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes, **a partir de los requisitos de negocio, diseñé, desarrollé y llevé a producción un SaaS multi-tenant** con la responsabilidad técnica completa, y me encargué de la **infraestructura AWS completa** de las startups de una venture builder, con su preproducción on-premise en Proxmox. He trabajado con API REST y clientes desacoplados, SPA y monolitos SSR con HTMX. **Cinco herramientas open source propias: dos en PyPI y una en el VS Code Marketplace.**',
+    en: 'Today I define the **code architecture** for the refactor of a SaaS marketplace in Python and Django, in a team of four, and I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that, **working from the business requirements, I designed, built and took a multi-tenant SaaS to production** with full technical responsibility, and ran the **full AWS infrastructure** of a venture builder’s startups, with their on-premise pre-production on Proxmox. I have worked with REST APIs and decoupled clients, SPAs and SSR monoliths with HTMX. **Five open source tools of my own: two on PyPI and one on the VS Code Marketplace.**',
   } satisfies Localized,
+
+  /** The everyday stack, shown under the headline. */
+  stack: {
+    es: ['Python y Django', 'Angular', 'AWS', 'Proxmox', 'Open source'],
+    en: ['Python and Django', 'Angular', 'AWS', 'Proxmox', 'Open source'],
+  } satisfies Localized<string[]>,
+  /** What I have also shipped with, smaller than the everyday stack. */
+  otherStack: ['Flask', 'React', 'Laravel', 'Symfony', '.NET', 'Java'],
 
   location: 'Hernani, Gipuzkoa',
 
@@ -27,22 +37,22 @@ export const profile = {
   photo: '/photo.png',
 } as const;
 
+/** The stack I work with every day: the one I can defend in an interview right now. */
 export const stackGroups: StackGroup[] = [
   {
     label: { es: 'Backend', en: 'Backend' },
-    items: 'Python, Django, Flask, PHP, Laravel, Symfony, C# / .NET, Java',
+    items: 'Python, Django, Flask',
   },
   {
     label: { es: 'Frontend', en: 'Frontend' },
-    items:
-      'TypeScript, JavaScript, Angular, React, Astro, HTML, CSS, Tailwind CSS, Bootstrap, Alpine.js, HTMX',
+    items: 'TypeScript, JavaScript, Angular, Astro, HTML, CSS, Tailwind CSS, Alpine.js, HTMX',
   },
   {
     label: { es: 'Bases de datos', en: 'Databases' },
     items: 'PostgreSQL, MySQL / MariaDB, SQL Server',
   },
   {
-    label: { es: 'Cloud y DevOps', en: 'Cloud and DevOps' },
+    label: { es: 'Cloud y despliegue', en: 'Cloud and deployment' },
     items:
       'AWS (EC2, ECR, RDS, S3, Lambda, VPC, Load Balancer), Docker, GitHub Actions, Gunicorn / WSGI',
   },
@@ -57,14 +67,20 @@ export const stackGroups: StackGroup[] = [
   },
 ];
 
+/** Shipped with in earlier jobs: real experience, picked up again when a project needs it. */
+export const previousStack: StackGroup = {
+  label: { es: 'Experiencia anterior', en: 'Earlier experience' },
+  items: 'PHP (Laravel, Symfony), C# / .NET, Java, React, Bootstrap',
+};
+
 /**
  * Page titles. Separate from the in-page headings: a heading names the section
  * for a reader who is already here, a title has to earn the click from a SERP.
  */
 export const pageTitles = {
   home: {
-    es: 'Desarrollador Full Stack en Gipuzkoa',
-    en: 'Full Stack Developer in Gipuzkoa, Spain',
+    es: 'Software Engineer en Gipuzkoa',
+    en: 'Software Engineer in Gipuzkoa, Spain',
   },
   experience: {
     es: 'Experiencia: Django, AWS y sistemas',
@@ -75,8 +91,8 @@ export const pageTitles = {
     en: 'Open source tools for Django and Docker',
   },
   cv: {
-    es: 'CV · Desarrollador Full Stack y sistemas',
-    en: 'CV · Full Stack Developer and systems',
+    es: 'CV · Software Engineer',
+    en: 'CV · Software Engineer',
   },
 } satisfies Record<string, Localized>;
 
@@ -87,8 +103,8 @@ export const pageTitles = {
  */
 export const seo = {
   home: {
-    es: 'Desarrollador Full Stack y administrador de sistemas en Gipuzkoa. Django, Python, Laravel y .NET; Angular. Seis herramientas open source propias.',
-    en: 'Full Stack Developer and systems administrator in Gipuzkoa, Spain. Django, Python, Laravel and .NET; Angular. Six open source tools of my own.',
+    es: 'Software Engineer en Gipuzkoa: desarrollo, despliego y mantengo software con Python, Django y Angular, en AWS o servidores propios. Cinco proyectos open source.',
+    en: 'Software Engineer in Gipuzkoa, Spain: I build, deploy and maintain software with Python, Django and Angular, on AWS or my own servers. Five open source tools.',
   },
   projects: {
     es: 'Seis herramientas open source: un ORM Python tipado, dos extensiones de VS Code y un catálogo de componentes para Django, un panel Docker y una librería Astro.',
@@ -99,8 +115,8 @@ export const seo = {
     en: 'Four years: Django architecture at Zenit Solar, AWS at Eywa Space, VoIP at SWAP, and a multi-tenant SaaS in Laravel taken to production at VITE.',
   },
   cv: {
-    es: 'Currículum de Anthony Velez Tapia, desarrollador Full Stack en Gipuzkoa. Django, Laravel, .NET, Angular y sistemas. Listo para imprimir o guardar en PDF.',
-    en: 'CV of Anthony Velez Tapia, Full Stack Developer in Hernani, Gipuzkoa. Django, Laravel, .NET, Angular and systems. Ready to print or save as PDF.',
+    es: 'Currículum de Anthony Velez Tapia, Software Engineer en Gipuzkoa. Python, Django, Angular, AWS y sistemas. Listo para imprimir o guardar en PDF.',
+    en: 'CV of Anthony Velez Tapia, Software Engineer in Hernani, Gipuzkoa. Python, Django, Angular, AWS and systems. Ready to print or save as PDF.',
   },
 } satisfies Record<string, Localized>;
 
@@ -128,16 +144,18 @@ export const contact: ContactLink[] = [
 /**
  * The CV is read on paper and as a PDF, where the site is not one click away.
  * Everywhere else the link would point at the page you are already on.
+ * Email and LinkedIn first: they fill the CV's left column.
  */
 export const cvContact: ContactLink[] = [
   contact[0]!,
+  contact[2]!,
   {
     label: 'Portfolio',
     href: SITE,
     handle: SITE_HOST,
     icon: 'external',
   },
-  ...contact.slice(1),
+  contact[1]!,
 ];
 
 export const spokenLanguages: SpokenLanguage[] = [

@@ -24,9 +24,18 @@ const t = useTranslations(lang);
         {profile.name}
       </Heading>
 
+      <p class="mt-3 text-xl font-medium text-muted">{profile.role}</p>
+
       <Text tone="ink" size="lead" class="mt-5 max-w-(--container-measure)">
         {profile.headline[lang]}
       </Text>
+
+      <InlineList items={[...profile.stack[lang]]} class="mt-6 text-lg font-medium text-ink" />
+
+      <div class="mt-3 flex flex-wrap items-baseline gap-x-2 text-sm text-muted">
+        <span>{t('También he trabajado con')}:</span>
+        <InlineList items={[...profile.otherStack]} />
+      </div>
     </div>
 
     <div class="flex flex-col gap-6 lg:border-l lg:border-rule lg:pt-1 lg:pl-14">

@@ -7,6 +7,7 @@ import type { PersonSource, ProjectData } from './jsonld';
 const owner: PersonSource = {
   profile: {
     name: 'Anthony Velez Tapia',
+    role: 'Software Engineer',
     headline: { es: 'Desarrollador Full Stack', en: 'Full Stack Developer' },
   },
   email: 'velezanthony2000@gmail.com',
@@ -47,9 +48,11 @@ describe('person', () => {
     expect(en.url).toBe(`${site}/en/`);
   });
 
-  it('gives the current role in the page language', () => {
-    expect(es.jobTitle).toBe('Desarrollador Full Stack');
-    expect(en.jobTitle).toBe('Full Stack Developer');
+  /* The profile title, not the last contract's: job titles stay as history. */
+  it('takes the job title from the profile, not from the current job', () => {
+    expect(es.jobTitle).toBe('Software Engineer');
+    expect(en.jobTitle).toBe('Software Engineer');
+    expect(es.worksFor).toEqual({ '@type': 'Organization', name: 'Dinycon' });
   });
 
   it('lists only web profiles as sameAs, not the mailto', () => {

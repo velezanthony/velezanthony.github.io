@@ -2,7 +2,7 @@
 import Heading from '@velezanthony/design/components/atoms/display/Heading.astro';
 import ContactList from '@ui/components/ContactList.astro';
 import Timeline from '@ui/components/Timeline.astro';
-import { cvContact, profile, spokenLanguages, stackGroups } from '@data/profile';
+import { cvContact, previousStack, profile, spokenLanguages, stackGroups } from '@data/profile';
 import { segments } from '@data/emphasis';
 import { education } from '@data/education';
 import { useTranslations } from '@ui/translations';
@@ -44,14 +44,16 @@ const t = useTranslations(lang);
       {profile.name}
     </Heading>
 
-    <p class="text-cv-headline mt-1.5 font-medium text-muted">{profile.headline[lang]}</p>
+    <p class="text-cv-headline mt-1.5 font-semibold text-ink">{profile.role}</p>
+    <p class="text-cv-body mt-1 text-muted">{profile.headline[lang]}</p>
 
     <div class="text-cv-meta mt-2 flex flex-col items-start gap-y-2 print:flex-row print:flex-wrap print:items-center print:gap-x-5 print:gap-y-0.5">
       <p class="font-mono text-faint">{profile.location}</p>
       <ContactList
         items={cvContact}
-        direction="column"
-        class="print:flex-row print:flex-wrap print:items-center"
+        direction="grid"
+        size="inherit"
+        class="text-[0.9em] print:flex print:flex-row print:flex-wrap print:items-center print:text-[1em]"
       />
     </div>
   </div>
@@ -77,6 +79,11 @@ const t = useTranslations(lang);
       </div>
     ))}
   </dl>
+
+  <p class="text-cv-body mt-2 flex gap-3 border-t border-rule pt-2 text-faint">
+    <span class="w-[30mm] shrink-0">{previousStack.label[lang]}</span>
+    <span class="min-w-0">{previousStack.items}</span>
+  </p>
 </section>
 
 <section class="mt-5">

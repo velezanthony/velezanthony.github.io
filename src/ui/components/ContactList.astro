@@ -4,19 +4,26 @@ import type { ContactLink } from '@core/types';
 
 interface Props {
   items: ContactLink[];
-  direction?: 'row' | 'column';
+  /** `grid`: from `md`, two rows filled column by column, so the first two items share a column. */
+  direction?: 'row' | 'column' | 'grid';
+  /** `inherit` takes the size of the parent, e.g. the CV's meta size. */
+  size?: 'sm' | 'inherit';
   class?: string;
 }
 
-const { items, direction = 'column', class: className } = Astro.props;
+const { items, direction = 'column', size = 'sm', class: className } = Astro.props;
 
 const opensAway = (href: string) => /^https?:\/\//.test(href);
 ---
 
 <ul
   class:list={[
-    'flex gap-x-6 gap-y-3',
-    direction === 'row' ? 'flex-row flex-wrap items-center' : 'flex-col',
+    'gap-x-6 gap-y-3',
+    {
+      row: 'flex flex-row flex-wrap items-center',
+      column: 'flex flex-col',
+      grid: 'grid grid-cols-1 md:grid-cols-none md:grid-flow-col md:grid-rows-2 md:auto-cols-max',
+    }[direction],
     className,
   ]}
 >
@@ -29,7 +36,7 @@ const opensAway = (href: string) => /^https?:\/\//.test(href);
         class="inline-flex min-h-6 items-center gap-2.5 text-muted transition-colors hover:text-accent"
       >
         <Icon name={item.icon} size={15} class="shrink-0 text-faint" />
-        <span class="font-mono text-sm">{item.handle ?? item.label}</span>
+        <span class:list={['font-mono', size === 'sm' && 'text-sm']}>{item.handle ?? item.label}</span>
       </a>
     </li>
   ))}
