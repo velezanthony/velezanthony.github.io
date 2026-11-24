@@ -22,7 +22,8 @@ seo:
 When a web project with Django starts, one of the first decisions is how the frontend gets built.
 I have worked with both options and both have their place. Here I compare them aspect by aspect.
 I am not looking for which one is better: you can get to the same result with either. I am looking
-for **which one makes each thing simpler**.
+for **which one makes each thing simpler**. If you want the full map first, what SSR, SPA, SSG, PWA
+or an API is and what builds each one, it is in [SSR, SPA, SSG, PWA and API](ssr-spa-ssg-pwa-api.md).
 
 A warning before we start: **the size of the application does not decide**. A large application
 can be a monolith and a small one can be a SPA. What decides is how much reactivity you need on the

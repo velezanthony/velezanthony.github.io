@@ -21,7 +21,8 @@ seo:
 Cuando empieza un proyecto web con Django, una de las primeras decisiones es cómo se construye el
 frontend. He trabajado con las dos opciones y las dos tienen su sitio. Aquí las comparo aspecto por
 aspecto. No busco cuál es mejor: con las dos se puede llegar a lo mismo. Busco **con cuál es más
-sencillo** cada cosa.
+sencillo** cada cosa. Si antes quieres el mapa completo, qué es SSR, SPA, SSG, PWA o una API y con
+qué se hace cada uno, lo tienes en [SSR, SPA, SSG, PWA y API](ssr-spa-ssg-pwa-api.md).
 
 Un aviso antes de empezar: **el tamaño de la aplicación no decide**. Una aplicación grande puede
 ser un monolito y una pequeña puede ser una SPA. Lo que decide es cuánta reactividad necesitas en
