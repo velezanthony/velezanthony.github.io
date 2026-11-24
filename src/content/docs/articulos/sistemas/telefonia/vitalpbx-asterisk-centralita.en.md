@@ -3,10 +3,14 @@ slug: articles/systems/telephony/vitalpbx-asterisk-pbx
 seo:
   title: "Asterisk and VitalPBX vs Twilio"
   description: "Running your own PBX with Asterisk and VitalPBX instead of paying Twilio per minute, what you still need for AI voice agents, and why it goes in a VM."
+  image:
+    src: /og/articles/systems/telephony/vitalpbx-asterisk-pbx.png
+    alt: "Asterisk and VitalPBX vs Twilio"
   schema:
     - '@type': TechArticle
       headline: "Your own PBX: Asterisk and VitalPBX versus Twilio"
       description: "Running your own PBX with Asterisk and VitalPBX instead of paying Twilio per minute, what you still need for AI voice agents, and why it goes in a VM."
+      image: https://velezanthony.github.io/og/articles/systems/telephony/vitalpbx-asterisk-pbx.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'

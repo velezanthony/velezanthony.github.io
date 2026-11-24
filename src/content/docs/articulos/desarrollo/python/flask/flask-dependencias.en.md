@@ -3,10 +3,14 @@ slug: articles/development/python/flask/flask-dependencies
 seo:
   title: "Flask dependencies: SSR or API"
   description: "What I install in Flask to get what Django ships with: ORM, migrations, forms, CSRF, login and i18n, for SSR with Jinja or for a JSON API."
+  image:
+    src: /og/articles/development/python/flask/flask-dependencies.png
+    alt: "Flask dependencies: SSR or API"
   schema:
     - '@type': TechArticle
       headline: "Setting up your Flask: the essential dependencies for an SSR or API project"
       description: "What I install in Flask to get what Django ships with: ORM, migrations, forms, CSRF, login and i18n, for SSR with Jinja or for a JSON API."
+      image: https://velezanthony.github.io/og/articles/development/python/flask/flask-dependencies.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

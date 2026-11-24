@@ -3,10 +3,14 @@ slug: articles/systems/ci-cd/github-actions-docker-images
 seo:
   title: "GitHub Actions and Docker images"
   description: "A GitHub Actions workflow that builds Docker images, tags them with semver and sha, and pushes them to Docker Hub: triggers, secrets and build cache."
+  image:
+    src: /og/articles/systems/ci-cd/github-actions-docker-images.png
+    alt: "GitHub Actions and Docker images"
   schema:
     - '@type': TechArticle
       headline: "GitHub Actions: build, version and publish Docker images"
       description: "A GitHub Actions workflow that builds Docker images, tags them with semver and sha, and pushes them to Docker Hub: triggers, secrets and build cache."
+      image: https://velezanthony.github.io/og/articles/systems/ci-cd/github-actions-docker-images.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -102,6 +106,20 @@ The `on` block defines three situations, and I do something different in each on
   the one I deploy to the staging environment.
 - **Push of a `v1.4.0` tag**: I build and publish the version. That is the one that goes to
   production.
+
+What comes out of each trigger:
+
+```mermaid
+flowchart LR
+  accTitle: What the workflow does with each trigger
+  PR[Pull request against main] --> B1[Builds<br/>without publishing]
+  M[Push to main] --> B2[Builds and publishes<br/>main and sha-…]
+  T[Tag v1.4.0] --> B3[Builds and publishes<br/>1.4.0, 1.4, latest and sha-…]
+  B2 --> H[(Docker Hub)]
+  B3 --> H
+  H -->|main image| E1[Staging environment]
+  H -->|version| E2[Production]
+```
 
 The condition `github.event_name != 'pull_request'` appears twice: on the login and on `push`.
 A pull request from a fork doesn't receive the repository's secrets, so the login would fail, and

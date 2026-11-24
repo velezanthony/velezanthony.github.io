@@ -2,10 +2,14 @@
 seo:
   title: "Alpine.js: el proxy y las librerías"
   description: "Por qué Leaflet o Chart.js van lentos o fallan dentro de Alpine.js: el proxy reactivo y el MutationObserver, medidos con DevTools, y cómo evitarlo."
+  image:
+    src: /og/articulos/desarrollo/javascript/alpine-js-proxy-librerias.png
+    alt: "Alpine.js: el proxy y las librerías"
   schema:
     - '@type': TechArticle
       headline: "Alpine.js y las librerías pesadas: de 1,8 segundos a milisegundos"
       description: "Por qué Leaflet o Chart.js van lentos o fallan dentro de Alpine.js: el proxy reactivo y el MutationObserver, medidos con DevTools, y cómo evitarlo."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/javascript/alpine-js-proxy-librerias.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

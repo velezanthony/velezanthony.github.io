@@ -1,7 +1,7 @@
 ---
 seo:
   title: "Python estricto: la serie"
-  description: "Serie sobre las herramientas que hacen fallar un proyecto Python antes de producción: Ruff, mypy y Pyright, tests de tipos, pytest, dependencias y la matriz de CI."
+  description: "Serie sobre las herramientas que hacen fallar un proyecto Python antes de producción: Ruff, mypy y Pyright, tests de tipos, pytest, dependencias y CI."
 ---
 
 # Python estricto

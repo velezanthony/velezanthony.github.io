@@ -2,10 +2,14 @@
 seo:
   title: "SSR, SPA, SSG, PWA y API"
   description: "Qué diferencia SSR, SPA, SSG, PWA y una API, con qué frameworks se hace cada uno (Django, Flask, Angular, Next.js, Astro) y cómo decido cuál usar."
+  image:
+    src: /og/articulos/desarrollo/conceptos/ssr-spa-ssg-pwa-api.png
+    alt: "SSR, SPA, SSG, PWA y API"
   schema:
     - '@type': TechArticle
       headline: "SSR, SPA, SSG, PWA y API: qué es cada uno y con qué se hace"
       description: "Qué diferencia SSR, SPA, SSG, PWA y una API, con qué frameworks se hace cada uno (Django, Flask, Angular, Next.js, Astro) y cómo decido cuál usar."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/conceptos/ssr-spa-ssg-pwa-api.png
       inLanguage: es
       datePublished: '2026-11-24'
       dateModified: '2026-11-24'
@@ -34,6 +38,19 @@ Aquí van las cinco siglas en un solo mapa: qué es cada una, con qué se hace y
 
 Solo las tres primeras son formas de pintar una página. La API alimenta a una SPA o a una app
 móvil, y la PWA se suma a lo que ya tengas.
+
+Dónde y cuándo se genera el HTML en cada caso:
+
+```mermaid
+flowchart LR
+  accTitle: Dónde y cuándo se genera el HTML
+  SRV[Servidor<br/>SSR: en cada petición] -->|HTML completo| NAV[Navegador]
+  BLD[Compilación<br/>SSG: una sola vez] -->|archivos HTML| HOST[Alojamiento estático]
+  HOST -->|SSG: páginas hechas<br/>SPA: HTML casi vacío y JS| NAV
+  API[API] -->|JSON| NAV
+  NAV --> JS[SPA: el JavaScript<br/>pinta en el navegador]
+  PWA[PWA: capa instalable<br/>y sin conexión] -.-> NAV
+```
 
 ## SSR: el servidor pinta cada página
 

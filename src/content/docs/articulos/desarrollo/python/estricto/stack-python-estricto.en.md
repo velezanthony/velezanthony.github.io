@@ -3,10 +3,14 @@ slug: articles/development/python/strict/strict-python-stack
 seo:
   title: "A stack for strict Python"
   description: "The tools that make a Python project fail before production: uv, Ruff, mypy and Pyright, type tests, Hypothesis, coverage, deptry and the CI matrix."
+  image:
+    src: /og/articles/development/python/strict/strict-python-stack.png
+    alt: "A stack for strict Python"
   schema:
     - '@type': TechArticle
       headline: "Strict Python: the tools that warn you before production"
       description: "The tools that make a Python project fail before production: uv, Ruff, mypy and Pyright, type tests, Hypothesis, coverage, deptry and the CI matrix."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/strict-python-stack.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

@@ -3,10 +3,14 @@ slug: articles/development/typescript/angular/angular-directive-or-component
 seo:
   title: "Angular: directive or component?"
   description: "Why, with Angular Reactive Forms, I prefer a directive on the native input over wrapping it in a component with ControlValueAccessor, and when I don't."
+  image:
+    src: /og/articles/development/typescript/angular/angular-directive-or-component.png
+    alt: "Angular: directive or component?"
   schema:
     - '@type': TechArticle
       headline: "Directive or component for an input in Angular"
       description: "Why, with Angular Reactive Forms, I prefer a directive on the native input over wrapping it in a component with ControlValueAccessor, and when I don't."
+      image: https://velezanthony.github.io/og/articles/development/typescript/angular/angular-directive-or-component.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'

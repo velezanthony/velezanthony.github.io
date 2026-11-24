@@ -2,10 +2,14 @@
 seo:
   title: "Git: cómo deshacer un commit"
   description: "Deshacer errores en Git sin perder trabajo, por situación: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash y reflog para recuperar."
+  image:
+    src: /og/articulos/desarrollo/herramientas/git-deshacer-errores.png
+    alt: "Git: cómo deshacer un commit"
   schema:
     - '@type': TechArticle
       headline: "Cómo deshacer errores en Git sin perder trabajo"
       description: "Deshacer errores en Git sin perder trabajo, por situación: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash y reflog para recuperar."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/herramientas/git-deshacer-errores.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
@@ -30,6 +34,19 @@ Casi todos estos comandos mueven cambios entre tres sitios:
 - **El área de preparación** (*staging* o índice): lo que has añadido con `git add` y entrará en el
   próximo commit.
 - **El historial**: los commits. `HEAD` es el commit en el que estás, y `HEAD~1` el anterior.
+
+Las tres zonas, más el remoto, y los comandos que mueven cambios entre ellas:
+
+```mermaid
+flowchart TB
+  accTitle: Qué zona toca cada comando
+  W[Directorio de trabajo] -->|git add| S[Área de preparación]
+  S -->|git commit| H[Historial local]
+  H -->|"git push<br/>después, solo git revert"| R[Remoto]
+  S -.->|"git restore --staged"| W
+  H -.->|"reset --soft"| S
+  H -.->|"reset --mixed"| W
+```
 
 ## «He cambiado un fichero y quiero dejarlo como estaba»
 

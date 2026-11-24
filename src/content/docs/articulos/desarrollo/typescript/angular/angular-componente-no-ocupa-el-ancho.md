@@ -2,10 +2,14 @@
 seo:
   title: "Angular: width 100% no funciona"
   description: "Por qué tu componente de Angular ignora width y margin: el elemento host, :host con display: block y cómo encaja en flex/grid."
+  image:
+    src: /og/articulos/desarrollo/typescript/angular/angular-componente-no-ocupa-el-ancho.png
+    alt: "Angular: width 100% no funciona"
   schema:
     - '@type': TechArticle
       headline: "Tu componente de Angular no ocupa el ancho (y no es culpa de tu CSS)"
       description: "Por qué tu componente de Angular ignora width y margin: el elemento host, :host con display: block y cómo encaja en flex/grid."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/typescript/angular/angular-componente-no-ocupa-el-ancho.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'

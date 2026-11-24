@@ -2,10 +2,14 @@
 seo:
   title: "Directiva o componente en Angular"
   description: "Por qué en Angular con Reactive Forms prefiero una directiva sobre el input nativo a envolverlo en un componente con ControlValueAccessor, y cuándo no."
+  image:
+    src: /og/articulos/desarrollo/typescript/angular/angular-directivas-o-componentes.png
+    alt: "Directiva o componente en Angular"
   schema:
     - '@type': TechArticle
       headline: "Directiva o componente para un input en Angular"
       description: "Por qué en Angular con Reactive Forms prefiero una directiva sobre el input nativo a envolverlo en un componente con ControlValueAccessor, y cuándo no."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/typescript/angular/angular-directivas-o-componentes.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'

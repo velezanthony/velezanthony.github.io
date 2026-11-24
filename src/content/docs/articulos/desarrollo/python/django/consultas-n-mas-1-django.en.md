@@ -3,10 +3,14 @@ slug: articles/development/python/django/django-n-plus-1-queries
 seo:
   title: "Django N+1 queries: from 101 to 1"
   description: "How to find and fix N+1 queries in Django step by step: from 101 queries to 1 with debug-toolbar, select_related, prefetch_related and annotate."
+  image:
+    src: /og/articles/development/python/django/django-n-plus-1-queries.png
+    alt: "Django N+1 queries: from 101 to 1"
   schema:
     - '@type': TechArticle
       headline: "N+1 queries in Django: from 101 queries to 1"
       description: "How to find and fix N+1 queries in Django step by step: from 101 queries to 1 with debug-toolbar, select_related, prefetch_related and annotate."
+      image: https://velezanthony.github.io/og/articles/development/python/django/django-n-plus-1-queries.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -164,6 +168,20 @@ products = Product.objects.select_related("seller").prefetch_related("images")[:
 Now `product.images.count()` doesn't go to the database: Django counts what it already prefetched.
 
 **Counter: 2 queries.** It makes no difference whether there are 5 products or 500.
+
+The 50 products, before and after both fixes:
+
+```mermaid
+flowchart LR
+  accTitle: From 101 queries to 2
+  subgraph BEFORE["Unfixed: 101 queries"]
+    P1["1 query:<br/>50 products"] --> S1["50 queries:<br/>the seller of each one"]
+    P1 --> I1["50 queries:<br/>the images of each one"]
+  end
+  subgraph AFTER["With both fixes: 2 queries"]
+    P2["1 query: products and seller<br/>select_related, with a JOIN"] --> I2["1 query: all the images<br/>prefetch_related, with IN"]
+  end
+```
 
 ### And if you only need the number: `annotate`
 

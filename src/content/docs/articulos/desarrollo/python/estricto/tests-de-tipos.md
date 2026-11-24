@@ -2,10 +2,14 @@
 seo:
   title: "Tests de tipos en Python"
   description: "Cómo probar que tus tipos aceptan lo correcto y rechazan lo incorrecto: assert_type, errores esperados y mypy y Pyright ejecutados desde pytest."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/tests-de-tipos.png
+    alt: "Tests de tipos en Python"
   schema:
     - '@type': TechArticle
       headline: "Tests de tipos: que los tipos digan lo que prometen"
       description: "Cómo probar que tus tipos aceptan lo correcto y rechazan lo incorrecto: assert_type, errores esperados y mypy y Pyright ejecutados desde pytest."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/tests-de-tipos.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

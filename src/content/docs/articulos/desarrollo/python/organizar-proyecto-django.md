@@ -2,10 +2,14 @@
 seo:
   title: "Organizar un proyecto Django o Flask"
   description: "La estructura con la que organizo proyectos Django y Flask que crecen: dominio, servicios, selectors y casos de uso para servir HTML y JSON a la vez."
+  image:
+    src: /og/articulos/desarrollo/python/organizar-proyecto-django.png
+    alt: "Organizar un proyecto Django o Flask"
   schema:
     - '@type': TechArticle
       headline: "Cómo organizo un proyecto Python que crece: la misma estructura en Django y en Flask"
       description: "La estructura con la que organizo proyectos Django y Flask que crecen: dominio, servicios, selectors y casos de uso para servir HTML y JSON a la vez."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/organizar-proyecto-django.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'
@@ -258,6 +262,19 @@ Con la lógica en las vistas, cada arreglo había que hacerlo dos veces. La solu
 `use_cases.py`, con una regla: **el caso de uso no conoce la petición**. Recibe datos ya limpios,
 orquesta la operación y devuelve un resultado. Cada vista lee su entrada, lo llama y traduce el
 resultado a su formato.
+
+Las dos vistas entran por el mismo caso de uso:
+
+```mermaid
+flowchart TB
+  accTitle: Dos clientes, una sola lógica
+  V["views.py<br/>SSR: responde HTML"] -->|valida con forms.py| UC[use_cases.py]
+  A["api.py<br/>API: responde JSON"] -->|valida con schemas.py| UC
+  UC --> S["services.py<br/>escribe"]
+  UC --> SEL["selectors.py<br/>lee"]
+  S --> M[models.py]
+  SEL --> M
+```
 
 En el restaurante, el caso de uso es la receta: no sabe si el pedido llegó por la barra o por
 teléfono.

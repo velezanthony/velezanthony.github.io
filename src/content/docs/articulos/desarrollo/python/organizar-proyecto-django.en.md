@@ -3,10 +3,14 @@ slug: articles/development/python/organising-a-django-or-flask-project
 seo:
   title: "Organising a Django or Flask project"
   description: "The structure I use for Django and Flask projects that grow: domain, services, selectors and use cases to serve HTML and JSON at the same time."
+  image:
+    src: /og/articles/development/python/organising-a-django-or-flask-project.png
+    alt: "Organising a Django or Flask project"
   schema:
     - '@type': TechArticle
       headline: "How I organise a growing Python project: the same structure in Django and Flask"
       description: "The structure I use for Django and Flask projects that grow: domain, services, selectors and use cases to serve HTML and JSON at the same time."
+      image: https://velezanthony.github.io/og/articles/development/python/organising-a-django-or-flask-project.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'
@@ -262,6 +266,19 @@ With the logic in the views, every fix had to be made twice. The solution is one
 `use_cases.py`, with one rule: **the use case does not know about the request**. It receives data
 that is already clean, orchestrates the operation and returns a result. Each view reads its input,
 calls it and translates the result to its own format.
+
+Both views come in through the same use case:
+
+```mermaid
+flowchart TB
+  accTitle: Two clients, one piece of logic
+  V["views.py<br/>SSR: responds with HTML"] -->|validates with forms.py| UC[use_cases.py]
+  A["api.py<br/>API: responds with JSON"] -->|validates with schemas.py| UC
+  UC --> S["services.py<br/>writes"]
+  UC --> SEL["selectors.py<br/>reads"]
+  S --> M[models.py]
+  SEL --> M
+```
 
 In the restaurant, the use case is the recipe: it does not know whether the order came in at the
 counter or by phone.

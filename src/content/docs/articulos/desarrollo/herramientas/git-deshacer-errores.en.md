@@ -3,10 +3,14 @@ slug: articles/development/tools/git-undo-mistakes
 seo:
   title: "Git: how to undo a commit"
   description: "Undo mistakes in Git without losing work, case by case: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash, and reflog to recover."
+  image:
+    src: /og/articles/development/tools/git-undo-mistakes.png
+    alt: "Git: how to undo a commit"
   schema:
     - '@type': TechArticle
       headline: "How to undo mistakes in Git without losing work"
       description: "Undo mistakes in Git without losing work, case by case: restore, reset --soft/--mixed/--hard, commit --amend, revert, stash, and reflog to recover."
+      image: https://velezanthony.github.io/og/articles/development/tools/git-undo-mistakes.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -32,6 +36,19 @@ Almost all of these commands move changes between three places:
 - **The staging area** (*staging* or index): what you have added with `git add` and will go into
   the next commit.
 - **The history**: the commits. `HEAD` is the commit you are on, and `HEAD~1` the previous one.
+
+The three areas, plus the remote, and the commands that move changes between them:
+
+```mermaid
+flowchart TB
+  accTitle: Which area each command touches
+  W[Working tree] -->|git add| S[Staging area]
+  S -->|git commit| H[Local history]
+  H -->|"git push<br/>afterwards, only git revert"| R[Remote]
+  S -.->|"git restore --staged"| W
+  H -.->|"reset --soft"| S
+  H -.->|"reset --mixed"| W
+```
 
 ## "I changed a file and want it back as it was"
 

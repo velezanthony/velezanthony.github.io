@@ -2,10 +2,14 @@
 seo:
   title: "pytest a fondo: fixtures y flaky tests"
   description: "pytest más allá de lo básico: fixtures tipadas, pytest-django, Hypothesis con st.data(), Playwright sin esperas fijas y avisos que se cuelan en tus tests."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/pytest-a-fondo.png
+    alt: "pytest a fondo: fixtures y flaky tests"
   schema:
     - '@type': TechArticle
       headline: "pytest a fondo: de las fixtures a los tests que fallan a veces"
       description: "pytest más allá de lo básico: fixtures tipadas, pytest-django, Hypothesis con st.data(), Playwright sin esperas fijas y avisos que se cuelan en tus tests."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/pytest-a-fondo.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

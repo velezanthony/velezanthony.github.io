@@ -3,10 +3,14 @@ slug: articles/development/python/strict/mutation-testing
 seo:
   title: "Mutation testing in Python with mutmut"
   description: "Why 100 % coverage is not enough: mutation testing with mutmut, a real surviving mutant, and how to split it in CI with parallel shards and a cache."
+  image:
+    src: /og/articles/development/python/strict/mutation-testing.png
+    alt: "Mutation testing in Python with mutmut"
   schema:
     - '@type': TechArticle
       headline: "Mutation testing: the test that tests your tests"
       description: "Why 100 % coverage is not enough: mutation testing with mutmut, a real surviving mutant, and how to split it in CI with parallel shards and a cache."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/mutation-testing.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'
@@ -47,6 +51,17 @@ For each mutant it runs your tests:
 - **They all pass**: the mutant survives. You have found a change in behaviour that no test detects.
 
 The score is the percentage of killed mutants.
+
+The path of each mutant:
+
+```mermaid
+flowchart LR
+  accTitle: What happens to each mutant
+  C[Your code] -->|a small change| M[Mutant]
+  M --> T[Your tests run]
+  T -->|some test fails| K["Dies:<br/>your tests protect that piece"]
+  T -->|they all pass| S["Survives:<br/>no test detects the change"]
+```
 
 ## 2. A mutant that survives, for real
 

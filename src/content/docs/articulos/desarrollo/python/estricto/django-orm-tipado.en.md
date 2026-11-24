@@ -3,10 +3,14 @@ slug: articles/development/python/strict/typed-django-orm
 seo:
   title: "A typed Django ORM"
   description: "What mypy and Pyright understand of the Django ORM with django-stubs: the plugin, QuerySet[Model], annotate() and values() with TypedDict, and no plugin."
+  image:
+    src: /og/articles/development/python/strict/typed-django-orm.png
+    alt: "A typed Django ORM"
   schema:
     - '@type': TechArticle
       headline: "A typed Django ORM: what the type checker sees and what it does not"
       description: "What mypy and Pyright understand of the Django ORM with django-stubs: the plugin, QuerySet[Model], annotate() and values() with TypedDict, and no plugin."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/typed-django-orm.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

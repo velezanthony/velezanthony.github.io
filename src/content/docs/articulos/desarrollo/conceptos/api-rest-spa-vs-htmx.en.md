@@ -3,10 +3,14 @@ slug: articles/development/concepts/rest-api-spa-vs-htmx
 seo:
   title: "REST API and SPA vs htmx and Alpine"
   description: "REST API with a SPA versus a Django monolith with htmx and Alpine, aspect by aspect: code, deployment, debugging, state, validation and errors."
+  image:
+    src: /og/articles/development/concepts/rest-api-spa-vs-htmx.png
+    alt: "REST API and SPA vs htmx and Alpine"
   schema:
     - '@type': TechArticle
       headline: "REST API and SPA vs a monolith with htmx and Alpine"
       description: "REST API with a SPA versus a Django monolith with htmx and Alpine, aspect by aspect: code, deployment, debugging, state, validation and errors."
+      image: https://velezanthony.github.io/og/articles/development/concepts/rest-api-spa-vs-htmx.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -79,6 +83,23 @@ an order line that recalculates the total as you type, without going to the serv
 ```
 
 htmx brings HTML from the server; Alpine brings to life what is already on the page.
+
+The same product search, in each option:
+
+```mermaid
+sequenceDiagram
+  accTitle: The same search in a SPA and with htmx
+  participant N as Browser
+  participant D as Django
+  Note over N,D: REST API and SPA
+  N->>D: GET with the search text
+  D-->>N: JSON with the products
+  N->>N: The SPA renders the results
+  Note over N,D: Monolith with htmx
+  N->>D: hx-get with the search text
+  D-->>N: Already rendered HTML fragment
+  N->>N: htmx places it in the page
+```
 
 ## Aspect by aspect
 

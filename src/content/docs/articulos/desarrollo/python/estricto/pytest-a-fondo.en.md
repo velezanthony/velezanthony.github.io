@@ -3,10 +3,14 @@ slug: articles/development/python/strict/pytest-in-depth
 seo:
   title: "pytest in depth: fixtures, flaky tests"
   description: "pytest beyond the basics: typed fixtures, pytest-django, Hypothesis with st.data(), Playwright without fixed waits, and warnings that sneak into your tests."
+  image:
+    src: /og/articles/development/python/strict/pytest-in-depth.png
+    alt: "pytest in depth: fixtures, flaky tests"
   schema:
     - '@type': TechArticle
       headline: "pytest in depth: from fixtures to tests that fail sometimes"
       description: "pytest beyond the basics: typed fixtures, pytest-django, Hypothesis with st.data(), Playwright without fixed waits, and warnings that sneak into your tests."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/pytest-in-depth.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

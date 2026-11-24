@@ -1,11 +1,15 @@
 ---
 seo:
   title: "Stack para un Python estricto"
-  description: "Las herramientas para que un proyecto Python falle antes de producción: uv, Ruff, mypy y Pyright, tests de tipos, Hypothesis, cobertura, deptry y la matriz de CI."
+  description: "Las herramientas para que un proyecto Python falle antes de producción: uv, Ruff, mypy y Pyright, tests de tipos, Hypothesis, cobertura, deptry y CI."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/stack-python-estricto.png
+    alt: "Stack para un Python estricto"
   schema:
     - '@type': TechArticle
       headline: "Python estricto: las herramientas que te avisan antes de producción"
-      description: "Las herramientas para que un proyecto Python falle antes de producción: uv, Ruff, mypy y Pyright, tests de tipos, Hypothesis, cobertura, deptry y la matriz de CI."
+      description: "Las herramientas para que un proyecto Python falle antes de producción: uv, Ruff, mypy y Pyright, tests de tipos, Hypothesis, cobertura, deptry y CI."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/stack-python-estricto.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

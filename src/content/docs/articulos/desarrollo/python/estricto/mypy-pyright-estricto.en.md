@@ -3,10 +3,14 @@ slug: articles/development/python/strict/strict-mypy-pyright
 seo:
   title: "mypy and Pyright in strict mode"
   description: "What mypy --strict turns on, the cache, Pyright and its modes, running both at once, where to relax without giving up, and what Python 3.14 annotations changed."
+  image:
+    src: /og/articles/development/python/strict/strict-mypy-pyright.png
+    alt: "mypy and Pyright in strict mode"
   schema:
     - '@type': TechArticle
       headline: "mypy and Pyright in depth: strict mode without surprises"
       description: "What mypy --strict turns on, the cache, Pyright and its modes, running both at once, where to relax without giving up, and what Python 3.14 annotations changed."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/strict-mypy-pyright.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

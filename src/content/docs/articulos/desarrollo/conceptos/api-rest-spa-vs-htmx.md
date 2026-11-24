@@ -2,10 +2,14 @@
 seo:
   title: "API REST y SPA vs HTMX y Alpine"
   description: "API REST con SPA frente a monolito Django con htmx y Alpine, aspecto por aspecto: código, despliegue, depuración, estado, validación y errores."
+  image:
+    src: /og/articulos/desarrollo/conceptos/api-rest-spa-vs-htmx.png
+    alt: "API REST y SPA vs HTMX y Alpine"
   schema:
     - '@type': TechArticle
       headline: "API REST y SPA vs monolito con HTMX y Alpine"
       description: "API REST con SPA frente a monolito Django con htmx y Alpine, aspecto por aspecto: código, despliegue, depuración, estado, validación y errores."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/conceptos/api-rest-spa-vs-htmx.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
@@ -78,6 +82,23 @@ recalcula el total mientras escribes, sin ir al servidor:
 ```
 
 htmx trae HTML del servidor; Alpine da vida a lo que ya está en la página.
+
+La misma búsqueda de productos, en cada opción:
+
+```mermaid
+sequenceDiagram
+  accTitle: La misma búsqueda en una SPA y con htmx
+  participant N as Navegador
+  participant D as Django
+  Note over N,D: API REST y SPA
+  N->>D: GET con el texto buscado
+  D-->>N: JSON con los productos
+  N->>N: La SPA pinta los resultados
+  Note over N,D: Monolito con htmx
+  N->>D: hx-get con el texto buscado
+  D-->>N: Fragmento HTML ya renderizado
+  N->>N: htmx lo coloca en la página
+```
 
 ## Aspecto por aspecto
 

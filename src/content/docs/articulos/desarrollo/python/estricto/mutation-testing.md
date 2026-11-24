@@ -2,10 +2,14 @@
 seo:
   title: "Mutation testing en Python con mutmut"
   description: "Por qué un 100 % de cobertura no basta: mutation testing con mutmut, un mutante real que sobrevive y cómo repartirlo en el CI con trozos en paralelo y caché."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/mutation-testing.png
+    alt: "Mutation testing en Python con mutmut"
   schema:
     - '@type': TechArticle
       headline: "Mutation testing: el test que prueba tus tests"
       description: "Por qué un 100 % de cobertura no basta: mutation testing con mutmut, un mutante real que sobrevive y cómo repartirlo en el CI con trozos en paralelo y caché."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/mutation-testing.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'
@@ -46,6 +50,17 @@ Para cada mutante pasa tus tests:
   detecta.
 
 La nota es el porcentaje de mutantes muertos.
+
+El recorrido de cada mutante:
+
+```mermaid
+flowchart LR
+  accTitle: Qué le pasa a cada mutante
+  C[Tu código] -->|un cambio pequeño| M[Mutante]
+  M --> T[Se pasan tus tests]
+  T -->|algún test falla| K["Muere:<br/>tus tests protegen ese trozo"]
+  T -->|todos pasan| S["Sobrevive:<br/>ningún test detecta el cambio"]
+```
 
 ## 2. Un mutante que sobrevive, de verdad
 

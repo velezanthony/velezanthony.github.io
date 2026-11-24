@@ -3,10 +3,14 @@ slug: articles/development/concepts/ssr-spa-ssg-pwa-api
 seo:
   title: "SSR, SPA, SSG, PWA and API"
   description: "What sets SSR, SPA, SSG, PWA and an API apart, which frameworks build each one (Django, Flask, Angular, Next.js, Astro) and how I choose."
+  image:
+    src: /og/articles/development/concepts/ssr-spa-ssg-pwa-api.png
+    alt: "SSR, SPA, SSG, PWA and API"
   schema:
     - '@type': TechArticle
       headline: "SSR, SPA, SSG, PWA and API: what each one is and what builds it"
       description: "What sets SSR, SPA, SSG, PWA and an API apart, which frameworks build each one (Django, Flask, Angular, Next.js, Astro) and how I choose."
+      image: https://velezanthony.github.io/og/articles/development/concepts/ssr-spa-ssg-pwa-api.png
       inLanguage: en
       datePublished: '2026-11-24'
       dateModified: '2026-11-24'
@@ -36,6 +40,19 @@ choose.
 
 Only the first three are ways of rendering a page. The API feeds a SPA or a mobile app, and the PWA
 is added on top of whatever you already have.
+
+Where and when the HTML is produced in each case:
+
+```mermaid
+flowchart LR
+  accTitle: Where and when the HTML is produced
+  SRV[Server<br/>SSR: on every request] -->|complete HTML| NAV[Browser]
+  BLD[Build<br/>SSG: only once] -->|HTML files| HOST[Static hosting]
+  HOST -->|SSG: ready-made pages<br/>SPA: almost empty HTML and JS| NAV
+  API[API] -->|JSON| NAV
+  NAV --> JS[SPA: the JavaScript<br/>renders in the browser]
+  PWA[PWA: installable<br/>offline layer] -.-> NAV
+```
 
 ## SSR: the server renders every page
 

@@ -2,10 +2,14 @@
 seo:
   title: "Multi-tenancy en Django"
   description: "Cuatro formas de aislar a los clientes de un SaaS en Django: bases de datos separadas, híbrido, esquema por tenant y tenant_id, y cuándo usar cada una."
+  image:
+    src: /og/articulos/desarrollo/python/django/multi-tenancy-django.png
+    alt: "Multi-tenancy en Django"
   schema:
     - '@type': TechArticle
       headline: "Multi-tenancy en Django: cuatro estrategias"
       description: "Cuatro formas de aislar a los clientes de un SaaS en Django: bases de datos separadas, híbrido, esquema por tenant y tenant_id, y cuándo usar cada una."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/django/multi-tenancy-django.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
@@ -24,6 +28,18 @@ entre ellos. En este artículo repaso las cuatro estrategias que conozco, de má
 y cómo elegir entre ellas.
 
 Los ejemplos usan un modelo `Tenant` mínimo y modelos de negocio genéricos como `Order`.
+
+Dónde acaban los datos de un mismo tenant en cada estrategia:
+
+```mermaid
+flowchart LR
+  accTitle: Dónde viven los datos de cada tenant
+  P[Petición del tenant A] --> R{¿Dónde viven<br/>sus datos?}
+  R -->|1. BD separada| D1[("Su propia BD<br/>y su despliegue")]
+  R -->|2. Híbrido| D2[("BD global: usuarios y tenants<br/>más su BD de negocio")]
+  R -->|3. Esquema por tenant| D3[("Una BD PostgreSQL<br/>search_path en su esquema")]
+  R -->|4. tenant_id| D4[("BD y esquema compartidos<br/>filas filtradas por tenant_id")]
+```
 
 ## 1. Una base de datos completamente separada por tenant
 

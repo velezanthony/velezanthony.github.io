@@ -3,10 +3,14 @@ slug: articles/development/python/strict/ruff-rules
 seo:
   title: "Ruff: which rules to enable and why"
   description: "Which Ruff rule families to enable, safe and unsafe fixes, per-folder exceptions and how to avoid running three different Ruff versions in one project."
+  image:
+    src: /og/articles/development/python/strict/ruff-rules.png
+    alt: "Ruff: which rules to enable and why"
   schema:
     - '@type': TechArticle
       headline: "Ruff in depth: which rules to enable and how not to run three versions"
       description: "Which Ruff rule families to enable, safe and unsafe fixes, per-folder exceptions and how to avoid running three different Ruff versions in one project."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/ruff-rules.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

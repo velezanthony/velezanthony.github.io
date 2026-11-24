@@ -16,7 +16,8 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "og": "node scripts/og/generate.mjs"
   },
   "dependencies": {
     "@velezanthony/design": "github:velezanthony/design#v0.2.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
     "@eslint/js": "^10.0.1",
+    "@resvg/resvg-js": "2.6.2",
     "@types/node": "^22.20.5",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
@@ -35,8 +37,10 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "satori": "0.63.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.72.2",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.0",
+    "yaml": "2.9.1"
   }
 }

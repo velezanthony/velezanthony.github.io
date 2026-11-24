@@ -3,10 +3,14 @@ slug: articles/development/python/django/django-multi-tenancy
 seo:
   title: "Multi-tenancy in Django: 4 approaches"
   description: "Four ways to isolate SaaS customers in Django: separate databases, hybrid, schema per tenant and tenant_id, with the trade-offs and when to use each one."
+  image:
+    src: /og/articles/development/python/django/django-multi-tenancy.png
+    alt: "Multi-tenancy in Django: 4 approaches"
   schema:
     - '@type': TechArticle
       headline: "Multi-tenancy in Django: four strategies"
       description: "Four ways to isolate SaaS customers in Django: separate databases, hybrid, schema per tenant and tenant_id, with the trade-offs and when to use each one."
+      image: https://velezanthony.github.io/og/articles/development/python/django/django-multi-tenancy.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -25,6 +29,18 @@ is between them. In this article I go through the four strategies I know, from m
 isolation, and how to choose between them.
 
 The examples use a minimal `Tenant` model and generic business models such as `Order`.
+
+Where the data of the same tenant ends up with each strategy:
+
+```mermaid
+flowchart LR
+  accTitle: Where each tenant's data lives
+  P[Request from tenant A] --> R{Where does<br/>its data live?}
+  R -->|1. Separate DB| D1[("Its own DB<br/>and its own deployment")]
+  R -->|2. Hybrid| D2[("Global DB: users and tenants<br/>plus its business DB")]
+  R -->|3. Schema per tenant| D3[("One PostgreSQL DB<br/>search_path set to its schema")]
+  R -->|4. tenant_id| D4[("Shared DB and schema<br/>rows filtered by tenant_id")]
+```
 
 ## 1. A completely separate database per tenant
 

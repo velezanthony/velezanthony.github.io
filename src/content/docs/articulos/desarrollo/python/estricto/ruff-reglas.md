@@ -2,10 +2,14 @@
 seo:
   title: "Ruff: qué reglas activar y por qué"
   description: "Qué familias de reglas de Ruff activar, arreglos seguros e inseguros, excepciones por carpeta y cómo evitar tres versiones de Ruff distintas en un proyecto."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/ruff-reglas.png
+    alt: "Ruff: qué reglas activar y por qué"
   schema:
     - '@type': TechArticle
       headline: "Ruff a fondo: qué reglas activar y cómo no tener tres versiones"
       description: "Qué familias de reglas de Ruff activar, arreglos seguros e inseguros, excepciones por carpeta y cómo evitar tres versiones de Ruff distintas en un proyecto."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/ruff-reglas.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

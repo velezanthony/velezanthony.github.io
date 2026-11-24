@@ -2,10 +2,14 @@
 seo:
   title: "GitHub Actions e imágenes Docker"
   description: "Un workflow de GitHub Actions que construye, etiqueta con semver y sha y publica imágenes Docker en Docker Hub: disparadores, secretos y caché."
+  image:
+    src: /og/articulos/sistemas/ci-cd/github-actions-imagenes-docker.png
+    alt: "GitHub Actions e imágenes Docker"
   schema:
     - '@type': TechArticle
       headline: "GitHub Actions: construir, versionar y publicar imágenes Docker"
       description: "Un workflow de GitHub Actions que construye, etiqueta con semver y sha y publica imágenes Docker en Docker Hub: disparadores, secretos y caché."
+      image: https://velezanthony.github.io/og/articulos/sistemas/ci-cd/github-actions-imagenes-docker.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
@@ -101,6 +105,20 @@ El bloque `on` define tres situaciones, y en cada una hago algo distinto:
 - **Push a `main`**: construyo y publico una imagen etiquetada con la rama y el commit. Es la que
   despliego en el entorno de pruebas.
 - **Push de una etiqueta `v1.4.0`**: construyo y publico la versión. Es la que va a producción.
+
+Lo que sale de cada disparador:
+
+```mermaid
+flowchart LR
+  accTitle: Qué hace el workflow con cada disparador
+  PR[Pull request contra main] --> B1[Construye<br/>sin publicar]
+  M[Push a main] --> B2[Construye y publica<br/>main y sha-…]
+  T[Etiqueta v1.4.0] --> B3[Construye y publica<br/>1.4.0, 1.4, latest y sha-…]
+  B2 --> H[(Docker Hub)]
+  B3 --> H
+  H -->|imagen de main| E1[Entorno de pruebas]
+  H -->|versión| E2[Producción]
+```
 
 La condición `github.event_name != 'pull_request'` aparece dos veces: en el login y en `push`.
 Un pull request desde un fork no recibe los secretos del repositorio, así que el login fallaría,

@@ -3,10 +3,14 @@ slug: articles/development/python/strict/type-tests
 seo:
   title: "Type tests in Python"
   description: "How to prove your types accept what is right and reject what is wrong: assert_type, expected errors, and mypy and Pyright run from pytest."
+  image:
+    src: /og/articles/development/python/strict/type-tests.png
+    alt: "Type tests in Python"
   schema:
     - '@type': TechArticle
       headline: "Type tests: making the types say what they promise"
       description: "How to prove your types accept what is right and reject what is wrong: assert_type, expected errors, and mypy and Pyright run from pytest."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/type-tests.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

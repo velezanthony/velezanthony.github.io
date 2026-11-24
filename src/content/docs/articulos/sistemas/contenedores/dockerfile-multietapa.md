@@ -2,10 +2,14 @@
 seo:
   title: "Dockerfile multietapa para Node.js"
   description: "Un solo Dockerfile con etapa de desarrollo y una imagen de producción ligera: etapas, --target, orden de capas para la caché y usuario sin root."
+  image:
+    src: /og/articulos/sistemas/contenedores/dockerfile-multietapa.png
+    alt: "Dockerfile multietapa para Node.js"
   schema:
     - '@type': TechArticle
       headline: "Dockerfile multietapa: desarrollo y producción en un solo fichero"
       description: "Un solo Dockerfile con etapa de desarrollo y una imagen de producción ligera: etapas, --target, orden de capas para la caché y usuario sin root."
+      image: https://velezanthony.github.io/og/articulos/sistemas/contenedores/dockerfile-multietapa.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'

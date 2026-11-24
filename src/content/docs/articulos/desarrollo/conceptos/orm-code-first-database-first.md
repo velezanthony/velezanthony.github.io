@@ -2,10 +2,14 @@
 seo:
   title: "Code First o Database First en ORMs"
   description: "Code First o Database First: cómo decidir y cómo tratan las claves compuestas EF Core, Hibernate, Doctrine, Django, Eloquent y SQLAlchemy."
+  image:
+    src: /og/articulos/desarrollo/conceptos/orm-code-first-database-first.png
+    alt: "Code First o Database First en ORMs"
   schema:
     - '@type': TechArticle
       headline: "Code First o Database First: claves compuestas en seis ORMs"
       description: "Code First o Database First: cómo decidir y cómo tratan las claves compuestas EF Core, Hibernate, Doctrine, Django, Eloquent y SQLAlchemy."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/conceptos/orm-code-first-database-first.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
@@ -41,6 +45,19 @@ La pregunta es quién manda: el código o la base de datos.
 - **Database First.** Diseñas el esquema en SQL y el código se adapta a él. Las herramientas son
   de **ingeniería inversa**: leen tablas, columnas y claves y generan las clases
   (*scaffolding*), o las construyen en ejecución leyendo el catálogo (*reflection*).
+
+El sentido del flujo es lo que cambia:
+
+```mermaid
+flowchart LR
+  accTitle: Quién manda, el código o la base de datos
+  subgraph CF["Code First"]
+    C1[Clases] -->|"makemigrations, migrations add…"| M1[Migraciones] -->|SQL| D1[(Base de datos)]
+  end
+  subgraph DF["Database First"]
+    D2[(Esquema en SQL)] -->|"ingeniería inversa:<br/>scaffolding o reflection"| C2[Clases generadas]
+  end
+```
 
 No me caso con ninguno. Cada uno tiene un precio, y lo importante es saber cuál estás pagando:
 

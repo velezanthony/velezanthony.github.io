@@ -5,7 +5,7 @@ import { getViteConfig } from 'astro/config';
    compilation resolve in tests exactly as they do in the build. */
 export default getViteConfig({
   test: {
-    include: ['src/**/*.test.ts', 'docs.config.test.ts'],
+    include: ['src/**/*.test.ts', 'docs.config.test.ts', 'scripts/**/*.test.ts'],
     exclude: ['node_modules/**'],
   },
 });

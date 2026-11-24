@@ -2,10 +2,14 @@
 seo:
   title: "Arquitectura básica en AWS"
   description: "Las piezas básicas de AWS, Django en AWS y cómo servir una web estática desde S3 con una CDN (CloudFront) delante: más rápido, seguro y barato."
+  image:
+    src: /og/articulos/sistemas/cloud/aws/aws-arquitectura-basica.png
+    alt: "Arquitectura básica en AWS"
   schema:
     - '@type': TechArticle
       headline: "Arquitectura básica en AWS: Django y webs estáticas"
       description: "Las piezas básicas de AWS, Django en AWS y cómo servir una web estática desde S3 con una CDN (CloudFront) delante: más rápido, seguro y barato."
+      image: https://velezanthony.github.io/og/articulos/sistemas/cloud/aws/aws-arquitectura-basica.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'

@@ -3,10 +3,14 @@ slug: articles/development/php/symfony/doctrine-dynamic-queries
 seo:
   title: "Dynamic queries with Doctrine"
   description: "Optional filters with Doctrine's QueryBuilder in Symfony: conditions built from filters, parameters against SQL injection, joins without N+1, pagination."
+  image:
+    src: /og/articles/development/php/symfony/doctrine-dynamic-queries.png
+    alt: "Dynamic queries with Doctrine"
   schema:
     - '@type': TechArticle
       headline: "Dynamic queries with Doctrine's QueryBuilder in Symfony"
       description: "Optional filters with Doctrine's QueryBuilder in Symfony: conditions built from filters, parameters against SQL injection, joins without N+1, pagination."
+      image: https://velezanthony.github.io/og/articles/development/php/symfony/doctrine-dynamic-queries.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'

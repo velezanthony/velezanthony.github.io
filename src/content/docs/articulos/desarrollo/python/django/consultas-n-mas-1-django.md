@@ -2,10 +2,14 @@
 seo:
   title: "Consultas N+1 en Django"
   description: "Cómo encontrar y arreglar consultas N+1 en Django paso a paso: de 101 consultas a 1 con debug-toolbar, select_related, prefetch_related y annotate."
+  image:
+    src: /og/articulos/desarrollo/python/django/consultas-n-mas-1-django.png
+    alt: "Consultas N+1 en Django"
   schema:
     - '@type': TechArticle
       headline: "Consultas N+1 en Django: de 101 consultas a 1"
       description: "Cómo encontrar y arreglar consultas N+1 en Django paso a paso: de 101 consultas a 1 con debug-toolbar, select_related, prefetch_related y annotate."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/django/consultas-n-mas-1-django.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
@@ -161,6 +165,20 @@ products = Product.objects.select_related("seller").prefetch_related("images")[:
 Ahora `product.images.count()` no va a la base de datos: Django cuenta lo que ya precargó.
 
 **Contador: 2 consultas.** Da igual que sean 5 productos o 500.
+
+Los 50 productos, antes y después de los dos arreglos:
+
+```mermaid
+flowchart LR
+  accTitle: De 101 consultas a 2
+  subgraph ANTES["Sin arreglar: 101 consultas"]
+    P1["1 consulta:<br/>50 productos"] --> S1["50 consultas:<br/>el vendedor de cada uno"]
+    P1 --> I1["50 consultas:<br/>las imágenes de cada uno"]
+  end
+  subgraph DESPUES["Con los dos arreglos: 2 consultas"]
+    P2["1 consulta: productos y vendedor<br/>select_related, con JOIN"] --> I2["1 consulta: todas las imágenes<br/>prefetch_related, con IN"]
+  end
+```
 
 ### Y si solo necesitas el número: `annotate`
 

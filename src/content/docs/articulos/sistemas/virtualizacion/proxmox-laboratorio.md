@@ -2,10 +2,14 @@
 seo:
   title: "Proxmox: laboratorio y preproducción"
   description: "Qué es Proxmox VE, para qué lo uso (laboratorio, pruebas y preproducción), por qué no lo elegiría para producción seria y consejos prácticos para empezar."
+  image:
+    src: /og/articulos/sistemas/virtualizacion/proxmox-laboratorio.png
+    alt: "Proxmox: laboratorio y preproducción"
   schema:
     - '@type': TechArticle
       headline: "Proxmox para un laboratorio o preproducción"
       description: "Qué es Proxmox VE, para qué lo uso (laboratorio, pruebas y preproducción), por qué no lo elegiría para producción seria y consejos prácticos para empezar."
+      image: https://velezanthony.github.io/og/articulos/sistemas/virtualizacion/proxmox-laboratorio.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'

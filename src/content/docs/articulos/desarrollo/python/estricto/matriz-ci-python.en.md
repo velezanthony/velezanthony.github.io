@@ -3,10 +3,14 @@ slug: articles/development/python/strict/python-ci-matrix
 seo:
   title: "Python CI matrix: real failures"
   description: "How to build a CI matrix with tox and GitHub Actions for Python, Django, databases, Windows and macOS, told through the real failures it uncovered."
+  image:
+    src: /og/articles/development/python/strict/python-ci-matrix.png
+    alt: "Python CI matrix: real failures"
   schema:
     - '@type': TechArticle
       headline: "The CI matrix: what only fails on another version or another system"
       description: "How to build a CI matrix with tox and GitHub Actions for Python, Django, databases, Windows and macOS, told through the real failures it uncovered."
+      image: https://velezanthony.github.io/og/articles/development/python/strict/python-ci-matrix.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'
@@ -91,6 +95,16 @@ combinations; on three systems, 60. Two tools trim them:
   do not support 3.13.
 - **`include`** adds only what is worth it: Windows and macOS do not repeat everything, only Python
   3.12 with the two long-term-support Django versions.
+
+This is how the trimming works out:
+
+```mermaid
+flowchart LR
+  accTitle: How the matrix is trimmed
+  T["Linux: 4 Python × 5 Django<br/>20 combinations"] -->|"exclude: those that do not exist"| L["16 jobs on Linux"]
+  I["include: Python 3.12<br/>with Django 4.2 and 5.2"] --> W["2 jobs on Windows"]
+  I --> M["2 jobs on macOS"]
+```
 
 The result: 16 jobs on Linux and 4 on Windows and macOS:
 

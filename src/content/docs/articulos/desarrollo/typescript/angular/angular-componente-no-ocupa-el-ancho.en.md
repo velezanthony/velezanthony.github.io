@@ -3,10 +3,14 @@ slug: articles/development/typescript/angular/angular-component-not-full-width
 seo:
   title: "Angular: width 100% not working"
   description: "Why your Angular component ignores width and margin: the host element, :host with display: block, and how it fits into flex and grid layouts."
+  image:
+    src: /og/articles/development/typescript/angular/angular-component-not-full-width.png
+    alt: "Angular: width 100% not working"
   schema:
     - '@type': TechArticle
       headline: "Your Angular component does not fill the width (and it is not your CSS's fault)"
       description: "Why your Angular component ignores width and margin: the host element, :host with display: block, and how it fits into flex and grid layouts."
+      image: https://velezanthony.github.io/og/articles/development/typescript/angular/angular-component-not-full-width.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'

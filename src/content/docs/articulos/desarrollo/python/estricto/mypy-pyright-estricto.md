@@ -2,10 +2,14 @@
 seo:
   title: "mypy y Pyright en modo estricto"
   description: "Qué activa mypy --strict, la caché, Pyright y sus modos, usar los dos a la vez, dónde relajar sin rendirse y qué cambió con las anotaciones de Python 3.14."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/mypy-pyright-estricto.png
+    alt: "mypy y Pyright en modo estricto"
   schema:
     - '@type': TechArticle
       headline: "mypy y Pyright a fondo: el modo estricto sin sorpresas"
       description: "Qué activa mypy --strict, la caché, Pyright y sus modos, usar los dos a la vez, dónde relajar sin rendirse y qué cambió con las anotaciones de Python 3.14."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/mypy-pyright-estricto.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

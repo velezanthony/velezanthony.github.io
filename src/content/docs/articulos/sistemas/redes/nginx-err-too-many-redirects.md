@@ -2,10 +2,14 @@
 seo:
   title: "ERR_TOO_MANY_REDIRECTS con Nginx"
   description: "Por qué un sitio detrás de Nginx entra en un bucle de redirecciones al forzar HTTPS: dónde termina TLS, X-Forwarded-Proto y cómo diagnosticarlo con curl."
+  image:
+    src: /og/articulos/sistemas/redes/nginx-err-too-many-redirects.png
+    alt: "ERR_TOO_MANY_REDIRECTS con Nginx"
   schema:
     - '@type': TechArticle
       headline: "ERR_TOO_MANY_REDIRECTS: Nginx, HTTPS y redirecciones"
       description: "Por qué un sitio detrás de Nginx entra en un bucle de redirecciones al forzar HTTPS: dónde termina TLS, X-Forwarded-Proto y cómo diagnosticarlo con curl."
+      image: https://velezanthony.github.io/og/articulos/sistemas/redes/nginx-err-too-many-redirects.png
       inLanguage: es
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'

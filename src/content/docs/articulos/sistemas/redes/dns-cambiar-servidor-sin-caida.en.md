@@ -3,10 +3,14 @@ slug: articles/systems/networking/dns-server-migration-without-downtime
 seo:
   title: "Switch servers without downtime: DNS"
   description: "Moving a website to a new server without an outage: what TTL is, why propagation is just caches expiring, the order of the steps and how to check it with dig."
+  image:
+    src: /og/articles/systems/networking/dns-server-migration-without-downtime.png
+    alt: "Switch servers without downtime: DNS"
   schema:
     - '@type': TechArticle
       headline: "Moving servers without downtime: DNS and TTL"
       description: "Moving a website to a new server without an outage: what TTL is, why propagation is just caches expiring, the order of the steps and how to check it with dig."
+      image: https://velezanthony.github.io/og/articles/systems/networking/dns-server-migration-without-downtime.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -63,6 +67,18 @@ Repeat the query and the number goes down. When it reaches zero, the resolver as
 authoritative server again.
 
 ## The procedure
+
+The six steps, in order:
+
+```mermaid
+flowchart TB
+  accTitle: Moving servers without downtime
+  T1["1. Lower the TTL to 300"] -->|wait at least the old TTL| T2["2. Prepare and test the new server"]
+  T2 --> T3["3. Certificate on the new server"]
+  T3 --> T4["4. Change the A and AAAA"]
+  T4 -->|the old one stays up at least the old TTL| T5["5. Keep the old server running"]
+  T5 -->|once everything is stable| T6["6. Raise the TTL again"]
+```
 
 ### 1. Lower the TTL in advance
 

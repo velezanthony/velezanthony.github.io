@@ -2,10 +2,14 @@
 seo:
   title: "El ORM de Django tipado"
   description: "Qué entienden mypy y Pyright del ORM de Django con django-stubs: el plugin, QuerySet[Model], annotate() y values() con TypedDict, y qué hacer sin plugin."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/django-orm-tipado.png
+    alt: "El ORM de Django tipado"
   schema:
     - '@type': TechArticle
       headline: "El ORM de Django tipado: lo que ve el comprobador y lo que no"
       description: "Qué entienden mypy y Pyright del ORM de Django con django-stubs: el plugin, QuerySet[Model], annotate() y values() con TypedDict, y qué hacer sin plugin."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/django-orm-tipado.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

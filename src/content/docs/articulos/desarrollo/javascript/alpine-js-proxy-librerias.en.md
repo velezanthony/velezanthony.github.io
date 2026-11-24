@@ -3,10 +3,14 @@ slug: articles/development/javascript/alpine-js-proxy-libraries
 seo:
   title: "Alpine.js: the proxy and libraries"
   description: "Why Leaflet or Chart.js get slow or break inside Alpine.js: the reactive proxy and the MutationObserver, measured with DevTools, and how to avoid it."
+  image:
+    src: /og/articles/development/javascript/alpine-js-proxy-libraries.png
+    alt: "Alpine.js: the proxy and libraries"
   schema:
     - '@type': TechArticle
       headline: "Alpine.js and heavy libraries: from 1.8 seconds to milliseconds"
       description: "Why Leaflet or Chart.js get slow or break inside Alpine.js: the reactive proxy and the MutationObserver, measured with DevTools, and how to avoid it."
+      image: https://velezanthony.github.io/og/articles/development/javascript/alpine-js-proxy-libraries.png
       inLanguage: en
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'

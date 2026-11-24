@@ -2,10 +2,14 @@
 seo:
   title: "ORM tipado en Python sin generar código"
   description: "Cómo hacer que mypy y Pyright entiendan un ORM de Python sin generar código ni plugins: descriptores con __get__ sobrecargado, genéricos y dataclass_transform."
+  image:
+    src: /og/articulos/desarrollo/python/orm-tipado-sin-generar-codigo.png
+    alt: "ORM tipado en Python sin generar código"
   schema:
     - '@type': TechArticle
       headline: "Un ORM tipado sin generar código"
       description: "Cómo hacer que mypy y Pyright entiendan un ORM de Python sin generar código ni plugins: descriptores con __get__ sobrecargado, genéricos y dataclass_transform."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/orm-tipado-sin-generar-codigo.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'

@@ -3,10 +3,14 @@ slug: articles/development/concepts/orm-code-first-vs-database-first
 seo:
   title: "ORM: Code First vs Database First"
   description: "Code First or Database First: how to decide, and how EF Core, Hibernate, Doctrine, Django, Eloquent and SQLAlchemy handle composite primary keys."
+  image:
+    src: /og/articles/development/concepts/orm-code-first-vs-database-first.png
+    alt: "ORM: Code First vs Database First"
   schema:
     - '@type': TechArticle
       headline: "Code First or Database First: composite keys in six ORMs"
       description: "Code First or Database First: how to decide, and how EF Core, Hibernate, Doctrine, Django, Eloquent and SQLAlchemy handle composite primary keys."
+      image: https://velezanthony.github.io/og/articles/development/concepts/orm-code-first-vs-database-first.png
       inLanguage: en
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -43,6 +47,19 @@ The question is who is in charge: the code or the database.
 - **Database First.** You design the schema in SQL and the code adapts to it. The tools do
   **reverse engineering**: they read tables, columns and keys and generate the classes
   (*scaffolding*), or build them at runtime by reading the catalogue (*reflection*).
+
+What changes is the direction of the flow:
+
+```mermaid
+flowchart LR
+  accTitle: Who is in charge, the code or the database
+  subgraph CF["Code First"]
+    C1[Classes] -->|"makemigrations, migrations add…"| M1[Migrations] -->|SQL| D1[(Database)]
+  end
+  subgraph DF["Database First"]
+    D2[(Schema in SQL)] -->|"reverse engineering:<br/>scaffolding or reflection"| C2[Generated classes]
+  end
+```
 
 I am not wedded to either. Each has a price, and what matters is knowing which one you are paying:
 

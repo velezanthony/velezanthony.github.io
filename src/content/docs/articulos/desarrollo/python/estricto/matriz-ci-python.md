@@ -2,10 +2,14 @@
 seo:
   title: "Matriz de CI en Python: casos reales"
   description: "Cómo montar una matriz de CI con tox y GitHub Actions para Python, Django, bases de datos, Windows y macOS, contada con los fallos reales que destapó."
+  image:
+    src: /og/articulos/desarrollo/python/estricto/matriz-ci-python.png
+    alt: "Matriz de CI en Python: casos reales"
   schema:
     - '@type': TechArticle
       headline: "La matriz de CI: lo que solo falla en otra versión o en otro sistema"
       description: "Cómo montar una matriz de CI con tox y GitHub Actions para Python, Django, bases de datos, Windows y macOS, contada con los fallos reales que destapó."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/python/estricto/matriz-ci-python.png
       inLanguage: es
       datePublished: '2026-11-23'
       dateModified: '2026-11-23'
@@ -90,6 +94,16 @@ combinaciones; en tres sistemas, 60. Se recortan con dos herramientas:
   3.13.
 - **`include`** añade solo lo que aporta: en Windows y macOS no se repite todo, solo Python 3.12 con
   las dos versiones de Django de soporte largo.
+
+Así queda el recorte:
+
+```mermaid
+flowchart LR
+  accTitle: Cómo se recorta la matriz
+  T["Linux: 4 Python × 5 Django<br/>20 combinaciones"] -->|"exclude: las que no existen"| L["16 trabajos en Linux"]
+  I["include: Python 3.12<br/>con Django 4.2 y 5.2"] --> W["2 trabajos en Windows"]
+  I --> M["2 trabajos en macOS"]
+```
 
 El resultado: 16 trabajos en Linux y 4 en Windows y macOS:
 

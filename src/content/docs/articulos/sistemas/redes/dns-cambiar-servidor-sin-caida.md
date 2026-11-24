@@ -2,10 +2,14 @@
 seo:
   title: "Cambiar de servidor sin caída: DNS"
   description: "Mover una web a un servidor nuevo sin cortes: qué es el TTL, por qué la propagación son cachés caducando, el orden de los pasos y cómo comprobarlo con dig."
+  image:
+    src: /og/articulos/sistemas/redes/dns-cambiar-servidor-sin-caida.png
+    alt: "Cambiar de servidor sin caída: DNS"
   schema:
     - '@type': TechArticle
       headline: "Cambiar de servidor sin caída: DNS y TTL"
       description: "Mover una web a un servidor nuevo sin cortes: qué es el TTL, por qué la propagación son cachés caducando, el orden de los pasos y cómo comprobarlo con dig."
+      image: https://velezanthony.github.io/og/articulos/sistemas/redes/dns-cambiar-servidor-sin-caida.png
       inLanguage: es
       datePublished: '2026-11-22'
       dateModified: '2026-11-22'
@@ -61,6 +65,18 @@ Repite la consulta y el número baja. Cuando llega a cero, el resolver vuelve a 
 autoritativo.
 
 ## El procedimiento
+
+Los seis pasos, en orden:
+
+```mermaid
+flowchart TB
+  accTitle: Cambiar de servidor sin caída
+  T1["1. Bajar el TTL a 300"] -->|esperar al menos el TTL antiguo| T2["2. Preparar y probar el servidor nuevo"]
+  T2 --> T3["3. Certificado en el servidor nuevo"]
+  T3 --> T4["4. Cambiar el A y el AAAA"]
+  T4 -->|el viejo sigue al menos el TTL antiguo| T5["5. Mantener el servidor viejo"]
+  T5 -->|cuando todo esté estable| T6["6. Subir el TTL otra vez"]
+```
 
 ### 1. Bajar el TTL con antelación
 

@@ -2,10 +2,14 @@
 seo:
   title: "Consultas dinámicas con Doctrine"
   description: "Filtros opcionales con el QueryBuilder de Doctrine en Symfony: condiciones según los filtros, parámetros contra la inyección SQL, joins sin N+1 y paginación."
+  image:
+    src: /og/articulos/desarrollo/php/symfony/doctrine-consultas-dinamicas.png
+    alt: "Consultas dinámicas con Doctrine"
   schema:
     - '@type': TechArticle
       headline: "Consultas dinámicas con el QueryBuilder de Doctrine en Symfony"
       description: "Filtros opcionales con el QueryBuilder de Doctrine en Symfony: condiciones según los filtros, parámetros contra la inyección SQL, joins sin N+1 y paginación."
+      image: https://velezanthony.github.io/og/articulos/desarrollo/php/symfony/doctrine-consultas-dinamicas.png
       inLanguage: es
       datePublished: '2026-11-21'
       dateModified: '2026-11-22'
