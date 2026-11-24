@@ -36,7 +36,9 @@ const opensAway = (href: string) => /^https?:\/\//.test(href);
         class="inline-flex min-h-6 items-center gap-2.5 text-muted transition-colors hover:text-accent"
       >
         <Icon name={item.icon} size={15} class="shrink-0 text-faint" />
-        <span class:list={['font-mono', size === 'sm' && 'text-sm']}>{item.handle ?? item.label}</span>
+        <span class:list={['font-mono', size === 'sm' && 'text-sm']}>
+          {item.handle ?? item.label}
+        </span>
       </a>
     </li>
   ))}
