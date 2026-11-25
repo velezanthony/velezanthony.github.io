@@ -31,6 +31,7 @@ export default defineDocsConfig({
           '/cotton-props/sitemap.xml',
           '/django-language-service/sitemap.xml',
           '/design/sitemap.xml',
+          '/figma-control-center/sitemap.xml',
         ],
       },
     },

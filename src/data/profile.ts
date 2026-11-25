@@ -14,8 +14,8 @@ export const profile = {
   } satisfies Localized,
 
   summary: {
-    es: 'Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS en Python y Django, en un equipo de cuatro, y bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes, **a partir de los requisitos de negocio, diseñé, desarrollé y llevé a producción un SaaS multi-tenant** con la responsabilidad técnica completa, y me encargué de la **infraestructura AWS completa** de las startups de una venture builder, con su preproducción on-premise en Proxmox. He trabajado con API REST y clientes desacoplados, SPA y monolitos SSR con HTMX. **Cinco herramientas open source propias: dos en PyPI y una en el VS Code Marketplace.**',
-    en: 'Today I define the **code architecture** for the refactor of a SaaS marketplace in Python and Django, in a team of four, and I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that, **working from the business requirements, I designed, built and took a multi-tenant SaaS to production** with full technical responsibility, and ran the **full AWS infrastructure** of a venture builder’s startups, with their on-premise pre-production on Proxmox. I have worked with REST APIs and decoupled clients, SPAs and SSR monoliths with HTMX. **Five open source tools of my own: two on PyPI and one on the VS Code Marketplace.**',
+    es: 'Hoy defino la **arquitectura de código** del refactor de un marketplace SaaS en Python y Django, en un equipo de cuatro, y bajé su página principal de **12 s a 1–2 s** optimizando consultas. Antes, **a partir de los requisitos de negocio, diseñé, desarrollé y llevé a producción un SaaS multi-tenant** con la responsabilidad técnica completa, y me encargué de la **infraestructura AWS completa** de las startups de una venture builder, con su preproducción on-premise en Proxmox. He trabajado con API REST y clientes desacoplados, SPA y monolitos SSR con HTMX. **Seis herramientas open source propias: dos en PyPI y una en el VS Code Marketplace.**',
+    en: 'Today I define the **code architecture** for the refactor of a SaaS marketplace in Python and Django, in a team of four, and I brought its main page down from **12 s to 1–2 s** by optimising queries. Before that, **working from the business requirements, I designed, built and took a multi-tenant SaaS to production** with full technical responsibility, and ran the **full AWS infrastructure** of a venture builder’s startups, with their on-premise pre-production on Proxmox. I have worked with REST APIs and decoupled clients, SPAs and SSR monoliths with HTMX. **Six open source tools of my own: two on PyPI and one on the VS Code Marketplace.**',
   } satisfies Localized,
 
   /** The everyday stack, shown under the headline. */
@@ -87,8 +87,8 @@ export const pageTitles = {
     en: 'Experience: Django, AWS and systems',
   },
   projects: {
-    es: 'Herramientas open source para Django y Docker',
-    en: 'Open source tools for Django and Docker',
+    es: 'Herramientas open source propias',
+    en: 'Open source tools I built',
   },
   cv: {
     es: 'CV · Software Engineer',
@@ -103,12 +103,12 @@ export const pageTitles = {
  */
 export const seo = {
   home: {
-    es: 'Software Engineer en Gipuzkoa: desarrollo, despliego y mantengo software con Python, Django y Angular, en AWS o servidores propios. Cinco proyectos open source.',
-    en: 'Software Engineer in Gipuzkoa, Spain: I build, deploy and maintain software with Python, Django and Angular, on AWS or my own servers. Five open source tools.',
+    es: 'Software Engineer en Gipuzkoa: desarrollo, despliego y mantengo software con Python, Django y Angular, en AWS o servidores propios. Seis proyectos open source.',
+    en: 'Software Engineer in Gipuzkoa, Spain: I build, deploy and maintain software with Python, Django and Angular, on AWS or my own servers. Six open source tools.',
   },
   projects: {
-    es: 'Seis herramientas open source: un ORM Python tipado, dos extensiones de VS Code y un catálogo de componentes para Django, un panel Docker y una librería Astro.',
-    en: 'Six open source tools: a typed Python ORM, two VS Code extensions and a component catalogue for Django, a terminal Docker dashboard and an Astro docs library.',
+    es: 'Siete herramientas open source: un ORM Python tipado, dos extensiones VS Code y un catálogo para Django, un panel Docker, un MCP de Figma y una librería Astro.',
+    en: 'Seven open source tools: a typed Python ORM, two VS Code extensions and a catalogue for Django, a Docker dashboard, a Figma MCP server and an Astro library.',
   },
   experience: {
     es: 'Cuatro años: arquitectura Django en Zenit Solar, AWS en Eywa Space, VoIP en SWAP y un SaaS multi-tenant en Laravel llevado a producción en VITE.',
